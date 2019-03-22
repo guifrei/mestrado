@@ -1,0 +1,106 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Temperaturas em y = b
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[h!b]
+	\begin{minipage}[t][6cm][c]{\textwidth}
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[
+		axis lines=left,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = 310,
+%		ymax = 340,
+%		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=7cm,
+		height=5cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $T_1\big|_{\Gamma_0}$ (\celsius)]
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_01_conductance_01_stdev_00.dat} 
+		\teff
+		\addplot[color=blue,mark=o,mark options={mark size=1.0pt}] table from \teff;
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_01_conductance_01_stdev_01.dat} 
+		\teff
+		\addplot[only marks,color=red,mark=square,mark options={mark size=1.0pt}] table from \teff;
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_01_conductance_01_stdev_05.dat} 
+		\teff
+		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=1.0pt}] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(a) Perfil 1}
+	\end{minipage}
+	\begin{minipage}[t][6cm][c]{\textwidth}
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[
+		axis lines=left,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = 300,
+%		ymax = 330,
+		%		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=7cm,
+		height=5cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $T_1\big|_{\Gamma_0}$ (\celsius)]
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_01_conductance_02_stdev_00.dat} 
+		\teff
+		\addplot[color=blue,mark=o,mark options={mark size=1.0pt}] table from \teff;
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_01_conductance_02_stdev_01.dat} 
+		\teff
+		\addplot[only marks,color=red,mark=square,mark options={mark size=1.0pt}] table from \teff;
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_01_conductance_02_stdev_05.dat} 
+		\teff
+		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=1.0pt}] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(b) Perfil 2}
+	\end{minipage}
+	\begin{minipage}[t][6cm][c]{\textwidth}
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[
+		axis lines=left,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = 245,
+%		ymax = 265,
+		%		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=7cm,
+		height=5cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $T_1\big|_{\Gamma_0}$ (\celsius)]
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_01_conductance_03_stdev_00.dat} 
+		\teff
+		\addplot[color=blue,mark=o,mark options={mark size=1.0pt}] table from \teff;
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_01_conductance_03_stdev_01.dat} 
+		\teff
+		\addplot[only marks,color=red,mark=square,mark options={mark size=1.0pt}] table from \teff;
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_01_conductance_03_stdev_05.dat} 
+		\teff
+		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=1.0pt}] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(c) Perfil 3}
+	\end{minipage}
+	\caption{Temperaturas sintéticas ($Y$) ao longo da superfície superior $\Gamma_0$, para os perfis de CTC de 1 a 3, referentes à interface de contato 1: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+	\label{figura_temperaturas_sinteticas_interface_01}
+\end{figure}

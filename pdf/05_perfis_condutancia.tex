@@ -1,0 +1,168 @@
+\begin{figure}[h!b]
+	\begin{minipage}[t][5cm][c]{\textwidth}
+		\centering		
+		\begin{tikzpicture}
+		\begin{axis}[
+		axis lines=left,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = -500,
+		ymax = 2000,
+		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=6cm,
+		height=4cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
+		\pgfplotstableread{../data/conductance_01.dat} 
+		\teff
+		\addplot[color=blue,mark=none,smooth] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(a) Perfil 1}
+	\end{minipage}
+\end{figure}
+%	\begin{minipage}[t][5cm][t]{0,5\textwidth}
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		axis lines=left,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = -500,
+%		ymax = 2000,
+%		restrict y to domain=-500:2000,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		anchor=east,  
+%		width=6cm,
+%		height=4cm,
+%		label style={font=\footnotesize},
+%		xlabel = $x$(m),
+%		ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
+%		\pgfplotstableread{../data/conductance_02.dat} 
+%		\teff
+%		\addplot[color=blue,mark=none,smooth] table from \teff;
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption*{(a) Perfil 2}
+%	\end{minipage}
+\begin{figure}[h!b]
+	\begin{minipage}[t][5cm][c]{\textwidth}
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[
+		axis lines=left,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = -500,
+		ymax = 2000,
+		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=6cm,
+		height=4cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
+		\pgfplotstableread{../data/conductance_02.dat} 
+		\teff
+		\addplot[color=blue,mark=none,smooth] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(a) Perfil 2}
+	\end{minipage}
+\end{figure}
+\newpage
+%	\begin{minipage}[t][5cm][t]{0,5\textwidth}
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		axis lines=left,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = -500,
+%		ymax = 2000,
+%		restrict y to domain=-500:2000,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		anchor=east,  
+%		width=6cm,
+%		height=4cm,
+%		label style={font=\footnotesize},
+%		xlabel = $x$(m),
+%		ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
+%		\pgfplotstableread{../data/conductance_04.dat} 
+%		\teff
+%		\addplot[color=blue,mark=none,smooth] table from \teff;
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption*{(a) Perfil 4}
+%	\end{minipage}
+%	\begin{minipage}[t][5cm][t]{0,5\textwidth}
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		axis lines=left,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = -500,
+%		ymax = 2000,
+%		restrict y to domain=-500:2000,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		anchor=east,  
+%		width=6cm,
+%		height=4cm,
+%		label style={font=\footnotesize},
+%		xlabel = $x$(m),
+%		ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
+%		\pgfplotstableread{../data/conductance_05.dat} 
+%		\teff
+%		\addplot[color=blue,mark=none,smooth] table from \teff;
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption*{(a) Perfil 5}
+%	\end{minipage}
+\begin{figure}[h!b]
+	\begin{minipage}[t][5cm][c]{\textwidth}
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[
+		axis lines=left,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = -500,
+		ymax = 2000,
+		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=6cm,
+		height=4cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
+		\pgfplotstableread{../data/conductance_03.dat} 
+		\teff
+		\addplot[color=blue,mark=none,smooth] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(a) Perfil 3}
+	\end{minipage}	
+	\caption{Diferentes perfis de $h_c(x)$ na interface $\Gamma$}
+	\label{figura_ctc}
+\end{figure}

@@ -1,0 +1,607 @@
+\newpage
+
+\section{Geração de temperaturas sintéticas através da Técnica da Transformada Integral Clássica}\label{sec_sol_prob_direto}
+Para determinar a condutância de contato, precisamos conhecer as temperaturas ao longo da superfície $\Gamma_0$, representadas
+pela função $Y(x)$, conforme foi dito nas seções \ref{sec_repr_F} e \ref{sec_repr_G}. Uma forma de obter essas temperaturas é
+resolver o problema direto dado pelas equações \eqref{harm_T1} a \eqref{cc_T1_5}.
+Essas equações são problemas de difusão-convecção; elas possuem características que favorecem a aplicação do método da
+Transformada Integral Clássica (CITT). Esta técnica consiste nos seguintes passos (COTTA, 1993):%(\cite{livro_cotta}):
+\begin{itemize}
+  \item Escolher um problema auxiliar relacionado;
+  \item Desenvolver um \textit{par transformada-inversa} apropriado;
+  \item Aplicar a transformação integral na equação diferencial, gerando um sistema infinito de equações diferenciais orginárias desacopladas;
+  \item Resolver o sistema gerado, obtendo expressões analíticas para os campos de temperatura transformados; 
+  \item Reconstruir a solução final através da fórmula de inversão. 
+\end{itemize}
+
+Aplicando os resultados obtidos na seção \ref{sec_normais},
+podemos reescrever as equações do problema direto no sistema de coordenadas cartesianas como segue:
+\begin{align}
+	& \frac{\partial T_1}{\partial x^2} + \frac{\partial T_1}{\partial y^2} = 0 \label{harm_T1_cart}
+\end{align}
+\begin{align}
+	& -\kappa \frac{\partial T_1(x, b)}{\partial y} = q  \label{cc_T1_2_cart}
+\end{align}
+\begin{align}	
+	& \frac{\partial T_1(0, y)}{\partial x} = 0 \label{cc_T1_1_0_cart}
+\end{align}
+\begin{align}	
+	& \frac{\partial T_1(a, y)}{\partial x} = 0 \label{cc_T1_1_a_cart}
+\end{align}
+\begin{align}	
+	& -\frac{\kappa}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial T_{1,n}(x, w(x))}{\partial x} - \frac{\partial T_{1,n}(x, w(x))}{\partial y}\right] = \nonumber \\
+	& h_\Gamma(x)[T_1(x, w(x))-T_2(x, w(x))] \label{cc_grad_T1_cart}
+\end{align}
+\begin{align}
+	& \frac{\partial T_2}{\partial x^2} + \frac{\partial T_2}{\partial y^2} = 0 \label{harm_T2_cart}
+\end{align}
+\begin{align}	
+	& \frac{\partial T_2(0, y)}{\partial x} = 0 \label{cc_T1_3_0_cart}
+\end{align}
+\begin{align}	
+	& \frac{\partial T_2(a, y)}{\partial x} = 0 \label{cc_T1_3_a_cart}
+\end{align}
+\begin{align}	
+	& T_2(x, 0) = 0 \label{cc_T1_4_cart}
+\end{align}
+\begin{align}
+	& w'(x)\frac{\partial T_{2,n}(x, w(x))}{\partial x} - \frac{\partial T_{2,n}(x, w(x))}{\partial y} = 
+	w'(x)\frac{\partial T_{1,n}(x, w(x))}{\partial x} - \frac{\partial T_{1,n}(x, w(x))}{\partial y} \label{cc_T1_5_cart}
+\end{align}
+
+O problema formulado pelas equações \eqref{harm_T1_cart} a \eqref{cc_T1_5_cart} pode assim ser resolvido através da
+Técnica da Transformação Integral Clássica. Para tanto, aplicaremos a transformação integral
+na direção $x$, para a qual as condições de contorno \eqref{cc_T1_1_0_cart}, \eqref{cc_T1_1_a_cart},
+\eqref{cc_T1_3_0_cart} e \eqref{cc_T1_3_a_cart} são homogêneas. Desse modo, aplicando separação de variáveis
+na versão homogênea do problema acima, obtemos o seguinte \textit{problema de Sturm-Liouville}:
+\begin{align}
+	& \frac{d^2 X_i(x)}{d x^2} + \lambda_i^2 X_i(x) = 0 \label{prob_autofuncao_x} \\ \nonumber \\
+	& X'_i(0) = 0 \label{condicao_cont_x_0}\\ \nonumber \\
+	& X'_i(a) = 0 \label{condicao_cont_x_a}
+\end{align}
+onde $\lambda_i$ são os \textit{autovalores} e $X_i(x)$ são as autofunções correspondentes.
+
+A solução do problema, já normalizada, é (OZISIK, 1980):
+\begin{align}
+	X_i(x) = \sqrt{\frac{2}{a}}\cos\lambda_i x \label{sol_normaliz}
+\end{align}
+sendo
+\begin{align}
+	\lambda_i = \frac{i\pi}{a}
+\end{align}
+
+Para o caso particular $i = 0$, teremos $\lambda_0 = 0$ como um autovalor válido, cuja autofunção associada é:
+\begin{align}
+	X_0(x) = \sqrt{\frac{1}{a}} \label{sol_normaliz_0}
+\end{align}
+
+As autofunções definidas em \eqref{sol_normaliz} e \eqref{sol_normaliz_0} atendem à seguinte condição de orotgonalidade:
+\begin{align}
+	\int_0^a X_i(x)X_j(x)dx = 
+	\left\lbrace
+		\begin{matrix}
+			1, & \text{para } i = j \\ \\
+			0, & \text{para }i \ne j 
+		\end{matrix}
+	\right.
+\end{align}
+
+Considera-se agora que os cammpos de temperatura $T_1$ e $T_2$ podem ser expressos como uma combinação linear
+das autofunções $X_i(x)$:
+\begin{align}
+	& T_1(x, y) = \sum_{i=0}^\infty \tilde{T}_{1, i}(y)X_i(x) \label{expansao_T1} \\ \nonumber \\
+	& T_2(x, y) = \sum_{i=0}^\infty \tilde{T}_{2, i}(y)X_i(x) \label{expansao_T2} 
+\end{align}
+
+Conhecidos os campos $T_1(x, y)$ e $T_2(x, y)$, cada um dos coeficientes $\tilde{T}_{1, i}(y)$ e $\tilde{T}_{2, i}(y)$ pode ser determinado
+através das seguintes integrais:
+\begin{align}
+	& \tilde{T}_{1, i}(y) = \int_0^a T_1(x, y) X_i(x)dx \label{transformacao_T1} \\ \nonumber \\
+	& \tilde{T}_{2, i}(y) = \int_0^a T_2(x, y) X_i(x)dx \label{transformacao_T2}
+\end{align}
+
+As equações \eqref{transformacao_T1} e \eqref{transformacao_T2} definem as \textit{transformadas integrais}
+das funções $T_1(x, y)$ e $T_2(x, y)$, ao passo que as equacções \eqref{expansao_T1} e \eqref{expansao_T2}
+definem as \textit{transformações inversas} correspondentes.
+
+Faremos agora a transformação integral na equação diferencial \eqref{harm_T1_cart}, ou seja, aplicaremos
+o operador $\displaystyle\int_0^a \left(\cdot\right)X_i(x)dx$ aos termos dessa equação: 
+\begin{align}
+	\int_0^a \frac{\partial^2 T_1(x, y)}{\partial x^2}X_i(x)dx
+	+
+	\int_0^a \frac{\partial^2 T_1(x, y)}{\partial y^2}X_i(x)dx
+	=
+	0
+\end{align}
+
+O primeiro termo acima pode ser integrado por partes, e no segundo termo as operações de derivada e integral
+podem ser permutadas, logo:
+ \begin{align}
+ 	& \left[\frac{\partial T_1(x, y)}{\partial x}X_i(x)\right]_0^a - 
+	\int_0^a \frac{\partial T_1(x, y)}{\partial x}X'_i(x)dx
+	+
+	\frac{d^2}{dy^2}\int_0^a T_1(x, y)X_i(x)dx
+	=
+	0 \nonumber \\
+	& \therefore
+	\frac{\partial T_1(a, y)}{\partial x}X_i(a) - \frac{\partial T_1(0, y)}{\partial x}X_i(0)
+	-
+	\int_0^a \frac{\partial T_1(x, y)}{\partial x}X'_i(x)dx
+	+
+	\frac{d^2 \tilde{T}_{1, i}(y)}{dy^2}
+	=
+	0
+\end{align}
+
+Os dois termos da expressão acima se cancelam devido às condições de contorno \eqref{cc_T1_1_0_cart} e \eqref{cc_T1_1_a_cart}.
+Integrando por partes o terceiro termo:
+\begin{align}
+ 	&
+ 	-
+ 	\left[ T_1(x, y)X'_i(x) \right]_0^a
+	+
+	\int_0^a  T_1(x, y)X''_i(x)dx
+	+
+	\frac{d^2 \tilde{T}_{1, i}(y)}{dy^2}
+	=
+	0 \nonumber \\
+	& \therefore
+ 	-
+ 	T_1(a, y)X'_i(a)
+ 	+
+ 	T_1(0, y)X'_i(0)
+	-
+	\lambda_i^2
+	\int_0^a  T_1(x, y)X_i(x)dx
+	+
+	\frac{d^2 \tilde{T}_{1, i}(y)}{dy^2}
+	=
+	0
+\end{align}
+
+Substituindo as condições de contorno \eqref{condicao_cont_x_0} e \eqref{condicao_cont_x_a}, e aplicando
+a relação \eqref{prob_autofuncao_x}, obtemos finalmente:
+\begin{align}
+	&
+ 	-
+	\lambda_i^2
+	\tilde{T}_{1, i}(y)
+	+
+	\frac{d^2 \tilde{T}_{1, i}(y)}{dy^2}
+	=
+	0 \label{eq_harmon_1}
+\end{align}
+
+Operando de forma análoga com a equação \eqref{harm_T2_cart}, teremos:
+\begin{align}
+	&
+ 	-
+	\lambda_i^2
+	\tilde{T}_{2, i}(y)
+	+
+	\frac{d^2 \tilde{T}_{2, i}(y)}{dy^2}
+	=
+	0 \label{eq_harmon_2}
+\end{align}
+
+Devemos agora aplicar a mesma transformação integral às condições de contorno. Por hora, faremos a análise para 
+as autofunções de índice $i \ne 0$, e posteriormente trataremos o caso $i = 0$. Assim, para as condições \eqref{cc_T1_2_cart}
+e \eqref{cc_T1_4_cart}, a aplicação é direta:
+\begin{align}
+	& \tilde{T}_{2, i}(0) = 0 \\ 
+	& -\kappa \tilde{T}'_{1, i}(b) = q\int_0^a X_i(x)dx = q\sqrt{\frac{2}{a}}\int_0^a \cos\lambda_i x dx \nonumber \\
+	& \therefore \tilde{T}'_{1, i}(b) = 0
+\end{align}
+
+Para as condições acima, as equações \eqref{eq_harmon_1} e \eqref{eq_harmon_2} terão as seguintes soluções gerais (BOYCE e DI PRIMA, 1994): 
+\begin{align}
+&	T_{1,i}(y) = A_i \cosh\lambda_i (b - y) \\ \nonumber \\
+& 	T_{2,i}(y) = B_i\sinh\lambda_i y
+\end{align}
+onde $A_i$ e $B_i$ são coeficientes a determinar.
+
+Para o caso particular $i=0$, as condições de contorno serão:
+\begin{align}
+	& \tilde{T}_{2, 0}(0) = 0 \\ 
+	& -\kappa \tilde{T}'_{1, 0}(b) = q\int_0^a X_0(x)dx = q\sqrt{\frac{1}{a}}\int_0^a dx \nonumber \\
+	& \therefore \tilde{T}'_{1, 0}(b) = -\frac{q}{\kappa}\sqrt{a}
+\end{align}
+e as soluções gerais, por sua vez, serão dadas por:
+\begin{align}
+	& T_{1,0}(y) = A_0 + \frac{q}{\kappa}(b - y)\sqrt{a}\\ \nonumber \\
+	& T_{2,0}(y) = B_0 y
+\end{align}
+onde $A_0$ e $B_0$ são coeficientes a determinar.
+
+Dessa forma, substituindo os resultados acima nas expansões dos campos de temperatura:
+\begin{align}
+	& T_1(x, y) = \frac{q}{\kappa}(b - y) + A_0 + \sum_{i=1}^\infty A_i X_i(x) \cosh\lambda_i (b - y) \label{expansao_nova_1} \\ \nonumber \\
+	& T_2(x, y) = B_0 y + \sum_{i=1}^\infty B_i X_i(x)\sinh\lambda_i y \label{expansao_nova_2}
+\end{align}
+
+Faremos agora o tratamento das condições de contorno \eqref{cc_grad_T1_cart} e \eqref{cc_T1_5_cart}. Inicialmente, substituiremos
+nessas condições as expressões dos campos de temperatura \eqref{expansao_nova_1} e \eqref{expansao_nova_2}.
+
+Para a condição \eqref{cc_grad_T1_cart}:
+\begin{align}	
+	& -\frac{\kappa}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial T_1(x, w(x))}{\partial x} - \frac{\partial T_1(x, w(x))}{\partial y}\right] = \nonumber \\
+	& h_\Gamma(x)[T_1(x, w(x))-T_2(x, w(x))] \nonumber \\
+	& \Rightarrow - w'(x)\frac{\partial T_1(x, w(x))}{\partial x} + \frac{\partial T_1(x, w(x))}{\partial y} = \nonumber \\
+	& \frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa}[T_1(x, w(x))-T_2(x, w(x))] \nonumber \\
+	& \Rightarrow
+		- w'(x)\sum_{i=1}^\infty A_i X'_i(x) \cosh\lambda_i (b - w(x))
+		- \frac{q}{\kappa} - \sum_{i=1}^\infty \lambda_i A_i X_i(x) \sinh\lambda_i (b - w(x)) = \nonumber \\
+	& \frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa}\left[
+		\frac{q}{\kappa}(b - w(x)) + A_0 + \sum_{i=1}^\infty A_i X_i(x) \cosh\lambda_i (b - w(x)) \right. \nonumber \\
+		&\left.
+		- B_0 w(x) - \sum_{i=1}^\infty B_i X_i(x)\sinh\lambda_i w(x)\right] \nonumber \\
+	& \Rightarrow
+		-\frac{q}{\kappa} - 
+		\sum_{i=1}^\infty A_i [w'(x)X'_i(x) \cosh\lambda_i (b - w(x))
+		+ \lambda_i X_i(x) \sinh\lambda_i (b - w(x))] = \nonumber \\
+	& \frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa}\left[
+		\frac{q}{\kappa}(b - w(x)) + A_0 + \sum_{i=1}^\infty A_i X_i(x) \cosh\lambda_i (b - w(x)) \right. \nonumber \\
+		&\left.
+		- B_0 w(x) - \sum_{i=1}^\infty B_i X_i(x)\sinh\lambda_i w(x)\right] \label{constantes_a_b_1}
+\end{align}
+
+Para a condição \eqref{cc_T1_5_cart}:
+\begin{align}
+	& w'(x)\frac{\partial T_2(x, w(x))}{\partial x} - \frac{\partial T_2(x, w(x))}{\partial y} = 
+	w'(x)\frac{\partial T_1(x, w(x))}{\partial x} - \frac{\partial T_1(x, w(x))}{\partial y} \nonumber \\
+	& \Rightarrow w'(x)\sum_{i=1}^\infty B_i X'_i(x)\sinh\lambda_i w(x)
+	- B_0 - \sum_{i=1}^\infty \lambda_i B_i X_i(x)\cosh\lambda_i w(x) = \nonumber \\
+	& w'(x)\sum_{i=1}^\infty A_i X'_i(x) \cosh\lambda_i (b - w(x))
+		+ \frac{q}{\kappa} + \sum_{i=1}^\infty \lambda_i A_i X_i(x) \sinh\lambda_i (b - w(x)) \label{constantes_a_b_2}
+\end{align}
+
+Reorganizando a equação \eqref{constantes_a_b_1}:
+\begin{align}	
+	& A_0 \frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa} + \nonumber \\
+	& \sum_{i=1}^\infty A_i \frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa} X_i(x) \cosh\lambda_i (b - w(x))  \nonumber \\
+	& + \sum_{i=1}^\infty A_i [w'(x)X'_i(x) \cosh\lambda_i (b - w(x)) + \lambda_i X_i(x) \sinh\lambda_i (b - w(x))] \nonumber \\		
+		&
+		- B_0 \frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa} w(x) - \sum_{i=1}^\infty B_i \frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa} X_i(x)\sinh\lambda_i w(x) = \nonumber \\
+		& \frac{q}{\kappa}\left\lbrace -1 - \frac{h_\Gamma(x)[b - w(x)]\sqrt{1 + w'(x)^2}}{\kappa}\right\rbrace \label{equacao_ai_bi_1}
+\end{align}
+Reorganizando a equação \eqref{constantes_a_b_2}:
+\begin{align}
+	&
+	\sum_{i=1}^\infty A_i [w'(x) X'_i(x) \cosh\lambda_i (b - w(x))
+		+ \lambda_i X_i(x) \sinh\lambda_i (b - w(x))] + \nonumber \\
+	&
+	B_0 + \sum_{i=1}^\infty B_i [\lambda_i X_i(x)\cosh\lambda_i w(x)
+	-
+	w'(x) X'_i(x)\sinh\lambda_i w(x)] = -\frac{q}{\kappa} \label{equacao_ai_bi_2}
+\end{align}
+As constantes $A_i$ e $B_i$ podem ser obtidas a partir das equações \eqref{equacao_ai_bi_1} e \eqref{equacao_ai_bi_2},
+se aplicarmos a mesma transformação integral em $x$ a elas, eliminando assim a dependência com esta variável.
+Desse modo, aplicando o operador $\displaystyle\int_0^a\left(\cdot\right)X_j(x)dx$ a equação \eqref{equacao_ai_bi_1}:
+\begin{align}	
+	& A_0 \int_0^a\frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa}X_j(x)dx + \nonumber \\
+	& \sum_{i=1}^\infty A_i \int_0^a\frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa} X_i(x)X_j(x) \cosh\lambda_i (b - w(x))dx  \nonumber \\
+	& + \sum_{i=1}^\infty A_i \int_0^a[w'(x)X'_i(x) \cosh\lambda_i (b - w(x)) + \lambda_i X_i(x) \sinh\lambda_i (b - w(x))]X_j(x)dx \nonumber \\		
+		&
+		- B_0 \int_0^a\frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa} w(x)X_j(x)dx \nonumber \\
+		& - \sum_{i=1}^\infty B_i \int_0^a\frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa} X_i(x)X_j(x)\sinh\lambda_i w(x)dx = \nonumber \\
+		& \frac{q}{\kappa} \int_0^a \left\lbrace - 1 - \frac{h_\Gamma(x)[b - w(x)]\sqrt{1 + w'(x)^2}}{\kappa}\right\rbrace X_j(x)dx
+\end{align}
+
+Da mesma forma, para a equação \eqref{equacao_ai_bi_2}:
+\begin{align}
+	&
+	\sum_{i=1}^\infty A_i \int_0^a[w'(x) X'_i(x) \cosh\lambda_i (b - w(x))
+		+ \lambda_i X_i(x) \sinh\lambda_i (b - w(x))]X_j(x)dx + \nonumber \\
+	&
+	B_0\int_0^a X_j(x)dx + \sum_{i=1}^\infty B_i \int_0^a[\lambda_i X_i(x)\cosh\lambda_i w(x)
+	-
+	w'(x) X'_i(x)\sinh\lambda_i w(x)]X_j(x)dx = \nonumber \\
+	&-\frac{q}{\kappa}\int_0^a X_j(x)dx
+\end{align}
+
+Fazendo as seguintes substituições:
+\begin{align}
+	& a_j = \int_0^a\frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa}X_j(x)dx \\
+	& b_{ij} = \int_0^a\frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa} X_i(x)X_j(x) \cosh\lambda_i (b - w(x))dx \\
+	& c_{ij} = \int_0^a[w'(x)X'_i(x) \cosh\lambda_i (b - w(x)) + \lambda_i X_i(x) \sinh\lambda_i (b - w(x))]X_j(x)dx \\
+	& d_j = \int_0^a\frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa} w(x)X_j(x)dx \\
+	& e_{ij} = \int_0^a\frac{h_\Gamma(x)\sqrt{1 + w'(x)^2}}{\kappa} X_i(x)X_j(x)\sinh\lambda_i w(x)dx \\
+	& f_j =  \int_0^a \left\lbrace -1 - \frac{h_\Gamma(x)[b - w(x)]\sqrt{1 + w'(x)^2}}{\kappa}\right\rbrace X_j(x)dx \\
+	& g_j = \int_0^a X_j(x)dx \\
+	& h_{ij} = \int_0^a[\lambda_i X_i(x)\cosh\lambda_i w(x) - w'(x) X'_i(x)\sinh\lambda_i w(x)]X_j(x)dx
+\end{align}
+
+Desse modo, construímos um sistema de equações que, resolvido, fornece os coeficientes $A_i$ e $B_i$:
+\begin{align}	
+	& a_j A_0 + \sum_{i=1}^\infty (b_{ij} + c_{ij}) A_i - d_j B_0 - \sum_{i=1}^\infty e_{ij}B_i = \frac{q}{\kappa} f_j \label{sist_A_B_1}
+\end{align}
+\begin{align}
+	& \sum_{i=1}^\infty c_{ij} A_i + g_j B_0 + \sum_{i=1}^\infty h_{ij} B_i = -\frac{q}{\kappa}g_j \label{sist_A_B_2}
+\end{align}
+\subsection{Primeiro problema auxiliar: estimativa de $T_1 - T_2$ em $\Gamma$}\label{sec_repr_F}
+
+Para estabelecer o primeiro problema auxiliar, introduzimos uma família de funções auxiliares $F_{1, n}$ e $F_{2, n}$, definidas
+nos domínios $\Omega_1$ e $\Omega_2$ respectivamente, e que satisfazem às seguintes equações e condições de contorno, onde as funções
+$\psi_n(x)$ formam um conjunto de funções linearmente independentes:
+\begin{align}
+	& \nabla^2 F_{1,n} = 0 & \text{em } \Omega_1 \label{harm_F1}
+\end{align}
+\begin{align}	
+	& F_{1,n} = \psi_n & \text{em } \Gamma_0
+\end{align}
+\begin{align}	
+	& \frac{\partial F_{1,n}}{\partial \mathbf{n}_1} = 0 & \text{em } \Gamma_1 \label{cc_F1_1}
+\end{align}
+\begin{align}
+	& \nabla^2 F_{2,n} = 0 & \text{em } \Omega_2 \label{harm_F2}
+\end{align}
+\begin{align}	
+	& \frac{\partial F_{2,n}}{\partial \mathbf{n}_2} = 0 & \text{em } \Gamma_2 \label{cc_F1_2}
+\end{align}
+\begin{align}
+	& F_{2,n} = 0 & \text{em } \Gamma_\infty \label{cc_F1_3}
+\end{align}
+\begin{align}
+	& F_{1,n} = F_{2,n} & \text{em } \Gamma \label{cc_F1_4}
+\end{align}
+\begin{align}
+	& \frac{\partial F_{2,n}}{\partial\mathbf{n}_2} = -\frac{\partial F_{1,n}}{\partial\mathbf{n}_1} & \text{em } \label{cc_F1_5} \Gamma 
+\end{align}
+
+Vamos agora definir a seguinte integral no domínio $\Omega_1$:
+\begin{equation}
+	I_{\Omega_1} = \int_{\Omega_1}(F_{1,n}\nabla^2T_1 - T_1\nabla^2F_{1,n})d\Omega_1 \label{green_1}
+\end{equation}
+
+A aplicação da segunda identidade de Green permite escrever:
+\begin{equation}
+	I_{\Omega_1} = \int_{\partial\Omega_1}\left(F_{1,n}\frac{\partial T_1}{\partial\mathbf{n}_1} - T_1\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right)d(\partial\Omega_1) \label{green_2}
+\end{equation}
+
+Substituindo as equações \eqref{harm_T1} e \eqref{harm_F1} na integral em \eqref{green_1}, obtemos:
+\begin{equation}
+	I_{\Omega_1} = 0
+\end{equation}
+
+Combinando o resultado anterior com a equação \eqref{green_2}:
+\begin{align}
+	&
+	\int_{\partial\Omega_1}\left(F_{1,n}\frac{\partial T_1}{\partial\mathbf{n}_1} - T_1\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right)d(\partial\Omega_1)
+	=
+	0 \nonumber \\
+	&
+	\therefore
+	\int_{\Gamma_0}\left(F_{1,n}\frac{\partial T_1}{\partial\mathbf{n}_1} - T_1\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right)d\Gamma_0
+	+
+	\int_{\Gamma_1}\left(F_{1,n}\frac{\partial T_1}{\partial\mathbf{n}_1} - T_1\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right)d\Gamma_1
+	+ \nonumber \\
+	&
+	\int_{\Gamma}\left(F_{1,n}\frac{\partial T_1}{\partial\mathbf{n}_1} - T_1\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right)d\Gamma
+	=
+	0 \label{green_3}
+\end{align}
+
+As condições de contorno \eqref{cc_T1_1} e \eqref{cc_F1_1} anulam a segunda integral de \eqref{green_3}. Além disso, as medidas de temperatura
+$Y$ na interface $\Gamma_0$ são conhecidas, de modo que $Y \equiv T_1|_{\Gamma_0}$. Por fim, aplicamos a condição de contorno \eqref{cc_T1_2}
+na primeira integral de \eqref{green_3}. Assim, teremos:
+\begin{align}
+	&
+	\int_{\Gamma_0}\left[\left(-\frac{q}{\kappa}\right)F_{1,n} - Y\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right]d\Gamma_0
+	+
+	\int_{\Gamma}\left(F_{1,n}\frac{\partial T_1}{\partial\mathbf{n}_1} - T_1\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right)d\Gamma
+	=
+	0 \label{green_4}
+\end{align}
+
+Definimos agora a seguinte integral no domínio $\Omega_2$:
+\begin{equation}
+	I_{\Omega_2} = \int_{\Omega_2}(F_{2,n}\nabla^2T_2 - T_2\nabla^2F_{2,n})d\Omega_2
+\end{equation}
+
+Aplicando a segunda identidade de Green de forma análoga ao procedimento adotado previamente, podemos escrever:
+ \begin{align}
+	&
+	\int_{\partial\Omega_2}\left(F_{2,n}\frac{\partial T_2}{\partial\mathbf{n}_2} - T_2\frac{\partial F_{2,n}}{\partial\mathbf{n}_2}\right)d(\partial\Omega_2)
+	=
+	0 \nonumber \\
+	&
+	\therefore
+	\int_{\Gamma_\infty}\left(F_{2,n}\frac{\partial T_2}{\partial\mathbf{n}_1} - T_2\frac{\partial F_{2,n}}{\partial\mathbf{n}_2}\right)d\Gamma_\infty
+	+
+	\int_{\Gamma_2}\left(F_{2,n}\frac{\partial T_2}{\partial\mathbf{n}_1} - T_2\frac{\partial F_{2,n}}{\partial\mathbf{n}_2}\right)d\Gamma_2
+	+ \nonumber \\
+	&
+	\int_{\Gamma}\left(F_{2,n}\frac{\partial T_2}{\partial\mathbf{n}_1} - T_2\frac{\partial F_{2,n}}{\partial\mathbf{n}_2}\right)d\Gamma
+	=
+	0
+\end{align}
+
+Empregando as condições de contorno \eqref{cc_T1_3}, \eqref{cc_T1_4}, \eqref{cc_F1_2} e \eqref{cc_F1_3}, chega-se à seguinte relação:
+\begin{align}
+	\int_{\Gamma}\left(F_{2,n}\frac{\partial T_2}{\partial\mathbf{n}_2} - T_2\frac{\partial F_{2,n}}{\partial\mathbf{n}_2}\right)d\Gamma
+	=
+	0 \label{green_5}
+\end{align}
+
+
+Somando as equações \eqref{green_4} e \eqref{green_5}:
+\begin{align}
+	&
+	\int_{\Gamma_0}\left[\left(-\frac{q}{\kappa}\right)F_{1,n} - Y\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right]d\Gamma_0
+	+
+	\int_{\Gamma}\left(F_{1,n}\frac{\partial T_1}{\partial\mathbf{n}_1} - T_1\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right)d\Gamma
+	+ \nonumber \\
+	&
+	\int_{\Gamma}\left(F_{2,n}\frac{\partial T_2}{\partial\mathbf{n}_2} - T_2\frac{\partial F_{2,n}}{\partial\mathbf{n}_2}\right)d\Gamma
+	=
+	0 \\
+	&
+	\therefore
+	\int_{\Gamma_0}\left[\left(-\frac{q}{\kappa}\right)F_{1,n} - Y\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right]d\Gamma_0
+	+
+	\int_{\Gamma}\left(F_{1,n}\frac{\partial T_1}{\partial\mathbf{n}_1} + F_{2,n}\frac{\partial T_2}{\partial\mathbf{n}_2} \right)d\Gamma
+	- \nonumber \\
+	&
+	\int_{\Gamma}\left(T_1\frac{\partial F_{1,n}}{\partial\mathbf{n}_1} + T_2\frac{\partial F_{2,n}}{\partial\mathbf{n}_2} \right)d\Gamma
+	=
+	0
+\end{align}
+
+Aplicando as condições de contorno \eqref{cc_T1_5} e \eqref{cc_F1_4}:
+\begin{align}
+	&
+	\int_{\Gamma_0}\left[\left(-\frac{q}{\kappa}\right)F_{1,n} - Y\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right]d\Gamma_0
+	=
+	\int_{\Gamma}\left(T_1\frac{\partial F_{1,n}}{\partial\mathbf{n}_1} + T_2\frac{\partial F_{2,n}}{\partial\mathbf{n}_2} \right)d\Gamma	
+\end{align}
+
+Aplicando a condição de contorno \eqref{cc_F1_5}
+\begin{align}
+	&
+	\int_{\Gamma_0}\left[\left(-\frac{q}{\kappa}\right)F_{1,n} - Y\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right]d\Gamma_0
+	=
+	\int_{\Gamma}(T_1 - T_2)\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}d\Gamma \label{green_6}
+\end{align}
+
+A expressão anterior relaciona as propriedades na interface externa $\Gamma_0$ com as propriedades na interface de contato $\Gamma$. Define-se
+agora o \textit{funcional de reciprocidade} através da fórmula:
+\begin{align}
+	\Re(F_{1,n}) = \int_{\Gamma_0}\left[\left(-\frac{q}{\kappa}\right)F_{1,n} - Y\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\right]d\Gamma_0
+	\label{recipr_F}
+\end{align}
+
+Uma vez que se conhecem a condutividade térmica $\kappa$, o fluxo de calor imposto $q$ e as medidas de temperatura $Y$, basta determinar as
+funções auxiliares $F_{1,n}$ para o cálculo de $\Re(F_{1,n})$. É importante notar também que o cálculo de $F_{1,n}$ depende apenas da geometria do
+problema\footnote{Se os materiais envolvidos tiverem condutividades térmicas distintas, então $F_{1,n}$ dependerá também dessas condutividades.}.
+Assim:
+\begin{align}
+	&
+	\Re(F_{1,n})
+	=
+	\int_{\Gamma}(T_1 - T_2)\frac{\partial F_{1,n}}{\partial\mathbf{n}_1}d\Gamma \label{recipr_Fa}
+\end{align}
+
+Agora estabelecemos a seguinte definição:
+\begin{align}
+	& \frac{\partial F_{1,n}}{\partial\mathbf{n}_1}\Bigg|_\Gamma = \beta_n(x) \label{def_00}
+\end{align}
+
+Ou seja, para cada função $\psi_n(x)$, podemos resolver o problema para $F_{1,n}$ definido pelas equações \eqref{harm_F1} a \eqref{cc_F1_5}, e obter
+uma função $\beta_n(x)$ correspondente pela expressão acima. Uma vez que impomos que as funções $\psi_n(x)$ são linearmente independentes, e
+como o problema é linear, é possível demonstrar que as funções $\beta_n(x)$ também são linearmente independentes (COLAÇO \textit{et al.}, 2015). %(\cite{reciproc_1}).
+Se, além disso, conseguirmos
+escolher as funções $\psi_n(x)$ de modo que as funções $\beta_n(x)$ resultantes sejam ortonormais, estas últimas formarão uma base ortonormal
+através da qual podemos representar a descontinuidade de temperatura na interface $\Gamma$:
+\begin{align}
+	[T_1 - T_2]_\Gamma = \sum_i \alpha_i \beta_i\label{green_7a}
+\end{align}
+
+Os coeficientes $\alpha_i$ podem ser obtidos através da expressão:
+\begin{align}
+	\alpha_i = \langle [T_1 - T_2]_\Gamma, \beta_i\rangle_{L^2(\Gamma)}\label{green_7}
+\end{align}
+
+Por hora, vamos adiar a definição do produto interno em \eqref{green_7} e sua relação com o funcional de reciprocidade \eqref{recipr_F}.
+
+\subsection{Segundo problema auxiliar: estimativa de $-\kappa \partial{T_1}/\partial{\mathbf{n}_1}$ em $\Gamma$}\label{sec_repr_G}
+
+Agora estabelecemos o segundo problema auxiliar introduzindo uma família de funções auxiliares $G_{1, n}$, definida
+no domínio $\Omega_1$, e que satisfaz às seguintes equações e condições de contorno, onde as funções
+$\phi_n(x)$ formam um conjunto de funções linearmente independentes:
+\begin{align}
+	& \nabla^2 G_{1,n} = 0 & \text{em } \Omega_1 \label{harm_G1}
+\end{align}
+\begin{align}
+	& G_{1,n} = \phi_n & \text{em } \Gamma_0
+\end{align}
+\begin{align}
+	& \frac{\partial G_{1,n}}{\partial \mathbf{n}_1} = 0 & \text{em } \Gamma_1
+\end{align}
+\begin{align}
+	& \frac{\partial G_{1,n}}{\partial \mathbf{n}_1} = 0 & \text{em } \Gamma \label{cc_G1_5}
+\end{align}
+
+Seguindo o mesmo procedimento da seção anterior, chegamos à seguinte expressão:
+% \begin{align}
+% 	\int_{\Gamma_0}\left[ \left(-\frac{q}{\kappa}\right)G_{1,n} - Y\frac{\partial G_{1,n}}{\partial\mathbf{n_1}}\right] d\Gamma_0
+% 	+
+% 	\int_{\Gamma}\left(G_{1,n}\frac{\partial T_1}{\partial\mathbf{n_1}} - T_1\frac{\partial G_{1,n}}{\partial\mathbf{n_1}}\right)d\Gamma
+% 	=
+% 	0
+% \end{align}
+% 
+% ou
+\begin{align}
+	\int_{\Gamma_0}\left[ \left(-\frac{q}{\kappa}\right) G_{1,n}- Y\frac{\partial G_{1,n}}{\partial\mathbf{n_1}}\right] d\Gamma_0
+	=
+	-
+	\int_{\Gamma} G_{1,n}\frac{\partial T_1}{\partial\mathbf{n_1}} d\Gamma
+\end{align}
+
+Definimos o funcional de reciprocidade para $G_{1,n}$ de forma análoga ao que foi feito para $F_{1,n}$:
+\begin{align}
+	\Re(G_{1,n}) = \int_{\Gamma_0}\left[\left(-\frac{q}{\kappa}\right)G_{1,n} - Y\frac{\partial G_{1,n}}{\partial\mathbf{n_1}}\right]d\Gamma_0 \label{recipr_Ga}
+\end{align}
+
+Obtemos então:
+\begin{align}
+	&
+	\Re(G_{1,n})
+	=
+	\int_{\Gamma}\left[-G_{1,n}\frac{\partial T_1}{\partial\mathbf{n_1}}\right] d\Gamma	 \label{recipr_G}
+\end{align}
+
+Estabelecemos agora a seguinte definição:
+\begin{align}
+	G_{1,n}\big|_\Gamma = \gamma_n(x) \label{def_99}
+\end{align}
+
+Também de forma análoga ao caso anterior, podemos escolher as funções $\phi_n(x)$ de modo que as funções $\gamma_n(x)$ definam
+uma base ortonormal, permitindo expressar o gradiente de temperatura na interface $\Gamma$ em termos dessa base:
+\begin{align}
+	\left[-\frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma = \sum_i \mu_i \gamma_i\label{green_8a}
+\end{align}
+
+Os coeficientes $\mu_i$ podem ser obtidos através da expressão:
+\begin{align}
+	\mu_i = \left\langle \left[-\frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma, \gamma_i \right\rangle_{L^2(\Gamma)}\label{green_8}
+\end{align}
+
+Também vamos adiar a definição do produto interno em \eqref{green_8} e sua relação com o funcional de reciprocidade \eqref{recipr_G}.
+
+\subsection{Obtenção da condutância de contato $h_{\Gamma}(x)$}
+
+Combinando os resultados obtidos em \eqref{green_7a} e \eqref{green_8a} na definição em \eqref{def_cond_contact}, podemos obter a condutância de contato através da expressão:
+\begin{align}
+	h_{\Gamma}(x) = \frac{\kappa\sum_i \mu_i \gamma_i}{\sum_i \alpha_i \beta_i} \label{eq_cond_contato}
+\end{align}
+
+É importante destacar que a equação acima permite levantar a condutância de contato de forma não intrusiva, usando uma técnica não iterativa, bastando
+apenas levantar previamente as funções auxiliares $F_{1, n}$ e $G_{1, n}$, que por sua vez permitirão obter as funções ortonormais $\beta_n$ e $\gamma_n$.
+
+Se a interface $\Gamma$ for plana e paralela
+ao eixo coordenado $x$, a resolução do problema direto e dos problemas auxiliares fica bastante simplificada. Pode-se aplicar diretamente
+um esquema de diferenças finitas, ou empregar a técnica da Transformada Integral Clássica para o sistema de coordenadas cartesianas.
+Esse caso particular for resolvido por PADILHA (2016), %\cite{tese_padilha},
+que encontrou a seguinte expressão analítica pata a condutância térmica de contato
+\footnote{Esta expressão é, na verdade, um caso particular da expressão original encontrada por PADILHA (2016) %\cite{tese_padilha}
+em que os dois materiais têm a mesma condutividade.}:
+\begin{align}
+	h_\Gamma(x) = \frac{
+					-\left[
+						q + \displaystyle\frac{2\kappa}{a}\sum_{j=1}^N \lambda_j\sinh\lambda_j (b - w) \cos\lambda_j x \int_0^a Y(x)\cos \lambda_j x dx
+					\right]
+						}
+						{
+							b\displaystyle\frac{q}{\kappa} + \frac{1}{a}\int_0^a Y(x)dx 
+							+
+							\frac{2}{a}\sum_{j=1}^N 
+							\frac{\cosh\lambda_j b\cos\lambda_j x}{\cosh\lambda_jw}
+							\int_0^a Y(x)\cos \lambda_j x dx
+						}\label{padilha}
+\end{align}
+
+onde $w$ é a altura da interface de contato em relação ao eixo $x$, $Y(x)$ são medidas de temperatura na interface superior $y = b$ e $\lambda_j$ é dado por
+\begin{align}
+	& \lambda_j = \frac{j\pi}{a}
+\end{align}

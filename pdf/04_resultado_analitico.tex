@@ -1,0 +1,304 @@
+\section{Formulação analítica para a condutância térmica de contato}
+
+Nas últimas seções, foram finalmente deduzidas as expressões para as funções auxiliares $F_{1,j}$ e $G_{1,j}$, bem como as funções $\beta_j$ e $\gamma_j$ que compõem as bases ortonormais em $L^2(\Gamma)$. Nesta seção, estes resultados serão reunidos, a fim de levantar uma expressão analítica de uso geral, para estimativa da condutância térmica de contato ao longo da superfície irregular $\Gamma$. Como ponto de partida, será estabelecida a expressão em coordenadas cartesianas do produto interno entre as funções no espaço linear $L^2(\Gamma)$.
+
+\subsection{Formulação do produto interno no espaço linear de funções $L^2(\Gamma)$ em coordenadas cartesianas}
+
+Na seção \ref{secao_sobre_fr}, foi definido na equação \eqref{definicao_innner_product} o produto interno entre duas funções $f_1$ e $f_2$ no espaço linear de funções $L^2(\Gamma)$:
+\begin{align}
+\langle f_1, f_2\rangle = \int_\Gamma f_1(\Gamma) f_2(\Gamma) d\Gamma \label{integral_da_definicao_produto_interno}
+\end{align}
+
+Se a superfície $\Gamma$, sobre a qual é realizada a integração, possuir uma representação paramétrica da forma
+\begin{align}
+	\mathbf{\Gamma}(t) = x(t)\mathbf{a}_x + y(t)\mathbf{a}_y
+\end{align}
+onde $\mathbf{a}_x$ e $\mathbf{a}_y$ são os vetores unitários da base canônica do sistema cartesiano, então a integral \eqref{integral_da_definicao_produto_interno} pode ser escrita como \citep{livro_stewart}:
+\begin{align}
+\langle f_1, f_2\rangle = \int_{t=t_0}^{t=t_1}f_1(x(t), y(t))f_2(x(t), y(t))\sqrt{x'(t)^2 + y'(t)^2}dt \label{integral_da_definicao_produto_interno_2}
+\end{align}
+
+Adotando as parametrizações \eqref{parametrizacao_x} e \eqref{parametrizacao_y}, pode-se escrever:
+\begin{align} 
+\langle f_1, f_2\rangle = \int_{t=0}^{t=a}f_1(t, w(t))f_2(t, w(t))\sqrt{1 + w'(t)^2}dt \label{integral_da_definicao_produto_interno_3}
+\end{align}
+ou, uma vez que $x$ e $t$ são equivalentes,
+\begin{align}
+\langle f_1, f_2\rangle = \int_{x=0}^{x=a}f_1(x, w(x))f_2(x, w(x))\sqrt{1 + w'(x)^2}dx \label{integral_da_definicao_produto_interno_4}
+\end{align}
+
+\subsection{Formulação da estimativa da condutância térmica de contato em coordenadas cartesianas}
+
+Os funcionais de reciprocidade, conforme dito na seção \ref{secao_sobre_fr}, são ferramentas através das quais será estimada a condutância térmica de contato (CTC) na interface de contato $\Gamma$. A expressão \eqref{def_funcional_reciprocidade} fornece o funcional de reciprocidade para uma função $F(x, y)$:
+\begin{align}
+\Re(F)
+=
+\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F - Y\frac{\partial F}{\partial\mathbf{n_1}}\right]d\Gamma_0
+\label{integral_de_contorno_para_F}
+\end{align}
+
+A superfície $\Gamma_0$, representada no arranjo da figura \ref{fig2}, e sobre a qual é calculada a integral de contorno \eqref{integral_de_contorno_para_F}, pode ser parametrizada como:
+\begin{align}
+\mathbf{\Gamma}_0(t) = t\mathbf{a}_x + b \mathbf{a}_y
+\end{align}
+onde $b$ é o comprimento vertical do corpo de prova representado na figura \ref{fig2}.
+
+O vetor $\mathbf{n}_1$, normal à superfície $\Gamma_0$, é o próprio vetor unitário $\mathbf{a}_y$ da base canônica. Logo, a derivada direcional de $F$ sobre esse vetor será dada por \citep{livro_stewart}:
+\begin{align}
+\frac{\partial F}{\partial\mathbf{n}_1}\bigg|_{\Gamma_0} & = \nabla F \cdot \mathbf{a}_y \nonumber \\
+& = \left[\frac{\partial F(x, b)}{\partial x}\mathbf{a}_x + \frac{\partial F(x, b)}{\partial y}\mathbf{a}_y \right] \cdot \mathbf{a}_y \nonumber \\
+& = \frac{\partial F(x, b)}{\partial y}
+\end{align} 
+
+Substituindo na integral \eqref{integral_de_contorno_para_F}, obtém-se \citep{livro_stewart}:
+\begin{align}
+\Re(F)
+=
+\int_{t=0}^{t=a} \left[\left(\frac{-q}{k_1}\right)F(t, b) - Y(t)\frac{\partial F(t, b)}{\partial y}\right] dt
+\label{integral_de_contorno_para_F_2}
+\end{align}
+ou
+\begin{align}
+\Re(F)
+=
+\int_{x=0}^{x=a} \left[\left(\frac{-q}{k_1}\right)F(x, b) - Y(x)\frac{\partial F(x, b)}{\partial y}\right] dx
+\label{integral_de_contorno_para_F_3}
+\end{align}
+
+Dessa forma, aplicando a equação \eqref{integral_de_contorno_para_F_3} para expressar os funcionais de reciprocidade das funções $F_{1,j}$ e $G_{1,j}$:
+\begin{align}
+\Re(F_{1,j})
+=
+\int_{x=0}^{x=a} \left[\left(\frac{-q}{k_1}\right)F_{1,j}(x, b) - Y(x)\frac{\partial F_{1,j}(x, b)}{\partial y}\right] dx
+\label{integral_de_contorno_para_F1_0}
+\end{align}
+\begin{align}
+\Re(G_{1,j})
+=
+\int_{x=0}^{x=a} \left[\left(\frac{-q}{k_1}\right)G_{1,j}(x, b) - Y(x)\frac{\partial G_{1,j}(x, b)}{\partial y}\right] dx
+\label{integral_de_contorno_para_G1_0}
+\end{align}
+ou, substituindo as condições de contorno \eqref{funcao_F_cc_T1_2_cart} e \eqref{funcao_G_cc_T1_2_cart}:
+\begin{align}
+\Re(F_{1,j})
+& =
+\int_0^a \left[\left(\frac{-q}{k_1}\right)\psi_j(x) - Y(x)\frac{\partial F_{1,j}(x, b)}{\partial y}\right] dx \nonumber \\
+& =
+-\frac{q}{k_1}\int_0^a\psi_j(x)dx - \int_0^a Y(x)\frac{\partial F_{1,j}(x, b)}{\partial y} dx \nonumber \\
+& =
+-\frac{q}{k_1}\bar{\psi}_{j,0} - \int_0^a Y(x)\frac{\partial F_{1,j}(x, b)}{\partial y} dx
+\label{integral_de_contorno_para_F1}
+\end{align}
+%
+\begin{align}
+\Re(G_{1,j})
+& =
+\int_0^a \left[\left(\frac{-q}{k_1}\right)\phi_j(x) - Y(x)\frac{\partial G_{1,j}(x, b)}{\partial y}\right] dx \nonumber \\
+& =
+-\frac{q}{k_1}\int_0^a\phi_j(x)dx - \int_0^a Y(x)\frac{\partial G_{1,j}(x, b)}{\partial y} dx
+ \nonumber \\
+ & =
+ -\frac{q}{k_1}\bar{\phi}_{j,0} - \int_0^a Y(x)\frac{\partial G_{1,j}(x, b)}{\partial y} dx
+\label{integral_de_contorno_para_G1}
+\end{align}
+
+As derivadas em relação a $y$ de $F_{1,j}$ e $G_{1,j}$, avaliadas em $y = b$, podem ser determinadas por derivação parcial das expressões \eqref{solucao_transf_inversa_F1_com_dependencia} e
+\eqref{solucao_transf_inversa_G1_com_dependencia}, truncadas até o índice $M$, fornecendo:
+%
+\begin{align}
+\frac{\partial F_{1, j}(x, b)}{\partial y} = & \frac{\bar{\psi}_{j,0} - \mathbb{A}_{j,0}}{ab} - 
+\frac{2}{a}\sum_{m=1}^M \mu_m \left(\mathbb{A}_{j,m}\frac{1}{\sinh\mu_m b} - \bar{\psi}_{j, m}\frac{\cosh\mu_m b}{\sinh\mu_m b}\right)\cos\mu_m x \nonumber \\
+= & \frac{\bar{\psi}_{j,0} - \mathbb{A}_{j,0}}{ab} - 
+\frac{2}{a}\sum_{m=1}^M \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)\cos\mu_m x
+\label{derivada_parcial_y_F}
+\end{align}
+%
+\begin{align}
+\frac{\partial G_{1, j}(x, b)}{\partial y} = & \frac{\bar{\phi}_{j,0} - \mathbb{E}_{j,0}}{ab} - 
+\frac{2}{a}\sum_{m=1}^M \mu_m \left(\mathbb{E}_{j,m}\frac{1}{\sinh\mu_m b} - \bar{\phi}_{j, m}\frac{\cosh\mu_m b}{\sinh\mu_m b}\right)\cos\mu_m x \nonumber \\
+= & \frac{\bar{\phi}_{j,0} - \mathbb{E}_{j,0}}{ab} - 
+\frac{2}{a}\sum_{m=1}^M \mu_m \left(\frac{\mathbb{E}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\phi}_{j, m}}{\tanh\mu_m b}\right)\cos\mu_m x
+\label{derivada_parcial_y_G}
+\end{align}
+
+Substituindo os resultados \eqref{derivada_parcial_y_F} e \eqref{derivada_parcial_y_G} em \eqref{integral_de_contorno_para_F1} e \eqref{integral_de_contorno_para_G1}, obtém-se:
+\begin{align}
+\Re(F_{1,j})
+& =
+-\frac{q}{k_1}\bar{\psi}_{j,0} + \frac{\mathbb{A}_{j,0} - \bar{\psi}_{j,0}}{ab}\int_0^a Y(x)dx + \nonumber \\
+& \frac{2}{a}\sum_{m=1}^M \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)\int_0^a Y(x)\cos\mu_m x dx
+\label{calculo_FR_F1}
+\end{align}
+%
+\begin{align}
+\Re(G_{1,j})
+& =
+-\frac{q}{k_1}\bar{\phi}_{j,0} + \frac{\mathbb{E}_{j,0} - \bar{\phi}_{j,0}}{ab}\int_0^a Y(x)dx + \nonumber \\
+& \frac{2}{a}\sum_{m=1}^M \mu_m \left(\frac{\mathbb{E}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\phi}_{j, m}}{\tanh\mu_m b}\right)\int_0^a Y(x)\cos\mu_m x dx
+\label{calculo_FR_G1}
+\end{align}
+
+Finalmente, conhecidos os funcionais de reciprocidade, bem como as funções de base ortogonal $\beta_j(x)$ e $\gamma_j(x)$, aplica-se a equação \eqref{equacao_definicao_f_r}, deduzida na seção \ref{secao_sobre_fr}:
+\begin{align}
+& h_c(x) % = \frac{- k_1 \displaystyle\frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma}{[T_1 - T_2]_\Gamma} 
+= \frac{\displaystyle\sum_{j=1}^{N_2} \Re(G_{1,j}) \gamma_j(x)}{\displaystyle\sum_{j=1}^{N_1} \Re(F_{1,j}) \beta_j(x)} \label{expressao_final_ctc}
+\end{align}
+
+A expressão \eqref{expressao_final_ctc} e as relações \eqref{calculo_FR_F1} e \eqref{calculo_FR_G1} representam uma generalização da expressão analítica para o cálculo da condutância térmica de contato obtida por \cite{tese_padilha} para o caso em que a interface de contato $\Gamma$ é plana e paralela às bases do corpo de prova. Assim como o resultado encontrado para o referido caso, elas permitem estimar de forma direta a distribuição espacial da CTC ao longo da interface $\Gamma$, através das medidas de temperatura $Y(x)$ tomadas sobre a superfície $\Gamma_0$, conforme havia sido comentado na seção \ref{secao_sobre_fr}. Essas expressões envolvem integrais da forma $\displaystyle \int_0^a Y(x)dx$ e $\displaystyle \int_0^a Y(x)\cos\mu_m x dx$, também presentes no trabalho de \cite{tese_padilha}, que podem ser calculadas previamente e aplicadas nos somatórios \eqref{calculo_FR_F1} e \eqref{calculo_FR_G1}. A determinação dos coeficientes $\mathbb{A}_{j,m}$ e $\mathbb{E}_{j,m}$ foi discutida nas seções anteriores.
+
+%Na próxima seção, será feita uma validação dos resultados até então encontrados, aplicando-os para o caso estudado por \cite{tese_padilha}, a fim de deduzir a mesma expressão analítica de estimativa de CTC encontrada naquele trabalho.
+%
+%\subsection{Validação para o caso da interface plana}
+%
+%Será feita agora a análise dos resultados obtidos para o caso resolvido analiticamente por \cite{tese_padilha}, e que motivou o esenvolvimento do presente trabalho. O arranjo equivalente foi representado na figura \ref{fig4}, reproduzida a seguir.
+%\begin{figure}[h!b]
+%	\begin{center}
+%		\begin{tikzpicture}[scale=0.7]
+%		
+%		\draw [ultra thick] (0, 0) -- (10, 0);
+%		%\draw [ultra thick] (0, 2) -- (7, 2);
+%		%\draw [ultra thick] (8, 2) -- (10, 2);
+%		\draw [ultra thick] (0, 5) -- (10, 5);
+%		\draw [ultra thick] (0, 2.0) -- (3.0, 2.0);
+%		\draw [ultra thick] (3.6, 2.0) -- (10, 2.0);
+%		\draw [ultra thick] (0, 0) -- (0, 5);
+%		\draw [ultra thick] (10, 0) -- (10, 5);
+%		
+%		\draw (2.5, 3.5) node {$\Omega_1$};
+%		\draw (7.5, 1) node {$\Omega_2$};
+%		\draw (3.3, 2.2) node {$\Gamma$};
+%		\draw (-0.5, 3.5) node {$\Gamma_1$};
+%		\draw (-0.5, 1) node {$\Gamma_2$};
+%		\draw (10.5, 3.5) node {$\Gamma_1$};
+%		\draw (10.5, 1) node {$\Gamma_2$};
+%		\draw (5, -0.4) node {$\Gamma_\infty$};
+%		\draw (2.5, 5.3) node {$\Gamma_0$};
+%		\draw [blue](5, 6.5) node {$q$};
+%		\draw (5, -1.3) node {$a$};
+%		\draw (-3.9, 2.5) node {$b$};
+%		\draw (-2.5, 1) node {$b_2$};
+%		\draw (-2.5, 3.5) node {$b_1$};
+%		
+%		\node [above right] at (12, 0) {$x$};
+%		\node [right] at (0, 8) {$y$};
+%		
+%		\draw [->, blue] (0, 6.2) -- (0, 5.2);
+%		\draw [->, blue] (1, 6.2) -- (1, 5.2);
+%		\draw [->, blue] (2, 6.2) -- (2, 5.2);
+%		\draw [->, blue] (3, 6.2) -- (3, 5.2);
+%		\draw [->, blue] (4, 6.2) -- (4, 5.2);
+%		\draw [->, blue] (5, 6.2) -- (5, 5.2);
+%		\draw [->, blue] (6, 6.2) -- (6, 5.2);
+%		\draw [->, blue] (7, 6.2) -- (7, 5.2);
+%		\draw [->, blue] (8, 6.2) -- (8, 5.2);
+%		\draw [->, blue] (9, 6.2) -- (9, 5.2);
+%		\draw [->, blue] (10, 6.2) -- (10, 5.2);
+%		
+%		\draw [->, very thick] (10.2,0) -- (12,0);
+%		\draw [->, very thick] (0, 6.5) -- (0,8);
+%		
+%		\draw [-] (0, -0.2) -- (0, -1.2);
+%		\draw [-] (10, -0.2) -- (10, -1.2);
+%		\draw [<->] (0, -1) -- (10, -1);
+%		
+%		\draw [-] (-0.2, 0) -- (-3.8, 0);
+%		\draw [-] (-0.2, 5) -- (-3.8, 5);
+%		\draw [-] (-0.2, 2) -- (-2.2, 2);
+%		\draw [<->] (-3.6, 0) -- (-3.6, 5);
+%		\draw [<->] (-2.0, 0) -- (-2.0, 2);
+%		\draw [<->] (-2.0, 2) -- (-2.0, 5);
+%		
+%		\end{tikzpicture}
+%		\caption{Geometria do problema físico: interface plana}
+%		\label{fig8}
+%	\end{center}
+%\end{figure}
+%
+%Para o arranjo em questão, a curva que representa a interface de contato $\Gamma$ é simplesmente:
+%\begin{align}
+%w(x) = b_2 \label{curva_w_interface_plana}
+%\end{align}
+%
+%Consequentemente,
+%\begin{align}
+%b - w(x) = b_1 \label{curva_w_interface_plana_2}
+%\end{align}
+%
+%A constatação imediata é que, uma vez que $w'(x) = 0$, várias integrais envolvendo este termo encontradas ao longo da seção \ref{secao_probs_aux} serão anuladas, enquanto outras terão uma expressão mais simples. Além disso, \cite{tese_padilha} adota as seguintes funções auxiliares para definição das condições de contorno \eqref{funcao_F_cc_T1_2_cart} e \eqref{funcao_G_cc_T1_2_cart}:
+%\begin{align}
+%\psi_j(x) = \phi_j(x) = \left\lbrace
+%	\begin{array}{ll}
+%		\displaystyle\sqrt{\frac{1}{a}}, & j = 0\\ \\
+%		\displaystyle\sqrt{\frac{2}{a}}\cos\mu_j x, & j \ne 0
+%	\end{array}
+%\right .
+%\end{align}
+%
+%\begin{align}
+%& p_m(x) = \left\lbrace
+%\begin{array}{ll}
+%\displaystyle -\frac{k_1}{b}, & m = 0 \\ \\
+%\displaystyle -2k_1 \mu_m\frac{\cosh\mu_m b_1}{\sinh\mu_m b}X_m(x), & m \ne 0
+%\end{array}
+%\right. \label{compacta_p_cons} \\
+%& q_m(x) = \left\lbrace
+%\begin{array}{ll}
+%\displaystyle -\frac{k_2}{b}, & m = 0 \\ \\
+%\displaystyle - 2k_2 \mu_m\frac{\cosh\mu_m b_2}{\sinh\mu_m b} X_m(x), & m \ne 0
+%\end{array}
+%\right. \label{compacta_q_cons} \\
+%&
+%r_{j}(x) = -\frac{k_1}{b}\psi_{j,0} -  2k_1 \sum_{m=1}^M \bar{\psi}_{j, m} \mu_m\frac{\cosh\mu_m b_2}{\sinh\mu_m b}X_m(x) \label{compacta_r_cons}\\
+%& u_m(x) = \left\lbrace
+%\begin{array}{ll}
+%\displaystyle -\frac{1}{b}, & m = 0 \\ \\
+%\displaystyle -2 \mu_m\frac{\cosh\mu_m b_1}{\sinh\mu_m b}X_m(x), & m \ne 0
+%\end{array}
+%\right.  \label{compacta_p2_cons} \\
+%&
+%v_{j}(x) = -\frac{1}{b}\phi_{j,0} - 2 \sum_{m=1}^M \bar{\phi}_{j, m}\mu_m\frac{\cosh\mu_m b_2}{\sinh\mu_m b}X_m(x) \label{compacta_r2_cons}
+%\end{align}
+%
+%\begin{align}
+%\bar{v}_{j, n} & = -\frac{1}{b}\phi_{j,0} \int_0^a X_n(x) dx - 2 \sum_{m=1}^M \bar{\phi}_{j, m}\mu_m\frac{\cosh\mu_m b_2}{\sinh\mu_m b}\int_0^a X_m(x)X_n(x) dx
+%\end{align}
+%
+%Para $j = 0$:
+%\begin{align}
+%\bar{v}_{0, n} & = -\frac{1}{b}\phi_{0,0} \int_0^a X_n(x) dx - 2 \sum_{m=1}^M \bar{\phi}_{0, m}\mu_m\frac{\cosh\mu_m b_2}{\sinh\mu_m b}\int_0^a X_m(x)X_n(x) dx
+%\end{align}
+%
+%Mas $\bar{\phi}_{0, m} = 0$ e $\phi_{0,0} =\displaystyle  \int_0^a \sqrt{\frac{1}{a}} X_0(x)dx =  \sqrt{a}$, logo:
+%\begin{align}
+%\bar{v}_{0, n} & = -\frac{\sqrt{a}}{b} \int_0^a X_n(x) dx
+%\end{align}
+%
+%Para $n = 0$:
+%\begin{align}
+%\bar{v}_{0, 0} = -\frac{a\sqrt{a}}{b}
+%\end{align}
+%
+%Para $n \ne 0$:
+%\begin{align}
+%\bar{v}_{0, n} & = 0
+%\end{align}
+%
+%Para $j \ne 0$:
+%\begin{align}
+%\bar{v}_{j, n} & = -\frac{1}{b}\phi_{j,0} \int_0^a X_n(x) dx - 2 \sum_{m=1}^M \bar{\phi}_{j, m}\mu_m\frac{\cosh\mu_m b_2}{\sinh\mu_m b}\int_0^a X_m(x)X_n(x) dx
+%\end{align}
+%
+%Para $n = 0$:
+%\begin{align}
+%\bar{v}_{j, 0} = 0
+%\end{align}
+%
+%Para $n \ne 0, n \ne j$:
+%\begin{align}
+%\bar{v}_{j, n} = 0
+%\end{align}
+%
+%Para $n \ne 0, n  = j$:
+%\begin{align}
+%\bar{v}_{j, n} = - \sqrt{\frac{a}{2}} \mu_n\frac{\cosh\mu_n b_2}{\sinh\mu_n b}
+%\end{align}

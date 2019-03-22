@@ -1,0 +1,165 @@
+\subsection{Estimativa da condutância térmica de contato}
+
+No tratado sobre funções de Bessel escrito por \cite{livro_bessel}, são deduzidas soluções para problemas de propagação de ondas e de fluxo de
+eletricidade que envolvem essas funções. No início do capítulo XII, os autores afirmam que é possível fazer uma analogia entre os problemas
+elétricos desenvolvidos no texto com problemas de condução de calor, desde que se relacione, por exemplo, o potencial elétrico com a temperatura. Algumas
+dessas análises teóricas levam em conta a resistência elétrica na região de contato entre dois materiais, considerando a existência de um fino
+estrato nessa região. Os autores pressupõem a presença de uma descontinuidade de potencial elétrico entre as superfícies,
+que seria função da resistividade do material do estrato, e resolvem analiticamente o problema difusivo de potencial elétrico nessa região de pequena espessura. 
+Com base nisso, \cite{tese_mikic} afirma que, ainda de forma indireta, as primeiras análises teóricas sobre o fluxo de calor através de superfícies
+em contato remontam à época de publicação desse trabalho. Mesmo assim, os primeiros estudos efetivos acerca da estimativa da CTC eram basicamente experimentais,
+e foram impulsionados por necessidades nas áreas de projeto de reatores nucleares e na indústria aeroespacial \citep{tese_mikic}.
+
+\cite{artigo_fenech} apresentam um modelo
+teórico de CTC, baseado na hipótese de o contato entre as superfícies metálicas acontecer em apenas em alguns pontos, cuja distribuição superficial
+é uniforme, e desprezando o fluxo de calor
+nas regiões de vazios. A expressão analítica da CTC encontrada depende principalmente de três parâmetros: número de pontos de contato por unidade
+de área, altura média dos vazios e razão entre área efetiva de contato e área total. Esses parâmetros são obtidos a partir de medidas tomadas nas
+interfaces individuais, com auxílio de um perfilômetro. Os autores comparam os resultados teóricos com observações experimentais, e observam que,
+a baixas pressões, a CTC se aproxima da condutividade térmica do fluido que preenche os vazios da interface. É importante observar que neste trabalho
+e nos seguintes, a CTC é calculada como um valor único e constante sobre a superfície de contato.
+
+Uma situação especialmente interessante para a área aeroespacial é o estudo da CTC em ambientes no vácuo. Este caso foi examinado por \cite{artigo_clausing}.
+Em seu modelo, os autores distinguem os efeitos de constrição microscópica e macroscópica, e afirmam que estes últimos têm influência preponderante
+na resistência térmica de contato. Tambem comentam sobre o efeito da chamada ``resistência de filme'', causado, por exemplo, pela presença de
+filmes de óxidos em superfícies metálicas, e que podem apresentar influência significativa em ambientes no vácuo, sendo normalmente desprezados
+nas análises em que há fluido presente no interstício. São definidos dois parâmetros adimensionais, baseados nas características geométricas e
+físicas dos materiais, a partir dos quais é definida a CTC. 
+
+\cite{tese_mikic} levantou expressões analíticas para resistências térmicas nos pontos de contato entre corpos metálicos, havendo presença de
+fluido ou em ambiente de vácuo. Em seguida, fez uma descrição do perfil de rugosidade das superfícies de contato
+a partir da distribuição gaussiana de probabilidade, a fim de determinar o número de contatos por unidade de área. Finalmente, relacionou a área efetiva de 
+contato com a pressão aplicada sobre os materiais. Efeitos de filme foram desprezados, de forma a considerar apenas os efeitos de constrição.
+Neste trabalho, a fase experimental, para fins de comparação com o modelo teórico, envolveu o emprego de um analisador de superfície para registrar os perfis de superfície, a partir dos quais foram obtidos
+os desvios-padrão das amplitudes das rugosidades. A concordância entre os valores de CTC calculados e medidos foi, em geral, satisfatória; ainda assim,
+para o caso de fluidos de baixa condutividade térmica, os valores de CTC previstos pelo modelo foram maiores do que os obtidos através dos experimentos. 
+
+Uma investigação do efeito da difusão de calor em regime transiente na CTC foi conduzida por \cite{artigo_beck}. Nesse artigo, os campos de temperatura são
+calculados separadamente para cada um dos dois corpos em contato, e medidas de temperatura são tomadas em pontos não necessariamente próximos da interface
+de contato. A estimativa da CTC é a que miminiza o erro quadrático médio entre as temperaturas medidas e calculadas nesses pontos, avaliado em cada instante
+discreto de tempo em que são feitas as medições.
+
+Vários experimentos envolvendo fluidos diferentes na interface entre os corpos em contato, e sua influência na CTC, foram realizados por \cite{artigo_madhusudana}.
+Considerações teóricas não foram feitas nesse trabalho. O autor mostra empiricamente que a presença de um meio condutor de calor na interface melhora a CTC,
+especialmente a baixas pressões e se o meio for um bom condutor.   
+
+A influência na CTC da formação de filmes de óxido em contatos metal-metal foi examinada por \cite{artigo_astrabadi}. Na modelagem, assumiu-se
+que cada microcontato era circundado por uma região anular de óxido; desse modo a CTC total era uma composição entre duas parcelas, uma devido
+aos contatos metal-metal circundados por óxido, e outra devido aos contatos óxido-óxido. Era esperado um aumento da resistência térmica de contato
+devido à presença do filme, o que foi corroborado pelos resultados experimentais. O modelo envolve um descrição probabilística gaussiana da rugosidade e
+da aspereza (coeficiente angular das microdeformações, aproximadas por cones).
+
+\cite{artigo_snaith} citam a importância do razoável conhecimento do comportamento da transferência de calor no contato entre superfícies, citando
+exemplos nas áreas de energia nuclear, microeletrônica e criogenia. Os autores fazem uma revisão dos trabalhos teóricos e empíricos sobre CTC
+até o momento, apontando algumas limitações associadas às predições analíticas, tais como a suposição de que o contato é isotérmico, ou que as linhas de fluxo
+de calor são paralelas a grandes distâncias da superficie de contato. São feitas comparações de predições de diferentes correlações empíricas
+para a CTC em duas configurações hipotéticas (contatos entre ligas de alumínio e contatos entre elementos de aço inoxidável), mostrando
+consideráveis divergências entre essas correlações.
+
+Alguns experimentos foram realizados por \cite{artigo_williamson}, numa tentativa de responder algumas questões acerca da dependência da CTC com
+deformações plásticas ou elásticas das superfícies em contato. Nos ensaios, foram aplicadas cargas cíclicas sobre os materiais em contato, e observou-se
+uma influência significativa da deformação plástica apenas no primeiro carregamento. Um comparativo envolvendo modelos teóricos de CTC que levam em conta
+o tipo de deformação foi feito por \cite{artigo_mcwaid}, e os autores observaram que as predições baseadas
+no modelo de contato elástico concordavam melhor com resultados experimentais do que os baseados no modelo de contato plástico. 
+
+Uma proposta de modelagem mecânica-geométrica foi apresentada por \cite{artigo_salgon}. Nesse modelo, a resistência térmica de contato é considerada
+como a associação em paralelo de duas resistências: uma devido aos pontos de contato e outra devido ao meio intersticial. Os pontos de contato foram
+representados segundo um modelo geométrico simplificado denominado \textit{tubo de Holm} \citep{livro_holm}. O cálculo da CTC apresentado no trabalho
+depende de um conjunto de parâmetros adimensionais, calculados a partir das caraterísticas mecânicas e geométricas dos materiais envolvidos. Para baixos carregamentos,
+os valores previstos pelo modelo diferiam de forma considerável dos resultados experimentais.
+
+\cite{artigo_tomimura} introduziram uma abordagem baseada na transmissão de ondas sonoras através da interface de contato. Os autores definem a
+taxa de transmissão de energia sonora como sendo a razão entre a energia transmitida com e sem atenuação na interface; a energia sonora, por sua
+vez, é proporcional ao quadrado da variação de pressão detectada por transdutores localizados nas extremidades dos corpos de prova.
+Essa taxa é relacionada com a condutância térmica de contato média sobre a interface, através de uma correlação bastante simples obtida a partir de dados
+experimentais. Mesmo assim, o erro garantido pelos autores na previsão da CTC média é relativamente alto (aproximadamente $\pm 50 \%$).
+
+Em face das dificuldades relacionadas ao levantamento de características me-cânicas e geométricas dos problemas de estimação de CTC, 
+tais como a distribuição dos pontos de contato e as dimensões dos espaços intersticiais, e que são parâmetros necessários nos trabalhos citados
+até o momento, não tardou para que começassem a ser aplicadas as técnicas de resolução de problemas inversos de transferência de calor (IHTP, do termo em inglês \textit{Inverse Heat Transfer Problems}).
+
+\cite{artigo_huang} formularam um problema inverso de condução de calor em regime transiente a fim de estimar a condutância térmica no contato entre
+os tubos e as aletas de um trocador de calor. Os autores resolveram numericamente o problema direto de condução de calor, atribuindo uma expressão
+algébrica para a CTC em função do tempo e do ângulo (uma vez que a superfície de contato era circular), a fim de simular medidas de temperaturas
+em determinadas posições. Em seguida, aplicaram o método do gradiente conjugado a fim de minimizar um funcional que envolvia valores calculados
+de temperatura para uma estimativa de CTC e os valores medidos correspondentes, ao longo do tempo. Foram também realizadas simulações em que se
+consideravam erros randômicos de distribuição gaussiana nas medições sintéticas. Os autores verificaram que, mesmo com a introdução de pequenos erros de medição e com
+o aumento da distância dos pontos de medição em relação ao centro da interface circular, era possível obter estimativas confiáveis da CTC. O mesmo
+problema foi formulado de forma não-linear e resolvido por \cite{artigo_huang_2}, gerando resultados ainda mais precisos.
+
+\cite{artigo_milosevic} combinaram a técnica de estimação de parâmetros de Gauss com o método de pulso de \textit{laser} (originalmente empregado
+na medição de difusividade térmica de materiais) a fim de estimar a CTC entre dois sólidos. Assim como no trabalho citado previamente, foram calculadas
+medidas sintéticas de temperatura obtidas do problema direto, além de simulações envolvendo ruídos gaussianos adicionados a essas medidas.
+
+A variação temporal da CTC também foi considerada por \cite{artigo_yang} ao estudar os efeitos presentes na interface entre um cabo de
+fibra óptica e seu revestimento. De forma semelhante ao trabalho de \cite{artigo_huang}, foi aplicado o método do gradiente conjugado para estimação
+da resistência térmica de contato nessa interface. Para a resolução do problema inverso, não foi necessário um conhecimento prévio da forma funcional das grandezas desconhecidas.
+
+\cite{artigo_fieberg} relizaram investigações voltadas à análise da CTC de materiais aplicados em motores a combustão. Em seu trabalho, o salto de temperatura
+na interface foi determinado através de medições obtidas com o uso de câmeras de infravermelho, e o fluxo de calor na interface foi calculado
+através da resolução de um problema inverso de condução de calor; a razão entre essas grandezas forneceu a estimativa da CTC, de acordo
+com a definição.   
+
+Um problema inverso de condução de calor para estimativa de CTC entre corpos cujo contato varia ciclicamente foi analisado por \cite{artigo_shoj}.
+Os autores levantaram duas classes de resultados, uma obtida por dados simulados com erros gaussianos, e outra com dados experimentais, obtidos através
+de termopares poisicionados ao longo dos corpos de prova. O problema
+inverso foi resolvido de forma iterativa para ambas as classes. Os valores de salto de temperatura na interface, necessários para o cálculo da CTC,
+foram determinados de forma direta na primeira classe, e determinados através de regressão linear na segunda classe. 
+
+A variação espacial da CTC ao longo da interface de contato foi considerada por \cite{artigo_gill}, que, na resolução do problema inverso, aplicaram
+o método dos elementos de contorno \citep{livro_bem} associado a um algoritmo genético para regularização das medidas de temperatura. O procedimento empregado
+envolvia a medição de temperaturas na interface. Uma simulação numérica do experimento foi implementada, sendo observada uma razoável sensibilidade
+da solução em relação aos erros de medição. 
+
+Duas características comums aos métodos até agora citados para determinação da CTC são: a) a necessidade de ter medidas de temperatura disponíveis na interface de contato,
+normalmente por meios intrusivos, ou seja, medidas diretas de temperatura no interior dos corpos de prova; b) a necessidade de se fazer alguma descrição física e geométrica, em
+escala microscópica, da interface de contato, o que pode exigir a separação dos materiais. Em face dessas dificuldades, \cite{reciproc_3} desenvolveram
+um método não-intrusivo e não-destrutivo para estimativa da distribuição espacial da CTC em regime permanente. Para tanto, a fim de resolver o problema inverso de condução de calor, os autores partiram do conceito de funcional de reciprocidade, originalmente
+empregado na identificação de falhas ou descontinuidades planas em materiais \citep{artigo_andrieux}.
+
+A metodologia empregada por \cite{reciproc_3}, e que basicamente foi replicada nos trabalhos posteriores envolvendo funcionais de reciprocidade para estimativa
+da CTC, consiste em duas etapas. Na primeira,
+são formulados dois problemas difusivos auxiliares, no mesmo domínio do problema original; um problema é relacionado ao salto de temperatura na interface, e
+o outro é relacionado ao fluxo de calor na interface. As soluções desses problemas são usadas para obter dois conjuntos de funções ortogonais; dessa forma,
+o salto de temperatura e o fluxo de calor são expressos como combinações lineares das funções ortogonais correspondentes. A etapa seguinte é a determinação 
+dos coeficientes dessas combinações lineares através dos funcionais de reciprocidade, que consistem em integrais calculadas nas fronteiras do domínio, envolvendo as soluções dos
+problemas auxiliares resolvidos previamente, além de medidas externas de temperatura e fluxo de calor. As integrais são tais que
+se anulam ao longo da interface de contato, sendo calculadas apenas nas fronteiras externas dos corpos de prova, sobre as quais conhecem-se as temperaturas
+ou são impostas condições de contorno. Finalmente, obtidos os coeficientes das expansões lineares, são calculadas as estimativas de fluxo de calor e de salto de temperatura na interface;
+a CTC é então avaliada através da razão entre essas quantidades. É importante destacar que a determinação da CTC por esta técnica é feita de forma não iterativa,
+através da aplicação direta da definição. Outra vantagem desta técnica é que, para uma dada configuração geométrica dos corpos em contato, os problemas auxiliares que
+fornecem as funções ortogonais só precisam ser resolvidos uma vez; desse modo, é possível estimar diferentes distribuições de CTC conhecendo-se apenas as medidas externas de temperatura
+e de fluxo de calor, as quais, juntamente com as funções auxiliares, permitem calcular os funcionais de reciprocidade.
+
+Os problemas auxiliares levantados por \cite{reciproc_3} são problemas de Cauchy, isto é, se caracterizam por terem duas condições de contorno sobre uma
+mesma região da fronteira, o que requer o uso de técnicas especiais de solução. Os autores propuseram o método das soluções fundamentais \citep{artigo_marin}, aplicando-o
+para seis diferentes perfis de CTC ao longo de uma interface de contato plana: um perfil constante ao longo da interface, dois perfis com variações suaves e três perfis apresentando descontinuidades. Para os
+perfis sem descontinuidades (os três primeiros descritos acima), os resultados obtidos foram muito bons, mesmo após o acréscimo de erros gaussianos às medições
+de temperatura. Para os casos de perfis descontínuos, os resultados permitiram recuperar o comportamento variacional das descontinuidades ao longo da interface.
+
+\cite{artigo_colaco_2} estenderam o trabalho citado anteriormente, introduzindo um termo transiente no problema inverso de determinação da CTC, mantendo a mesma formulação
+nos problemas auxiliares. A
+metodologia adotada foi a mesma, incluindo o emprego da técnica das soluções fundamentais. Assim, chegaram a uma relação envolvendo os funcionais de reciprocidade,
+que, no regime transiente, se reduzia ao resultado encontrado no trabalho anterior. Desse modo, a CTC encontrada era função do tempo, e sua estimativa era calculada 
+iterativamente, melhorando à medida em que se aproximava do regime permanente.
+
+Uma nova abordagem do tratamento transiente foi feita por \cite{artigo_colaco_4},
+ao introduzir termos transientes nos problemas auxiliares, ainda aplicando a mesma metodologia baseada em funcionais de reciprocidade e soluções fundamentais. O tratamento
+matemático envolvia a integração das funções de reciprocidade no tempo, eliminando o aspecto iterativo observado no trabalho anterior. Os resultados encontrados mostraram
+as mesmas características dos trabalhos anteriores, indicando assim a robustez do método apresentado.
+
+O método dos funcionais de reciprocidade foi empregado por \cite{tese_abreu} e \cite{artigo_abreu_3} na detecção indireta de falhas de contato planas em materiais bicompostos, através da estimativa da distribuição espacial da CTC.
+Em situações práticas, tal falha é inacessível, e o método proposto se adequa por não ser intrusivo. Um aparato experimental, com descontinuidades na interface produzidas artificialmente, e a partir
+do qual foram obtidas medidas reais de temperatura, foi construído para validar a modelagem. Para resolução dos problemas auxiliares, foi empregado o método 
+de Monte Carlo com Cadeias de Markov \citep{artigo_mcmc}. A partir da estimativa do perfil da CTC, foi possível identificar e caracterizar qualitativamente as regiões de falha na interface,
+de forma satisfatória.
+
+\cite{artigo_padilha_3} avançaram no desenvolvimento do método dos funcionais de reciprocidade na estimativa da CTC ao aplicarem a reformulação das condições de contorno 
+dos problemas auxiliares proposta por \cite{tese_abreu}, convertendo-os em problemas de valor de contorno e possibilitando o uso da Técnica da Transformada Integral Generalizada \citep{livro_integral_transforms_cotta}.
+Uma definição conveniente das condições de contorno permitiu que o sistema linear que forneceria os coeficientes das expansões lineares se transformasse num sistema diagonal, simplificando
+consideravelmente o cálculo desses coeficientes. Com isso, 
+o problema inverso originalmente explorado por \cite{reciproc_3} foi desenvolvido analiticamente, fornecendo uma equação simples para o cálculo da CTC. O ganho
+computacional obtido através desta abordagem foi considerável, uma vez que a distribuição da CTC pôde ser obtida em frações de segundo, de forma direta, obtendo resultados consistentes
+com os encontrados através dos funcionais de reciprocidade empregando outras técnicas de solução.
+
+

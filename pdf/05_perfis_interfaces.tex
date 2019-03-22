@@ -1,0 +1,121 @@
+\begin{figure}[h!b]
+	\begin{minipage}[t][5cm][c]{\textwidth}
+		\centering
+		\begin{tikzpicture}
+			\begin{axis}[
+			anchor=east,  
+			ticks=none,
+			width=8cm,
+			height=4cm,
+			%ylabel=Iterações Lineares,
+			xmin = 0,
+			xmax = 0.04,
+			ymin = 0,
+			ymax = 0.02]
+			\pgfplotstableread{../data/interface_01.dat} 
+			\teff
+			\addplot[color=blue,mark=none,smooth] table from \teff;
+			\end{axis}
+		\end{tikzpicture}
+		\caption*{(a) Geometria 1}
+	\end{minipage}
+%	\begin{minipage}[t][5cm][t]{0,5\textwidth}
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		anchor=east,  
+%		ticks=none,
+%		width=8cm,
+%		height=4cm,
+%		%ylabel=Iterações Lineares,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = 0,
+%		ymax = 0.02]
+%		\pgfplotstableread{../data/interface_05.dat} 
+%		\teff
+%		\addplot[color=blue,mark=none,smooth] table from \teff;
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption*{(b) Geometria 2}
+%	\end{minipage}
+%	\begin{minipage}[t][5cm][t]{0,5\textwidth}
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		anchor=east,  
+%		ticks=none,
+%		width=8cm,
+%		height=4cm,
+%		%ylabel=Iterações Lineares,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = 0,
+%		ymax = 0.02]
+%		\pgfplotstableread{../data/interface_06.dat} 
+%		\teff
+%		\addplot[color=blue,mark=none,smooth] table from \teff;
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption*{(c) Geometria 3}
+%	\end{minipage}
+	\begin{minipage}[t][5cm][c]{\textwidth}
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[
+		anchor=east,  
+		ticks=none,
+		width=8cm,
+		height=4cm,
+		%ylabel=Iterações Lineares,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = 0,
+		ymax = 0.02]
+		\pgfplotstableread{../data/interface_02.dat} 
+		\teff
+		\addplot[color=blue,mark=none,smooth] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(d) Geometria 2}
+	\end{minipage}
+%	\begin{minipage}[t][5cm][t]{0,5\textwidth}
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		anchor=east,  
+%		ticks=none,
+%		width=8cm,
+%		height=4cm,
+%		%ylabel=Iterações Lineares,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = 0,
+%		ymax = 0.02]
+%		\pgfplotstableread{../data/interface_08.dat} 
+%		\teff
+%		\addplot[color=blue,mark=none,smooth] table from \teff;
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption*{(e) Geometria 5}
+%	\end{minipage}
+	\begin{minipage}[t][5cm][c]{\textwidth}
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[
+		anchor=east,  
+		ticks=none,
+		width=8cm,
+		height=4cm,
+		%ylabel=Iterações Lineares,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = 0,
+		ymax = 0.02]
+		\pgfplotstableread{../data/interface_03.dat} 
+		\teff
+		\addplot[color=blue,mark=none,smooth] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(f) Geometria 3}
+	\end{minipage}	
+	\caption{Diferentes geometrias para a interface $\Gamma$}
+	\label{figura_interfaces}
+\end{figure}

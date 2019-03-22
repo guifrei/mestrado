@@ -1,0 +1,282 @@
+
+\chapter{Resolução do problema direto de condução de calor através da Técnica da Transformação Integral Clássica}
+
+
+Problema permanente região $\Omega_1$:
+\begin{subequations}
+	\begin{alignat}{2}
+	& \nabla^2 T_1 = 0 \quad\quad\quad\quad\quad && \text{ em } \Omega_1 \label{harm_T1_trans} \\ \nonumber \\
+	& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = q && \text{ em } \Gamma_0  \label{cc_T1_2_trans} \\ \nonumber \\
+	& \frac{\partial T_1}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1 \label{cc_T1_1_trans} \\ \nonumber \\
+	& k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} + h_c T_1 = h_c T_2 \quad\quad\quad\quad\quad\quad\quad\quad && \text{ em }  \Gamma \label{cc_grad_T1_trans}
+	\end{alignat}
+\end{subequations}
+
+Problema pseudo-transiente região $\Omega_2$:
+\begin{subequations}
+\begin{alignat}{2}
+	& \nabla^2 T_2 = \frac{1}{\alpha}\frac{\partial T_2}{\partial t} \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad && \text{ em }  \Omega_2 \label{harm_T2_trans} \\ \nonumber \\
+	& \frac{\partial T_2}{\partial \mathbf{n}_2} = 0 && \text{ em }  \Gamma_2 \label{cc_T1_3_trans} \\ \nonumber \\
+	& T_2 = 0 && \text{ em }  \Gamma_\infty \label{cc_T1_4_trans} \\ \nonumber \\
+	& k_2 \frac{\partial T_2}{\partial\mathbf{n}_2} + h_c T_2 = h_c T_1 && \text{ em }  \Gamma \label{cc_T1_5_trans}
+	\end{alignat}
+\end{subequations}
+
+%Reescrevendo as condições de contorno:
+%
+%Problema pseudo-transiente região $\Omega_1$:
+%\begin{subequations}
+%	\begin{alignat}{2}
+%	& \frac{\partial T_1(x, b)}{\partial y} = -\frac{q}{k_1} \label{cc_T1_2_trans_rew} \\ \nonumber \\
+%	& \frac{\partial T_1(0, y)}{\partial x} = 0 \label{cc_T1_1_trans_rew} \\ \nonumber \\
+%	& \frac{\partial T_1(a, y)}{\partial x} = 0 \label{cc_T1_a_trans_rew} \\ \nonumber \\
+%	& \frac{k_1}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial T_1(x, w(x))}{\partial x} - \frac{\partial T_1(x, w(x))}{\partial y}\right]  + h_c T_1(x, w(x)) = h_c T_2(x, w(x)) \label{cc_grad_T1_trans_rew}
+%	\end{alignat}
+%\end{subequations}
+%
+%Problema pseudo-transiente região $\Omega_2$:
+%\begin{subequations}
+%	\begin{alignat}{2}
+%	& \frac{\partial T_2(0, y)}{\partial x} = 0 \label{cc_T2_3_trans_rew} \\ \nonumber \\
+%	& \frac{\partial T_2(a, y)}{\partial x} = 0 \label{cc_T2_a_trans_rew} \\ \nonumber \\
+%	& T_2(x, 0) = 0 \label{cc_T1_4_trans_rew} \\ \nonumber \\
+%	& -\frac{k_1}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial T_2(x, w(x))}{\partial x} - \frac{\partial T_2(x, w(x))}{\partial y}\right]  + h_c T_2(x, w(x)) = h_c T_1(x, w(x)) \label{cc_T1_5_trans_rew}
+%	\end{alignat}
+%\end{subequations}
+
+%Método das soluções fundamentais:
+%\begin{align}
+%	& T_1(x, y) = \sum_{i=1}^{M} \beta_i G_i(x, y) \\
+%	& T_2(x, y) = \sum_{i=1}^{M} \gamma_i G_i(x, y)
+%\end{align}
+%onde
+%\begin{align}
+%	& G_i(x, y) = \frac{1}{2\pi}\ln r_i(x, y)
+%\end{align}
+%e
+%\begin{align}
+%	r_i(x, y) = \sqrt{(x - x_i)^2 + (y - y_i)^2}
+%\end{align}
+%
+%Derivadas:
+%\begin{align}
+%& \frac{\partial G_i(x, y)}{\partial x} = \frac{x - x_i}{2\pi r_i^2} \\
+%& \frac{\partial G_i(x, y)}{\partial y} = \frac{y - y_i}{2\pi r_i^2}
+%\end{align}
+%
+%Substituindo:
+%\begin{align}
+%& \sum_{i=1}^{M} \beta_i \frac{\partial G_i(x, b)}{\partial y} = -\frac{q}{k_1} \\
+%& \sum_{i=1}^{M} \beta_i \frac{\partial G_i(0, y)}{\partial x} = 0 \\
+%& \sum_{i=1}^{M} \beta_i \frac{\partial G_i(a, y)}{\partial x} = 0 \\
+%& \sum_{i=1}^{M} \beta_i \left\lbrace k_1\left[w'(x)\frac{\partial G_i(x, w(x))}{\partial x} - \frac{\partial G_i(x, w(x))}{\partial y}\right] + h_c(x) \sqrt{1 + w'(x)^2}G_i(x, w(x))\right\rbrace = \nonumber \\
+%& \quad\quad\quad\quad\sum_{i=1}^{M} \gamma_i h_c(x)\sqrt{1 + w'(x)^2}G_i(x, w(x)) \\
+%& \sum_{i=1}^{M} \gamma_i \frac{\partial G_i(0, y)}{\partial x} = 0 \\
+%& \sum_{i=1}^{M} \gamma_i \frac{\partial G_i(a, y)}{\partial x} = 0 \\
+%& \sum_{i=1}^{M} \gamma_i G_i(0, y) = 0 \\
+%& \sum_{i=1}^{M} \gamma_i \left\lbrace -k_1\left[w'(x)\frac{\partial G_i(x, w(x))}{\partial x} - \frac{\partial G_i(x, w(x))}{\partial y}\right] + h_c(x) \sqrt{1 + w'(x)^2}G_i(x, w(x))\right\rbrace = \nonumber \\
+%& \quad\quad\quad\quad\sum_{i=1}^{M} \beta_i h_c(x)\sqrt{1 + w'(x)^2}G_i(x, w(x))
+%\end{align}
+%
+%\newpage
+
+%
+
+
+
+\begin{itemize}
+	\item Campo de temperaturas $T_1$:
+	\begin{fleqn} 
+		\begin{alignat}{2}
+		& \text{Inversa:} && T_1(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\bar{T}_{1,m}(y) \label{definicao_da_transf_inv_T1} \\ \nonumber \\
+		& \text{Transformada:} \quad\quad && \bar{T}_{1,m}(y) = \int_0^a T_1(x, y) X(\mu_m, x) dx \label{definicao_da_transf_T1}
+		\end{alignat}
+	\end{fleqn}
+	\item Funções $T_2$:
+	\begin{fleqn}
+		\begin{alignat}{2}
+		& \text{Inversa:} && T_2(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\bar{T}_{2,m}(y) \label{definicao_da_transf_inv_T2} \\ \nonumber \\
+		& \text{Transformada:} \quad\quad && \bar{T}_{2,m}(y) = \int_0^a T_1(x, y) X(\mu_m, x) dx \label{definicao_da_transf_T2}
+		\end{alignat}
+	\end{fleqn}
+\end{itemize}
+
+Transformação das condições de contorno:
+\begin{align}
+& 	\frac{\partial T_1(x, b)}{\partial y} = -\frac{q}{k_1} \nonumber \\
+&	\Rightarrow \bar{T}'_{1,m}(b) = -\frac{q}{k_1} \nonumber \int_0^a X_m(x) dx
+\end{align}
+\begin{align}
+& T_2(0, y) = 0 \nonumber \\
+& \Rightarrow \bar{T}_{2,m}(0) = 0
+\end{align}
+
+\begin{align}
+& \bar{T}_{1,m}(y) = \left\lbrace
+	\begin{array}{ll}
+		\mathbb{A}_0 y + \mathbb{C}_0, & m = 0 \\ \\
+		\displaystyle\mathbb{A}_m\frac{\sinh\mu_m y}{\cosh\mu_m b} + \mathbb{C}_m\frac{\cosh\mu_m (b - y)}{\cosh\mu_m b}, & m \ne 0
+	\end{array}
+\right .
+ \\ \nonumber \\
+& \bar{T}_{2,m}(y) = \left\lbrace
+\begin{array}{ll}
+\mathbb{B}_0 y + \mathbb{D}_0, & m = 0 \\ \\
+\displaystyle\mathbb{B}_m\frac{\sinh\mu_m y}{\cosh\mu_m b} + \mathbb{D}_m\frac{\cosh\mu_m y}{\cosh\mu_m b} , & m \ne 0
+\end{array}
+\right .
+\end{align} 
+
+Derivadas:
+\begin{align}
+& \bar{T}'_{1,m}(y) = \left\lbrace
+\begin{array}{ll}
+\mathbb{A}_0, & m = 0 \\ \\
+\displaystyle\mu_m\mathbb{A}_m\frac{\cosh\mu_m y}{\cosh\mu_m b} - \mu_m\mathbb{C}_m\frac{\sinh\mu_m (b - y)}{\cosh\mu_m b}, & m \ne 0
+\end{array}
+\right .
+\\ \nonumber \\
+& \bar{T}'_{2,m}(y) = \left\lbrace
+\begin{array}{ll}
+\mathbb{B}_0, & m = 0 \\ \\
+\displaystyle\mu_m\mathbb{B}_m\frac{\cosh\mu_m y}{\cosh\mu_m b} + \mu_m\mathbb{D}_m\frac{\sinh\mu_m y}{\cosh\mu_m b} , & m \ne 0
+\end{array}
+\right .
+\end{align} 
+
+
+Substituição nas condições de contorno:
+
+Se $m = 0$:
+\begin{align}
+\mathbb{A}_0 = -\frac{qa}{k_1}
+\end{align}
+
+Se $m \ne 0$:
+\begin{align}
+\mathbb{A}_m = 0
+\end{align}
+
+
+
+Se $m = 0$:
+\begin{align}
+\mathbb{D}_0 = 0
+\end{align}
+
+Se $m \ne 0$:
+\begin{align}
+\mathbb{D}_m = 0
+\end{align}
+
+Assim:
+\begin{align}
+& \bar{T}_{1,m}(y) = \left\lbrace
+\begin{array}{ll}
+\mathbb{C}_0 -\displaystyle\frac{qa}{k_1} y, & m = 0 \\ \\
+\displaystyle\mathbb{C}_m\frac{\cosh\mu_m (b - y)}{\cosh\mu_m b}, & m \ne 0
+\end{array}
+\right .
+\\ \nonumber \\
+& \bar{T}_{2,m}(y) = \left\lbrace
+\begin{array}{ll}
+\mathbb{B}_0 y, & m = 0 \\ \\
+\displaystyle\mathbb{B}_m\frac{\sinh\mu_m y}{\cosh\mu_m b}, & m \ne 0
+\end{array}
+\right .
+\end{align} 
+
+Derivadas:
+\begin{align}
+& \bar{T}'_{1,m}(y) = \left\lbrace
+\begin{array}{ll}
+-\displaystyle \frac{qa}{k_1}, & m = 0 \\ \\
+-\displaystyle\mu_m\mathbb{C}_m\frac{\sinh\mu_m (b - y)}{\cosh\mu_m b}, & m \ne 0
+\end{array}
+\right .
+\\ \nonumber \\
+& \bar{T}'_{2,m}(y) = \left\lbrace
+\begin{array}{ll}
+\mathbb{B}_0, & m = 0 \\ \\
+\displaystyle\mu_m\mathbb{B}_m\frac{\cosh\mu_m y}{\cosh\mu_m b} , & m \ne 0
+\end{array}
+\right .
+\end{align} 
+
+Campos de temperatura:
+\begin{align}
+& T_1(x, y) = \frac{\mathbb{C}_0}{a} - \frac{q}{k_1} y + \frac{2}{a}\sum_{m=1}^\infty \mathbb{C}_m\frac{\cosh\mu_m (b - y)}{\cosh\mu_m b}X(\mu_m, x) \\
+& T_2(x, y) = \frac{\mathbb{B}_0}{a}y + \frac{2}{a}\sum_{m=1}^\infty\mathbb{B}_m\frac{\sinh\mu_m y}{\cosh\mu_m b} X(\mu_m, x)
+\end{align}
+
+Derivadas:
+\begin{align}
+& \frac{\partial T_1(x, y)}{\partial x} = -\frac{2}{a}\sum_{m=1}^\infty \mu_m\mathbb{C}_m\frac{\cosh\mu_m (b - y)}{\cosh\mu_m b}\sin\mu_m, x \\
+& \frac{\partial T_2(x, y)}{\partial x} = -\frac{2}{a}\sum_{m=1}^\infty\mu_m\mathbb{B}_m\frac{\sinh\mu_m y}{\cosh\mu_m b} \sin\mu_m, x \\
+& \frac{\partial T_1(x, y)}{\partial y} = - \frac{q}{k_1} - \frac{2}{a}\sum_{m=1}^\infty \mu_m\mathbb{C}_m\frac{\sinh\mu_m (b - y)}{\cosh\mu_m b}\cos\mu_m, x\\ 
+& \frac{\partial T_2(x, y)}{\partial y} = \frac{\mathbb{B}_0}{a} + \frac{2}{a}\sum_{m=1}^\infty\mu_m\mathbb{B}_m\frac{\cosh\mu_m y}{\cosh\mu_m b} \cos\mu_m, x
+\end{align}
+
+Nas condições de contorno:
+\begin{align}
+& \frac{k_1}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial T_1(x, w(x))}{\partial x} - \frac{\partial T_1(x, w(x))}{\partial y}\right] = \nonumber \\
+& \quad\quad\quad\quad h_c(x)[T_2(x, w(x)) - T_1(x, w(x))] \\
+& \frac{k_2}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial T_2(x, w(x))}{\partial x} - \frac{\partial T_2(x, w(x))}{\partial y}\right] = \nonumber \\
+& \quad\quad\quad\quad h_c(x)[T_2(x, w(x)) - T_1(x, w(x))]
+\end{align}
+ou
+\begin{align}
+& k_1\left[w'(x)\frac{\partial T_1(x, w(x))}{\partial x} - \frac{\partial T_1(x, w(x))}{\partial y}\right] = h^\star_c(x)[T_2(x, w(x)) - T_1(x, w(x))] \\
+& k_2\left[w'(x)\frac{\partial T_2(x, w(x))}{\partial x} - \frac{\partial T_2(x, w(x))}{\partial y}\right] = h^\star_c(x)[T_2(x, w(x)) - T_1(x, w(x))]
+\end{align}
+onde
+\begin{align}
+h^\star_c(x) = h_c(x)\sqrt{1 + w'(x)^2}
+\end{align}
+
+Expressão:
+\begin{align}
+& k_1\left[w'(x)\frac{\partial T_1(x, w(x))}{\partial x} - \frac{\partial T_1(x, w(x))}{\partial y}\right] = q + \frac{2k_1}{a}\sum_{m=1}^\infty \mu_m\mathbb{C}_m \eta_m(x)
+\end{align}
+onde
+\begin{align}
+\eta_m(x) = \frac{\sinh\mu_m [b - w(x)]}{\cosh\mu_m b}\cos\mu_m x - w'(x) \frac{\cosh\mu_m [b - w(x)]}{\cosh\mu_m b}\sin\mu_m x
+\end{align}
+
+Expressão:
+\begin{align}
+& k_2\left[w'(x)\frac{\partial T_2(x, w(x))}{\partial x} - \frac{\partial T_2(x, w(x))}{\partial y}\right] = - \frac{k_2}{a}\mathbb{B}_0 - \frac{2k_2}{a}\sum_{m=1}^\infty \mu_m \mathbb{B}_m \sigma_m(x)
+\end{align}
+onde
+\begin{align}
+\sigma_m(x) = \frac{\cosh\mu_m w(x)}{\cosh\mu_m b} \cos\mu_m x + w'(x)\frac{\sinh\mu_m w(x)}{\cosh\mu_m b} \sin\mu_m x
+\end{align}
+
+Expressão:
+
+\begin{align}
+& h^\star_c(x)[T_2(x, w(x)) - T_1(x, w(x))] = \frac{q}{k_1}h^\star_c(x) w(x) + \frac{\mathbb{B}_0}{a}h^\star_c(x)w(x) - \nonumber \\
+& \quad\quad\quad \frac{\mathbb{C}_0}{a}h^\star_c(x) +
+\frac{2}{a}\sum_{m=1}^\infty\mathbb{B}_m \varrho_m(x)  - \frac{2}{a}\sum_{m=1}^\infty \mathbb{C}_m \kappa_m(x)
+\end{align}
+onde
+\begin{align}
+& \varrho_m(x) = \frac{\sinh\mu_m w(x)}{\cosh\mu_m b} h^\star_c(x)\cos\mu_m x \\ \nonumber \\
+& \kappa_m(x) = \frac{\cosh\mu_m [b - w(x)]}{\cosh\mu_m b}h^\star_c(x)\cos\mu_m x
+\end{align}
+
+Substituindo numa condição de contorno:
+\begin{align}
+& q + \frac{2k_1}{a}\sum_{m=1}^\infty \mu_m\mathbb{C}_m \eta_m(x)  = \frac{q}{k_1}h^\star_c(x) w(x) + \frac{\mathbb{B}_0}{a}h^\star_c(x)w(x) - \frac{\mathbb{C}_0}{a}h^\star_c(x) + \nonumber \\
+& \quad\quad\quad \frac{2}{a}\sum_{m=1}^\infty\mathbb{B}_m \varrho_m(x)  - \frac{2}{a}\sum_{m=1}^\infty \mathbb{C}_m \kappa_m(x) \nonumber \\
+& \Rightarrow - \mathbb{B}_0 h^\star_c(x)w(x) + \mathbb{C}_0 h^\star_c(x) - 2\sum_{m=1}^\infty\mathbb{B}_m \varrho_m(x) + 2\sum_{m=1}^\infty \mathbb{C}_m[k_1\mu_m \eta_m(x) + \kappa_m(x)] = \nonumber \\ 
+& qa\left[\frac{h^\star_c(x) w(x)}{k_1} - 1\right]
+\end{align}
+
+Substituindo na outra condição de contorno:
+\begin{align}
+& - \frac{k_2}{a}\mathbb{B}_0 - \frac{2k_2}{a}\sum_{m=1}^\infty \mu_m \mathbb{B}_m \sigma_m(x)= \frac{q}{k_1}h^\star_c(x) w(x) + \frac{\mathbb{B}_0}{a}h^\star_c(x)w(x) - \frac{\mathbb{C}_0}{a}h^\star_c(x) + \nonumber \\
+& \quad\quad\quad \frac{2}{a}\sum_{m=1}^\infty\mathbb{B}_m \varrho_m(x)  - \frac{2}{a}\sum_{m=1}^\infty \mathbb{C}_m \kappa_m(x) \nonumber \\
+& \Rightarrow - \mathbb{B}_0[k_2 + h^\star_c(x)w(x)] + \mathbb{C}_0 h^\star_c(x) - 2\sum_{m=1}^\infty \mathbb{B}_m[k_2\mu_m  \sigma_m(x) + \varrho_m(x)] + 2\sum_{m=1}^\infty \mathbb{C}_m \kappa_m(x) = \nonumber \\
+& \quad\quad\quad \frac{qa}{k_1}h^\star_c(x) w(x)
+\end{align}
