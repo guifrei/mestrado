@@ -12,7 +12,7 @@ Sejam duas famílias de funções harmônicas $F_{1, j}$ e $F_{2, j}$, definidas
 problema auxiliar, relacionado ao salto de temperatura na interface $\Gamma$ através das seguintes equações:
 
 \begin{subequations}
-\begin{alignat}{2}
+	\begin{alignat}{2}
 	& \nabla^2 F_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ em } \Omega_1 \label{funcao_F_harm_T1} \\ \nonumber \\
 	& F_{1,j} = \psi_j && \text{ em } \Gamma_0  \label{funcao_F_cc_T1_2} \\ \nonumber \\
 	& \frac{\partial F_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1 \label{funcao_F_cc_T1_1} \\ \nonumber \\
@@ -21,7 +21,7 @@ problema auxiliar, relacionado ao salto de temperatura na interface $\Gamma$ atr
 	& \frac{\partial F_{2,j}}{\partial \mathbf{n}_2} = 0 && \text{ em }  \Gamma_2 \label{funcao_F_cc_T1_3} \\ \nonumber \\
 	& F_{2,j} = 0 && \text{ em }  \Gamma_\infty \label{funcao_F_cc_T1_4} \\ \nonumber \\
 	& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} = -\beta_j && \text{ em }  \Gamma \label{funcao_F_cc_T1_5}
-\end{alignat}
+	\end{alignat}
 \end{subequations}
 
 Nas equações acima, $\psi_j, j=1,2,\ldots N_1$ é uma família de funções que garante a ortonormalidade entre as funções $\beta_j, j=1,2,\ldots N_1$, conforme discutido
@@ -33,12 +33,12 @@ Como ainda não se sabe quais são essas funções, elas ficarão em aberto por 
 Seja a família de funções harmônicas $G_{1, j}$, definida no domínio $\Omega_1$. Define-se assim o segundo
 problema auxiliar, relacionado ao fluxo de calor por unidade de área através da interface, $\Gamma$ através das seguintes equações:
 \begin{subequations}
-\begin{alignat}{2}
+	\begin{alignat}{2}
 	& \nabla^2 G_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ em } \Omega_1 \label{funcao_G_harm_T1} \\ \nonumber \\
 	& G_{1,j} = \phi_j && \text{ em } \Gamma_0  \label{funcao_G_cc_T1_2} \\ \nonumber \\
 	& \frac{\partial G_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1 \label{funcao_G_cc_T1_1} \\ \nonumber \\
 	& \frac{\partial G_{1,j}}{\partial\mathbf{n}_1} = 0 \quad\quad\quad\quad\quad\quad\quad\quad && \text{ em }  \Gamma \label{funcao_G_cc_grad_T1}
-\end{alignat}
+	\end{alignat}
 \end{subequations}
 
 Nas equações acima, $\phi_j, j=1,2,\ldots N_2$ é uma família de funções que garante a ortonormalidade entre as funções $\gamma_j, j=1,2,\ldots N_1$, conforme discutido
@@ -64,13 +64,13 @@ de um arranjo mais geral, representado na figura \ref{fig2}, objeto de estudo de
 
 De acordo com \cite{livro_cotta}, a solução dos problemas via CITT requer a aplicação dos seguintes passos:
 \begin{enumerate}[(i)]
-  \item Desenvolver o problema de autovalor associado, através da aplicação do método de separação de variáveis à versão homogênea do problema da equação
-  diferencial parcial;
-  \item Desenvolver o par transformada-inversa apropriado;
-  \item Aplicar a transformação integral à equação diferencial parcial do problema de valor de contorno original, empregando as condições de contorno no
-  desenvolvimento dos cálculos;
-  \item Resolver o sistema de equações diferenciais ordinárias desacopladas; e
-  \item Aplicar a fórmula de inversão previamente estabelecida no passo (ii) para construir a solução completa do problema.
+	\item Desenvolver o problema de autovalor associado, através da aplicação do método de separação de variáveis à versão homogênea do problema da equação
+	diferencial parcial;
+	\item Desenvolver o par transformada-inversa apropriado;
+	\item Aplicar a transformação integral à equação diferencial parcial do problema de valor de contorno original, empregando as condições de contorno no
+	desenvolvimento dos cálculos;
+	\item Resolver o sistema de equações diferenciais ordinárias desacopladas; e
+	\item Aplicar a fórmula de inversão previamente estabelecida no passo (ii) para construir a solução completa do problema.
 \end{enumerate}
 
 Na seção anterior, foi apontada a importância de se definir os problemas auxiliares cuja solução fornece as funções auxiliares $F_{1,j}$ e $G_{1,j}$.
@@ -81,12 +81,12 @@ será feito a seguir.
 \subsubsection{Expressão das derivadas direcionais em coordenadas cartesianas}\label{secao_sobre_normal}
 Seja um campo escalar $\Phi$. A derivada direcional em relação ao vetor unitário $\mathbf{u}$ é dada por \citep{livro_stewart}:
 \begin{align}
-	& \frac{\partial\Phi}{\partial\mathbf{u}} = \nabla \Phi \cdot \mathbf{u} 
+& \frac{\partial\Phi}{\partial\mathbf{u}} = \nabla \Phi \cdot \mathbf{u} 
 \end{align} 
 
 Em coordenadas cartesianas, havendo dependência apenas de $x$ e $y$, pode-se escrever:
 \begin{align}
-	& \frac{\partial\Phi}{\partial\mathbf{u}} = \frac{\partial \Phi}{\partial x}u_x + \frac{\partial \Phi}{\partial y}u_y\label{derivada_direcional_coodernadas_cartesianas}
+& \frac{\partial\Phi}{\partial\mathbf{u}} = \frac{\partial \Phi}{\partial x}u_x + \frac{\partial \Phi}{\partial y}u_y\label{derivada_direcional_coodernadas_cartesianas}
 \end{align}
 onde $u_x$ e $u_y$ são as componentes do vetor unitário $\mathbf{u}$ nas direções $x$ e $y$ respectivamente.
 
@@ -96,58 +96,58 @@ Para esses vetores, $u_y = 0$ e $u_x = \pm 1$, dependendo do sentido para onde o
 todas nulas, por isso o sinal de $u_x$ é indiferente nestes casos. Por exemplo, a condição de contorno \eqref{funcao_F_cc_T1_1} pode
 ser escrita como:
 \begin{align}
-	\frac{\partial F_{1,j}(0, y)}{\partial x} = 0, \quad\quad\quad w(0) < y < b 
+\frac{\partial F_{1,j}(0, y)}{\partial x} = 0, \quad\quad\quad w(0) < y < b 
 \end{align}
 
 As equações \eqref{expressao_define_beta}, \eqref{funcao_F_cc_T1_5} e \eqref{funcao_G_cc_grad_T1} possuem derivadas direcionais calculadas sobre a superfície $\Gamma$.
 Sejam então os vetores normais $\mathbf{n}_2$ e $\mathbf{n}_1$ em uma dada posição sobre essa superfície, apontando para fora das regiões $\Omega_2$ e $\Omega_1$ respectivamente, e
 seja também o vetor tangente $\mathbf{T}$ na mesma posição, em relação à superfície $\Gamma$. Estes vetores estão ilustrados na figura \ref{fig7}.
 \begin{figure}[h!b]
-\begin{center}
-\begin{tikzpicture}[scale=0.7]
-	\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
-	\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};		
-	\draw [dashed] (10, 0) -- (10, 2);
+	\begin{center}
+		\begin{tikzpicture}[scale=0.7]
+		\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
+		\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};		
+		\draw [dashed] (10, 0) -- (10, 2);
 		
-	\draw (3.3, 2.2) node {$\Gamma$};
-	\draw (5, -1.3) node {$a$};
-	
-	\node [above right] at (12, 0) {$x$};
-	\node [right] at (0, 5) {$y$};
-	
-	\draw [->, thick] (5.7,2.5) -- (4.7,2);
-	\node [right] at (4.3, 1.6) {$\mathbf{n}_1$};
-	
-	\draw [->, thick] (5.7,2.5) -- (6.7,3);
-	\node [right] at (6.7, 3) {$\mathbf{n}_2$};
-	
-	\draw [->, thick] (5.7,2.5) -- (6.2,1.5);
-	\node [right] at (6.1, 1.2) {$\mathbf{T}$};
-	
-	\node [right] at (10, 2) {$w(x)$};
-	
-	\draw [->, very thick] (0,0) -- (12,0);
-	\draw [->, very thick] (0, 0) -- (0,5);
-	
-	\draw [-] (0, -0.2) -- (0, -1.2);
-	\draw [-] (10, -0.2) -- (10, -1.2);
-	\draw [<->] (0, -1) -- (10, -1);
-\end{tikzpicture}
-\caption{Vetores normais e tangente à interface $\Gamma$}
-\label{fig7}
-\end{center}
+		\draw (3.3, 2.2) node {$\Gamma$};
+		\draw (5, -1.3) node {$a$};
+		
+		\node [above right] at (12, 0) {$x$};
+		\node [right] at (0, 5) {$y$};
+		
+		\draw [->, thick] (5.7,2.5) -- (4.7,2);
+		\node [right] at (4.3, 1.6) {$\mathbf{n}_1$};
+		
+		\draw [->, thick] (5.7,2.5) -- (6.7,3);
+		\node [right] at (6.7, 3) {$\mathbf{n}_2$};
+		
+		\draw [->, thick] (5.7,2.5) -- (6.2,1.5);
+		\node [right] at (6.1, 1.2) {$\mathbf{T}$};
+		
+		\node [right] at (10, 2) {$w(x)$};
+		
+		\draw [->, very thick] (0,0) -- (12,0);
+		\draw [->, very thick] (0, 0) -- (0,5);
+		
+		\draw [-] (0, -0.2) -- (0, -1.2);
+		\draw [-] (10, -0.2) -- (10, -1.2);
+		\draw [<->] (0, -1) -- (10, -1);
+		\end{tikzpicture}
+		\caption{Vetores normais e tangente à interface $\Gamma$}
+		\label{fig7}
+	\end{center}
 \end{figure}
 
 A curva que representa $\Gamma$ pode ser escrita de forma paramétrica como segue:
 \begin{align}
-	\mathbf{\Gamma}(t) = x(t) \mathbf{a}_x + y(t) \mathbf{a}_y \label{forma_parametrica}
+\mathbf{\Gamma}(t) = x(t) \mathbf{a}_x + y(t) \mathbf{a}_y \label{forma_parametrica}
 \end{align}
 onde $\mathbf{a}_x$ e $\mathbf{a}_y$ são os vetores unitários da base canônica do sistema cartesiano.
 
 A parametrização a ser adotada será:
 \begin{align}
-	& x(t) = t \label{parametrizacao_x}\\
-	& y(t) = w(t) \label{parametrizacao_y}
+& x(t) = t \label{parametrizacao_x}\\
+& y(t) = w(t) \label{parametrizacao_y}
 \end{align}
 
 Substituindo em \eqref{forma_parametrica}, obtém-se:
@@ -157,35 +157,35 @@ Substituindo em \eqref{forma_parametrica}, obtém-se:
 
 O vetor tangente unitário $\mathbf{T}$ será dado por \citep{livro_stewart}:
 \begin{align}
-	& \mathbf{T}(t) = \frac{\mathbf{\Gamma}'(t)}{\norm{\mathbf{\Gamma}'(t)}} \nonumber \\
-	& \Rightarrow \mathbf{T}(t) = \frac{\mathbf{a}_x + w'(t) \mathbf{a}_y}{\sqrt{1 + w'(t)^2}}
+& \mathbf{T}(t) = \frac{\mathbf{\Gamma}'(t)}{\norm{\mathbf{\Gamma}'(t)}} \nonumber \\
+& \Rightarrow \mathbf{T}(t) = \frac{\mathbf{a}_x + w'(t) \mathbf{a}_y}{\sqrt{1 + w'(t)^2}}
 \end{align}
 
 O vetor normal unitário principal $\mathbf{N}$ será dado por \citep{livro_stewart}:
 \begin{align}
-	& \mathbf{N}(t) = \frac{\mathbf{T}'(t)}{\norm{\mathbf{T}'(t)}} \nonumber \\
-	& \Rightarrow \mathbf{N}(t) = \frac{ \displaystyle\frac{d}{dt}\left[\frac{1}{\sqrt{1 + w'(t)^2}}\right]\mathbf{a}_x
+& \mathbf{N}(t) = \frac{\mathbf{T}'(t)}{\norm{\mathbf{T}'(t)}} \nonumber \\
+& \Rightarrow \mathbf{N}(t) = \frac{ \displaystyle\frac{d}{dt}\left[\frac{1}{\sqrt{1 + w'(t)^2}}\right]\mathbf{a}_x
 	+
 	\displaystyle\frac{d}{dt}\left[\frac{w'(t)}{\sqrt{1 + w'(t)^2}}\right]\mathbf{a}_y }
-	{\sqrt{ \left\lbrace \displaystyle\frac{d}{dt}\left[\frac{1}{\sqrt{1 + w'(t)^2}}\right] \right\rbrace ^2
-	+
-	 \left\lbrace \displaystyle\frac{d}{dt}\left[\frac{w'(t)}{\sqrt{1 + w'(t)^2}}\right] \right\rbrace ^2 }} \nonumber \\
-	& \Rightarrow \mathbf{N}(t) = \frac{ -\displaystyle \frac{w'(t)w''(t)}{[1 + w'(t)^2]^{3/2}} \mathbf{a}_x
+{\sqrt{ \left\lbrace \displaystyle\frac{d}{dt}\left[\frac{1}{\sqrt{1 + w'(t)^2}}\right] \right\rbrace ^2
+		+
+		\left\lbrace \displaystyle\frac{d}{dt}\left[\frac{w'(t)}{\sqrt{1 + w'(t)^2}}\right] \right\rbrace ^2 }} \nonumber \\
+& \Rightarrow \mathbf{N}(t) = \frac{ -\displaystyle \frac{w'(t)w''(t)}{[1 + w'(t)^2]^{3/2}} \mathbf{a}_x
 	+
 	\displaystyle \frac{w''(t)}{[1 + w'(t)^2]^{3/2}} \mathbf{a}_y }
-	{\sqrt{ \displaystyle \frac{w'(t)^2 w''(t)^2}{[1 + w'(t)^2]^3} 
-	+
-	\displaystyle \frac{w''(t)^2}{[1 + w'(t)^2]^{3}} }} \nonumber \\
-	& \Rightarrow \mathbf{N}(t) = \frac{ \displaystyle\frac{w''(t)}{[1 + w'(t)^2]^{3/2}} [-w'(t)\mathbf{a}_x + \mathbf{a}_y] }
-	{\sqrt{ \displaystyle \frac{w''(t)^2}{[1 + w'(t)^2]^3} [w'(t)^2	+ 1] }} \nonumber \\
-	& \Rightarrow \mathbf{N}(t) = \frac{w''(t)}{\abs{w''(t)}} \frac{ -w'(t)\mathbf{a}_x + \mathbf{a}_y }
-	{\sqrt{ 1 + w'(t)^2 }} \label{equacao_normal_geometria_diferencial}
+{\sqrt{ \displaystyle \frac{w'(t)^2 w''(t)^2}{[1 + w'(t)^2]^3} 
+		+
+		\displaystyle \frac{w''(t)^2}{[1 + w'(t)^2]^{3}} }} \nonumber \\
+& \Rightarrow \mathbf{N}(t) = \frac{ \displaystyle\frac{w''(t)}{[1 + w'(t)^2]^{3/2}} [-w'(t)\mathbf{a}_x + \mathbf{a}_y] }
+{\sqrt{ \displaystyle \frac{w''(t)^2}{[1 + w'(t)^2]^3} [w'(t)^2	+ 1] }} \nonumber \\
+& \Rightarrow \mathbf{N}(t) = \frac{w''(t)}{\abs{w''(t)}} \frac{ -w'(t)\mathbf{a}_x + \mathbf{a}_y }
+{\sqrt{ 1 + w'(t)^2 }} \label{equacao_normal_geometria_diferencial}
 \end{align}
 
 O termo $\displaystyle\frac{w''(t)}{\abs{w''(t)}} $ presente em \eqref{equacao_normal_geometria_diferencial} interfere apenas no sentido para
 onde aponta o vetor $\mathbf{N}(t)$. Pode-se então abstrair desse fator e escrever:
 \begin{align}
-	\mathbf{N}(t) = \frac{ -w'(t)\mathbf{a}_x + \mathbf{a}_y }{\sqrt{ 1 + w'(t)^2 }} \label{equacao_normal_geometria_diferencial_2}
+\mathbf{N}(t) = \frac{ -w'(t)\mathbf{a}_x + \mathbf{a}_y }{\sqrt{ 1 + w'(t)^2 }} \label{equacao_normal_geometria_diferencial_2}
 \end{align}
 
 Retornando à figura \ref{fig7}, pode-se observar que no ponto de exemplo onde os vetores unitários foram representados, o vetor unitário $\mathbf{n}_2$,
@@ -193,43 +193,43 @@ que aponta para fora da região $\Omega_2$, é o que tem as componentes em $x$ e
 nota-se que neste ponto a derivada $w'(x)$ é negativa, logo $-w'(t)$ é positiva e assim as componentes em $x$ e $y$ deste vetor normal unitário também são positivas. Logo, 
 pode-se escrever:
 \begin{align}
-	\mathbf{n}_2 = \frac{ -w'(x)\mathbf{a}_x + \mathbf{a}_y }{\sqrt{ 1 + w'(x)^2 }}
+\mathbf{n}_2 = \frac{ -w'(x)\mathbf{a}_x + \mathbf{a}_y }{\sqrt{ 1 + w'(x)^2 }}
 \end{align}
 onde a variável paramétrica $t$ foi substituída por $x$, uma vez que são equivalentes.
- 
+
 A expressão para $\mathbf{n}_1$ é imediata:
 \begin{align}
-	\mathbf{n}_1 = \frac{ w'(x)\mathbf{a}_x - \mathbf{a}_y }{\sqrt{ 1 + w'(x)^2 }}
+\mathbf{n}_1 = \frac{ w'(x)\mathbf{a}_x - \mathbf{a}_y }{\sqrt{ 1 + w'(x)^2 }}
 \end{align}
 
 Desse modo, aplicando a equação \eqref{derivada_direcional_coodernadas_cartesianas} para o vetor unitário $\mathbf{n}_1$, obtém-se a derivada do campo escalar $\Phi$
 em relação a esse vetor, em coordenadas cartesianas: 
 \begin{align}
-	& \frac{\partial\Phi}{\partial\mathbf{n_1}} = \frac{1}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial \Phi}{\partial x} - \frac{\partial \Phi}{\partial y}\right]
-	\label{derivada_direcional_para_n1}
+& \frac{\partial\Phi}{\partial\mathbf{n_1}} = \frac{1}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial \Phi}{\partial x} - \frac{\partial \Phi}{\partial y}\right]
+\label{derivada_direcional_para_n1}
 \end{align} 
 e, em relação ao vetor $\mathbf{n}_2$:
 \begin{align}
-	& \frac{\partial\Phi}{\partial\mathbf{n_2}} = -\frac{1}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial \Phi}{\partial x} - \frac{\partial \Phi}{\partial y}\right]
-	\label{derivada_direcional_para_n2}
+& \frac{\partial\Phi}{\partial\mathbf{n_2}} = -\frac{1}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial \Phi}{\partial x} - \frac{\partial \Phi}{\partial y}\right]
+\label{derivada_direcional_para_n2}
 \end{align} 
 
 Tomando como exemplo a condição de contorno \eqref{funcao_F_cc_T1_5}, e aplicando as expressões \eqref{derivada_direcional_para_n1} e \eqref{derivada_direcional_para_n2},
 a fim de escrever esta condição em coordenadas cartesianas,
 tem-se:
 \begin{align}
-	& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} \nonumber \\
-	& \Rightarrow -\frac{k_2}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial F_{2,j}(x, w(x))}{\partial x} - \frac{\partial F_{2,j}(x, w(x))}{\partial y}\right] = \nonumber \\
-	& -\frac{k_1}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial F_{1,j}(x, w(x))}{\partial x} - \frac{\partial F_{1,j}(x, w(x))}{\partial y}\right] \nonumber \\
-	& \Rightarrow k_2\left[w'(x)\frac{\partial F_{2,j}(x, w(x))}{\partial x} - \frac{\partial F_{2,j}(x, w(x))}{\partial y}\right] = \nonumber \\
-	& k_1 \left[w'(x)\frac{\partial F_{1,j}(x, w(x))}{\partial x} - \frac{\partial F_{1,j}(x, w(x))}{\partial y}\right]
+& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} \nonumber \\
+& \Rightarrow -\frac{k_2}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial F_{2,j}(x, w(x))}{\partial x} - \frac{\partial F_{2,j}(x, w(x))}{\partial y}\right] = \nonumber \\
+& -\frac{k_1}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial F_{1,j}(x, w(x))}{\partial x} - \frac{\partial F_{1,j}(x, w(x))}{\partial y}\right] \nonumber \\
+& \Rightarrow k_2\left[w'(x)\frac{\partial F_{2,j}(x, w(x))}{\partial x} - \frac{\partial F_{2,j}(x, w(x))}{\partial y}\right] = \nonumber \\
+& k_1 \left[w'(x)\frac{\partial F_{1,j}(x, w(x))}{\partial x} - \frac{\partial F_{1,j}(x, w(x))}{\partial y}\right]
 \end{align}
 
 \subsubsection{Formulação dos problemas auxiliares no sistema cartesiano: domínio físico original}
 
 Reescrevendo-se o primeiro problema auxiliar em coordenadas cartesianas, empregando os resultados encontrados na seção \ref{secao_sobre_normal}, obtém-se o sistema de equações a seguir:
 \begin{subequations}
-\begin{alignat}{2}
+	\begin{alignat}{2}
 	& \frac{\partial^2 F_{1,j}(x, y)}{\partial x^2} + \frac{\partial^2 F_{1,j}(x, y)}{\partial y^2} = 0  && 0 < x < a, w(x) < y < b \label{funcao_F_harm_T1_cart} \\ \nonumber \\
 	& F_{1,j}(x, b) = \psi_j(x) && 0 < x < a  \label{funcao_F_cc_T1_2_cart} \\ \nonumber \\
 	& \frac{\partial F_{1,j}(0, y)}{\partial x} = 0 && w(0) < y < b \label{funcao_F_cc_T1_1a_cart} \\ \nonumber \\
@@ -241,18 +241,18 @@ Reescrevendo-se o primeiro problema auxiliar em coordenadas cartesianas, emprega
 	& F_{2,j}(x, 0) = 0 && 0 < x < a \label{funcao_F_cc_T1_4_cart} \\ \nonumber \\
 	& k_2\left[w'(x)\frac{\partial F_{2,j}(x, w(x))}{\partial x} - \frac{\partial F_{2,j}(x, w(x))}{\partial y}\right] = \nonumber \\
 	& k_1\left[w'(x)\frac{\partial F_{1,j}(x, w(x))}{\partial x} - \frac{\partial F_{1,j}(x, w(x))}{\partial y}\right] && 0 < x < a \label{funcao_F_cc_T1_5_cart}
-\end{alignat}
+	\end{alignat}
 \end{subequations}
 
 Já o segundo problema auxiliar assume a forma:
 \begin{subequations}
-\begin{alignat}{2}
+	\begin{alignat}{2}
 	& \frac{\partial^2 G_{1,j}(x, y)}{\partial x^2} + \frac{\partial^2 G_{1,j}(x, y)}{\partial y^2} = 0 \quad\quad && 0 < x < a, w(x) < y < b \label{funcao_G_harm_T1_cart} \\ \nonumber \\
 	& G_{1,j}(x, b) = \phi_j(x) && 0 < x < a  \label{funcao_G_cc_T1_2_cart} \\ \nonumber \\
 	& \frac{\partial G_{1,j}(0, y)}{\partial x} = 0 && w(0) < y < b \label{funcao_G_cc_T1_1a_cart} \\ \nonumber \\
 	& \frac{\partial G_{1,j}(a, y)}{\partial x} = 0 && w(a) < y < b \label{funcao_G_cc_T1_1b_cart} \\ \nonumber \\
 	& w'(x)\frac{\partial G_{1,j}(x, w(x))}{\partial x} - \frac{\partial G_{1,j}(x, w(x))}{\partial y} = 0 \quad\quad\quad\quad && 0 < x < a \label{funcao_G_cc_grad_T1_cart}
-\end{alignat}
+	\end{alignat}
 \end{subequations}
 
 \subsubsection{Extensão dos domínios dos problemas auxiliares no sistema cartesiano}\label{secao_formulacao_aux}
@@ -268,129 +268,129 @@ Desse modo, as soluções analíticas das funções $F_{1, j}$ e $G_{1, j}$ ser�
 as soluções analíticas das funções $F_{2, j}$ serão obtidas a partir do domínio estendido representado na figura \ref{fig6}.
 
 \begin{figure}[h!b]
-\begin{center}
-\begin{tikzpicture}[scale=0.7]
-
-	\draw [ultra thick, dashed] (0, 0) -- (10, 0);
-	%\draw [ultra thick] (0, 2) -- (7, 2);
-	%\draw [ultra thick] (8, 2) -- (10, 2);
-	\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
-	\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};
-	\draw [ultra thick] (0, 5) -- (10, 5);
-	\draw [ultra thick, dashed] (0, 0) -- (0, 2);	
-	\draw [ultra thick] (0, 2) -- (0, 5);	
-	\draw [ultra thick, dashed] (10, 0) -- (10, 2);
-	\draw [ultra thick] (10, 2) -- (10, 5);
-	
-	\draw (2.5, 3.5) node {$\Omega_1$};
-	\draw (3.3, 2.2) node {$\Gamma$};
-	\draw (-0.5, 3.5) node {$\Gamma_1$};
-	\draw (-0.5, 1) node {$\Gamma_2$};
-	\draw (10.5, 3.5) node {$\Gamma_1$};
-	\draw (10.5, 1) node {$\Gamma_2$};
-	\draw (5, -0.4) node {$\Gamma_\infty$};
-	\draw (2.5, 5.3) node {$\Gamma_0$};
-	\draw [blue](5, 6.5) node {$q$};
-	\draw (5, -1.3) node {$a$};
-	\draw (-3.9, 2.5) node {$b$};
-	\draw (-2.7, 1) node {$w(x)$};
-	
-	\node [above right] at (12, 0) {$x$};
-	\node [right] at (0, 8) {$y$};
-	
-	\draw [->, blue] (0, 6.2) -- (0, 5.2);
-	\draw [->, blue] (1, 6.2) -- (1, 5.2);
-	\draw [->, blue] (2, 6.2) -- (2, 5.2);
-	\draw [->, blue] (3, 6.2) -- (3, 5.2);
-	\draw [->, blue] (4, 6.2) -- (4, 5.2);
-	\draw [->, blue] (5, 6.2) -- (5, 5.2);
-	\draw [->, blue] (6, 6.2) -- (6, 5.2);
-	\draw [->, blue] (7, 6.2) -- (7, 5.2);
-	\draw [->, blue] (8, 6.2) -- (8, 5.2);
-	\draw [->, blue] (9, 6.2) -- (9, 5.2);
-	\draw [->, blue] (10, 6.2) -- (10, 5.2);
-	
-	\draw [->, very thick] (10.2,0) -- (12,0);
-	\draw [->, very thick] (0, 6.5) -- (0,8);
-	
-	\draw [-] (0, -0.2) -- (0, -1.2);
-	\draw [-] (10, -0.2) -- (10, -1.2);
-	\draw [<->] (0, -1) -- (10, -1);
-	
-	\draw [-] (-0.2, 0) -- (-3.8, 0);
-	\draw [-] (-0.2, 5) -- (-3.8, 5);
-	\draw [-] (-0.2, 2) -- (-2.2, 2);
-	\draw [<->] (-3.6, 0) -- (-3.6, 5);
-	\draw [<->] (-2.0, 0) -- (-2.0, 2);
-
-\end{tikzpicture}
-\caption{Extensão do subdomínio $\Omega_1$ para as funções $F_{1, j}$ e $G_{1, j}$}
-\label{fig5}
-\end{center}
+	\begin{center}
+		\begin{tikzpicture}[scale=0.7]
+		
+		\draw [ultra thick, dashed] (0, 0) -- (10, 0);
+		%\draw [ultra thick] (0, 2) -- (7, 2);
+		%\draw [ultra thick] (8, 2) -- (10, 2);
+		\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
+		\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};
+		\draw [ultra thick] (0, 5) -- (10, 5);
+		\draw [ultra thick, dashed] (0, 0) -- (0, 2);	
+		\draw [ultra thick] (0, 2) -- (0, 5);	
+		\draw [ultra thick, dashed] (10, 0) -- (10, 2);
+		\draw [ultra thick] (10, 2) -- (10, 5);
+		
+		\draw (2.5, 3.5) node {$\Omega_1$};
+		\draw (3.3, 2.2) node {$\Gamma$};
+		\draw (-0.5, 3.5) node {$\Gamma_1$};
+		\draw (-0.5, 1) node {$\Gamma_2$};
+		\draw (10.5, 3.5) node {$\Gamma_1$};
+		\draw (10.5, 1) node {$\Gamma_2$};
+		\draw (5, -0.4) node {$\Gamma_\infty$};
+		\draw (2.5, 5.3) node {$\Gamma_0$};
+		\draw [blue](5, 6.5) node {$q$};
+		\draw (5, -1.3) node {$a$};
+		\draw (-3.9, 2.5) node {$b$};
+		\draw (-2.7, 1) node {$w(x)$};
+		
+		\node [above right] at (12, 0) {$x$};
+		\node [right] at (0, 8) {$y$};
+		
+		\draw [->, blue] (0, 6.2) -- (0, 5.2);
+		\draw [->, blue] (1, 6.2) -- (1, 5.2);
+		\draw [->, blue] (2, 6.2) -- (2, 5.2);
+		\draw [->, blue] (3, 6.2) -- (3, 5.2);
+		\draw [->, blue] (4, 6.2) -- (4, 5.2);
+		\draw [->, blue] (5, 6.2) -- (5, 5.2);
+		\draw [->, blue] (6, 6.2) -- (6, 5.2);
+		\draw [->, blue] (7, 6.2) -- (7, 5.2);
+		\draw [->, blue] (8, 6.2) -- (8, 5.2);
+		\draw [->, blue] (9, 6.2) -- (9, 5.2);
+		\draw [->, blue] (10, 6.2) -- (10, 5.2);
+		
+		\draw [->, very thick] (10.2,0) -- (12,0);
+		\draw [->, very thick] (0, 6.5) -- (0,8);
+		
+		\draw [-] (0, -0.2) -- (0, -1.2);
+		\draw [-] (10, -0.2) -- (10, -1.2);
+		\draw [<->] (0, -1) -- (10, -1);
+		
+		\draw [-] (-0.2, 0) -- (-3.8, 0);
+		\draw [-] (-0.2, 5) -- (-3.8, 5);
+		\draw [-] (-0.2, 2) -- (-2.2, 2);
+		\draw [<->] (-3.6, 0) -- (-3.6, 5);
+		\draw [<->] (-2.0, 0) -- (-2.0, 2);
+		
+		\end{tikzpicture}
+		\caption{Extensão do subdomínio $\Omega_1$ para as funções $F_{1, j}$ e $G_{1, j}$}
+		\label{fig5}
+	\end{center}
 \end{figure}
 
 \newpage
 
 \begin{figure}[h!b]
-\begin{center}
-\begin{tikzpicture}[scale=0.7]
-
-	\draw [ultra thick] (0, 0) -- (10, 0);
-	%\draw [ultra thick] (0, 2) -- (7, 2);
-	%\draw [ultra thick] (8, 2) -- (10, 2);
-	\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
-	\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};
-	\draw [ultra thick, dashed] (0, 5) -- (10, 5);
-	\draw [ultra thick] (0, 0) -- (0, 2);	
-	\draw [ultra thick, dashed] (0, 2) -- (0, 5);	
-	\draw [ultra thick] (10, 0) -- (10, 2);
-	\draw [ultra thick, dashed] (10, 2) -- (10, 5);
-	
-	\draw (7.5, 1) node {$\Omega_2$};	
-	\draw (3.3, 2.2) node {$\Gamma$};
-	\draw (-0.5, 3.5) node {$\Gamma_1$};
-	\draw (-0.5, 1) node {$\Gamma_2$};
-	\draw (10.5, 3.5) node {$\Gamma_1$};
-	\draw (10.5, 1) node {$\Gamma_2$};
-	\draw (5, -0.4) node {$\Gamma_\infty$};
-	\draw (2.5, 5.3) node {$\Gamma_0$};
-	\draw [blue](5, 6.5) node {$q$};
-	\draw (5, -1.3) node {$a$};
-	\draw (-3.9, 2.5) node {$b$};
-	\draw (-2.7, 1) node {$w(x)$};
-	
-	\node [above right] at (12, 0) {$x$};
-	\node [right] at (0, 8) {$y$};
-	
-	\draw [->, blue] (0, 6.2) -- (0, 5.2);
-	\draw [->, blue] (1, 6.2) -- (1, 5.2);
-	\draw [->, blue] (2, 6.2) -- (2, 5.2);
-	\draw [->, blue] (3, 6.2) -- (3, 5.2);
-	\draw [->, blue] (4, 6.2) -- (4, 5.2);
-	\draw [->, blue] (5, 6.2) -- (5, 5.2);
-	\draw [->, blue] (6, 6.2) -- (6, 5.2);
-	\draw [->, blue] (7, 6.2) -- (7, 5.2);
-	\draw [->, blue] (8, 6.2) -- (8, 5.2);
-	\draw [->, blue] (9, 6.2) -- (9, 5.2);
-	\draw [->, blue] (10, 6.2) -- (10, 5.2);
-	
-	\draw [->, very thick] (10.2,0) -- (12,0);
-	\draw [->, very thick] (0, 6.5) -- (0,8);
-	
-	\draw [-] (0, -0.2) -- (0, -1.2);
-	\draw [-] (10, -0.2) -- (10, -1.2);
-	\draw [<->] (0, -1) -- (10, -1);
-	
-	\draw [-] (-0.2, 0) -- (-3.8, 0);
-	\draw [-] (-0.2, 5) -- (-3.8, 5);
-	\draw [-] (-0.2, 2) -- (-2.2, 2);
-	\draw [<->] (-3.6, 0) -- (-3.6, 5);
-	\draw [<->] (-2.0, 0) -- (-2.0, 2);
-
-\end{tikzpicture}
-\caption{Extensão do subdomínio $\Omega_2$ para as funções $F_{2, j}$}
-\label{fig6}
-\end{center}
+	\begin{center}
+		\begin{tikzpicture}[scale=0.7]
+		
+		\draw [ultra thick] (0, 0) -- (10, 0);
+		%\draw [ultra thick] (0, 2) -- (7, 2);
+		%\draw [ultra thick] (8, 2) -- (10, 2);
+		\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
+		\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};
+		\draw [ultra thick, dashed] (0, 5) -- (10, 5);
+		\draw [ultra thick] (0, 0) -- (0, 2);	
+		\draw [ultra thick, dashed] (0, 2) -- (0, 5);	
+		\draw [ultra thick] (10, 0) -- (10, 2);
+		\draw [ultra thick, dashed] (10, 2) -- (10, 5);
+		
+		\draw (7.5, 1) node {$\Omega_2$};	
+		\draw (3.3, 2.2) node {$\Gamma$};
+		\draw (-0.5, 3.5) node {$\Gamma_1$};
+		\draw (-0.5, 1) node {$\Gamma_2$};
+		\draw (10.5, 3.5) node {$\Gamma_1$};
+		\draw (10.5, 1) node {$\Gamma_2$};
+		\draw (5, -0.4) node {$\Gamma_\infty$};
+		\draw (2.5, 5.3) node {$\Gamma_0$};
+		\draw [blue](5, 6.5) node {$q$};
+		\draw (5, -1.3) node {$a$};
+		\draw (-3.9, 2.5) node {$b$};
+		\draw (-2.7, 1) node {$w(x)$};
+		
+		\node [above right] at (12, 0) {$x$};
+		\node [right] at (0, 8) {$y$};
+		
+		\draw [->, blue] (0, 6.2) -- (0, 5.2);
+		\draw [->, blue] (1, 6.2) -- (1, 5.2);
+		\draw [->, blue] (2, 6.2) -- (2, 5.2);
+		\draw [->, blue] (3, 6.2) -- (3, 5.2);
+		\draw [->, blue] (4, 6.2) -- (4, 5.2);
+		\draw [->, blue] (5, 6.2) -- (5, 5.2);
+		\draw [->, blue] (6, 6.2) -- (6, 5.2);
+		\draw [->, blue] (7, 6.2) -- (7, 5.2);
+		\draw [->, blue] (8, 6.2) -- (8, 5.2);
+		\draw [->, blue] (9, 6.2) -- (9, 5.2);
+		\draw [->, blue] (10, 6.2) -- (10, 5.2);
+		
+		\draw [->, very thick] (10.2,0) -- (12,0);
+		\draw [->, very thick] (0, 6.5) -- (0,8);
+		
+		\draw [-] (0, -0.2) -- (0, -1.2);
+		\draw [-] (10, -0.2) -- (10, -1.2);
+		\draw [<->] (0, -1) -- (10, -1);
+		
+		\draw [-] (-0.2, 0) -- (-3.8, 0);
+		\draw [-] (-0.2, 5) -- (-3.8, 5);
+		\draw [-] (-0.2, 2) -- (-2.2, 2);
+		\draw [<->] (-3.6, 0) -- (-3.6, 5);
+		\draw [<->] (-2.0, 0) -- (-2.0, 2);
+		
+		\end{tikzpicture}
+		\caption{Extensão do subdomínio $\Omega_2$ para as funções $F_{2, j}$}
+		\label{fig6}
+	\end{center}
 \end{figure}
 
 \subsection{Solução analítica dos problemas auxiliares através da Técnica da Transformada Integral Clássica}
@@ -401,21 +401,26 @@ As condições de contorno \eqref{funcao_F_cc_T1_1a_cart} e \eqref{funcao_F_cc_T
 mesmo pode ser observado nas condições de contorno \eqref{funcao_F_cc_T1_3a_cart} e \eqref{funcao_F_cc_T1_3b_cart}, na direção $x$, referentes ao problema de valor de contorno das funções $F_{2, j}$.
 Assim, o problema de autovalor associado, ou de Sturm-Liouville, será o mesmo para os dois problemas auxiliares:
 \begin{subequations}
-\begin{alignat}{2}
+	\begin{alignat}{2}
 	& \frac{d^2 X(\mu_m, x)}{d x^2} + \mu_m^2 X(\mu_m, x) = 0 \quad\quad\quad\quad\quad\quad && 0 < x < a \label{problema_vc_1a} \\ \nonumber \\
 	& \frac{d X(\mu_m, x)}{d x} = 0 && x = 0 \label{problema_vc_1b} \\ \nonumber \\
 	& \frac{d X(\mu_m, x)}{d x} = 0 && x = a \label{problema_vc_1c}
-\end{alignat}
+	\end{alignat}
 \end{subequations}
 onde $\mu_m$ são os autovalores e $X(\mu_m, x)$ são as autofunções correspondentes. Resolvendo-se o problema de autovalor defindo em \eqref{problema_vc_1a}--\eqref{problema_vc_1c}, obtém-se \citep{livro_ozisik}:
 \begin{align}
-& X(\mu_m, x) = \cos \mu_m x \\ \nonumber \\
+& X(\mu_m, x) = \left\lbrace
+\begin{array}{ll}
+1, & m = 0 \\ \\
+\cos \mu_m x, & m = 1,2,3,\ldots
+\end{array}
+\right . \label{definicao_das_autofuncoes} \\ \nonumber \\
 & \frac{1}{N(\mu_m)} = \left\lbrace
-	\begin{array}{ll}
-		\displaystyle\frac{1}{a} \quad\quad\quad\quad & m = 0 \\ \\
-		\displaystyle\frac{2}{a} & m = 1,2,3,\ldots
-	\end{array}
-\right.
+\begin{array}{ll}
+\displaystyle\frac{1}{a}, \quad\quad\quad\quad & m = 0 \\ \\
+\displaystyle\frac{2}{a}, & m = 1,2,3,\ldots
+\end{array}
+\right. \label{valor_integral_norm}
 \end{align}
 onde $N(\mu_m)$ é denominada integral de normalização, definida por
 \begin{align}
@@ -424,7 +429,7 @@ N(\mu_m) = \int_0^a X(\mu_m, x)^2 dx
 
 Os autovalores $\mu_m$ são dados por:
 \begin{alignat}{2}
-	\mu_m = \frac{m\pi}{a} \quad\quad\quad && m = 1,2,3,\ldots
+\mu_m = \frac{m\pi}{a} \quad\quad\quad && m = 1,2,3,\ldots
 \end{alignat}
 
 Uma vez que o problema de autovalor tem duas condições de contorno de segundo tipo, ele admite um autovalor nulo, isto é, $\mu_0 = 0$, cuja autofunção correspondente é:
@@ -436,10 +441,10 @@ As autofunções $X(\mu_m, x), m=0,1,2,3,\ldots$, do problema de autovalor \eqre
 \begin{align}
 & \int_0^a X(\mu_m, x)X(\mu_n, x)dx 
 = \left\lbrace
-	\begin{array}{ll}
-		0 \quad\quad\quad\quad & \text{para  } m \neq n \\ \\
-		N(\mu_m) & \text{para  }m = n
-	\end{array}
+\begin{array}{ll}
+0 \quad\quad\quad\quad & \text{para  } m \neq n \\ \\
+N(\mu_m) & \text{para  }m = n
+\end{array}
 \right. \label{ortogon}
 \end{align}
 
@@ -447,48 +452,48 @@ As autofunções $X(\mu_m, x), m=0,1,2,3,\ldots$, do problema de autovalor \eqre
 
 Considera-se agora que tanto $F_{1, j}$ quanto $F_{2, j}$ possam ser representados em termos das autofunções $X(\mu_m, x)$ como segue:
 \begin{align}
-	& F_{1, j}(x, y) = \sum_{m=0}^\infty C_{j,m}(y)X(\mu_m, x) \label{expansao_para_F1}\\ \nonumber \\
-	& F_{2, j}(x, y) = \sum_{m=0}^\infty D_{j,m}(y)X(\mu_m, x) \label{expansao_para_F2}
+& F_{1, j}(x, y) = \sum_{m=0}^\infty C_{j,m}(y)X(\mu_m, x) \label{expansao_para_F1}\\ \nonumber \\
+& F_{2, j}(x, y) = \sum_{m=0}^\infty D_{j,m}(y)X(\mu_m, x) \label{expansao_para_F2}
 \end{align}
 
 Os coeficientes $C_{j,m}(y)$ e $D_{j,m}(y)$ podem ser determinados através da aplicação da propriedade de ortogonalidade expressa em \eqref{ortogon}. Assim, multiplicando as equações
 \eqref{expansao_para_F1} e \eqref{expansao_para_F2} por $X(\mu_n, x)$ e integrando em relação a $x$ no intervalo $0 < x < a$, obtém-se:
 \begin{align}
-	& \int_0^a F_{1, j}(x, y)X(\mu_n, x)dx = \sum_{m=0}^\infty C_{j,m}(y) \int_0^a X(\mu_m, x)X(\mu_n, x)dx \label{somatorio_para_F1}\\ \nonumber \\
-	& \int_0^a F_{2, j}(x, y)X(\mu_n, x)dx = \sum_{m=0}^\infty D_{j,m}(y) \int_0^a X(\mu_m, x)X(\mu_n, x)dx \label{somatorio_para_F2}
+& \int_0^a F_{1, j}(x, y)X(\mu_n, x)dx = \sum_{m=0}^\infty C_{j,m}(y) \int_0^a X(\mu_m, x)X(\mu_n, x)dx \label{somatorio_para_F1}\\ \nonumber \\
+& \int_0^a F_{2, j}(x, y)X(\mu_n, x)dx = \sum_{m=0}^\infty D_{j,m}(y) \int_0^a X(\mu_m, x)X(\mu_n, x)dx \label{somatorio_para_F2}
 \end{align}
 
 As integrais acima, de acordo com a propriedade de ortogonalidade, anulam-se quando $m \ne n$, e são iguais a $N(\mu_m)$ quando $m = n$. Assim, cada somatório se reduz apenas ao
 termo de índice $m$, de modo que os coeficientes serão dados por:
 \begin{align}
-	& C_{j,m}(y) = \frac{1}{N(\mu_m)}\int_0^a F_{1, j}(x, y)X(\mu_m, x)dx \label{coef_para_F1}\\ \nonumber \\
-	& D_{j,m}(y) = \frac{1}{N(\mu_m)}\int_0^a F_{2, j}(x, y)X(\mu_m, x)dx \label{coef_para_F2}
+& C_{j,m}(y) = \frac{1}{N(\mu_m)}\int_0^a F_{1, j}(x, y)X(\mu_m, x)dx \label{coef_para_F1}\\ \nonumber \\
+& D_{j,m}(y) = \frac{1}{N(\mu_m)}\int_0^a F_{2, j}(x, y)X(\mu_m, x)dx \label{coef_para_F2}
 \end{align}
 
 Substituindo as relações \eqref{coef_para_F1} e \eqref{coef_para_F2} nos somatórios \eqref{expansao_para_F1} e \eqref{expansao_para_F2}, respectivamente:
 \begin{align}
-	& F_{1, j}(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\int_0^a F_{1, j}(x', y)X(\mu_m, x')dx' \label{expansao_para_F1_nova}\\ \nonumber \\
-	& F_{2, j}(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\int_0^a F_{2, j}(x', y)X(\mu_m, x')dx' \label{expansao_para_F2_nova}
+& F_{1, j}(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\int_0^a F_{1, j}(x', y)X(\mu_m, x')dx' \label{expansao_para_F1_nova}\\ \nonumber \\
+& F_{2, j}(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\int_0^a F_{2, j}(x', y)X(\mu_m, x')dx' \label{expansao_para_F2_nova}
 \end{align}
 
 Denota-se a \textit{transformada integral} de $F_{1, j}$ e $F_{2, j}$ na direção $x$ respectivamente por $\bar{F}_{1,j,m}(y)$ e $\bar{F}_{2,j,m}(y)$.
 Desse modo, cada uma das expressões acima pode ser dividida em duas partes, definindo o par \textit{transformada-inversa} para as funções $F_{1,j}$ e $F_{2,j}$:
 \begin{itemize}
-  \item Funções $F_{1, j}$:
-  \begin{fleqn}
-  \begin{alignat}{2}
-  		& \text{Inversa:} && F_{1, j}(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{1,j,m}(y) \label{definicao_da_transf_inv_F1} \\ \nonumber \\
-  		& \text{Transformada:} \quad\quad && \bar{F}_{1,j,m}(y) = \int_0^a F_{1, j}(x, y) X(\mu_m, x) dx \label{definicao_da_transf_F1}
-  \end{alignat}
-  \end{fleqn}
-  \item Funções $F_{2, j}$:
-  \begin{fleqn}
-  \begin{alignat}{2}
-  		& \text{Inversa:} && F_{2, j}(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{2,j,m}(y) \label{definicao_da_transf_inv_F2} \\ \nonumber \\
-  		& \text{Transformada:} \quad\quad && \bar{F}_{2,j,m}(y) = \int_0^a F_{2, j}(x, y) X(\mu_m, x) dx
-  		\label{definicao_da_transf_F2}
-  \end{alignat}
-  \end{fleqn}
+	\item Funções $F_{1, j}$:
+	\begin{fleqn}
+		\begin{alignat}{2}
+		& \text{Inversa:} && F_{1, j}(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{1,j,m}(y) \label{definicao_da_transf_inv_F1} \\ \nonumber \\
+		& \text{Transformada:} \quad\quad && \bar{F}_{1,j,m}(y) = \int_0^a F_{1, j}(x, y) X(\mu_m, x) dx \label{definicao_da_transf_F1}
+		\end{alignat}
+	\end{fleqn}
+	\item Funções $F_{2, j}$:
+	\begin{fleqn}
+		\begin{alignat}{2}
+		& \text{Inversa:} && F_{2, j}(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{2,j,m}(y) \label{definicao_da_transf_inv_F2} \\ \nonumber \\
+		& \text{Transformada:} \quad\quad && \bar{F}_{2,j,m}(y) = \int_0^a F_{2, j}(x, y) X(\mu_m, x) dx
+		\label{definicao_da_transf_F2}
+		\end{alignat}
+	\end{fleqn}
 \end{itemize}
 
 \subsubsection{Aplicação da transformação integral às equações do primeiro problema auxiliar}\label{secao_reciprocidade_F}
@@ -500,67 +505,67 @@ os resultados serão análogos para a equação \eqref{funcao_F_harm_T2_cart}.
 
 Multiplicando-se então a equação \eqref{funcao_F_harm_T1_cart} por $X(\mu_m, x)$ e integrando em relação a $x$ no intervalo $0 < x < a$: 
 \begin{align}
-	& \int_0^a  \frac{\partial^2 F_{1,j}(x, y)}{\partial x^2}X(\mu_m, x)dx + \int_0^a \frac{\partial^2 F_{1,j}(x, y)}{\partial y^2}X(\mu_m, x)dx = 0 
+& \int_0^a  \frac{\partial^2 F_{1,j}(x, y)}{\partial x^2}X(\mu_m, x)dx + \int_0^a \frac{\partial^2 F_{1,j}(x, y)}{\partial y^2}X(\mu_m, x)dx = 0 
 \end{align}
 
 Na expressão acima, a primeira integral pode ser desenvolvida através de integração por partes, enquanto que na segunda integral, os operadores de derivada
 em relação a $y$ e integração em relação a $x$ podem ser permutados:
 \begin{align}
-	& \left[ \frac{\partial F_{1,j}(x, y)}{\partial x}X(\mu_m, x) \right]_0^a
-	-
-	\int_0^a  \frac{\partial F_{1,j}(x, y)}{\partial x}\frac{dX(\mu_m, x)}{dx} dx + \nonumber \\
-	& \frac{d^2}{d y^2}\int_0^a F_{1,j}(x, y)X(\mu_m, x)dx = 0 \nonumber \\ 
-	\Rightarrow & \frac{\partial F_{1,j}(a, y)}{\partial x}X(\mu_m, a) - \frac{\partial F_{1,j}(0, y)}{\partial x}X(\mu_m, 0)
-	-
-	\int_0^a  \frac{\partial F_{1,j}(x, y)}{\partial x}\frac{dX(\mu_m, x)}{dx} dx + \nonumber \\
-	& \frac{d^2}{d y^2}\int_0^a F_{1,j}(x, y)X(\mu_m, x)dx = 0
+& \left[ \frac{\partial F_{1,j}(x, y)}{\partial x}X(\mu_m, x) \right]_0^a
+-
+\int_0^a  \frac{\partial F_{1,j}(x, y)}{\partial x}\frac{dX(\mu_m, x)}{dx} dx + \nonumber \\
+& \frac{d^2}{d y^2}\int_0^a F_{1,j}(x, y)X(\mu_m, x)dx = 0 \nonumber \\ 
+\Rightarrow & \frac{\partial F_{1,j}(a, y)}{\partial x}X(\mu_m, a) - \frac{\partial F_{1,j}(0, y)}{\partial x}X(\mu_m, 0)
+-
+\int_0^a  \frac{\partial F_{1,j}(x, y)}{\partial x}\frac{dX(\mu_m, x)}{dx} dx + \nonumber \\
+& \frac{d^2}{d y^2}\int_0^a F_{1,j}(x, y)X(\mu_m, x)dx = 0
 \end{align}
 
 As condições de contorno \eqref{funcao_F_cc_T1_1a_cart} e \eqref{funcao_F_cc_T1_1b_cart} anulam os dois primeiros termos da expressão acima. A primeira
 integral também pode ser desenvolvida por partes. A segunda integral é exatamente a transformada integral da função $F_{1, j}$, conforme a equação \eqref{definicao_da_transf_F1}.
 Assim:
 \begin{align}
-	&
-	- \left[ F_{1,j}(x, y)\frac{dX(\mu_m, x)}{dx} \right]_0^a
-	+ \int_0^a  F_{1,j}(x, y)\frac{d^2X(\mu_m, x)}{dx^2} dx + \frac{d^2 \bar{F}_{1,j,m}(y)}{d y^2} = 0 \nonumber \\
-	\Rightarrow &
-	- F_{1,j}(a, y)\frac{dX(\mu_m, a)}{dx}+ F_{1,j}(0, y)\frac{dX(\mu_m, 0)}{dx} + \int_0^a  F_{1,j}(x, y)\frac{d^2X(\mu_m, x)}{dx^2} dx + \nonumber \\
-	& \frac{d^2 \bar{F}_{1,j,m}(y)}{d y^2} = 0
+&
+- \left[ F_{1,j}(x, y)\frac{dX(\mu_m, x)}{dx} \right]_0^a
++ \int_0^a  F_{1,j}(x, y)\frac{d^2X(\mu_m, x)}{dx^2} dx + \frac{d^2 \bar{F}_{1,j,m}(y)}{d y^2} = 0 \nonumber \\
+\Rightarrow &
+- F_{1,j}(a, y)\frac{dX(\mu_m, a)}{dx}+ F_{1,j}(0, y)\frac{dX(\mu_m, 0)}{dx} + \int_0^a  F_{1,j}(x, y)\frac{d^2X(\mu_m, x)}{dx^2} dx + \nonumber \\
+& \frac{d^2 \bar{F}_{1,j,m}(y)}{d y^2} = 0
 \end{align}
 
 Aplicando as condições de contorno \eqref{problema_vc_1b} e \eqref{problema_vc_1c}, a expressão resulta em: 
 \begin{align}
-	&
-	\int_0^a  F_{1,j}(x, y)\frac{d^2X(\mu_m, x)}{dx^2} dx + \frac{d^2 \bar{F}_{1,j,m}(y)}{d y^2} = 0 \label{equacao_intermediaria_F1}
+&
+\int_0^a  F_{1,j}(x, y)\frac{d^2X(\mu_m, x)}{dx^2} dx + \frac{d^2 \bar{F}_{1,j,m}(y)}{d y^2} = 0 \label{equacao_intermediaria_F1}
 \end{align}
 
 Da equação do problema homogêneo de autovalor associado \eqref{problema_vc_1a}, obtém-se:
 \begin{align}
-	\frac{d^2 X(\mu_m, x)}{d x^2} = -\mu_m^2 X(\mu_m, x) \label{substituicao_autofuncao}
+\frac{d^2 X(\mu_m, x)}{d x^2} = -\mu_m^2 X(\mu_m, x) \label{substituicao_autofuncao}
 \end{align}
 
 Substituindo \eqref{substituicao_autofuncao} em \eqref{equacao_intermediaria_F1}:
 \begin{align}
-	&
-	\int_0^a  F_{1,j}(x, y)[-\mu_m^2 X(\mu_m, x)] dx + \frac{\partial^2 \bar{F}_{1,j,m}(y)}{\partial y^2} = 0 \nonumber \\
-	\Rightarrow &
-	\frac{d^2 \bar{F}_{1,j,m}(y)}{d y^2}
-	-
-	\mu_m^2 \int_0^a  F_{1,j}(x, y)X(\mu_m, x) dx = 0
+&
+\int_0^a  F_{1,j}(x, y)[-\mu_m^2 X(\mu_m, x)] dx + \frac{\partial^2 \bar{F}_{1,j,m}(y)}{\partial y^2} = 0 \nonumber \\
+\Rightarrow &
+\frac{d^2 \bar{F}_{1,j,m}(y)}{d y^2}
+-
+\mu_m^2 \int_0^a  F_{1,j}(x, y)X(\mu_m, x) dx = 0
 \end{align}
 
 Finalmente, aplicando a definição da transformada integral de $F_{1, j}$, obtém-se uma equação diferencial ordinária para $\bar{F}_{1,j,m}(y)$:
 \begin{align}
-	\frac{d^2 \bar{F}_{1,j,m}(y)}{d y^2}
-	-
-	\mu_m^2 \bar{F}_{1,j,m}(y) = 0 \label{eq_dif_ord_F1}
+\frac{d^2 \bar{F}_{1,j,m}(y)}{d y^2}
+-
+\mu_m^2 \bar{F}_{1,j,m}(y) = 0 \label{eq_dif_ord_F1}
 \end{align}
 
 Seguindo o mesmo procedimento para a equação \eqref{funcao_F_harm_T2_cart}, obtém-se uma equação diferencial ordinária para $\bar{F}_{2,j,m}(y)$:
 \begin{align}
-	\frac{d^2 \bar{F}_{2,j,m}(y)}{d y^2}
-	-
-	\mu_m^2 \bar{F}_{2,j,m}(y) = 0 \label{eq_dif_ord_F2}
+\frac{d^2 \bar{F}_{2,j,m}(y)}{d y^2}
+-
+\mu_m^2 \bar{F}_{2,j,m}(y) = 0 \label{eq_dif_ord_F2}
 \end{align}
 
 As soluções gerais das equações diferenciais \eqref{eq_dif_ord_F1} e \eqref{eq_dif_ord_F2} podem ser escritas como combinação linear das seguintes funções \citep{livro_boyce}:
@@ -571,46 +576,46 @@ As soluções gerais das equações diferenciais \eqref{eq_dif_ord_F1} e \eqref{
 
 A combinação linear destas funções pode ser escrita na forma:
 \begin{align}
-	& \bar{F}_{1,j,m}(y) = \mathbb{A}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \mathbb{B}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \label{solucao_temporaria_F1}\\ \nonumber \\
-	& \bar{F}_{2,j,m}(y) = \mathbb{C}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \mathbb{D}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \label{solucao_temporaria_F2}
+& \bar{F}_{1,j,m}(y) = \mathbb{A}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \mathbb{B}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \label{solucao_temporaria_F1}\\ \nonumber \\
+& \bar{F}_{2,j,m}(y) = \mathbb{C}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \mathbb{D}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \label{solucao_temporaria_F2}
 \end{align} 
 onde $\mathbb{A}_{j,m}, \mathbb{B}_{j,m}, \mathbb{C}_{j,m}$ e $\mathbb{D}_{j,m}$ são constantes a determinar. Os argumentos das funções hiperbólicas em \eqref{solucao_temporaria_F1} e \eqref{solucao_temporaria_F2} escritos como $b - y$ também podem ser entendidos como combinações lineares das soluções \eqref{basic_1} e \eqref{basic_2}; essa forma de expressar as soluções facilitará a determinação dos coeficientes desta expressão, conforme será visto a seguir.
 
 Aplicando-se a transformação integral às condições de contorno \eqref{funcao_F_cc_T1_2_cart} e \eqref{funcao_F_cc_T1_4_cart}, e substituindo as expressões \eqref{solucao_temporaria_F1} e \eqref{solucao_temporaria_F2}:
 
 \begin{align}
-	& \int_0^a F_{1,j}(x, b)X(\mu_m, x)dx = \int_0^a \psi_j(x) X(\mu_m, x)dx \nonumber \\
-	& \Rightarrow \bar{F}_{1,j,m}(b) = \bar{\psi}_{j, m} \nonumber \\
-	& \Rightarrow \mathbb{A}_{j,m}\frac{\sinh 0}{\sinh\mu_m b} + \mathbb{B}_{j,m}\frac{\sinh \mu_m b}{\sinh\mu_m b} = \bar{\psi}_{j, m} \nonumber \\
-	& \Rightarrow \mathbb{B}_{j,m} = \bar{\psi}_{j, m} \label{resultado_cte_5}
+& \int_0^a F_{1,j}(x, b)X(\mu_m, x)dx = \int_0^a \psi_j(x) X(\mu_m, x)dx \nonumber \\
+& \Rightarrow \bar{F}_{1,j,m}(b) = \bar{\psi}_{j, m} \nonumber \\
+& \Rightarrow \mathbb{A}_{j,m}\frac{\sinh 0}{\sinh\mu_m b} + \mathbb{B}_{j,m}\frac{\sinh \mu_m b}{\sinh\mu_m b} = \bar{\psi}_{j, m} \nonumber \\
+& \Rightarrow \mathbb{B}_{j,m} = \bar{\psi}_{j, m} \label{resultado_cte_5}
 \end{align} 
 
 \begin{align}
-	& \int_0^a F_{2,j}(x, 0)X(\mu_m, x)dx = 0 \nonumber \\
-	& \Rightarrow \bar{F}_{2,j,m}(0) = 0 \nonumber \\
-	& \Rightarrow \mathbb{C}_{j,m}\frac{\sinh\mu_m b}{\sinh\mu_m b} + \mathbb{D}_{j,m}\frac{\sinh 0}{\sinh\mu_m b} = 0 \nonumber \\
-	& \Rightarrow \mathbb{C}_{j,m} = 0 \label{resultado_cte_8}
+& \int_0^a F_{2,j}(x, 0)X(\mu_m, x)dx = 0 \nonumber \\
+& \Rightarrow \bar{F}_{2,j,m}(0) = 0 \nonumber \\
+& \Rightarrow \mathbb{C}_{j,m}\frac{\sinh\mu_m b}{\sinh\mu_m b} + \mathbb{D}_{j,m}\frac{\sinh 0}{\sinh\mu_m b} = 0 \nonumber \\
+& \Rightarrow \mathbb{C}_{j,m} = 0 \label{resultado_cte_8}
 \end{align} 
 
 Para o caso específico $\mu_0 = 0$, as equações diferenciais \eqref{eq_dif_ord_F1} e \eqref{eq_dif_ord_F2} admitem as seguintes soluções gerais:
 \begin{align}
-	& \bar{F}_{1,j,0}(y) = \mathbb{A}_{j,0}\frac{b - y}{b} + \mathbb{B}_{j,0}\frac{y}{b} \label{solucao_temporaria_F1_0}\\ \nonumber \\
-	& \bar{F}_{2,j,0}(y) = \mathbb{C}_{j,0}\frac{b - y}{b} + \mathbb{D}_{j,0}\frac{y}{b} \label{solucao_temporaria_F2_0}
+& \bar{F}_{1,j,0}(y) = \mathbb{A}_{j,0}\frac{b - y}{b} + \mathbb{B}_{j,0}\frac{y}{b} \label{solucao_temporaria_F1_0}\\ \nonumber \\
+& \bar{F}_{2,j,0}(y) = \mathbb{C}_{j,0}\frac{b - y}{b} + \mathbb{D}_{j,0}\frac{y}{b} \label{solucao_temporaria_F2_0}
 \end{align} 
 
 Aplicando-se a transformação integral às condições de contorno \eqref{funcao_F_cc_T1_2_cart} e \eqref{funcao_F_cc_T1_4_cart} para $m = 0$, e substituindo as expressões \eqref{solucao_temporaria_F1_0} e \eqref{solucao_temporaria_F2_0}:
 \begin{align}
-	& \int_0^a F_{1,j}(x, b)X(\mu_0, x)dx = \int_0^a \psi_j(x)X(\mu_0, x)dx \nonumber \\
-	& \Rightarrow \bar{F}_{1,j,0}(b) = \bar{\psi}_{j,0} \nonumber \\
-	& \Rightarrow \mathbb{A}_{j,0}\frac{0}{b} + \mathbb{B}_{j,0}\frac{b}{b} = \bar{\psi}_{j,0} \nonumber \\
-	& \Rightarrow \mathbb{B}_{j,0} = \bar{\psi}_{j,0} \label{resultado_cte_2}
+& \int_0^a F_{1,j}(x, b)X(\mu_0, x)dx = \int_0^a \psi_j(x)X(\mu_0, x)dx \nonumber \\
+& \Rightarrow \bar{F}_{1,j,0}(b) = \bar{\psi}_{j,0} \nonumber \\
+& \Rightarrow \mathbb{A}_{j,0}\frac{0}{b} + \mathbb{B}_{j,0}\frac{b}{b} = \bar{\psi}_{j,0} \nonumber \\
+& \Rightarrow \mathbb{B}_{j,0} = \bar{\psi}_{j,0} \label{resultado_cte_2}
 \end{align} 
 
 \begin{align}
-	& \int_0^a F_{2,j}(x, 0)X(\mu_0, x)dx = 0 \nonumber \\
-	& \Rightarrow \bar{F}_{2,j,0}(0) = 0 \nonumber \\
-	& \Rightarrow \mathbb{C}_{j,0}\frac{b}{b} + \mathbb{D}_{j,0}\frac{0}{b} = 0 \nonumber \\
-	& \therefore \mathbb{C}_{j,0} = 0 \label{resultado_cte_3}
+& \int_0^a F_{2,j}(x, 0)X(\mu_0, x)dx = 0 \nonumber \\
+& \Rightarrow \bar{F}_{2,j,0}(0) = 0 \nonumber \\
+& \Rightarrow \mathbb{C}_{j,0}\frac{b}{b} + \mathbb{D}_{j,0}\frac{0}{b} = 0 \nonumber \\
+& \therefore \mathbb{C}_{j,0} = 0 \label{resultado_cte_3}
 \end{align}
 
 Fazendo a substituição dos resultados encontrados para as constantes \eqref{resultado_cte_5} e \eqref{resultado_cte_8}
@@ -645,8 +650,8 @@ As constantes $\mathbb{A}_{j,m}$ e $\mathbb{D}_{j,m}$ serão levantadas através
 Assim, fazendo esta
 substituição para a equação \eqref{funcao_F_cc_grad_T1_cart}, obtém-se:
 \begin{align}
-	& F_{1,j}(x, w(x)) = F_{2, j}(x, w(x)) \nonumber \\
-	& \Rightarrow \sum_{m=0}^M \frac{X_m(x)}{N(\mu_m)}\bar{F}_{1,j,m}(w(x)) = \sum_{m=0}^\infty \frac{X_m(x)}{N(\mu_m)}\bar{F}_{2,j,m}(w(x))
+& F_{1,j}(x, w(x)) = F_{2, j}(x, w(x)) \nonumber \\
+& \Rightarrow \sum_{m=0}^M \frac{X_m(x)}{N(\mu_m)}\bar{F}_{1,j,m}(w(x)) = \sum_{m=0}^\infty \frac{X_m(x)}{N(\mu_m)}\bar{F}_{2,j,m}(w(x))
 \end{align}
 onde $X_m(x) \equiv X(\mu_m, x)$.
 
@@ -711,12 +716,12 @@ Fazendo agora a
 substituição de \eqref{definicao_da_transf_inv_F1} e
 \eqref{definicao_da_transf_inv_F2} na equação \eqref{funcao_F_cc_T1_5_cart}, obtém-se:
 \begin{align}
-	& k_2\left[w'(x)\frac{\partial F_{2,j}(x, w(x))}{\partial x} - \frac{\partial F_{2,j}(x, w(x))}{\partial y}\right] = \nonumber \\
-	& k_1\left[w'(x)\frac{\partial F_{1,j}(x, w(x))}{\partial x} - \frac{\partial F_{1,j}(x, w(x))}{\partial y}\right] \nonumber \\
-	& \Rightarrow k_2\left[w'(x)\sum_{m=0}^\infty \frac{X'_m(x)}{N(\mu_m)}\bar{F}_{2,j,m}(w(x)) - \sum_{m=0}^\infty \frac{X_m(x)}{N(\mu_m)}\bar{F}'_{2,j,m}(w(x)) \right] = \nonumber \\
-	& \quad\quad k_1\left[w'(x)\sum_{m=0}^\infty \frac{X'_m(x)}{N(\mu_m)}\bar{F}_{1,j,m}(w(x)) - \sum_{m=0}^\infty \frac{X_m(x)}{N(\mu_m)}\bar{F}'_{1,j,m}(w(x)) \right] \nonumber \\
-	& \Rightarrow  \sum_{m=0}^\infty \frac{k_2}{N(\mu_m)} \left[ w'(x) X'_m(x)\bar{F}_{2,j,m}(w(x)) - X_m(x)\bar{F}'_{2,j,m}(w(x)) \right] = \nonumber \\
-	& \quad\quad \sum_{m=0}^\infty \frac{k_1}{N(\mu_m)} \left[ w'(x) X'_m(x)\bar{F}_{1,j,m}(w(x)) - X_m(x)\bar{F}'_{1,j,m}(w(x)) \right]
+& k_2\left[w'(x)\frac{\partial F_{2,j}(x, w(x))}{\partial x} - \frac{\partial F_{2,j}(x, w(x))}{\partial y}\right] = \nonumber \\
+& k_1\left[w'(x)\frac{\partial F_{1,j}(x, w(x))}{\partial x} - \frac{\partial F_{1,j}(x, w(x))}{\partial y}\right] \nonumber \\
+& \Rightarrow k_2\left[w'(x)\sum_{m=0}^\infty \frac{X'_m(x)}{N(\mu_m)}\bar{F}_{2,j,m}(w(x)) - \sum_{m=0}^\infty \frac{X_m(x)}{N(\mu_m)}\bar{F}'_{2,j,m}(w(x)) \right] = \nonumber \\
+& \quad\quad k_1\left[w'(x)\sum_{m=0}^\infty \frac{X'_m(x)}{N(\mu_m)}\bar{F}_{1,j,m}(w(x)) - \sum_{m=0}^\infty \frac{X_m(x)}{N(\mu_m)}\bar{F}'_{1,j,m}(w(x)) \right] \nonumber \\
+& \Rightarrow  \sum_{m=0}^\infty \frac{k_2}{N(\mu_m)} \left[ w'(x) X'_m(x)\bar{F}_{2,j,m}(w(x)) - X_m(x)\bar{F}'_{2,j,m}(w(x)) \right] = \nonumber \\
+& \quad\quad \sum_{m=0}^\infty \frac{k_1}{N(\mu_m)} \left[ w'(x) X'_m(x)\bar{F}_{1,j,m}(w(x)) - X_m(x)\bar{F}'_{1,j,m}(w(x)) \right]
 \end{align}
 
 Separando os termos $m = 0$ do restante do somatório:
@@ -837,7 +842,7 @@ onde
 \end{bmatrix}
 \end{align}
 
- O sistema definido por \eqref{sistema_para_coeficientes_3} deve ser resolvido para cada coluna da matriz $\mathbf{b}$, e os coeficientes obtidos, ou seja, as colunas da matriz $\mathbf{\xi}$, são os que melhor representam as aproximações \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2}. Assumindo então que esta aproximação é suficiente satisfatória, o sinal de aproximação em \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2}, e expressões análogas, será substituído pelo sinal de igual. Em tese, se o sistema infinito pudesse ser resolvido numericamente, as representações seriam dadas por \eqref{compacta_1} e \eqref{compacta_2} e seriam exatas.
+O sistema definido por \eqref{sistema_para_coeficientes_3} deve ser resolvido para cada coluna da matriz $\mathbf{b}$, e os coeficientes obtidos, ou seja, as colunas da matriz $\mathbf{\xi}$, são os que melhor representam as aproximações \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2}. Assumindo então que esta aproximação é suficiente satisfatória, o sinal de aproximação em \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2}, e expressões análogas, será substituído pelo sinal de igual. Em tese, se o sistema infinito pudesse ser resolvido numericamente, as representações seriam dadas por \eqref{compacta_1} e \eqref{compacta_2} e seriam exatas.
 
 %Aplicando a transformação integral às equações \eqref{compacta_1} e \eqref{compacta_2}:
 %\begin{align}
@@ -908,13 +913,13 @@ G_{1, j}(x, y) = & \frac{\mathbb{E}_{j,0}(b - y) + \bar{\phi}_{j,0}y}{ab} + \non
 \end{align}
 
 O par transformada-inversa para este problema, do qual se determina a solução acima, é obtido de forma imediata a partir da adequada substituição no par transformada-inversa relacionado pelas equações \eqref{definicao_da_transf_inv_F1} e \eqref{definicao_da_transf_F1}:
-  \begin{fleqn}
-  \begin{alignat}{2}
-  		& \text{Inversa:} && G_{1, j}(x, y) = \sum_{m=0}^\infty \frac{X_m(x)}{N(\mu_m)}\bar{G}_{1,j,m}(y) \label{definicao_da_transf_inv_G1} \\ \nonumber \\
-  		& \text{Transformada:} \quad\quad && \bar{G}_{1,j,m}(y) = \int_0^a G_{1, j}(x, y) X_m(x) dx \label{definicao_da_transf_G1}
-  \end{alignat}
-  \end{fleqn}
-  
+\begin{fleqn}
+	\begin{alignat}{2}
+	& \text{Inversa:} && G_{1, j}(x, y) = \sum_{m=0}^\infty \frac{X_m(x)}{N(\mu_m)}\bar{G}_{1,j,m}(y) \label{definicao_da_transf_inv_G1} \\ \nonumber \\
+	& \text{Transformada:} \quad\quad && \bar{G}_{1,j,m}(y) = \int_0^a G_{1, j}(x, y) X_m(x) dx \label{definicao_da_transf_G1}
+	\end{alignat}
+\end{fleqn}
+
 É possível fazer uma analogia entre as condições de contorno \eqref{funcao_F_cc_T1_5_cart} e \eqref{funcao_G_cc_grad_T1_cart}, bastando trocar $F$ por $G$ e $\psi$ por $\phi$, além de fazer $k_1 = 1$ e $k_2 = 0$. Dessa forma, a transformada integral da condição de contorno \eqref{funcao_G_cc_grad_T1_cart} é obtida fazendo as substituições adequadas em \eqref{sistema_para_coeficientes_2}, obtendo-se um sistema da forma:
 \begin{align}
 \sum_{m = 0}^M u_m(x_k) \mathbb{E}_{j,m} = v_{j}(x_k) 
@@ -1083,7 +1088,7 @@ As mesmas considerações podem ser feitas para as funções $G_{1,j}$, obtendo-
 
 Retornando à fórmula \eqref{gram_schmidt_F_04}, nota-se que ela pode ser escrita na forma
 \begin{align}
-	F_{1,j} = \frac{1}{\norm{\nu_j}}\hat{F}_{1,j} - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} F_{1,k} \label{termo_gram}
+F_{1,j} = \frac{1}{\norm{\nu_j}}\hat{F}_{1,j} - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} F_{1,k} \label{termo_gram}
 \end{align}
 onde
 \begin{align}
@@ -1095,7 +1100,7 @@ Substituindo então $F_{1,k}$ em \eqref{termo_gram} pela expressão em \eqref{de
 F_{1,j} = & \frac{X_0(x)}{N(\mu_0)}\left[\frac{1}{\norm{\nu_j}} \hat{\mathbb{A}}_{j,0}\frac{b - y}{b} + \frac{1}{\norm{\nu_j}} \hat{\mathbb{B}}_{j,0}\frac{y}{b}\right] \nonumber \\
 & + \sum_{m=1}^\infty \frac{X_m(x)}{N(\mu_m)}\left[\frac{1}{\norm{\nu_j}} \hat{\mathbb{A}}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \frac{1}{\norm{\nu_j}} \hat{\mathbb{B}}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b}\right] \nonumber \\
 & - \sum_{k=0}^{j-1} \frac{X_0(x)}{N(\mu_0)}\left[\frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{A}_{k,0}\frac{b - y}{b} + \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{B}_{k,0}\frac{y}{b}\right] \nonumber \\
-		& - \sum_{k=0}^{j-1} \sum_{m=1}^\infty \frac{X_m(x)}{N(\mu_m)}\left[\frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{A}_{k,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{B}_{k,m}\frac{\sinh\mu_m y}{\sinh\mu_m b}\right]
+& - \sum_{k=0}^{j-1} \sum_{m=1}^\infty \frac{X_m(x)}{N(\mu_m)}\left[\frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{A}_{k,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{B}_{k,m}\frac{\sinh\mu_m y}{\sinh\mu_m b}\right]
 \end{align}
 
 Permutando os somatórios e reorganizando:
@@ -1133,19 +1138,19 @@ Os resultados encontrados permitem esboçar um algoritmo básico para determina�
 	\item Gerar a matriz $\mathbf{M}$ do sistema linear referente às equações \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2};
 	\item Escolher um conjunto de funções linearmente independentes $\hat{\psi}_j(x), j=0,1,\ldots,N_1$;
 	\item Para cada $j$:
-		\begin{enumerate}	
-			\item Calcular as transformadas integrais $\hat{\bar{\psi}}_{j,m}, m=0,1,2, \ldots, M$;
-			\item Resolver o sistema $\mathbf{M}\mathbf{\xi} = \mathbf{b}$ definido pelas equações \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2}, onde $\mathbf{M}$ é a matriz calculada no passo 1 e $\mathbf{b}$ é o vetor calculado através dos valores de $\hat{\bar{\psi}}_{j,m}$, obtendo assim os valores $\hat{\mathbb{A}}_{j,m}, m=0,1,2, \ldots, M$;
-			\item Calcular $\hat{F}_{1,j}$ a partir de \eqref{solucao_transf_inversa_F1_com_dependencia} usando os valores $\hat{\mathbb{A}}_{j,m}$;
-			\item Calcular $\hat{\beta}_j$ a partir de \eqref{serie_para_beta} usando os valores $\hat{\mathbb{A}}_{j,m}$;
-			\item Calcular $\nu_j$:
-				\begin{itemize}
-				\item Se $j = 0$, então $\nu_j = \hat{\beta}_j$;
-				\item Se $j \ne 0$, então $\nu_j = \hat{\beta}_j - \displaystyle\sum_{k = 0}^{j - 1} \langle \hat{\beta}_j, \beta_k\rangle\beta_k$;
-				\end{itemize}
-			\item Calcular $\mathbb{A}_{j,m}, m=0,1,2, \ldots, M$ a partir de \eqref{expressao_relaciona_psi};
-			\item Calcular $F_{1,j}$ a partir de \eqref{solucao_transf_inversa_F1_com_dependencia} usando os valores $\mathbb{A}_{j,m}$;
-			\item Calcular $\beta_j$ a partir de \eqref{serie_para_beta} usando os valores $\mathbb{A}_{j,m}$.
+	\begin{enumerate}	
+		\item Calcular as transformadas integrais $\hat{\bar{\psi}}_{j,m}, m=0,1,2, \ldots, M$;
+		\item Resolver o sistema $\mathbf{M}\mathbf{\xi} = \mathbf{b}$ definido pelas equações \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2}, onde $\mathbf{M}$ é a matriz calculada no passo 1 e $\mathbf{b}$ é o vetor calculado através dos valores de $\hat{\bar{\psi}}_{j,m}$, obtendo assim os valores $\hat{\mathbb{A}}_{j,m}, m=0,1,2, \ldots, M$;
+		\item Calcular $\hat{F}_{1,j}$ a partir de \eqref{solucao_transf_inversa_F1_com_dependencia} usando os valores $\hat{\mathbb{A}}_{j,m}$;
+		\item Calcular $\hat{\beta}_j$ a partir de \eqref{serie_para_beta} usando os valores $\hat{\mathbb{A}}_{j,m}$;
+		\item Calcular $\nu_j$:
+		\begin{itemize}
+			\item Se $j = 0$, então $\nu_j = \hat{\beta}_j$;
+			\item Se $j \ne 0$, então $\nu_j = \hat{\beta}_j - \displaystyle\sum_{k = 0}^{j - 1} \langle \hat{\beta}_j, \beta_k\rangle\beta_k$;
+		\end{itemize}
+		\item Calcular $\mathbb{A}_{j,m}, m=0,1,2, \ldots, M$ a partir de \eqref{expressao_relaciona_psi};
+		\item Calcular $F_{1,j}$ a partir de \eqref{solucao_transf_inversa_F1_com_dependencia} usando os valores $\mathbb{A}_{j,m}$;
+		\item Calcular $\beta_j$ a partir de \eqref{serie_para_beta} usando os valores $\mathbb{A}_{j,m}$.
 	\end{enumerate}
 \end{enumerate}
 
@@ -1157,7 +1162,7 @@ Todas as análises feitas para determinação das funções $F_{1,j}$ e $\beta_j
 \end{align}
 onde
 \begin{align}
-	\upsilon_j = \hat{\gamma}_j - \displaystyle\sum_{k = 0}^{j - 1} \langle \hat{\gamma}_j, \gamma_k\rangle\gamma_k
+\upsilon_j = \hat{\gamma}_j - \displaystyle\sum_{k = 0}^{j - 1} \langle \hat{\gamma}_j, \gamma_k\rangle\gamma_k
 \end{align}
 
 Pode-se então adaptar o algoritmo básico elaborado para as funções $F_{1,j}$ e $\beta_j$, a fim de obter as funções $G_{1,j}$ e $\gamma_j$, necessárias para determinação da condutância térmica de contato, expressa pela equação \eqref{equacao_definicao_f_r_expl}:

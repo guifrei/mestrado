@@ -11,7 +11,7 @@ Na seção \ref{secao_sobre_fr}, foi definido na equação \eqref{definicao_innn
 
 Se a superfície $\Gamma$, sobre a qual é realizada a integração, possuir uma representação paramétrica da forma
 \begin{align}
-	\mathbf{\Gamma}(t) = x(t)\mathbf{a}_x + y(t)\mathbf{a}_y
+\mathbf{\Gamma}(t) = x(t)\mathbf{a}_x + y(t)\mathbf{a}_y
 \end{align}
 onde $\mathbf{a}_x$ e $\mathbf{a}_y$ são os vetores unitários da base canônica do sistema cartesiano, então a integral \eqref{integral_da_definicao_produto_interno} pode ser escrita como \citep{livro_stewart}:
 \begin{align}
@@ -96,9 +96,9 @@ ou, substituindo as condições de contorno \eqref{funcao_F_cc_T1_2_cart} e \eqr
 \int_0^a \left[\left(\frac{-q}{k_1}\right)\phi_j(x) - Y(x)\frac{\partial G_{1,j}(x, b)}{\partial y}\right] dx \nonumber \\
 & =
 -\frac{q}{k_1}\int_0^a\phi_j(x)dx - \int_0^a Y(x)\frac{\partial G_{1,j}(x, b)}{\partial y} dx
- \nonumber \\
- & =
- -\frac{q}{k_1}\bar{\phi}_{j,0} - \int_0^a Y(x)\frac{\partial G_{1,j}(x, b)}{\partial y} dx
+\nonumber \\
+& =
+-\frac{q}{k_1}\bar{\phi}_{j,0} - \int_0^a Y(x)\frac{\partial G_{1,j}(x, b)}{\partial y} dx
 \label{integral_de_contorno_para_G1}
 \end{align}
 
@@ -127,7 +127,7 @@ Substituindo os resultados \eqref{derivada_parcial_y_F} e \eqref{derivada_parcia
 & =
 -\frac{q}{k_1}\bar{\psi}_{j,0} + \frac{\mathbb{A}_{j,0} - \bar{\psi}_{j,0}}{ab}\int_0^a Y(x)dx + \nonumber \\
 & \frac{2}{a}\sum_{m=1}^M \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)\int_0^a Y(x)\cos\mu_m x dx
-\label{calculo_FR_F1}
+\label{calculo_FR_F1_antes}
 \end{align}
 %
 \begin{align}
@@ -135,6 +135,95 @@ Substituindo os resultados \eqref{derivada_parcial_y_F} e \eqref{derivada_parcia
 & =
 -\frac{q}{k_1}\bar{\phi}_{j,0} + \frac{\mathbb{E}_{j,0} - \bar{\phi}_{j,0}}{ab}\int_0^a Y(x)dx + \nonumber \\
 & \frac{2}{a}\sum_{m=1}^M \mu_m \left(\frac{\mathbb{E}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\phi}_{j, m}}{\tanh\mu_m b}\right)\int_0^a Y(x)\cos\mu_m x dx
+\label{calculo_FR_G1_antes}
+\end{align}
+
+As equações \eqref{calculo_FR_F1_antes} e \eqref{calculo_FR_G1_antes} fornecem os funcionais de reciprocidade $\Re(F_{1,j})$ e $\Re(G_{1,j})$ referentes à uma escolha particular de funções auxiliares $\psi_j(x)$ e $\phi_j(x)$, respectivamente. Os termos $\bar{\psi}_{j, m}$ e $\bar{\phi}_{j, m}$, por sua vez, correspondem respectivamente às transformadas integrais das referidas funções $\psi_j(x)$ e $\phi_j(x)$. É necessário agora estabelecer uma escolha para estas funções que seja vantajosa do ponto de vista computacional. \cite{tese_padilha} empregou, para o caso da interface plana horizontal, as seguintes alternativas para $\psi_j(x)$ e $\phi_j(x)$:
+\begin{align}
+\psi_j(x), \phi_j(x) = \left\lbrace
+\begin{array}{ll}
+\displaystyle\sqrt{\frac{1}{a}}, & j = 0 \\ \nonumber \\
+\displaystyle\sqrt{\frac{2}{a}}\cos \mu_j x, & j = 1,2,3,\ldots
+\end{array}
+\right.
+\end{align}
+
+As equações acima, a menos das constantes multiplicativas, são equivalentes às autofunções soluções do problema de Sturm-Liouville formulado em \eqref{problema_vc_1a}, \eqref{problema_vc_1b} e \eqref{problema_vc_1c}. Esta característica permite simplificar consideravelmente as expressões \eqref{calculo_FR_F1_antes} e \eqref{calculo_FR_G1_antes}, através da aplicação da propriedade da ortogonalidade formulada em \eqref{ortogon}. Com efeito, seja o cálculo de $\bar{\psi}_{j, m}$ através da definição da transformada integral:
+\begin{align}
+\bar{\psi}_{j, m} = \int_0^a \psi_j(x) X(\mu_m, x)dx \label{integrando_m}
+\end{align}
+onde $X(\mu_m, x)$ é definida em \eqref{definicao_das_autofuncoes}
+
+Para o caso $j \ne 0$, pode-se escrever:
+\begin{align}
+\psi_j(x) = \sqrt{\frac{2}{a}}X(\mu_j, x) \label{nova_expressao_m}
+\end{align}
+
+Substituindo \eqref{nova_expressao_m} em \eqref{integrando_m}:
+\begin{align}
+\bar{\psi}_{j, m} & = \int_0^a \sqrt{\frac{2}{a}}X(\mu_j, x) X(\mu_m, x)dx  \nonumber \\
+& = \sqrt{\frac{2}{a}} \int_0^a X(\mu_j, x) X(\mu_m, x)dx \label{integrando_m2}
+\end{align}
+
+Devido à propriedade da ortogonalidade \eqref{ortogon}, a integral em \eqref{integrando_m2} será não-nula apenas para $m = j$, e a equação \eqref{integrando_m2} pode ser escrita como:
+\begin{align}
+\bar{\psi}_{j, j} & = \sqrt{\frac{2}{a}} N(\mu_j) \nonumber \\
+& = \sqrt{\frac{a}{2}} \label{integrando_m3}
+\end{align}
+sendo que foi usado o resultado em \eqref{valor_integral_norm} na simplificação da equação acima.
+
+Para o caso $j = 0$, pode-se escrever:
+\begin{align}
+\psi_0(x) = \sqrt{\frac{1}{a}}X(\mu_0, x) \label{nova_expressao_0}
+\end{align}
+
+Substituindo \eqref{nova_expressao_0} em \eqref{integrando_m}:
+\begin{align}
+\bar{\psi}_{0, m} & = \int_0^a \sqrt{\frac{1}{a}}X(\mu_0, x) X(\mu_m, x)dx  \nonumber \\
+& = \sqrt{\frac{1}{a}} \int_0^a X(\mu_0, x) X(\mu_m, x)dx \label{integrando_m0}
+\end{align}
+
+Devido à propriedade da ortogonalidade \eqref{ortogon}, a integral em \eqref{integrando_m0} será não-nula apenas para $m = 0$, e a equação \eqref{integrando_m0} pode ser escrita como:
+\begin{align}
+\bar{\psi}_{0, 0} & = \sqrt{\frac{1}{a}} N(\mu_0) \nonumber \\
+& = \sqrt{a} \label{integrando_m00}
+\end{align}
+sendo que foi usado o resultado em \eqref{valor_integral_norm} na simplificação da equação acima.
+
+Para empregar os reultados obtidos em \eqref{integrando_m3} e \eqref{integrando_m00}, será feita uma reorganização dos termos na equação \eqref{calculo_FR_F1_antes}, obtendo-se:
+\begin{align}
+\Re(F_{1,j})
+& =
+-\bar{\psi}_{j,0}\left(\frac{q}{k_1} + \frac{1}{ab}\int_0^a Y(x)dx\right) -
+\frac{2}{a}\sum_{m=1}^M \mu_m \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\int_0^a Y(x)\cos\mu_m x dx + \nonumber \\
+& \frac{\mathbb{A}_{j,0}}{ab}\int_0^a Y(x)dx + \frac{2}{a}\sum_{m=1}^M \mu_m \frac{\mathbb{A}_{j,m}}{\sinh\mu_m b}\int_0^a Y(x)\cos\mu_m x dx
+\end{align}
+ou
+\begin{align}
+\Re(F_{1,j})
+=
+\zeta_j
++
+\frac{\mathbb{A}_{j,0}}{ab}\int_0^a Y(x)dx + \frac{2}{a}\sum_{m=1}^M \mu_m \frac{\mathbb{A}_{j,m}}{\sinh\mu_m b}\int_0^a Y(x)\cos\mu_m x dx
+\label{calculo_FR_F1}
+\end{align}
+onde
+\begin{align}
+\zeta_j = \left\lbrace
+\begin{array}{ll}
+-\sqrt{a}\displaystyle\left(\frac{q}{k_1} + \frac{1}{ab}\int_0^a Y(x)dx\right), & j = 0 \\ \nonumber \\
+-\displaystyle \sqrt{\frac{2}{a}}  \frac{\mu_j}{\tanh\mu_j b}\int_0^a Y(x)\cos\mu_j x dx, & j = 1, 2, 3, \ldots
+\end{array}
+\right .
+\end{align}
+
+Repetindo o mesmo procedimento para $\Re(G_{1,j})$, obtém-se:
+\begin{align}
+\Re(G_{1,j})
+=
+\zeta_j
++
+\frac{\mathbb{E}_{j,0}}{ab}\int_0^a Y(x)dx + \frac{2}{a}\sum_{m=1}^M \mu_m \frac{\mathbb{E}_{j,m}}{\sinh\mu_m b}\int_0^a Y(x)\cos\mu_m x dx
 \label{calculo_FR_G1}
 \end{align}
 
