@@ -1,3 +1,144 @@
+\section{Revisão bibliográfica}
+
+A revisão bibliográfica exposta nesta seção está dividida em duas partes. Na primeira parte, é feito um levantamento sobre a evolução histórica
+das técnicas de solução de problemas difusivos, uma vez que, conforme será visto nos próximos capítulos, o problema inverso de condução de calor
+a partir do qual será estimada a CTC é um problema difusivo. Na segunda parte, é apresentado um apanhado dos trabalhos clássicos que envolvem o tema da
+determinação da CTC, antes e depois da introdução da abordagem deste tema como um problema inverso.
+
+\subsection{Técnicas de soluções de problemas difusivos}
+
+Segundo \cite{livro_tanehill}, há basicamente três abordagens ou métodos que podem ser usados para resolver um problema
+de mecânica dos fluidos e/ou transferência de calor: experimental, teórico (ou analítico) e computacional (ou numérico). O primeiro
+fornece resultados mais realistas a um custo de implementação maior. Já o segundo faz suposições
+simplificadoras a fim de facilitar o tratamento do problema, e possivelmente encontrar uma solução fechada, ou seja, que é expressa geralmente como uma fórmula
+matemática; uma vez que não envolve iterações ou interpolações, a obtenção do valor da solução num determinado ponto do domínio é praticamente imediata,
+com baixo custo computacional. No último método -- a abordagem numérica -- as equações que governam o fenômeno em estudo são substituídas por
+esquemas numéricos, cuja solução (obtida através de cálculos manuais ou pelo emprego de computadores digitais) é usada para representar de forma
+aproximada a solução do problema original.
+
+A teoria matemática moderna sobre a condução de calor foi estabelecida por Joseph Fourier, que reuniu suas investigações teóricas em sua obra
+\textit{Théorie analytique de la chaleur} \citep{livro_fourier, artigo_langer}. Neste trabalho, Fourier deduz analiticamente as equações de condução para vários
+tipos de sólidos, como esferas, prismas retangulares ou cilindros de seção reta circular. Nesses problemas, o fluxo de calor tinha
+sempre uma direção que favorecia o aspecto simétrico do sólido em questão; por exemplo, no caso do cilindro ou da esfera, o fluxo
+de calor acontecia na direção radial. Em seguida, Fourier apresenta a formulação tridimensional em coordenadas cartesianas da equação
+de condução de calor em regime transiente, e a emprega para levantar as equações obtidas previamente, através de substituições de
+variáveis. Finalmente, Fourier desenvolve o conceito de representação de uma função como um somatório infinito de funções
+trigonométricas\footnote{A história registra que, quando Fourier apresentou seus artigos sobre a representação de funções arbitrárias
+como expansões de senos e cossenos à Academia de Ciências de Paris em 1807 e 1811, recebeu críticas dos consultores (principalmente Lagrange,
+que negou veementemente essa possibilidade), devido à falta de rigor, e por isso os artigos não foram publicados \citep{livro_agarwal}.} e, através da aplicação
+da técnica de separação de variáveis, usa esse conceito na resolução analítica dos problemas que propôs no início do trabalho. Uma vez que os domínios envolvidos e as
+condições de contorno impostas nos problemas possuíam algum tipo de simetria, que simplificava a variação da temperatura para apenas uma
+variável dimensional (distância radial, comprimento ao longo de um eixo, etc.), as soluções encontradas eram relativamente simples, o que não
+diminui sua importância por modelarem matematicamente o fenômeno físico da condução de calor pela primeira vez. O tratamento
+dado por Fourier aos problemas de condução de calor foi, em suma, predominantemente analítico, sem considerações de caráter numérico.
+
+Historicamente, os livros acadêmicos que versam sobre transferência de calor reproduzem a dedução da equação de condução em coordenadas
+cartesianas feita por Fourier e em seguida apresentam a formulação equivalente nos sistemas de coordenadas cilíndricas e esféricas; ver
+por exemplo \cite{livro_carslaw}, \cite{livro_holman} e \cite{livro_ozisik}. De fato, a formulação no sistema cartesiano é aplicável
+a qualquer tipo de geometria; a solução geral sempre poderá ser expressa em termos de somatórios de senos ou cossenos. Soluções analíticas obtidas
+nos sistemas de coordenadas esféricas ou cilíndricas envolvem somatórios de tipos diferentes de funções base ortogonais, obtidas através da aplicação do método
+de separação de variáveis \citep{livro_boyce}. Voltando a citar os trabalhos de Fourier, ao expressar
+as equações de condução para corpos esféricos ou cilíndricos, ele fez implicitamente um \textit{mapeamento} dessas geometrias a partir
+do sistema de coordenadas cartesiano para os sistemas de coordenadas cilíndricas ou esféricas \citep{livro_numerical_grid}, e, ao aplicar a
+separação de variáveis, encontra soluções em forma de séries que futuramente seriam associadas às funções de Bessel e Legendre \citep{livro_fourier}. 
+
+\cite{artigo_einsenhart, artigo_einsenhart_2} demonstrou que a equação de Helmholtz (da qual a equação
+de difusão é um caso particular) pode ser resolvida por separação de variáveis em onze diferentes
+sistemas de coordenadas ortogonais, dentre as quais figuram os sistemas cartesiano, esférico e cilíndrico, bem como outros menos usuais, tais
+como elíptico-cilíndrico ou parabólico. \cite{livro_moon} fizeram um extenso levantamento das equações diferenciais ordinárias
+oriundas da separação de variáveis em cada um desses sistemas, e apresentam suas respectivas soluções gerais (dentre as quais estão as funções
+seno e cosseno e as funções de Bessel e Legendre, já citadas). Tais equações, juntamente com as respectivas condições de contorno, constituem-se
+em \textit{problemas de valor de contorno de Sturm-Liouville} \citep{artigo_sturm, artigo_liouville}. Problemas de Sturm-Liouville são na realidade
+parte de uma teoria fundamental da Álgebra Linear conhecida como teoria dos operadores lineares; isto confere características e propriedades
+especiais às soluções desses problemas (denominadas \textit{autofunções}), tais como a ortogonalidade e a possibilidade de, sob certas condições, expressar uma função arbitrária
+como uma combinação linear dessas autofunções \citep{livro_boyce, livro_axler}.
+
+Os métodos numéricos de solução de equações diferenciais ganharam grande impulso a partir da década de 1960, quando houve uma maior disponibilidade
+de computadores digitais de alto desempenho \citep{livro_tanehill}. Aliado a esse fato, houve também um aumento natural da complexidade dos problemas de transferência
+de calor e mecânica dos fluidos: adoção de geometrias complexas ou não convencionais, formulações de condições de contorno que introduziam dificuldades na
+aplicação dos métodos analíticos, menores restrições quanto a não linearidade dos problemas. Já as abordagens numéricas, contudo, remontam a épocas anteriores. 
+
+Uma dessas abordagens, considerada pioneira na análise numérica de equações diferenciais parciais em problemas
+difusivos, foi proposta por \cite{artigo_richardson}. Em seu artigo, Richarsdon resolve numericamente a equação de Laplace e a equação biarmônica, e aplica esta última no problema prático de estudo da distribuição de tensão numa
+barragem de alvenaria, com uma geometria bidimensional. Para tanto, ele representa o perfil da barragem usando segmentos de reta e emprega uma malha estruturada regular em seu interior. A malha
+era resolvida usando um esquema iterativo de diferenças finitas centradas \citep{livro_tanehill}. Richardson já destacava as limitações dos métodos analíticos na integração de equações diferenciais parciais nos casos em que as fronteiras têm formato irregular.
+
+Os anos seguintes testemunharam uma grande quantidade de pesquisas em mé-todos numéricos, especialmente no campo dos problemas de dinâmica dos fluidos. Avanços na área dos
+problemas difusivos envolvem técnicas de precondicionamento de sistemas lineares e o desenvolvimento de esquemas de sobrerrelaxação, aumentando significativamente
+o desempenho da taxa de convergência da solução \citep{artigo_frankel, artigo_fedorenko}.
+
+Em meados da década de 1970, sistemas de coordenadas generalizadas, coincidentes com as fronteiras de domínios irregulares,
+começam a ser empregados em detrimento dos sistemas de coordenadas ortogonais convencionais na resolução numérica de problemas advectivos-difusivos,
+com o objetivo de evitar interpolações entre pontos da malha não coincidentes com as fronteiras \citep{livro_maliska}. As fronteiras do domínio físico, definidas geralmente no sistema 
+cartesiano, são mapeadas para uma região retangular no domínio computacional, definido no sistema de coordenadas generalizado, através de relações de transformação.
+
+A distribuição dos pontos na malha estruturada do problema físico original é feita de modo que a malha correspondente no domínio computacional seja regular. 
+As equações diferenciais e as condições de contorno devem ser reescritas nesse novo sistema; as equações resultantes são mais complicadas uma vez que contêm mais
+termos e coeficientes variáveis. Tais equações podem ser discretizadas e resolvidas usando, por exemplo, a técnica das diferenças finitas aplicada à malha retangular definida no domínio computacional.
+Finalmente, a solução é transformada de volta para o domínio físico através das relações de transformação. Destaca-se o trabalho de \citet{artigo_thompson},
+que desenvolveram uma técnica para determinação da relação de transformação entre sistemas de coordenadas para o caso bidimensional através da resolução numérica de equações diferenciais parciais.
+
+Outra técnica de transformação de coordenadas envolve o emprego de transformações conformes \citep{livro_numerical_grid}. Uma grande vantagem
+dessa técnica é o fato de que a equação de difusão preserva a forma original, sem introdução de termos não-lineares ou derivadas cruzadas;
+por outro lado é aplicável apenas a geometrias bidimensionais. Se as fronteiras da geometria do problema não tiverem uma descrição algébrica
+conhecida, também deve se fazer uso de esquemas de geração numérica de malha, baseados por exemplo na transformação de Schwarz-Christoffel \citep{livro_brown}.
+
+Voltando ao trabalho de Fourier, é possível identificar em seu trabalho uma das bases sobre a qual se estabeleceu a técnica analítica de solução
+de equações diferenciais parciais conhecida como transformação integral. No tratado previamente citado \textit{Théorie analytique de la chaleur},
+procurando estender suas ideias para funções definidas em intervalos infinitos, Fourier descobriu uma fórmula de transformação integral e
+sua respectiva inversa, que hoje levam o seu nome \citep{livro_integral_transforms}.
+
+A técnica da transformação integral revelou-se uma
+ferramenta poderosa para resolver problemas de valor inicial e problemas de valor de contorno para equações diferenciais parciais lineares.
+O conceito de transformação integral originou-se dos trabalhos de Laplace, que publicou os primeiros resultados envolvendo a sua transformada
+no tratado de 1812, \textit{Théorie analytique des probabilités} \citep{livro_integral_transforms}. Cauchy publicou em 1843 uma descrição
+dos métodos simbólicos ou operacionais (que trabalham com operadores diferenciais como se fossem algébricos) \citep{livro_cauchy} e sua relação com a transformada de
+Laplace, além de apresentar a forma exponencial da transformada de Fourier. Contudo, quem popularizou o uso das transformadas de Laplace foi Oliver Heaviside,
+aplicando-as na resolução de equações diferenciais lineares em problemas de circuitos elétricos, especialmente a equação do telégrafo, consolidando as bases do
+cálculo operacional moderno \citep{livro_yavetz, artigo_carson}. 
+
+A grande vantagem oferecida pela transformação integral aplicada às equações de difusão linear é a possibilidade de resolver analiticamente classes de
+problemas para os quais a técnica de separação de variáveis não é adequada.
+No caso específico das equações de difusão linear, as transformações integrais procuram reduzir a quantidade de variáveis independentes
+na equação original, geralmente levando a uma nova equação diferencial ordinária de fácil solução. Exemplos elementares de aplicação
+de transformação integral em problemas difusivos nos sistemas cartesiano e cilíndrico foram apresentados por \cite{artigo_doetsch}, \cite{artigo_sneddon} e \cite{livro_tranter},
+e em coordenadas esféricas por \cite{artigo_olcer}.
+\cite{livro_unified} classificaram e revisaram sete classes de problemas difusivos lineares, apresentando suas soluções
+exatas obtidas pela técnica da transformação integral, que por razões históricas passou a ser denominada Técnica da Transformação Integral Clássica (CITT).
+
+A CITT não se mostrou flexível o suficiente para fornecer
+soluções analíticas para tipos de problemas mais gerais. Nesse sentido, o trabalho desenvolvido por \cite{artigo_murray},
+que tratava problemas difusivos transientes com coeficientes variáveis nas condições de contorno, foi pioneiro no desenvolvimento da técnica
+que é conhecida hoje como Transformada Integral Generalizada (GITT) \citep{livro_integral_transforms_cotta}. Desde então, a GITT --- uma técnica
+híbrida analítico-numérica --- vem sido continuamente desenvolvida e estendida, fornecendo soluções analíticas aproximadas e numéricas alternativas
+para os problemas não solucionáveis pela abordagem clássica. Nos últimos anos, a GITT tem sido beneficiada e popularizada através do desenvolvimento de
+aplicativos de \textit{software} de computação simbólica, especialmente o \textit{Mathematica}\textsuperscript{\textregistered} \citep{artigo_mathematica}.
+
+A técnica de transformação integral, seja clássica ou generalizada, é formulada com base em integrais sobre um domínio cuja
+fronteira não é necessariamente regular. Em muitos casos, a transformação integral foi empregada em problemas difusivos ou advectivo-difusivos nos quais a geometria
+era irregular, porém descrita de forma algébrica no sistema de coordenadas cartesiano, como por exemplo os trabalhos de \cite{artigo_aparecido, artigo_aparecido_2, artigo_aparecido_3, artigo_fausto} e \cite{artigo_perez}.
+Já \cite{tese_sphaier} generaliza as técnicas de levantamento de autofunções nestes trabalhos e apresenta uma solução formal para domínios irregulares usando GITT;
+para fronteiras cuja descrição algébrica é desconhecida, Sphaier sugere aproximar por linhas poligonais (no caso bidimensional), em que cada
+trecho é representado por um segmento de reta. As autofunções levantadas no processo de solução são obtidas a partir de problemas auxiliares resolvidos no próprio
+domínio irregular do problema, e nesse caso diz-se que o domínio é \textit{coincidente}; é feita uma rápida citação sobre soluções de problemas difusivos em domínios \textit{envolventes}
+(quando o domínio original é considerado como sendo contido por um domínio maior, regular, sobre o qual a solução geral é encontrada e então particularizada
+para aquele subdomínio).
+
+As soluções da equação de difusão em dutos de seção reta elíptica com condições de contorno de primeiro e segundo tipo encontradas por
+ \citet{trabalho_maia_1, trabalho_maia_2} combinaram as técnicas de transformação integral e mapeamento conforme. 
+Isto se seguiu com \cite{tese_antonini}, que usa a mesma metodologia em sua dissertação de mestrado sobre resolução de problemas difusivo-convectivos em geometrias não-convencionais (setor circular, geometria anular
+concêntrica e geometria bicônica). Conforme citado anteriormente, as equações de difusão no novo sistema de coordenadas preservaram sua forma; isso facilitou em
+muito o emprego da GITT, uma vez que os problemas de autovalor associado geraram funções seno e cosseno. Por outro lado, a
+simplificação nas soluções analíticas ou híbridas encontradas só foi possível porque as geometrias envolvidas possuíam mapeamentos conformes de expressão analítica
+conhecida \citep{livro_brown}.
+
+Recentemente, houve o aumento do interesse na aplicação de métodos numéricos \textit{meshless} na resolução
+de problemas difusivos em geometrias irregulares; tais métodos procuram superar as dificuldades computacionais envolvidas na geração
+de malhas de discretização, trabalhando com o conceito de nós distribuídos pelo domínio do problema, e com as interações entre nós
+vizinhos. Tais técnicas incluem, por exemplo, o emprego de redes neurais \citep{artigo_deng, artigo_heidari}, funções de base
+radial associadas ao método de colocação \citep{artigo_chen, artigo_dai}, o método SPH (\textit{smoothed particle hydrodynamics}) \citep{artigo_vishwakarma} e o método MLPG (\textit{Meshless Local Petrov-Galerkin})
+\citep{artigo_li}.
+
 \subsection{Estimativa da condutância térmica de contato}
 
 No tratado sobre funções de Bessel escrito por \cite{livro_bessel}, são deduzidas soluções para problemas de propagação de ondas e de fluxo de

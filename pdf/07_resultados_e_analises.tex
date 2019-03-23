@@ -1,10 +1,10 @@
-\section{Resultados e análises}
+\section{Implementação numérico-computacional}
 
 Neste capítulo, será feita uma validação numérico-computacional dos resultados analíticos obtidos nas seções anteriores empregando as técnicas do Funcional de Reciprocidade (FR) e da Transformada Integral Clássica (CITT) na estimativa da distribuição de condutância térmica de contato (CTC) ao longo de uma interface irregular segundo o arranjo proposto na figura \ref{fig2}. Este arranjo foi proposto como uma generalização da configuração estudada por \cite{tese_padilha}, na qual a interface de contato era uma superfície plana paralela às bases do corpo de prova.
 
-Para tanto, diversos formatos de interface de contato foram propostos, bem como diferentes perfis de temperaturas medidas na superfície externa $\Gamma_0$ do corpo de prova. Para cada combinação composta por um formato de interface de contato e um perfil de temperaturas medidas na superfície externa, foi estimada, a partir das equações \eqref{calculo_FR_F1}, \eqref{calculo_FR_G1} e \eqref{expressao_final_ctc}, a distribuição da CTC na interface de contato referente a essa combinação, comparando-a com a distribuição de CTC teórica esperada para o caso. As medidas de temperatura na superfície externa correspondentes a uma determinada distribuição de CTC serão simuladas através da resolução do problema direto de condução de calor definido na seção \ref{sec_formulacao_direta} para a referida distribuição, e por isso serão denominadas \textit{medidas sintéticas de temperatura}, ou simplesmente \textit{temperaturas sintéticas}.
+Para tanto, diversos formatos de interface de contato foram propostos, bem como diferentes perfis de temperaturas medidas na superfície externa $\Gamma_0$ do corpo de prova. Para cada combinação composta por um formato de interface de contato e um perfil de temperaturas medidas na superfície externa, foi estimada, a partir das equações \eqref{calculo_FR_F1}, \eqref{calculo_FR_G1} e \eqref{expressao_final_ctc}, a distribuição da CTC na interface de contato referente a essa combinação, comparando-a com a distribuição de CTC teórica esperada para o caso. As medidas de temperatura na superfície externa correspondentes a uma determinada distribuição de CTC foram simuladas através da resolução do problema direto de condução de calor definido na seção \ref{sec_formulacao_direta} para a referida distribuição, e por isso são denominadas \textit{medidas sintéticas de temperatura}, ou simplesmente \textit{temperaturas sintéticas}.
 
-Ainda seguindo a metodologia de trabalho conduzida por \cite{tese_padilha}, serão feitas simulações envolvendo erros experimentais nas medidas sintéticas de temperatura, e seus efeitos sobre a estimativa da distribuição da CTC.
+Ainda seguindo a metodologia de trabalho conduzida por \cite{tese_padilha}, foram feitas simulações envolvendo erros experimentais nas medidas sintéticas de temperatura, e seus efeitos sobre a estimativa da distribuição da CTC.
 
 \subsection{Configuração física e geométrica dos problemas-teste}\label{config_fis_geom}
 
@@ -49,7 +49,7 @@ Foram testadas três possibilidades de geometrias de interfaces de contato. Para
 De forma a melhor ilustrar e visualizar as diferentes geometrias de interface de contato definidas acima, as suas representações gráficas são apresentadas na Figura \ref{figura_interfaces}.
 \\
 
-\input{05_perfis_interfaces.tex}
+\input{07_resultados_e_analises_perfis_interfaces.tex}
 
 \subsection{Perfis teóricos de condutância térmica de contato}\label{config_ctc}
 
@@ -74,7 +74,7 @@ Foram adotados três diferentes perfis de distribuição de CTC, extraídos do t
 \end{table}
 
 De forma a melhor ilustrar e visualizar os diferentes perfis definidos acima, as suas representações gráficas são apresentadas na Figura \ref{figura_ctc}.
-\input{05_perfis_condutancia.tex}
+\input{07_resultados_e_analises_perfis_condutancias.tex}
 
 
 \subsection{Determinação das temperaturas sintéticas}
@@ -93,6 +93,7 @@ Para fins de verificação, as mesmas combinações foram resolvidas numericamen
 		\centering
 		\begin{tikzpicture}
 		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		axis lines=left,
 		%		xmin = 0,
 		%		xmax = 0.04,
@@ -124,6 +125,7 @@ Para fins de verificação, as mesmas combinações foram resolvidas numericamen
 		\centering
 		\begin{tikzpicture}
 		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		axis lines=left,
 		%		xmin = 0,
 		%		xmax = 0.04,
@@ -163,57 +165,12 @@ onde $u$ e $v$ correspondem a variáveis aleatórias contínuas com distribuiç�
 Três níveis de desvio-padrão foram testados: $\sigma = \text{0,0}\celsius$ (correspondente aos casos onde as temperaturas sintéticas não contém erros), $\sigma = \text{0,1}\celsius$ e $\sigma = \text{0,5}\celsius$. Desse modo, havendo três possibilidades de geometrias de interface de contato e três possibilidades de condutância térmica de contato teórica, foram realizadas nove simulações distintas de problemas-teste diretos, para obtenção das respectivas distribuições de temperaturas sintéticas exatas. A cada um desses resultados foram aplicados os erros correpondentes às três possibilidades de desvio-padrão, num total de 27 conjuntos de dados de entrada; estes dados por sua vez alimentaram cada um dos 27 problemas inversos equivalentes resolvidos neste trabalho. Nas figuras \ref{figura_temperaturas_sinteticas_interface_01}, \ref{figura_temperaturas_sinteticas_interface_02} e \ref{figura_temperaturas_sinteticas_interface_03}, é possível visualizar as distribuições de temperaturas sintéticas na superfície superior do corpo de prova para cada uma das configurações. A maior ou menor dispersão dos dados com erros aleatórios em torno das medidas exatas é devida apenas às diferentes escalas adotadas no eixo $y$ de cada gráfico.
 
 \newpage
-\input{05_perfis_temperatura_superior_interface_01.tex}
+\input{07_resultados_e_analises_perfis_temperatura_superior_interface_01.tex}
 \newpage
-\input{05_perfis_temperatura_superior_interface_02.tex}
+\input{07_resultados_e_analises_perfis_temperatura_superior_interface_02.tex}
 \newpage
-\input{05_perfis_temperatura_superior_interface_03.tex}
+\input{07_resultados_e_analises_perfis_temperatura_superior_interface_03.tex}
 \newpage
-
-%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%TODO
-%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Análise de convergência:
-%%Stratified flow over a backward-facing step: hybrid solution by integral transforms
-%\begin{align}
-%\epsilon = \max \abs{\frac{\sum_{m=N+1}^{N + \Delta N} \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{1,j,m}(y)}{\sum_{m=0}^{N + \Delta N} \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{1,j,m}(y)}}
-%\end{align}
-
-\subsection{Limites superiores dos somatórios dos Funcionais de Reciprocidade}
-
-Muito embora os resultados numéricos obtidos para as estimativas de CTC em cada um dos casos discutidos nas seções anteriores só sejam apresentados posteriormente neste trabalho, cabe aqui comentar aspectos referentes a uma característica notável do problema inverso de condução de calor estudado, qual seja, o comportamento instável da estimativa do salto de temperatura e do fluxo de calor na interface $\Gamma$ (vide Figura \ref{fig2}) em relação à quantidade de termos $N_1$ e $N_2$ usados nas suas respectivas expansões em somatórios de combinações lineares de funcionais de reciprocidade, deduzidas na seção \ref{secao_sobre_fr}:
-\begin{align}
-& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \label{resultado_1_rep} \\ \nonumber \\
-& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j \label{resultado_2_rep}
-\end{align}
-
-No trabalho de \cite{tese_padilha}, foram obtidos, a partir da solução do problema direto para o caso da interface de contato plana e horizontal, a distribuição teórica do salto de temperatura e do fluxo de calor ao longo da interface $\Gamma$ para cada problema-teste. As expressões 
-\eqref{resultado_1_rep} e \eqref{resultado_2_rep} foram usadas naquele trabalho para estimativa do salto de temperatura e do fluxo de calor na interface, da mesma maneira como foi realizado no trabalho corrente, com a diferença de que a determinação dos funcionais de reciprocidade $\Re(F_{1,j})$ e $\Re(G_{1,j})$ era puramente analítica, sem a etapa de resolução de sistemas lineares como os obtidos nas seções \ref{secao_reciprocidade_F} e \ref{secao_reciprocidade_G}. Foram empregadas as seguintes expressões para o erro da raiz média quadrática (RMS) entre os resultados exatos e os estimados \footnote{A notação adotada por \cite{tese_padilha} na representação destas expressões era bem mais simples; porém as expressões aqui apresentadas são mais gerais e se reduzem facilmente à formulação usada naquele trabalho.}:
-\begin{align}
-& \delta_{[T_1 - T_2]_\Gamma} = \sqrt{\frac{\displaystyle\sum_{n=1}^{N_x} \left\lbrace[\widetilde{T}_1 - \widetilde{T}_2]_\Gamma(x_n, y_n) - [T_1 - T_2]_\Gamma(x_n, y_n) \right\rbrace^2 }{N_x}} \label{metrica_rms_1} \\ \nonumber \\
-& \delta_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma} = \sqrt{\frac{\displaystyle\sum_{n=1}^{N_x} \left\lbrace\left[- k_1 \displaystyle\frac{\partial \widetilde{T}_1}{\partial\mathbf{n_1}}\right]_\Gamma (x_n, y_n) - \left[- k_1 \displaystyle\frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma (x_n, y_n)\right\rbrace^2 }{N_x}} \label{metrica_rms_2}
-\end{align}
-onde $n$ corresponde a cada posição $(x_n, y_n)$ ao longo da interface $\Gamma$ na qual foram obtidas as estimativas, $N_x$ é o número total destas posições, e a presença do símbolo $\widetilde{T}$ expressa a medida teórica/exata, em contraste com a medida estimada correspondente.
-
-Os resultados obtidos nos problemas-teste estudados por \cite{tese_padilha} mostraram que, à medida em que se acrescentavam termos aos somatórios expressos em \eqref{resultado_1_rep} e \eqref{resultado_2_rep}, os erros RMS vão diminuindo até uma determinada quantidade de termos, a partir da qual passam a ter um crescimento muito grande. Ou seja, ao contrário do que normalmente se observa numa série numérica, um incremento na quantidade de parcelas a serem somadas naquelas expressões não implicava obrigatoriamente numa tendência consistente de convergência do somatório para um valor finito.
-
-Num problema real, entretanto, a distribuição da condutância térmica de contato ao longo da interface $\Gamma$ é desconhecida -- com efeito, trata-se da função que se deseja estimar -- tampouco se conhece a distribuição do salto de temperatura e do fluxo de calor naquela interface. Desse modo, o uso do erro RMS como métrica para avaliação da qualidade da estimativa perde o sentido prático. Em face dessa dificuldade, \cite{tese_padilha} propôs duas métricas para avaliar a convergência daquelas séries. A primeira foi basicamente uma norma considerando as diferenças entre duas estimativas sucessivas ao longo da superfície $\Gamma$:
-\begin{align}
-& \aleph_{[T_1 - T_2]_\Gamma}(J) = \sqrt{\sum_{p=1}^{N_x} \left\lbrace [T_1 - T_2]_\Gamma^J(x_p, y_p) - [T_1 - T_2]_\Gamma^{J-1}(x_p, y_p) \right\rbrace^2 } \label{metrica_norma_1} \\ \nonumber \\
-& \aleph_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma}(J) = \sqrt{\sum_{p=1}^{N_x} \left\lbrace \left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma^J(x_p, y_p) - \left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma^{J-1}(x_p, y_p) \right\rbrace^2 } \label{metrica_norma_2}
-\end{align}
-onde $J$ é o número de termos da série para uma determinada estimativa, $p$ corresponde à posição $(x_p, y_p)$ ao longo da interface $\Gamma$ e $N_x$ é o número total de pontos considerados ao longo desta interface.
-
-A outra métrica estabelecida por \cite{tese_padilha} foi a norma acumulada, definida por:
-\begin{align}
-& \mathbb{N}_{[T_1 - T_2]_\Gamma}(J) = \sum_{j=2}^J \aleph_{[T_1 - T_2]_\Gamma}(j) \label{metrica_norma_acc_1} \\ \nonumber \\
-& \mathbb{N}_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma}(J) = \sum_{j=2}^J \aleph_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma}(j) \label{metrica_norma_acc_2}
-\end{align}
-
-Assim, comparando e analisando as métricas expressas nas equações \eqref{metrica_rms_1} a \eqref{metrica_norma_acc_2}, \cite{tese_padilha} pôde investigar o comportamento da convergência das séries que representam o salto de temperatura e o fluxo de calor na interface de contato, e sua relação com os erros de medição adicionados às temperaturas sintéticas na interface superior do corpo de prova.
-
-No presente trabalho, as mesmas métricas foram adotadas e calculadas para cada problema-teste proposto, e foram feitas análises revelando resultados qualitativos semelhantes aos encontrados por \cite{tese_padilha} no seu estudo da CTC ao longo da interface plana horizontal.
 
 \subsection{Código computacional}\label{sobre_o_programa}
 
@@ -225,23 +182,27 @@ A livre disponibilidade do código-fonte das rotinas facilitou significativament
 Foram empregadas rotinas numéricas do repositório Netlib para realizar as seguintes tarefas:
 \begin{itemize}
 	\item Cálculo das integrais presentes nas equações \eqref{calculo_FR_F1} e \eqref{calculo_FR_G1}. Estas integrais são da forma
-		\begin{align}
-		& \int_0^a Y(x)dx \\ \nonumber \\
-		& \int_0^a Y(x)\cos\mu_m x dx
-		\end{align}
-		Estas integrais devem ser resolvidas numericamente, uma vez que o termo $Y(x)$, referente às temperaturas sintéticas sobre a superfície superior do corpo de prova, corresponde na verdade a um conjunto de dados discretos cuja formulação analítica é desconhecida (num problema real). Foram utilizadas duas rotinas que trabalhavam em conjunto: CURFIT, que aproxima um conjunto de pontos $(x_i, y_i)$ em uma B-\textit{spline}, e SPLINT, que integra a B-\textit{spline} obtida da rotina anterior sobre um intervalo.
-		
+	\begin{align}
+	& \int_0^a Y(x)dx \\ \nonumber \\
+	& \int_0^a Y(x)\cos\mu_m x dx
+	\end{align}
+	Estas integrais devem ser resolvidas numericamente, uma vez que o termo $Y(x)$, referente às temperaturas sintéticas sobre a superfície superior do corpo de prova, corresponde na verdade a um conjunto de dados discretos cuja formulação analítica é desconhecida (num problema real). Foram utilizadas duas rotinas que trabalhavam em conjunto: CURFIT, que aproxima um conjunto de pontos $(x_i, y_i)$ em uma B-\textit{spline}, e SPLINT, que integra a B-\textit{spline} obtida da rotina anterior sobre um intervalo.
+	
 	\item Cálculo das transformadas integrais que fornecem os coeficientes dos sistemas lineares \eqref{sistema_para_coeficientes_3} e \eqref{sistema_para_coeficientes_21}. O repositório Netlib oferece a rotina DQAWO, que faz parte do subprojeto QUADPACK, e que resolve integrais da forma
-		\begin{align}
-		& \int_{x_0}^{x_1} f(x)\cos\omega x dx \label{dqawo} \\ \nonumber \\
-		& \int_{x_0}^{x_1} f(x)\sin\omega x dx 
-		\end{align}
-		A rotina foi parametrizada para resolver integrais conforme a expressão \eqref{dqawo}, fazendo $\omega = \mu_m$.
+	\begin{align}
+	& \int_{x_0}^{x_1} f(x)\cos\omega x dx \label{dqawo} \\ \nonumber \\
+	& \int_{x_0}^{x_1} f(x)\sin\omega x dx 
+	\end{align}
+	A rotina foi parametrizada para resolver integrais conforme a expressão \eqref{dqawo}, fazendo $\omega = \mu_m$.
 	
 	\item Solução numérica dos sistemas de equações lineares \eqref{sistema_para_coeficientes_3} e \eqref{sistema_para_coeficientes_21}. O repositório Netlib possui o subprojeto LAPACK (\textit{Linear Algebra PACKage}), contendo diversos \textit{solvers} de sistemas lineares para várias possibilidades de matrizes de coeficientes: matrizes-banda, simétricas, positivas definidas, etc, além de outros utilitários de Álgebra Linear. A rotina DGESVX, utilizada no trabalho, recebe como entrada a matriz de coeficientes e uma matriz cujas colunas são diferentes vetores de termos independentes do sistema; a rotina aplica um pré-condicionador ao sistema, realiza uma decomposição LU da matriz de coeficientes e usa este resultado para obter os vetores-solução referentes a cada vetor de termos independentes. Esta rotina atendeu à necessidade de se resolver de forma eficiente um dado sistema de equações, variando apenas o segundo membro correspondente aos termos independentes, o que foi comentado na seção \ref{orto_beta_gama}.
 	
 	\item Cálculo das integrais necessárias para a ortogonalização de Gram-Schmidt. Estas integrais, definidas de forma geral pela equação \eqref{integral_da_definicao_produto_interno_4}, foram calculadas através da rotina de integração de propósito geral DAQG, que realiza uma integração adaptativa através das fórmulas de quadratura de Gauss-Konrod.
 \end{itemize}
+
+\section{Resultados e análise}
+
+Nas próximas subseções, serão apresentados os resultados obtidos a partir da aplicação das equações obtidas na seção \ref{secao_com_funcionais}
 
 % Parametros:
 % erro_rms
@@ -256,6 +217,7 @@ Foram empregadas rotinas numéricas do repositório Netlib para realizar as segu
 		\begin{tikzpicture}
 		\begin{axis}[
 		axis lines=left,
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		%ymode = log,
 		grid=major,
 		legend style={legend pos=north west}
@@ -350,6 +312,7 @@ Foram empregadas rotinas numéricas do repositório Netlib para realizar as segu
 		\begin{tikzpicture}
 		\begin{axis}[
 		axis lines=left,
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		%		xmin = 0,
 		%		xmax = 0.04,
 		%		ymin = 310,
@@ -381,14 +344,15 @@ Foram empregadas rotinas numéricas do repositório Netlib para realizar as segu
 		\end{tikzpicture}
 		\caption*{(#7) Perfil #3}
 	\end{minipage}
-	}%
-	
+}%
+
 \newcommand{\graficoctc}[4]{%
 	\begin{minipage}[t][7cm][c]{\textwidth}
 		\centering
 		\begin{tikzpicture}
 		\begin{axis}[
 		axis lines=left,
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		%		xmin = 0,
 		%		xmax = 0.04,
 		%		ymin = 310,
@@ -497,4 +461,52 @@ Foram empregadas rotinas numéricas do repositório Netlib para realizar as segu
 	\graficoctc{03}{02}{2}{b}
 	\graficoctc{03}{03}{3}{c}
 \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%TODO
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Análise de convergência:
+%%Stratified flow over a backward-facing step: hybrid solution by integral transforms
+%\begin{align}
+%\epsilon = \max \abs{\frac{\sum_{m=N+1}^{N + \Delta N} \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{1,j,m}(y)}{\sum_{m=0}^{N + \Delta N} \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{1,j,m}(y)}}
+%\end{align}
+
+\subsection{Limites superiores dos somatórios dos Funcionais de Reciprocidade}
+
+Muito embora os resultados numéricos obtidos para as estimativas de CTC em cada um dos casos discutidos nas seções anteriores só sejam apresentados posteriormente neste trabalho, cabe aqui comentar aspectos referentes a uma característica notável do problema inverso de condução de calor estudado, qual seja, o comportamento instável da estimativa do salto de temperatura e do fluxo de calor na interface $\Gamma$ (vide Figura \ref{fig2}) em relação à quantidade de termos $N_1$ e $N_2$ usados nas suas respectivas expansões em somatórios de combinações lineares de funcionais de reciprocidade, deduzidas na seção \ref{secao_sobre_fr}:
+\begin{align}
+& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \label{resultado_1_rep} \\ \nonumber \\
+& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j \label{resultado_2_rep}
+\end{align}
+
+No trabalho de \cite{tese_padilha}, foram obtidos, a partir da solução do problema direto para o caso da interface de contato plana e horizontal, a distribuição teórica do salto de temperatura e do fluxo de calor ao longo da interface $\Gamma$ para cada problema-teste. As expressões 
+\eqref{resultado_1_rep} e \eqref{resultado_2_rep} foram usadas naquele trabalho para estimativa do salto de temperatura e do fluxo de calor na interface, da mesma maneira como foi realizado no trabalho corrente, com a diferença de que a determinação dos funcionais de reciprocidade $\Re(F_{1,j})$ e $\Re(G_{1,j})$ era puramente analítica, sem a etapa de resolução de sistemas lineares como os obtidos nas seções \ref{secao_reciprocidade_F} e \ref{secao_reciprocidade_G}. Foram empregadas as seguintes expressões para o erro da raiz média quadrática (RMS) entre os resultados exatos e os estimados \footnote{A notação adotada por \cite{tese_padilha} na representação destas expressões era bem mais simples; porém as expressões aqui apresentadas são mais gerais e se reduzem facilmente à formulação usada naquele trabalho.}:
+\begin{align}
+& \delta_{[T_1 - T_2]_\Gamma} = \sqrt{\frac{\displaystyle\sum_{n=1}^{N_x} \left\lbrace[\widetilde{T}_1 - \widetilde{T}_2]_\Gamma(x_n, y_n) - [T_1 - T_2]_\Gamma(x_n, y_n) \right\rbrace^2 }{N_x}} \label{metrica_rms_1} \\ \nonumber \\
+& \delta_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma} = \sqrt{\frac{\displaystyle\sum_{n=1}^{N_x} \left\lbrace\left[- k_1 \displaystyle\frac{\partial \widetilde{T}_1}{\partial\mathbf{n_1}}\right]_\Gamma (x_n, y_n) - \left[- k_1 \displaystyle\frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma (x_n, y_n)\right\rbrace^2 }{N_x}} \label{metrica_rms_2}
+\end{align}
+onde $n$ corresponde a cada posição $(x_n, y_n)$ ao longo da interface $\Gamma$ na qual foram obtidas as estimativas, $N_x$ é o número total destas posições, e a presença do símbolo $\widetilde{T}$ expressa a medida teórica/exata, em contraste com a medida estimada correspondente.
+
+Os resultados obtidos nos problemas-teste estudados por \cite{tese_padilha} mostraram que, à medida em que se acrescentavam termos aos somatórios expressos em \eqref{resultado_1_rep} e \eqref{resultado_2_rep}, os erros RMS vão diminuindo até uma determinada quantidade de termos, a partir da qual passam a ter um crescimento muito grande. Ou seja, ao contrário do que normalmente se observa numa série numérica, um incremento na quantidade de parcelas a serem somadas naquelas expressões não implicava obrigatoriamente numa tendência consistente de convergência do somatório para um valor finito.
+
+Num problema real, entretanto, a distribuição da condutância térmica de contato ao longo da interface $\Gamma$ é desconhecida -- com efeito, trata-se da função que se deseja estimar -- tampouco se conhece a distribuição do salto de temperatura e do fluxo de calor naquela interface. Desse modo, o uso do erro RMS como métrica para avaliação da qualidade da estimativa perde o sentido prático. Em face dessa dificuldade, \cite{tese_padilha} propôs duas métricas para avaliar a convergência daquelas séries. A primeira foi basicamente uma norma considerando as diferenças entre duas estimativas sucessivas ao longo da superfície $\Gamma$:
+\begin{align}
+& \aleph_{[T_1 - T_2]_\Gamma}(J) = \sqrt{\sum_{p=1}^{N_x} \left\lbrace [T_1 - T_2]_\Gamma^J(x_p, y_p) - [T_1 - T_2]_\Gamma^{J-1}(x_p, y_p) \right\rbrace^2 } \label{metrica_norma_1} \\ \nonumber \\
+& \aleph_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma}(J) = \sqrt{\sum_{p=1}^{N_x} \left\lbrace \left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma^J(x_p, y_p) - \left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma^{J-1}(x_p, y_p) \right\rbrace^2 } \label{metrica_norma_2}
+\end{align}
+onde $J$ é o número de termos da série para uma determinada estimativa, $p$ corresponde à posição $(x_p, y_p)$ ao longo da interface $\Gamma$ e $N_x$ é o número total de pontos considerados ao longo desta interface.
+
+A outra métrica estabelecida por \cite{tese_padilha} foi a norma acumulada, definida por:
+\begin{align}
+& \mathbb{N}_{[T_1 - T_2]_\Gamma}(J) = \sum_{j=2}^J \aleph_{[T_1 - T_2]_\Gamma}(j) \label{metrica_norma_acc_1} \\ \nonumber \\
+& \mathbb{N}_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma}(J) = \sum_{j=2}^J \aleph_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma}(j) \label{metrica_norma_acc_2}
+\end{align}
+
+Assim, comparando e analisando as métricas expressas nas equações \eqref{metrica_rms_1} a \eqref{metrica_norma_acc_2}, \cite{tese_padilha} pôde investigar o comportamento da convergência das séries que representam o salto de temperatura e o fluxo de calor na interface de contato, e sua relação com os erros de medição adicionados às temperaturas sintéticas na interface superior do corpo de prova.
+
+No presente trabalho, as mesmas métricas foram adotadas e calculadas para cada problema-teste proposto, e foram feitas análises revelando resultados qualitativos semelhantes aos encontrados por \cite{tese_padilha} no seu estudo da CTC ao longo da interface plana horizontal.
+
+
+
 

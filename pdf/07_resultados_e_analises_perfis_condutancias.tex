@@ -3,6 +3,7 @@
 		\centering		
 		\begin{tikzpicture}
 		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		axis lines=left,
 		xmin = 0,
 		xmax = 0.04,
@@ -18,10 +19,10 @@
 		height=4cm,
 		label style={font=\footnotesize},
 		xlabel = $x$(m),
-		ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
-		\pgfplotstableread{../data/conductance_01.dat} 
-		\teff
-		\addplot[color=blue,mark=none,smooth] table from \teff;
+		ylabel= $h_c(x)[$W/($\text{m}^2$ \celsius)]]
+		\addplot[color=blue,mark=none,smooth, domain=0:0.01] {1000};
+		\addplot[color=blue,mark=none,smooth, domain=0.01:0.03] {0};
+		\addplot[color=blue,mark=none,smooth, domain=0.03:0.04] {1000};
 		\end{axis}
 		\end{tikzpicture}
 		\caption*{(a) Perfil 1}
@@ -58,6 +59,7 @@
 		\centering
 		\begin{tikzpicture}
 		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		axis lines=left,
 		xmin = 0,
 		xmax = 0.04,
@@ -140,6 +142,7 @@
 		\centering
 		\begin{tikzpicture}
 		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		axis lines=left,
 		xmin = 0,
 		xmax = 0.04,
@@ -156,9 +159,10 @@
 		label style={font=\footnotesize},
 		xlabel = $x$(m),
 		ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
-		\pgfplotstableread{../data/conductance_03.dat} 
-		\teff
-		\addplot[color=blue,mark=none,smooth] table from \teff;
+		\addplot[color=blue,mark=none,smooth, domain=0:0.01] {1000};
+		\addplot[color=blue,mark=none,smooth, domain=0.01:0.02] {500};
+		\addplot[color=blue,mark=none,smooth, domain=0.02:0.03] {1000};
+		\addplot[color=blue,mark=none,smooth, domain=0.03:0.04] {0};
 		\end{axis}
 		\end{tikzpicture}
 		\caption*{(a) Perfil 3}
