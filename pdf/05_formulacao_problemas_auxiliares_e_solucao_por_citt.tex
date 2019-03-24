@@ -60,7 +60,68 @@ de problemas difusivos de valor de contorno em regime permanente ou transiente, 
 de contorno \citep{livro_ozisik}. Esta técnica foi recentemente empregada na solução do problema inverso de transferência de calor para determinação da CTC para
 uma interface de contato plana, num arranjo semelhante ao da figura \ref{fig4}, fornecendo bons resultados \citep{tese_padilha}. Considerando que o referido problema é um caso particular
 de um arranjo mais geral, representado na figura \ref{fig2}, objeto de estudo desta dissertação, foi natural a opção por esta técnica para determinação da solução do problema inverso correspondente.
+\begin{figure}[h!b]
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
 
+	\draw [ultra thick] (0, 0) -- (10, 0);
+	%\draw [ultra thick] (0, 2) -- (7, 2);
+	%\draw [ultra thick] (8, 2) -- (10, 2);
+	\draw [ultra thick] (0, 5) -- (10, 5);
+	\draw [ultra thick] (0, 2.0) -- (3.0, 2.0);
+	\draw [ultra thick] (3.6, 2.0) -- (10, 2.0);
+	\draw [ultra thick] (0, 0) -- (0, 5);
+	\draw [ultra thick] (10, 0) -- (10, 5);
+
+	\draw (2.5, 3.5) node {$\Omega_1$};
+	\draw (7.5, 1) node {$\Omega_2$};
+	\draw (3.3, 2.2) node {$\Gamma$};
+	\draw (-0.5, 3.5) node {$\Gamma_1$};
+	\draw (-0.5, 1) node {$\Gamma_2$};
+	\draw (10.5, 3.5) node {$\Gamma_1$};
+	\draw (10.5, 1) node {$\Gamma_2$};
+	\draw (5, -0.4) node {$\Gamma_\infty$};
+	\draw (2.5, 5.3) node {$\Gamma_0$};
+	\draw [blue](5, 6.5) node {$q$};
+	\draw (5, -1.3) node {$a$};
+	\draw (-3.9, 2.5) node {$b$};
+	\draw (-2.5, 1) node {$b_2$};
+	\draw (-2.5, 3.5) node {$b_1$};
+
+	\node [above right] at (12, 0) {$x$};
+	\node [right] at (0, 8) {$y$};
+
+	\draw [->, blue] (0, 6.2) -- (0, 5.2);
+	\draw [->, blue] (1, 6.2) -- (1, 5.2);
+	\draw [->, blue] (2, 6.2) -- (2, 5.2);
+	\draw [->, blue] (3, 6.2) -- (3, 5.2);
+	\draw [->, blue] (4, 6.2) -- (4, 5.2);
+	\draw [->, blue] (5, 6.2) -- (5, 5.2);
+	\draw [->, blue] (6, 6.2) -- (6, 5.2);
+	\draw [->, blue] (7, 6.2) -- (7, 5.2);
+	\draw [->, blue] (8, 6.2) -- (8, 5.2);
+	\draw [->, blue] (9, 6.2) -- (9, 5.2);
+	\draw [->, blue] (10, 6.2) -- (10, 5.2);
+
+	\draw [->, very thick] (10.2,0) -- (12,0);
+	\draw [->, very thick] (0, 6.5) -- (0,8);
+
+	\draw [-] (0, -0.2) -- (0, -1.2);
+	\draw [-] (10, -0.2) -- (10, -1.2);
+	\draw [<->] (0, -1) -- (10, -1);
+
+	\draw [-] (-0.2, 0) -- (-3.8, 0);
+	\draw [-] (-0.2, 5) -- (-3.8, 5);
+	\draw [-] (-0.2, 2) -- (-2.2, 2);
+	\draw [<->] (-3.6, 0) -- (-3.6, 5);
+	\draw [<->] (-2.0, 0) -- (-2.0, 2);
+	\draw [<->] (-2.0, 2) -- (-2.0, 5);
+
+\end{tikzpicture}
+\caption{Geometria do problema físico resolvido por \cite{reciproc_2}}
+\label{fig4}
+\end{center}
+\end{figure}
 
 De acordo com \cite{livro_cotta}, a solução dos problemas via CITT requer a aplicação dos seguintes passos:
 \begin{enumerate}[(i)]
@@ -140,7 +201,7 @@ seja também o vetor tangente $\mathbf{T}$ na mesma posição, em relação à s
 
 A curva que representa $\Gamma$ pode ser escrita de forma paramétrica como segue:
 \begin{align}
-\mathbf{\Gamma}(t) = x(t) \mathbf{a}_x + y(t) \mathbf{a}_y \label{forma_parametrica}
+\Gamma(t) = x(t) \mathbf{a}_x + y(t) \mathbf{a}_y \label{forma_parametrica}
 \end{align}
 onde $\mathbf{a}_x$ e $\mathbf{a}_y$ são os vetores unitários da base canônica do sistema cartesiano.
 
@@ -152,12 +213,12 @@ A parametrização a ser adotada será:
 
 Substituindo em \eqref{forma_parametrica}, obtém-se:
 \begin{align}
-\mathbf{\Gamma}(t) = t \mathbf{a}_x + w(t) \mathbf{a}_y \label{forma_parametrica_substituida}
+\Gamma(t) = t \mathbf{a}_x + w(t) \mathbf{a}_y \label{forma_parametrica_substituida}
 \end{align}
 
 O vetor tangente unitário $\mathbf{T}$ será dado por \citep{livro_stewart}:
 \begin{align}
-& \mathbf{T}(t) = \frac{\mathbf{\Gamma}'(t)}{\norm{\mathbf{\Gamma}'(t)}} \nonumber \\
+& \mathbf{T}(t) = \frac{\Gamma'(t)}{\norm{\Gamma'(t)}} \nonumber \\
 & \Rightarrow \mathbf{T}(t) = \frac{\mathbf{a}_x + w'(t) \mathbf{a}_y}{\sqrt{1 + w'(t)^2}}
 \end{align}
 
@@ -197,7 +258,7 @@ pode-se escrever:
 \end{align}
 onde a variável paramétrica $t$ foi substituída por $x$, uma vez que são equivalentes.
 
-A expressão para $\mathbf{n}_1$ é imediata:
+A expressão para $\mathbf{n}_1$ é imediata, uma vez que aponta para o sentido oposto ao de $\mathbf{n}_2$:
 \begin{align}
 \mathbf{n}_1 = \frac{ w'(x)\mathbf{a}_x - \mathbf{a}_y }{\sqrt{ 1 + w'(x)^2 }}
 \end{align}
@@ -266,6 +327,7 @@ que envolverão respectivamente os subdomínios originais e que efetivamente coi
 satisfazerem as condições de contorno dos subdomínios originais.
 Desse modo, as soluções analíticas das funções $F_{1, j}$ e $G_{1, j}$ serão obtidas a partir do domínio estendido representado na figura \ref{fig5}, enquanto que
 as soluções analíticas das funções $F_{2, j}$ serão obtidas a partir do domínio estendido representado na figura \ref{fig6}.
+\newpage
 
 \begin{figure}[h!b]
 	\begin{center}
@@ -328,8 +390,6 @@ as soluções analíticas das funções $F_{2, j}$ serão obtidas a partir do do
 		\label{fig5}
 	\end{center}
 \end{figure}
-
-\newpage
 
 \begin{figure}[h!b]
 	\begin{center}
@@ -415,10 +475,10 @@ onde $\mu_m$ são os autovalores e $X(\mu_m, x)$ são as autofunções correspon
 \cos \mu_m x, & m = 1,2,3,\ldots
 \end{array}
 \right . \label{definicao_das_autofuncoes} \\ \nonumber \\
-& \frac{1}{N(\mu_m)} = \left\lbrace
+& N(\mu_m) = \left\lbrace
 \begin{array}{ll}
-\displaystyle\frac{1}{a}, \quad\quad\quad\quad & m = 0 \\ \\
-\displaystyle\frac{2}{a}, & m = 1,2,3,\ldots
+a, \quad\quad\quad\quad & m = 0 \\ \\
+\displaystyle\frac{a}{2}, & m = 1,2,3,\ldots
 \end{array}
 \right. \label{valor_integral_norm}
 \end{align}
@@ -780,7 +840,7 @@ deve ser truncado até uma quantidade finita de termos representada por $M$, de 
 & \sum_{m = 0}^M p_m(x) \mathbb{A}_{j,m} + \sum_{m = 0}^M q_m(x) \mathbb{D}_{j,m} \approx r_{j}(x) \label{compacta_aprox_2}
 \end{align}
 
-As relações \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2} são válidas para todo o domínio contínuo $0 \le x \le a$, e são funções apenas de $x$. Para eliminar a dependência com a variável $x$, pode-se multiplicar estas relações por $X(\mu_n, x)$, onde $n=0,1,2..., M$, e integrar em relação a $x$ no intervalo $0 < x < a$:
+As relações \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2} são válidas para todo o domínio contínuo $0 \le x \le a$, e são funções apenas de $x$. Para eliminar a dependência com a variável $x$, pode-se aplicar a transformação integral nessas equações:
 \begin{align}
 & \sum_{m = 0}^M \mathbb{A}_{j,m}\int_0^a a_m(x)X(\mu_n, x)dx + \sum_{m = 0}^M \mathbb{D}_{j,m} \int_0^a b_m(x)X(\mu_n, x)dx \approx \nonumber \\ 
 & \quad\quad\quad\quad\int_0^a c_{j}(x)X(\mu_n, x)dx \label{compacta_aprox_1_integr} \\
@@ -842,7 +902,7 @@ onde
 \end{bmatrix}
 \end{align}
 
-O sistema definido por \eqref{sistema_para_coeficientes_3} deve ser resolvido para cada coluna da matriz $\mathbf{b}$, e os coeficientes obtidos, ou seja, as colunas da matriz $\mathbf{\xi}$, são os que melhor representam as aproximações \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2}. Assumindo então que esta aproximação é suficiente satisfatória, o sinal de aproximação em \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2}, e expressões análogas, será substituído pelo sinal de igual. Em tese, se o sistema infinito pudesse ser resolvido numericamente, as representações seriam dadas por \eqref{compacta_1} e \eqref{compacta_2} e seriam exatas.
+Uma vez conhecida a família de funções $\psi_j(x)$ (e consequentemente suas transformadas integrais $\bar{\psi}_{j, m}$), pode-se levantar os termos das matrizes $\mathbf{M}$ e $\mathbf{b}$ que compõem o sistema definido por \eqref{sistema_para_coeficientes_3}. Este sistema deve ser resolvido para cada coluna da matriz $\mathbf{b}$, e os coeficientes obtidos, ou seja, as colunas da matriz $\mathbf{\xi}$, são os que melhor representam as aproximações \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2}. Assumindo então que esta aproximação é suficiente satisfatória, o sinal de aproximação em \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2}, e expressões análogas, será substituído pelo sinal de igual. Em tese, se o sistema infinito pudesse ser resolvido numericamente, as representações seriam dadas por \eqref{compacta_1} e \eqref{compacta_2} e seriam exatas.
 
 %Aplicando a transformação integral às equações \eqref{compacta_1} e \eqref{compacta_2}:
 %\begin{align}
@@ -890,6 +950,7 @@ Calculando separadamente as derivadas parciais de $F_{1, j}$ e truncando o somat
 \end{align}
 
 Substituindo em \eqref{expansao_beta} as expressões \eqref{derivada_parcial_F1_x} e \eqref{derivada_parcial_F1_y} avaliadas em $y = w(x)$, obtém-se:
+\newpage
 \begin{align}
 \beta_j(x) = & \frac{k_1}{\sqrt{1 + w'(x)^2}}\left\lbrace \frac{\mathbb{A}_{j,0} - \bar{\psi}_{j,0}}{ab} \right.  + \nonumber \\
 \frac{2}{a}\sum_{m=1}^M \mu_m & \left[ \mathbb{A}_{j,m}\frac{\cos\mu_m x\cosh\mu_m v(x) - w'(x)\sin\mu_m x\sinh\mu_m v(x)}{\sinh\mu_m b} \right. - \nonumber \\
@@ -988,7 +1049,7 @@ A expressão analítica para a função $\gamma_j$ é facilmente obtida avaliand
 
 Na seção \ref{secao_sobre_fr} foi dito que as funções $\beta_j(x)$ e $\gamma_j(x)$ compunham duas bases ortonormais em $L^2(\Gamma)$.
 Nas seções \ref{secao_do_primeiro} e \ref{secao_do_segundo}, foi dito que a ortonormalidade dessas funções dependia de uma definição adequada das funções $\psi_j(x)$
-ou $\phi_j(x)$, que aparecem nas condições de contorno dos dois problemas auxiliares. A definição dessas funções havia sido deixada em aberto.
+ou $\phi_j(x)$, que aparecem nas condições de contorno dos dois problemas auxiliares. A definição dessas funções havia sido deixada em aberto. Nesta seção, será proposta uma metodologia para determinação das funções $\psi_j(x)$ e $\phi_j(x)$ que atendem ao quesito da ortonormalidade das funções $\beta_j(x)$ e $\gamma_j(x)$.
 
 Seja então, por exemplo, um conjunto de funções $\hat{\beta}_j$ linearmente independentes mas não necessariamente ortonormais\footnote{Por definição, o conjunto de funções $\hat{\beta}_j, j = 1,2,...,N$ é linearmente independente se a relação $a_1\hat{\beta}_1 + a_2\hat{\beta}_2 + ... + a_N\hat{\beta}_N = 0$, onde $a_j, j=1,2,...,N$ são constantes, só será satisfeita se $a_1 = a_2 = ... = a_N = 0$ \citep{livro_axler}.}, obtidas a partir da aplicação de um conjunto correspondente de funções $\hat{\psi}_j$ previamente definidas ao primeiro problema auxiliar cujas soluções serão denotadas por $\hat{F}_{1,j}$. A partir da definição \eqref{expressao_define_beta}, pode-se escrever:
 \begin{align}
@@ -1154,11 +1215,12 @@ Os resultados encontrados permitem esboçar um algoritmo básico para determina�
 	\end{enumerate}
 \end{enumerate}
 
-É importante destacar que a matriz $\mathbf{M}$ da etapa 1 só precisa ser calculada uma vez, já que seus coeficientes não mudam a cada resolução do sistema, variando apenas o vetor do segundo membro. Também é interessante notar que a etapa 3 é iterativa, isto é, os resultados para o $j$-ésimo passo dependem dos resultados encontrados nos passos $j - 1, j - 2, \ldots$ até 0.
+É importante destacar que a matriz $\mathbf{M}$ da etapa 1 só precisa ser calculada uma vez, já que seus coeficientes não mudam a cada resolução do sistema, variando apenas o vetor do segundo membro. Também é interessante notar que a etapa 3 é iterativa, isto é, os resultados para o $j$-ésimo passo dependem dos resultados encontrados nos passos anteriores $j - 1, j - 2, \ldots$ até 0.
 
-Todas as análises feitas para determinação das funções $F_{1,j}$ e $\beta_j$ podem ser aplicadas para determinar as funções $G_{1,j}$ e $\gamma_j$, devido à linearidade do segundo problema auxiliar. Por exemplo, é válida a expressão a seguir, obtida por analogia com os resultados em \eqref{expressao_relaciona_psi} e \eqref{expressao_relaciona_zeta}:
+Todas as análises feitas para determinação das funções $F_{1,j}$ e $\beta_j$ podem ser aplicadas para determinar as funções $G_{1,j}$ e $\gamma_j$, devido à linearidade do segundo problema auxiliar. Por exemplo, são válidas as expressões a seguir, obtida por analogia com os resultados em \eqref{expressao_relaciona_psi} e \eqref{expressao_relaciona_zeta}:
 \begin{align}
-\mathbb{E}_{j,m} = \frac{1}{\norm{\upsilon_j}} \hat{\mathbb{E}}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \hat{\gamma}_j, \gamma_k \rangle}{\norm{\upsilon_j}} \mathbb{E}_{k,m}, \quad m=0,1,2,\ldots \label{expressao_relaciona_omega}
+& \mathbb{E}_{j,m} = \frac{1}{\norm{\upsilon_j}} \hat{\mathbb{E}}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \hat{\gamma}_j, \gamma_k \rangle}{\norm{\upsilon_j}} \mathbb{E}_{k,m}, \quad m=0,1,2,\ldots \label{expressao_relaciona_omega} \\ \nonumber \\
+& \phi_j(x) = \frac{1}{\norm{\upsilon_j}} \hat{\phi}_j(x) - \sum_{k=0}^{j-1} \frac{\langle \hat{\gamma}_j, \gamma_k \rangle}{\norm{\upsilon_j}} \phi_k(x), \quad m=0,1,2,\ldots \label{expressao_relaciona_phi_2}
 \end{align}
 onde
 \begin{align}

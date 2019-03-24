@@ -34,7 +34,7 @@ dado por Fourier aos problemas de condução de calor foi, em suma, predominante
 
 Historicamente, os livros acadêmicos que versam sobre transferência de calor reproduzem a dedução da equação de condução em coordenadas
 cartesianas feita por Fourier e em seguida apresentam a formulação equivalente nos sistemas de coordenadas cilíndricas e esféricas; ver
-por exemplo \cite{livro_carslaw}, \cite{livro_holman} e \cite{livro_ozisik}. De fato, a formulação no sistema cartesiano é aplicável
+por exemplo \cite{livro_carslaw}, \cite{livro_holman} e \cite{livro_ozisik}. Em tese, a formulação no sistema cartesiano é aplicável
 a qualquer tipo de geometria; a solução geral sempre poderá ser expressa em termos de somatórios de senos ou cossenos. Soluções analíticas obtidas
 nos sistemas de coordenadas esféricas ou cilíndricas envolvem somatórios de tipos diferentes de funções base ortogonais, obtidas através da aplicação do método
 de separação de variáveis \citep{livro_boyce}. Voltando a citar os trabalhos de Fourier, ao expressar
@@ -63,7 +63,7 @@ difusivos, foi proposta por \cite{artigo_richardson}. Em seu artigo, Richarsdon 
 barragem de alvenaria, com uma geometria bidimensional. Para tanto, ele representa o perfil da barragem usando segmentos de reta e emprega uma malha estruturada regular em seu interior. A malha
 era resolvida usando um esquema iterativo de diferenças finitas centradas \citep{livro_tanehill}. Richardson já destacava as limitações dos métodos analíticos na integração de equações diferenciais parciais nos casos em que as fronteiras têm formato irregular.
 
-Os anos seguintes testemunharam uma grande quantidade de pesquisas em mé-todos numéricos, especialmente no campo dos problemas de dinâmica dos fluidos. Avanços na área dos
+Os anos seguintes testemunharam uma grande quantidade de pesquisas em métodos numéricos, especialmente no campo dos problemas de dinâmica dos fluidos. Avanços na área dos
 problemas difusivos envolvem técnicas de precondicionamento de sistemas lineares e o desenvolvimento de esquemas de sobrerrelaxação, aumentando significativamente
 o desempenho da taxa de convergência da solução \citep{artigo_frankel, artigo_fedorenko}.
 
@@ -76,7 +76,7 @@ A distribuição dos pontos na malha estruturada do problema físico original é
 As equações diferenciais e as condições de contorno devem ser reescritas nesse novo sistema; as equações resultantes são mais complicadas uma vez que contêm mais
 termos e coeficientes variáveis. Tais equações podem ser discretizadas e resolvidas usando, por exemplo, a técnica das diferenças finitas aplicada à malha retangular definida no domínio computacional.
 Finalmente, a solução é transformada de volta para o domínio físico através das relações de transformação. Destaca-se o trabalho de \citet{artigo_thompson},
-que desenvolveram uma técnica para determinação da relação de transformação entre sistemas de coordenadas para o caso bidimensional através da resolução numérica de equações diferenciais parciais.
+em que foi desenvolvida uma técnica para determinação da relação de transformação entre sistemas de coordenadas para o caso bidimensional através da resolução numérica de equações diferenciais parciais.
 
 Outra técnica de transformação de coordenadas envolve o emprego de transformações conformes \citep{livro_numerical_grid}. Uma grande vantagem
 dessa técnica é o fato de que a equação de difusão preserva a forma original, sem introdução de termos não-lineares ou derivadas cruzadas;
@@ -126,13 +126,13 @@ para aquele subdomínio).
 
 As soluções da equação de difusão em dutos de seção reta elíptica com condições de contorno de primeiro e segundo tipo encontradas por
  \citet{trabalho_maia_1, trabalho_maia_2} combinaram as técnicas de transformação integral e mapeamento conforme. 
-Isto se seguiu com \cite{tese_antonini}, que usa a mesma metodologia em sua dissertação de mestrado sobre resolução de problemas difusivo-convectivos em geometrias não-convencionais (setor circular, geometria anular
+\cite{tese_antonini} usa a mesma metodologia em sua dissertação de mestrado sobre resolução de problemas difusivo-convectivos em geometrias não-convencionais (setor circular, geometria anular
 concêntrica e geometria bicônica). Conforme citado anteriormente, as equações de difusão no novo sistema de coordenadas preservaram sua forma; isso facilitou em
 muito o emprego da GITT, uma vez que os problemas de autovalor associado geraram funções seno e cosseno. Por outro lado, a
 simplificação nas soluções analíticas ou híbridas encontradas só foi possível porque as geometrias envolvidas possuíam mapeamentos conformes de expressão analítica
 conhecida \citep{livro_brown}.
 
-Recentemente, houve o aumento do interesse na aplicação de métodos numéricos \textit{meshless} na resolução
+Recentemente, houve o aumento do interesse na aplicação de métodos numéricos não baseados em malhas (\textit{meshless}) na resolução
 de problemas difusivos em geometrias irregulares; tais métodos procuram superar as dificuldades computacionais envolvidas na geração
 de malhas de discretização, trabalhando com o conceito de nós distribuídos pelo domínio do problema, e com as interações entre nós
 vizinhos. Tais técnicas incluem, por exemplo, o emprego de redes neurais \citep{artigo_deng, artigo_heidari}, funções de base
@@ -215,7 +215,7 @@ vez, é proporcional ao quadrado da variação de pressão detectada por transdu
 Essa taxa é relacionada com a condutância térmica de contato média sobre a interface, através de uma correlação bastante simples obtida a partir de dados
 experimentais. Mesmo assim, o erro garantido pelos autores na previsão da CTC média é relativamente alto (aproximadamente $\pm 50 \%$).
 
-Em face das dificuldades relacionadas ao levantamento de características me-cânicas e geométricas dos problemas de estimação de CTC, 
+Em face das dificuldades relacionadas ao levantamento de características mecânicas e geométricas dos problemas de estimação de CTC, 
 tais como a distribuição dos pontos de contato e as dimensões dos espaços intersticiais, e que são parâmetros necessários nos trabalhos citados
 até o momento, não tardou para que começassem a ser aplicadas as técnicas de resolução de problemas inversos de transferência de calor (IHTP, do termo em inglês \textit{Inverse Heat Transfer Problems}).
 

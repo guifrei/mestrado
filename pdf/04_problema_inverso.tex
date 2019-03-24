@@ -11,7 +11,7 @@ indireta e não intrusiva, através do emprego do conceito de funcional de recip
 
 A estimativa da CTC será feita através de medidas de temperaturas tomadas na superfície superior $\Gamma_0$ do corpo de prova, submetida a um fluxo
 de calor por unidade de área $q$. As superfícies laterais $\Gamma_1$ e $\Gamma_2$ são mantidas termicamente isoladas, e a temperatura da superfície
-inferior $\Gamma_\infty$ é mantida constante. As características termofísicas dos corpos materiais em contato são conhecidas, a saber, as 
+inferior $\Gamma_\infty$ é mantida constante. As características geométricas e termofísicas dos corpos materiais em contato são conhecidas, a saber, as 
 condutividades térmicas $k_1$ e $k_2$, bem como as dimensões $a$ e $b$ do corpo de prova e a curva $y = w(x)$, que descreve geometricamente a interface
 de contato entre os corpos. 
 
@@ -27,7 +27,7 @@ de falhas planas no interior de corpos materiais.
 Nesse sentido, a introdução de uma perturbação a um corpo material geraria uma resposta à aplicação de um campo escalar diferente da obtida se
 essa perturbação não estivesse presente. Seja então um fluxo de uma grandeza escalar $\Phi_m$ imposto à fronteira externa $\partial\Omega$ de um corpo material
 $\Omega$, e seja $U_m$ a medida de um campo escalar $u$ em equilíbrio, tomada na mesma fronteira (figura \ref{fig3}). Exemplos de grandezas dessa natureza são
-temperatura e fluxo de calor, ou deformação e vetor tensão. 
+temperatura e fluxo de calor, ou deformação e tensão. 
 \begin{figure}[h!b]
 \begin{center}
 \begin{tikzpicture}[scale=1.0]
@@ -153,7 +153,7 @@ onde
 	\gamma_j = G_{1,j}\big|_\Gamma \label{expressao_define_gamma}
 \end{align}
 
-Com base no trabalho de \cite{artigo_padilha_3}, será proposta uma escolha de parametrização de condições de contorno dos problemas auxiliares de modo que as funções
+Com base no trabalho de \cite{artigo_padilha_3}, será proposto um procedimento de parametrização de condições de contorno dos problemas auxiliares de modo que as funções
 $\beta_j, j=1,2,\ldots N_1$ e $\gamma_j, j=1,2,\ldots N_2$ formem dois conjuntos ortonormais, isto é:
 \begin{align}
 	\left\langle  \beta_m, \beta_n \right\rangle = \left\lbrace
@@ -244,83 +244,3 @@ de prova foi resolvido analiticamente por \cite{tese_padilha}.
 % O problema inverso definido pelo arranjo físico representado na figura \ref{fig2}, juntamente com as equações \eqref{harm_T1} -- \eqref{cc_T1_5}, é uma
 % generalização de um problema mais simples em que a interface de contato é um plano paralelo às faces inferior e superior do corpo de prova, conforme
 % ilustrado na \ref{fig4}.
-\begin{figure}[h!b]
-\begin{center}
-\begin{tikzpicture}[scale=0.7]
-
-	\draw [ultra thick] (0, 0) -- (10, 0);
-	%\draw [ultra thick] (0, 2) -- (7, 2);
-	%\draw [ultra thick] (8, 2) -- (10, 2);
-	\draw [ultra thick] (0, 5) -- (10, 5);
-	\draw [ultra thick] (0, 2.0) -- (3.0, 2.0);
-	\draw [ultra thick] (3.6, 2.0) -- (10, 2.0);
-	\draw [ultra thick] (0, 0) -- (0, 5);
-	\draw [ultra thick] (10, 0) -- (10, 5);
-
-	\draw (2.5, 3.5) node {$\Omega_1$};
-	\draw (7.5, 1) node {$\Omega_2$};
-	\draw (3.3, 2.2) node {$\Gamma$};
-	\draw (-0.5, 3.5) node {$\Gamma_1$};
-	\draw (-0.5, 1) node {$\Gamma_2$};
-	\draw (10.5, 3.5) node {$\Gamma_1$};
-	\draw (10.5, 1) node {$\Gamma_2$};
-	\draw (5, -0.4) node {$\Gamma_\infty$};
-	\draw (2.5, 5.3) node {$\Gamma_0$};
-	\draw [blue](5, 6.5) node {$q$};
-	\draw (5, -1.3) node {$a$};
-	\draw (-3.9, 2.5) node {$b$};
-	\draw (-2.5, 1) node {$b_2$};
-	\draw (-2.5, 3.5) node {$b_1$};
-
-	\node [above right] at (12, 0) {$x$};
-	\node [right] at (0, 8) {$y$};
-
-	\draw [->, blue] (0, 6.2) -- (0, 5.2);
-	\draw [->, blue] (1, 6.2) -- (1, 5.2);
-	\draw [->, blue] (2, 6.2) -- (2, 5.2);
-	\draw [->, blue] (3, 6.2) -- (3, 5.2);
-	\draw [->, blue] (4, 6.2) -- (4, 5.2);
-	\draw [->, blue] (5, 6.2) -- (5, 5.2);
-	\draw [->, blue] (6, 6.2) -- (6, 5.2);
-	\draw [->, blue] (7, 6.2) -- (7, 5.2);
-	\draw [->, blue] (8, 6.2) -- (8, 5.2);
-	\draw [->, blue] (9, 6.2) -- (9, 5.2);
-	\draw [->, blue] (10, 6.2) -- (10, 5.2);
-
-	\draw [->, very thick] (10.2,0) -- (12,0);
-	\draw [->, very thick] (0, 6.5) -- (0,8);
-
-	\draw [-] (0, -0.2) -- (0, -1.2);
-	\draw [-] (10, -0.2) -- (10, -1.2);
-	\draw [<->] (0, -1) -- (10, -1);
-
-	\draw [-] (-0.2, 0) -- (-3.8, 0);
-	\draw [-] (-0.2, 5) -- (-3.8, 5);
-	\draw [-] (-0.2, 2) -- (-2.2, 2);
-	\draw [<->] (-3.6, 0) -- (-3.6, 5);
-	\draw [<->] (-2.0, 0) -- (-2.0, 2);
-	\draw [<->] (-2.0, 2) -- (-2.0, 5);
-
-\end{tikzpicture}
-\caption{Geometria do problema físico resolvido por \cite{reciproc_2}}
-\label{fig4}
-\end{center}
-\end{figure}
-% 
-% Na resolução deste problema inverso, \cite{reciproc_2} deduziram uma versão mais simples da expressão \eqref{equacao_definicao_f_r}:
-% \begin{align}
-% 	& h_c % = \frac{- k_1 \displaystyle\frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma}{[T_1 - T_2]_\Gamma} 
-% 	= \frac{\displaystyle\sum_{j=1}^N \Re(G_{1,j}) \phi_j}{\displaystyle\sum_{j=1}^N \Re(F_{1,j}) \phi_j}
-% 	\label{equacao_definicao_f_r_simples}
-% \end{align}
-% 
-% As funções $\phi_j, j=1,2\ldots,N$ foram definidas através de funções seno e cosseno, ortogonais
-% no intervalo $0 \le x \le a$.
-% 
-% Uma vez que, para esse problema, $\phi_j = \beta_j = \gamma_j$, foram definidas as seguintes condições de contorno para as famílias de 
-% funções $F_{1,j}$ e $G_{1,j}$: 
-% 
-% 
-%  
-% . Os problemas difusivos auxiliares que fornecem as funções $F_j$ e $G_j$
-% foram resolvidos através do Método das Soluções Fundamentais 

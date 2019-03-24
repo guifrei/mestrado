@@ -11,7 +11,7 @@ Na seção \ref{secao_sobre_fr}, foi definido na equação \eqref{definicao_innn
 
 Se a superfície $\Gamma$, sobre a qual é realizada a integração, possuir uma representação paramétrica da forma
 \begin{align}
-\mathbf{\Gamma}(t) = x(t)\mathbf{a}_x + y(t)\mathbf{a}_y
+\Gamma(t) = x(t)\mathbf{a}_x + y(t)\mathbf{a}_y, \quad\quad\quad t_0 < t < t_1
 \end{align}
 onde $\mathbf{a}_x$ e $\mathbf{a}_y$ são os vetores unitários da base canônica do sistema cartesiano, então a integral \eqref{integral_da_definicao_produto_interno} pode ser escrita como \citep{livro_stewart}:
 \begin{align}
@@ -39,7 +39,7 @@ Os funcionais de reciprocidade, conforme dito na seção \ref{secao_sobre_fr}, s
 
 A superfície $\Gamma_0$, representada no arranjo da figura \ref{fig2}, e sobre a qual é calculada a integral de contorno \eqref{integral_de_contorno_para_F}, pode ser parametrizada como:
 \begin{align}
-\mathbf{\Gamma}_0(t) = t\mathbf{a}_x + b \mathbf{a}_y
+\Gamma_0(t) = t\mathbf{a}_x + b \mathbf{a}_y, \quad\quad\quad 0 < t < a
 \end{align}
 onde $b$ é o comprimento vertical do corpo de prova representado na figura \ref{fig2}.
 
@@ -138,94 +138,7 @@ Substituindo os resultados \eqref{derivada_parcial_y_F} e \eqref{derivada_parcia
 \label{calculo_FR_G1_antes}
 \end{align}
 
-As equações \eqref{calculo_FR_F1_antes} e \eqref{calculo_FR_G1_antes} fornecem os funcionais de reciprocidade $\Re(F_{1,j})$ e $\Re(G_{1,j})$ referentes à uma escolha particular de funções auxiliares $\psi_j(x)$ e $\phi_j(x)$, respectivamente. Os termos $\bar{\psi}_{j, m}$ e $\bar{\phi}_{j, m}$, por sua vez, correspondem respectivamente às transformadas integrais das referidas funções $\psi_j(x)$ e $\phi_j(x)$. É necessário agora estabelecer uma escolha para estas funções que seja vantajosa do ponto de vista computacional. \cite{tese_padilha} empregou, para o caso da interface plana horizontal, as seguintes alternativas para $\psi_j(x)$ e $\phi_j(x)$:
-\begin{align}
-\psi_j(x), \phi_j(x) = \left\lbrace
-\begin{array}{ll}
-\displaystyle\sqrt{\frac{1}{a}}, & j = 0 \\ \nonumber \\
-\displaystyle\sqrt{\frac{2}{a}}\cos \mu_j x, & j = 1,2,3,\ldots
-\end{array}
-\right.
-\end{align}
-
-As equações acima, a menos das constantes multiplicativas, são equivalentes às autofunções soluções do problema de Sturm-Liouville formulado em \eqref{problema_vc_1a}, \eqref{problema_vc_1b} e \eqref{problema_vc_1c}. Esta característica permite simplificar consideravelmente as expressões \eqref{calculo_FR_F1_antes} e \eqref{calculo_FR_G1_antes}, através da aplicação da propriedade da ortogonalidade formulada em \eqref{ortogon}. Com efeito, seja o cálculo de $\bar{\psi}_{j, m}$ através da definição da transformada integral:
-\begin{align}
-\bar{\psi}_{j, m} = \int_0^a \psi_j(x) X(\mu_m, x)dx \label{integrando_m}
-\end{align}
-onde $X(\mu_m, x)$ é definida em \eqref{definicao_das_autofuncoes}
-
-Para o caso $j \ne 0$, pode-se escrever:
-\begin{align}
-\psi_j(x) = \sqrt{\frac{2}{a}}X(\mu_j, x) \label{nova_expressao_m}
-\end{align}
-
-Substituindo \eqref{nova_expressao_m} em \eqref{integrando_m}:
-\begin{align}
-\bar{\psi}_{j, m} & = \int_0^a \sqrt{\frac{2}{a}}X(\mu_j, x) X(\mu_m, x)dx  \nonumber \\
-& = \sqrt{\frac{2}{a}} \int_0^a X(\mu_j, x) X(\mu_m, x)dx \label{integrando_m2}
-\end{align}
-
-Devido à propriedade da ortogonalidade \eqref{ortogon}, a integral em \eqref{integrando_m2} será não-nula apenas para $m = j$, e a equação \eqref{integrando_m2} pode ser escrita como:
-\begin{align}
-\bar{\psi}_{j, j} & = \sqrt{\frac{2}{a}} N(\mu_j) \nonumber \\
-& = \sqrt{\frac{a}{2}} \label{integrando_m3}
-\end{align}
-sendo que foi usado o resultado em \eqref{valor_integral_norm} na simplificação da equação acima.
-
-Para o caso $j = 0$, pode-se escrever:
-\begin{align}
-\psi_0(x) = \sqrt{\frac{1}{a}}X(\mu_0, x) \label{nova_expressao_0}
-\end{align}
-
-Substituindo \eqref{nova_expressao_0} em \eqref{integrando_m}:
-\begin{align}
-\bar{\psi}_{0, m} & = \int_0^a \sqrt{\frac{1}{a}}X(\mu_0, x) X(\mu_m, x)dx  \nonumber \\
-& = \sqrt{\frac{1}{a}} \int_0^a X(\mu_0, x) X(\mu_m, x)dx \label{integrando_m0}
-\end{align}
-
-Devido à propriedade da ortogonalidade \eqref{ortogon}, a integral em \eqref{integrando_m0} será não-nula apenas para $m = 0$, e a equação \eqref{integrando_m0} pode ser escrita como:
-\begin{align}
-\bar{\psi}_{0, 0} & = \sqrt{\frac{1}{a}} N(\mu_0) \nonumber \\
-& = \sqrt{a} \label{integrando_m00}
-\end{align}
-sendo que foi usado o resultado em \eqref{valor_integral_norm} na simplificação da equação acima.
-
-Para empregar os reultados obtidos em \eqref{integrando_m3} e \eqref{integrando_m00}, será feita uma reorganização dos termos na equação \eqref{calculo_FR_F1_antes}, obtendo-se:
-\begin{align}
-\Re(F_{1,j})
-& =
--\bar{\psi}_{j,0}\left(\frac{q}{k_1} + \frac{1}{ab}\int_0^a Y(x)dx\right) -
-\frac{2}{a}\sum_{m=1}^M \mu_m \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\int_0^a Y(x)\cos\mu_m x dx + \nonumber \\
-& \frac{\mathbb{A}_{j,0}}{ab}\int_0^a Y(x)dx + \frac{2}{a}\sum_{m=1}^M \mu_m \frac{\mathbb{A}_{j,m}}{\sinh\mu_m b}\int_0^a Y(x)\cos\mu_m x dx
-\end{align}
-ou
-\begin{align}
-\Re(F_{1,j})
-=
-\zeta_j
-+
-\frac{\mathbb{A}_{j,0}}{ab}\int_0^a Y(x)dx + \frac{2}{a}\sum_{m=1}^M \mu_m \frac{\mathbb{A}_{j,m}}{\sinh\mu_m b}\int_0^a Y(x)\cos\mu_m x dx
-\label{calculo_FR_F1}
-\end{align}
-onde
-\begin{align}
-\zeta_j = \left\lbrace
-\begin{array}{ll}
--\sqrt{a}\displaystyle\left(\frac{q}{k_1} + \frac{1}{ab}\int_0^a Y(x)dx\right), & j = 0 \\ \nonumber \\
--\displaystyle \sqrt{\frac{2}{a}}  \frac{\mu_j}{\tanh\mu_j b}\int_0^a Y(x)\cos\mu_j x dx, & j = 1, 2, 3, \ldots
-\end{array}
-\right .
-\end{align}
-
-Repetindo o mesmo procedimento para $\Re(G_{1,j})$, obtém-se:
-\begin{align}
-\Re(G_{1,j})
-=
-\zeta_j
-+
-\frac{\mathbb{E}_{j,0}}{ab}\int_0^a Y(x)dx + \frac{2}{a}\sum_{m=1}^M \mu_m \frac{\mathbb{E}_{j,m}}{\sinh\mu_m b}\int_0^a Y(x)\cos\mu_m x dx
-\label{calculo_FR_G1}
-\end{align}
+As equações \eqref{calculo_FR_F1_antes} e \eqref{calculo_FR_G1_antes} fornecem os funcionais de reciprocidade $\Re(F_{1,j})$ e $\Re(G_{1,j})$ referentes à uma escolha particular de funções auxiliares $\psi_j(x)$ e $\phi_j(x)$, respectivamente. Os termos $\bar{\psi}_{j, m}$ e $\bar{\phi}_{j, m}$, por sua vez, correspondem respectivamente às transformadas integrais das referidas funções $\psi_j(x)$ e $\phi_j(x)$. 
 
 Finalmente, conhecidos os funcionais de reciprocidade, bem como as funções de base ortogonal $\beta_j(x)$ e $\gamma_j(x)$, aplica-se a equação \eqref{equacao_definicao_f_r}, deduzida na seção \ref{secao_sobre_fr}:
 \begin{align}
@@ -233,7 +146,19 @@ Finalmente, conhecidos os funcionais de reciprocidade, bem como as funções de 
 = \frac{\displaystyle\sum_{j=1}^{N_2} \Re(G_{1,j}) \gamma_j(x)}{\displaystyle\sum_{j=1}^{N_1} \Re(F_{1,j}) \beta_j(x)} \label{expressao_final_ctc}
 \end{align}
 
-A expressão \eqref{expressao_final_ctc} e as relações \eqref{calculo_FR_F1} e \eqref{calculo_FR_G1} representam uma generalização da expressão analítica para o cálculo da condutância térmica de contato obtida por \cite{tese_padilha} para o caso em que a interface de contato $\Gamma$ é plana e paralela às bases do corpo de prova. Assim como o resultado encontrado para o referido caso, elas permitem estimar de forma direta a distribuição espacial da CTC ao longo da interface $\Gamma$, através das medidas de temperatura $Y(x)$ tomadas sobre a superfície $\Gamma_0$, conforme havia sido comentado na seção \ref{secao_sobre_fr}. Essas expressões envolvem integrais da forma $\displaystyle \int_0^a Y(x)dx$ e $\displaystyle \int_0^a Y(x)\cos\mu_m x dx$, também presentes no trabalho de \cite{tese_padilha}, que podem ser calculadas previamente e aplicadas nos somatórios \eqref{calculo_FR_F1} e \eqref{calculo_FR_G1}. A determinação dos coeficientes $\mathbb{A}_{j,m}$ e $\mathbb{E}_{j,m}$ foi discutida nas seções anteriores.
+A expressão \eqref{expressao_final_ctc} e as relações \eqref{calculo_FR_F1_antes} e \eqref{calculo_FR_G1_antes} representam uma generalização da expressão analítica para o cálculo da condutância térmica de contato obtida por \cite{tese_padilha} para o caso em que a interface de contato $\Gamma$ é plana e paralela às bases do corpo de prova. Assim como o resultado encontrado para o referido caso, elas permitem estimar de forma direta a distribuição espacial da CTC ao longo da interface $\Gamma$, através das medidas de temperatura $Y(x)$ tomadas sobre a superfície $\Gamma_0$, conforme havia sido comentado na seção \ref{secao_sobre_fr}. Essas expressões envolvem integrais da forma $\displaystyle \int_0^a Y(x)dx$ e $\displaystyle \int_0^a Y(x)\cos\mu_m x dx$, também presentes no trabalho de \cite{tese_padilha}, que podem ser calculadas previamente e aplicadas nos somatórios \eqref{calculo_FR_F1_antes} e \eqref{calculo_FR_G1_antes}. A determinação dos coeficientes $\mathbb{A}_{j,m}$ e $\mathbb{E}_{j,m}$ foi discutida nas seções anteriores.
+
+Uma questão ainda em aberto é a que envolve a definição das funções $\psi_j(x)$ e $\phi_j(x)$ que garantam a ortonormalidade das funções $\beta_j(x)$ e $\gamma_j(x)$. Conforme discutido na seção \ref{orto_beta_gama}, a determinação destas funções é feita de forma indireta, a partir de uma escolha prévia de funções $\hat{\psi}_j(x)$ e $\hat{\phi}_j(x)$ e da aplicação do algoritmo de Gram-Schmidt. Neste trabalho foram empregadas as seguintes alternativas para estas funções:
+\begin{align}
+\hat{\psi}_j(x), \hat{\phi}_j(x) = \left\lbrace
+\begin{array}{ll}
+\displaystyle\sqrt{\frac{1}{a}}, & j = 0 \\ \nonumber \\
+\displaystyle\sqrt{\frac{2}{a}}\cos \mu_j x, & j = 1,2,3,\ldots
+\end{array}
+\right.
+\end{align} 
+
+Através dessas funções, é possível determinar as funções $\psi_j(x)$ e $\phi_j(x)$ através das relações \eqref{expressao_relaciona_phi} e \eqref{expressao_relaciona_phi_2}\footnote{Estas funções foram as mesmas usadas por \cite{tese_padilha} na sua tese de doutorado e se mostraram bastante vantajosas do ponto de vista computacional, tanto neste como naquele trabalho. De fato, no estudo do problema de determinação da CTC numa interface plana horizontal conduzido por \cite{tese_padilha}, foi demonstrado que o emprego destas funções diretamente nas condições de contorno dos problemas auxiliares para $F_{1,j}$, $F_{2,j}$ e $G_{1,j}$ garantia automaticamente a ortogonalidade das funções $\beta_j(x)$ e $\gamma_j(x)$.}.
 
 %Na próxima seção, será feita uma validação dos resultados até então encontrados, aplicando-os para o caso estudado por \cite{tese_padilha}, a fim de deduzir a mesma expressão analítica de estimativa de CTC encontrada naquele trabalho.
 %

@@ -42,7 +42,7 @@ devido à presença do contato imperfeito \citep{livro_madhusudana}:
 \begin{equation}
 	h_c = \frac{Q_c/A}{\Delta T_c} = \frac{q_c}{\Delta T_c} \label{eq:definicao_1}
 \end{equation}
-onde $Q_C$ é o fluxo total de calor através da interface, $A$ é a área de contato nominal ou aparente, $q_c$ é o fluxo de calor por unidade de área e e $\Delta T_c$ é o salto de temperatura. As unidades
+onde $Q_C$ é o fluxo total de calor através da interface, $A$ é a área de contato nominal ou aparente, $q_c$ é o fluxo de calor por unidade de área e e $\Delta T_c$ é o salto de temperatura na interface. As unidades
 da CTC são as mesmas do coeficiente de transferência de calor por convecção ($W/m^2 K$ no SI).
 
 A inversa da CTC é denominada \textit{resistência térmica de contato} (RTC):
@@ -133,4 +133,18 @@ do domínio geométrico do problema.
 
 \subsection{Organização do trabalho}
 
-No presente capítulo \ldots
+O presente capítulo introduziu a definição formal de condutância térmica de contato e apresentou os conceitos e ferramentas básicas a serem aplicados ao longo do trabalho (a saber, os Funcionais de Reciprocidade e a Técnica da Transformada Integral Clássica). Os fatores motivacionais e os objetivos principais da dissertação também foram apresentados.
+
+No capítulo 2 é apresentada uma revisão bibliográfica descrevendo separadamente a evolução das técnicas de solução de problemas difusivos e as abordagens do tratamento da estimativa da condutância térmica de contato. O problema matemático necessário para o cálculo dos Funcionais de Reciprocidade é basicamente um problema difusivo, para o qual existem diversas opções de técnicas de solução; já os primeiros problemas de determinação da condutância térmica de contato não eram entendidos como problemas inversos de condução de calor (que são difusivos por definição). Ambos aspectos são citados e desenvolvidos pelo ponto de vista histórico neste capítulo.
+
+O capítulo 3 apresenta a descrição do problema físico abordado neste estudo. A configuração física, que consiste basicamente em um corpo de prova de seção reta retangular feito de dois materias distintos em contato, foi estabelecida levando-se em conta que a interface de contato entre os materiais pode ser representada por uma curva. As hipóteses assumidas e a formulação matemática do problema de condução de calor, em que a CTC aparece como um dos parâmetros de entrada, são indicados neste capítulo.
+
+O capítulo 4 descreve o problema inverso de condução de calor referente ao arranjo físico estabelecido no capítulo 3, no qual a CTC passa a ser um parâmetro a ser estimado. Neste arranjo, assume-se que as medidas de temperatura na superfície superior do corpo de prova são conhecidas. O conceito de Funcional de Reciprocidade é descrito neste capítulo, bem como a sua formulação proposta para o problema estudado. Conceitos matemáticos de Álgebra Linear necessários para o embasamento teórico da técnica dos Funcionais de Reciprocidade, tais como espaços lineares, produtos internos e projeções ortogonais, também são discutidos.
+
+No capítulo 5 são formulados os problemas difusivos auxiliares que fornecem as funções auxiliares necessárias para o cálculo dos Funcionais de Reciprocidade. Uma vez que a interface de contato entre os materiais que compõem o corpo de prova não é plana nem horizontal, faz-se necessário aplicar conceitos de Geometria Diferencial para expressar em coordenadas cartesianas o gradiente de temperatura ao longo da interface, que aparece nas condições de contorno dos problemas auxiliares. Desse modo, é feita uma adequação da formulação dos problemas para permitir a aplicação da Técnica da Transformada Integral Clássica para sua solução; todo o processo de resolução através desta ferramenta é detalhado neste capítulo. As funções obtidas são então ortogonalizadas através do algoritmo de Gram-Schmidt.
+
+Os resultados obtidos nos capítulos anteriores são reunidos no capítulo 6, onde finalmente é apresentada a formulação analítica da estimativa da condutância térmica de contato. Mais uma vez são revisitadas ferramentas de Geometria Diferencial, quais sejam, integrais de linha e derivadas direcionais, que auxiliam na formalização das conceitos estabelecidos ao longo do trablho. A expressão final proposta é de propósito geral, para interfaces de contato de formato arbitrário, sendo a interface plana horizontal, que inspirou o presente trabalho, um caso particular.
+
+Discussões sobre a implementação numérico-computacional da estimativa da condutância térmica de contato têm lugar no capítulo 7. Foram executadas simulações computacionais de diferentes configurações de geometria de interface de contato e de condutância térmica de contato, a fim de obter as medidas simuladas de temperatura na superfície superior dos corpos de prova. Estas medidas por sua vez alimentaram um programa escrito em Fortran, que implementa as equações deduzidas até o capítulo anterior, fornecendo as respectivas estimativas de condutância térmica de contato. Os resultados teóricos e estimados foram comparados e as análises correspondentes foram desenvolvidas ao longo deste capítulo.
+
+A dissertação se encerra no capítulo 8, onde são apresentadas conclusões quanto ao emprego da técnica dos Funcionais de Reciprocidade no problema inverso estudado e indica sugestões de trabalhos futuros para a continuidade do desenvolvimento desta técnica.
