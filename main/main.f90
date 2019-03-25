@@ -126,7 +126,7 @@ program main
                 call calculate_reciprocity_coefficients(interface_idx, condutance_idx)
 
                 do nmax = 0, N
-                    write(*, *)'N = ', nmax
+                    !write(*, *)'N = ', nmax
                     write(str_N, '(I2.2)') nmax
                     open(unit = 2, file = '/home/cx3d/mestrado/' // &
                         'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_' &
