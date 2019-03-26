@@ -12,7 +12,6 @@ module reciprocity_functions_module
     double precision, dimension(0: mmax_G, 0: N), target :: coeffsG
     double precision, dimension(0: N, 0: mmax_phi), target :: vpsi, vphi
     double precision, dimension(0: mmax_phi) :: integrals_Y
-    logical :: factored
 
     integer, parameter :: ID_F1 = 0
     integer, parameter :: ID_DF1DX = 1
@@ -297,69 +296,62 @@ contains
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
 
-        if (factored) then
 
-            !        do j = 0, N
-            !            do m = 0, mmax_phi
-            !                vpsi(j, m) = ftransform(f_aux_psi, j, m, interface_idx)
-            !                vphi(j, m) = ftransform(f_aux_phi, j, m, interface_idx)
-            !            end do
-            !        end do
+        !        do j = 0, N
+        !            do m = 0, mmax_phi
+        !                vpsi(j, m) = ftransform(f_aux_psi, j, m, interface_idx)
+        !                vphi(j, m) = ftransform(f_aux_phi, j, m, interface_idx)
+        !            end do
+        !        end do
 
-            vpsi = 0.0
-            vphi = 0.0
+        vpsi = 0.0
+        vphi = 0.0
 
-            do j = 0, N
-                if (j == 0) then
-                    vpsi(j, j) = sqrt(a)
-                    vphi(j, j) = sqrt(a)
-                else
-                    vpsi(j, j) = sqrt(a/2.0)
-                    vphi(j, j) = sqrt(a/2.0)
-                end if
+        do j = 0, N
+            if (j == 0) then
+                vpsi(j, j) = sqrt(a)
+                vphi(j, j) = sqrt(a)
+            else
+                vpsi(j, j) = sqrt(a/2.0)
+                vphi(j, j) = sqrt(a/2.0)
+            end if
+        end do
+
+        write(*, *)'Generating matrices for F'
+
+        mxF = 0.0
+        do j = 0, mmax_F
+            do m = 0, mmax_F
+                mxF(j*2,m*2) = ftransform(fa, m, j, interface_idx)
+                mxF(j*2,m*2+1) = ftransform(fb, m, j, interface_idx)
+                mxF(j*2+1,m*2) = ftransform(fp, m, j, interface_idx)
+                mxF(j*2+1,m*2+1) = ftransform(fq, m, j, interface_idx)
             end do
-
-            write(*, *)'Generating matrices for F'
-
-            mxF = 0.0
-            do j = 0, mmax_F
-                do m = 0, mmax_F
-                    mxF(j*2,m*2) = ftransform(fa, m, j, interface_idx)
-                    mxF(j*2,m*2+1) = ftransform(fb, m, j, interface_idx)
-                    mxF(j*2+1,m*2) = ftransform(fp, m, j, interface_idx)
-                    mxF(j*2+1,m*2+1) = ftransform(fq, m, j, interface_idx)
-                end do
-                do m = 0, N
-                    coeffsF(j*2, m) = ftransform(fc, m, j, interface_idx)
-                    coeffsF(j*2+1, m) = ftransform(fr, m, j, interface_idx)
-                end do
+            do m = 0, N
+                coeffsF(j*2, m) = ftransform(fc, m, j, interface_idx)
+                coeffsF(j*2+1, m) = ftransform(fr, m, j, interface_idx)
             end do
+        end do
 
-            write(*, *)'Generating matrices for G'
+        write(*, *)'Generating matrices for G'
 
-            mxG = 0.0
-            do j = 0, mmax_G
-                do m = 0, mmax_G
-                    mxG(j,m) = ftransform(fu, m, j, interface_idx)
-                end do
-                do m = 0, N
-                    coeffsG(j, m) = ftransform(fv, m, j, interface_idx)
-                end do
+        mxG = 0.0
+        do j = 0, mmax_G
+            do m = 0, mmax_G
+                mxG(j,m) = ftransform(fu, m, j, interface_idx)
             end do
+            do m = 0, N
+                coeffsG(j, m) = ftransform(fv, m, j, interface_idx)
+            end do
+        end do
 
-!            factored = .false.
+        !            factored = .false.
 
-        end if
 
         ! Solucao do sistema
         write(*, *)'Solving systems'
-        if (factored) then
-            fact = 'F'
-            equed = 'B'
-        else
-            fact = 'E'
-            equed = 'B'
-        end if
+        fact = 'E'
+        equed = 'B'
 
         call dgesvx('E', 'N', 2*mmax_F+2, N+1, mxF, 2*mmax_F+2, afF, 2*mmax_F+2, ipivF, equed, &
             rF, cF, coeffsF, 2*mmax_F+2, tmpcoeffsF, 2*mmax_F+2, rcond, ferr, berr, workF, iworkF, info)
@@ -447,8 +439,10 @@ contains
         do while (keep_1)
             r_acc = r_acc + parcela(j, m, x, y, v(m))
             m = m + 1
-            keep_1 = m <= mmax
+            keep_1 = m <= delta_m
         end do
+
+        keep_1 = .true.
 
         do while (keep_1)
             p = m

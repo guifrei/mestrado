@@ -83,7 +83,6 @@ program main
 
     do interface_idx = 1, 3
         write(str_idx, '(I2.2)') interface_idx
-        factored = .true.
         do condutance_idx = 1, 3
             write(str_cdx, '(I2.2)') condutance_idx
             call calculate_temperature_coefficients(interface_idx, condutance_idx)
