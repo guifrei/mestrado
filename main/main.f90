@@ -4,6 +4,7 @@ program main
     use conductances_module
     use temperature_functions_module
     use reciprocity_functions_module
+    use wynn_module
     implicit none
 
     integer :: interface_idx, condutance_idx, k, j, nmax, stdev_idx, n_delta_temperatura, n_fluxo_calor
@@ -11,7 +12,7 @@ program main
     procedure(w_proc_t), pointer :: w
     procedure(dw_proc_t), pointer :: dw
     double precision :: x, stdev, dx, desv, y1, y2, norma, dnorma, norma_acc, rms, norma_delta_temperatura, norma_fluxo_calor
-    character(len = 2) :: str_idx, str_cdx, str_N, str_stdev, str_N_delta_temperatura, str_N_fluxo_calor
+    character(len = 2) :: str_idx, str_cdx, str_N, str_N_prev, str_stdev, str_N_delta_temperatura, str_N_fluxo_calor
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -50,6 +51,9 @@ program main
     hlist(7) = c_funloc(h7)
     hlist(8) = c_funloc(h8)
     hlist(9) = c_funloc(h9)
+
+    call ok
+    stop
 
     dx = a/dble(tmax - 1)
 
@@ -206,15 +210,16 @@ program main
                 open(unit = 5, file = '/home/cx3d/mestrado/' // &
                     'data/norma_acumulada_delta_temperatura_interface_'//str_idx//'_conductance_' &
                     //str_cdx // '_stdev_'// str_stdev // '.dat')
-                do nmax = 0, N
+                do nmax = 1, N
                     write(str_N, '(I2.2)') nmax
+                    write(str_N_prev, '(I2.2)') nmax-1
                     norma = 0.0
                     open(unit = 2, file = '/home/cx3d/mestrado/' // &
                         'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_' &
                         //str_cdx // '_stdev_'// str_stdev // '_N_' // str_N // '.dat')
                     open(unit = 3, file = '/home/cx3d/mestrado/' // &
-                        'data/comsol/delta_temperatura_interface_'//str_idx//'_conductance_' &
-                        //str_cdx // '.dat')
+                        'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_' &
+                        //str_cdx // '_stdev_'// str_stdev // '_N_' // str_N_prev // '.dat')
                     do j = 0, tnmax - 1
                         read(2, *)x, y1
                         read(3, *)x, y2
@@ -247,15 +252,16 @@ program main
                 open(unit = 5, file = '/home/cx3d/mestrado/' // &
                     'data/norma_acumulada_fluxo_calor_interface_'//str_idx//'_conductance_' &
                     //str_cdx // '_stdev_'// str_stdev // '.dat')
-                do nmax = 0, N
+                do nmax = 1, N
                     write(str_N, '(I2.2)') nmax
+                    write(str_N_prev, '(I2.2)') nmax-1
                     norma = 0.0
                     open(unit = 2, file = '/home/cx3d/mestrado/' // &
                         'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_' &
                         //str_cdx // '_stdev_'// str_stdev // '_N_' // str_N // '.dat')
                     open(unit = 3, file = '/home/cx3d/mestrado/' // &
-                        'data/comsol/fluxo_calor_interface_'//str_idx//'_conductance_' &
-                        //str_cdx // '.dat')
+                        'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_' &
+                        //str_cdx // '_stdev_'// str_stdev // '_N_' // str_N_prev // '.dat')
                     do j = 0, tnmax - 1
                         read(2, *)x, y1
                         read(3, *)x, y2
@@ -284,32 +290,32 @@ program main
                 write(*, *)'n_fluxo_calor = ', n_fluxo_calor
 
                 ! Geracao das estimativas de condutancia termica de contato
-                write(str_N_delta_temperatura, '(I2.2)') n_delta_temperatura
-                write(str_N_fluxo_calor, '(I2.2)') n_fluxo_calor
-                open(unit = 2, file = '/home/cx3d/mestrado/' // &
-                    'data/estimativa_ctc_interface_'//str_idx//'_conductance_' &
-                    //str_cdx // '_stdev_'// str_stdev // '.dat')
-                open(unit = 3, file = '/home/cx3d/mestrado/' // &
-                    'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_' &
-                    //str_cdx // '_stdev_'// str_stdev // '_N_' // str_N_delta_temperatura // '.dat')
-                open(unit = 4, file = '/home/cx3d/mestrado/' // &
-                    'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_' &
-                    //str_cdx // '_stdev_'// str_stdev // '_N_' // str_N_fluxo_calor // '.dat')
-
-                open(unit = 5, file = '/home/cx3d/mestrado/' // &
-                    'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_' &
-                    //str_cdx // '_stdev_'// str_stdev // '_melhor.dat')
-                open(unit = 7, file = '/home/cx3d/mestrado/' // &
-                    'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_' &
-                    //str_cdx // '_stdev_'// str_stdev // '_melhor.dat')
-
-                do j = 0, tnmax - 1
-                    read(3, *)x, y1
-                    read(4, *)x, y2
-                    write(2, *)x, y2/y1
-                    write(5, *)x, y1
-                    write(7, *)x, y2
-                end do
+!                write(str_N_delta_temperatura, '(I2.2)') n_delta_temperatura
+!                write(str_N_fluxo_calor, '(I2.2)') n_fluxo_calor
+!                open(unit = 2, file = '/home/cx3d/mestrado/' // &
+!                    'data/estimativa_ctc_interface_'//str_idx//'_conductance_' &
+!                    //str_cdx // '_stdev_'// str_stdev // '.dat')
+!                open(unit = 3, file = '/home/cx3d/mestrado/' // &
+!                    'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_' &
+!                    //str_cdx // '_stdev_'// str_stdev // '_N_' // str_N_delta_temperatura // '.dat')
+!                open(unit = 4, file = '/home/cx3d/mestrado/' // &
+!                    'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_' &
+!                    //str_cdx // '_stdev_'// str_stdev // '_N_' // str_N_fluxo_calor // '.dat')
+!
+!                open(unit = 5, file = '/home/cx3d/mestrado/' // &
+!                    'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_' &
+!                    //str_cdx // '_stdev_'// str_stdev // '_melhor.dat')
+!                open(unit = 7, file = '/home/cx3d/mestrado/' // &
+!                    'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_' &
+!                    //str_cdx // '_stdev_'// str_stdev // '_melhor.dat')
+!
+!                do j = 0, tnmax - 1
+!                    read(3, *)x, y1
+!                    read(4, *)x, y2
+!                    write(2, *)x, y2/y1
+!                    write(5, *)x, y1
+!                    write(7, *)x, y2
+!                end do
 
                 close(7)
                 close(5)

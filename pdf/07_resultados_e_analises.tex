@@ -154,7 +154,7 @@ Para fins de verificação, as mesmas combinações foram resolvidas numericamen
 
 As temperaturas sintéticas obtidas a partir do COMSOL correspondem a medidas consideradas exatas, sem ruídos ou erros experimentais. De forma a simular medidas com erros experimentais, foi implementado o mesmo procedimento adotado por \cite{tese_padilha}: foram adicionados erros randômicos com distribuição normal às temperaturas calculadas sobre a superfície superior do corpo de prova. Sendo então $\mathbf{Y}$ as medidas de temperatura simuladas sem erros, as medidas simuladas com erros, denotadas por $\tilde{\mathbf{Y}}$, foram calculadas através da expressão:
 \begin{align}
-\tilde{\mathbf{Y}} = \mathbf{Y} + \mathbf{\varepsilon} \sigma
+\tilde{\mathbf{Y}} = \mathbf{Y} + \mathbf{\varepsilon} \sigma \label{modelagem_erro}
 \end{align}
 onde $\sigma$ é o desvio padrão das medidas de temperatura, e $\varepsilon$ é uma sequência aleatória gerada a partir da transformação Box-Muller\citep{artigo_box_muller}:
 \begin{align}
@@ -163,14 +163,77 @@ onde $\sigma$ é o desvio padrão das medidas de temperatura, e $\varepsilon$ é
 onde $u$ e $v$ correspondem a variáveis aleatórias contínuas com distribuição uniforme entre 0 e 1.
 
 Três níveis de desvio-padrão foram testados: $\sigma = \text{0,0}\celsius$ (correspondente aos casos onde as temperaturas sintéticas não contém erros), $\sigma = \text{0,1}\celsius$ e $\sigma = \text{0,5}\celsius$. Desse modo, havendo três possibilidades de geometrias de interface de contato e três possibilidades de condutância térmica de contato teórica, foram realizadas nove simulações distintas de problemas-teste diretos, para obtenção das respectivas distribuições de temperaturas sintéticas exatas. A cada um desses resultados foram aplicados os erros correpondentes às três possibilidades de desvio-padrão, num total de 27 conjuntos de dados de entrada; estes dados por sua vez alimentaram cada um dos 27 problemas inversos equivalentes resolvidos neste trabalho. Nas figuras \ref{figura_temperaturas_sinteticas_interface_01}, \ref{figura_temperaturas_sinteticas_interface_02} e \ref{figura_temperaturas_sinteticas_interface_03}, é possível visualizar as distribuições de temperaturas sintéticas na superfície superior do corpo de prova para cada uma das configurações. A maior ou menor dispersão dos dados com erros aleatórios em torno das medidas exatas é devida apenas às diferentes escalas adotadas no eixo $y$ de cada gráfico.
+\newpage
 
-\newpage
-\input{07_resultados_e_analises_perfis_temperatura_superior_interface_01.tex}
-\newpage
-\input{07_resultados_e_analises_perfis_temperatura_superior_interface_02.tex}
-\newpage
-\input{07_resultados_e_analises_perfis_temperatura_superior_interface_03.tex}
-\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Temperaturas em y = b
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% indice da interface
+% indice da condutancia
+\newcommand{\graficostemperatura}[3]{%
+	\begin{minipage}[t][6cm][c]{4.5cm}
+		\centering		
+		\begin{tikzpicture}[scale=0.75]
+		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		axis lines=left,
+		%		xmin = 0,
+		%		xmax = 0.04,
+		%		ymin = 310,
+		%		ymax = 340,
+		%		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=7cm,
+		height=5cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $T_1\big|_{\Gamma_0}$ (\celsius),
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]		
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_0#1_conductance_0#2_stdev_05.dat} 
+		\teff
+		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=2.0pt}] table from \teff;
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_0#1_conductance_0#2_stdev_01.dat} 
+		\teff
+		\addplot[only marks,color=red,mark=square,mark options={mark size=2.0pt}] table from \teff;
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_0#1_conductance_0#2_stdev_00.dat} 
+		\teff
+		\addplot[color=blue,mark=o,mark options={mark size=2.0pt}] table from \teff;		
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(#3) Perfil #2}
+	\end{minipage}
+}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%TODO apenas para acelerar a compilação
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\begin{figure}[h!b]
+%	\graficostemperatura{1}{1}{a}
+%	\graficostemperatura{1}{2}{b}
+%	\graficostemperatura{1}{3}{c}
+%	\caption{Temperaturas sintéticas ($Y$) ao longo da superfície superior $\Gamma_0$, para os perfis de CTC de 1 a 3, referentes à interface de contato 1: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	\label{figura_temperaturas_sinteticas_interface_01}
+%\end{figure}
+%\begin{figure}[h!b]
+%	\graficostemperatura{2}{1}{a}
+%	\graficostemperatura{2}{2}{b}
+%	\graficostemperatura{2}{3}{c}
+%	\caption{Temperaturas sintéticas ($Y$) ao longo da superfície superior $\Gamma_0$, para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	\label{figura_temperaturas_sinteticas_interface_02}
+%\end{figure}
+%\begin{figure}[h!b]
+%	\graficostemperatura{3}{1}{a}
+%	\graficostemperatura{3}{2}{b}
+%	\graficostemperatura{3}{3}{c}
+%	\caption{Temperaturas sintéticas ($Y$) ao longo da superfície superior $\Gamma_0$, para os perfis de CTC de 1 a 3, referentes à interface de contato 3: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	\label{figura_temperaturas_sinteticas_interface_03}
+%\end{figure}
 
 \subsection{Código computacional}\label{sobre_o_programa}
 
@@ -206,7 +269,7 @@ Serão apresentados agora os resultados numéricos obtidos a partir da aplicaç�
 
 Para cada combinação possível de geometria de interface (tabela \ref{tabela_interfaces}), perfil de condutância térmica de contato (tabela \ref{tabela_ctc}) e desvio-padrão de erros de medição ($\sigma = \text{0,0}\celsius$, $\sigma = \text{0,1}\celsius$ e $\sigma = \text{0,5}\celsius$), foram calculadas estimativas de salto de temperatura e fluxo de calor na interface de contato, e os resultados foram comparados com os respectivos valores teóricos esperados para cada combinação. A estimativa do perfil de condutância térmica de contato, calculada através da razão entre o salto de temperartura e fluxo de calor estimados na interface, também foi comparada com o perfil teórico correspondente, e que foi usado para determinação prévia das temperaturas sintéticas através de simulações de cada configuração do problema no módulo de transferência de calor no simulador COMSOL \textit{Multiphysics}\textsuperscript{\textregistered}.
 
-Todas as combinações analisadas são, de certo modo, condições ideais, no sentido de que a solução exata esperada para cada problema-teste já era previamente conhecida. Num problema real, entretanto, a distribuição da condutância térmica de contato ao longo da interface $\Gamma$ é desconhecida -- com efeito, trata-se da função que se deseja estimar -- tampouco se conhece a distribuição do salto de temperatura e do fluxo de calor naquela interface. Em especial, estes últimos parâmetros foram estimados a partir de dois somatórios envolvendo os funcionais de reciprocidade (equações \eqref{resultado_1} e \eqref{resultado_2}), ou seja:
+Todas as combinações analisadas são, de certo modo, condições ideais, no sentido de que a solução exata esperada para cada problema-teste já era previamente conhecida. Num problema real, entretanto, a distribuição da condutância térmica de contato ao longo da interface $\Gamma$ é desconhecida -- com efeito, trata-se da função que se deseja estimar -- tampouco se conhece a distribuição do salto de temperatura e do fluxo de calor naquela interface. Estes últimos parâmetros foram estimados a partir de dois somatórios envolvendo os funcionais de reciprocidade (equações \eqref{resultado_1} e \eqref{resultado_2}), ou seja:
 \begin{align}
 [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \label{resultado_1_again} \\ \nonumber \\
 - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j \label{resultado_2_again}
@@ -247,6 +310,8 @@ onde $J$ é o número de termos da série para uma determinada estimativa, $p$ c
 
 Assim, comparando e analisando as métricas expressas nas equações \eqref{metrica_norma_1} a \eqref{metrica_norma_2}, foi possível investigar o comportamento da convergência das séries que representam o salto de temperatura e o fluxo de calor na interface de contato à medida em que se aumentava o número de parcelas nos somatórios. Também foi analisada a relação entre estas métricas e os erros de medição adicionados às temperaturas sintéticas na interface superior do corpo de prova.
 
+Os gráficos utilizados na análise estão agrupados por geometria de interface; em cada grupo, estão plotadas as estimativas de salto de temperatura e fluxo de calor na interface de contato, bem como as correspondentes normas conforme definidas em \eqref{metrica_norma_1} e \eqref{metrica_norma_2}. A estimativa da condutância térmica de contato, razão entre o fluxo de calor e o salto de temperatura, é representada no último subgrupo de gráficos para cada interface.
+
 % Parametros:
 % erro_rms
 % delta_temperatura ou fluxo_calor
@@ -255,9 +320,9 @@ Assim, comparando e analisando as métricas expressas nas equações \eqref{metr
 % axis text
 % a, b, ou c
 \newcommand{\graficoerrorms}[6]{%
-	\begin{minipage}[t][7cm][c]{\textwidth}
+	\begin{minipage}[t][6cm][c]{4.5cm}
 		\centering		
-		\begin{tikzpicture}
+		\begin{tikzpicture}[scale=0.75]
 		\begin{axis}[
 		axis lines=left,
 		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
@@ -278,7 +343,8 @@ Assim, comparando e analisando as métricas expressas nas equações \eqref{metr
 		height=6cm,
 		label style={font=\footnotesize},
 		xlabel = $N_j$,
-		ylabel= $\log\left(\delta_{#5}\right)$]
+		ylabel= $\log\left(\delta_{#5}\right)$,
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
 		\pgfplotstableread{../data/#1_#2_interface_0#3_conductance_0#4_stdev_00.dat} 
 		\teff
 		\addplot[color=blue,mark=o,mark options={mark size=2.0pt}] table from \teff;
@@ -301,9 +367,9 @@ Assim, comparando e analisando as métricas expressas nas equações \eqref{metr
 % numero de autofunces para cada desvio padrao, com dois algarismos
 % a, b, ou c
 \newcommand{\graficoestimativa}[9]{%
-	\begin{minipage}[t][7cm][c]{\textwidth}
-		\centering
-		\begin{tikzpicture}
+	\begin{minipage}[t][6cm][c]{4.5cm}
+		\centering		
+		\begin{tikzpicture}[scale=0.65]
 		\begin{axis}[
 		axis lines=left,
 		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
@@ -321,7 +387,8 @@ Assim, comparando e analisando as métricas expressas nas equações \eqref{metr
 		height=6cm,
 		label style={font=\footnotesize},
 		xlabel = $x$(m),
-		ylabel= $#8$ (#9)]
+		ylabel= $#8$ (#9),
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
 		\pgfplotstableread{../data/comsol/#1_interface_0#2_conductance_0#3.dat} 
 		\teff
 		\addplot[color=black, line width=1.5pt] table from \teff;
@@ -341,9 +408,9 @@ Assim, comparando e analisando as métricas expressas nas equações \eqref{metr
 }%
 
 \newcommand{\graficoctc}[4]{%
-	\begin{minipage}[t][7cm][c]{\textwidth}
-		\centering
-		\begin{tikzpicture}
+	\begin{minipage}[t][6cm][c]{4.5cm}
+		\centering		
+		\begin{tikzpicture}[scale=0.7]
 		\begin{axis}[
 		axis lines=left,
 		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
@@ -361,7 +428,8 @@ Assim, comparando e analisando as métricas expressas nas equações \eqref{metr
 		height=6cm,
 		label style={font=\footnotesize},
 		xlabel = $x$(m),
-		ylabel= $...$ (...)]
+		ylabel= $...$ (...),
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
 		\pgfplotstableread{../data/conductance_#2.dat} 
 		\teff
 		\addplot[color=black, line width=1.5pt] table from \teff;
@@ -382,146 +450,155 @@ Assim, comparando e analisando as métricas expressas nas equações \eqref{metr
 
 \subsubsection{Estimativas para a geometria de interface de contato 1}
 
-A primeira geometria de interface de contato para a qual foram realizadas estimativas de condutância térmica de contato é a referente ao índice 1 na tabela \ref{tabela_interfaces}. Esse formato de interface, basicamente uma superfície plana e horizontal paralela às bases do corpo de prova de seção reta retangular (cf.Figura \ref{figura_interfaces}), corresponde exatamente à configuração inicialmente estudada por \cite{reciproc_3}, e que culminou no trabalho desenvolvido por \cite{tese_padilha}. Esta configuração foi o ponto de partida das primeiras pesquisas envolvendo a aplicação do método dos Funcionais de Reciprocidade na estimativa da condutância térmica de contato. Desse modo, este problema-teste serviu como base de referência para verificação da metodologia proposta neste trabalho.
+A primeira geometria de interface de contato para a qual foram realizadas estimativas de condutância térmica de contato é a referente ao índice 1 na tabela \ref{tabela_interfaces}. Esse formato de interface, basicamente uma superfície plana e horizontal paralela às bases do corpo de prova de seção reta retangular (cf. Figura \ref{figura_interfaces}), corresponde exatamente à configuração inicialmente estudada por \cite{reciproc_3}, e que culminou no trabalho desenvolvido por \cite{tese_padilha}. Esta configuração foi o ponto de partida das primeiras pesquisas envolvendo a aplicação do método dos Funcionais de Reciprocidade na estimativa da condutância térmica de contato. Desse modo, este problema-teste serviu como base de referência para verificação da metodologia proposta neste trabalho.
 
 \paragraph{Estimativa para o salto de temperatura}
 
-O salto de temperatura na interface $\Gamma$, segundo a técnica dos Funcionais de Reciprocidade, pode ser estimada através da expressão \eqref{resultado_1}, apresentada na seção \ref{secao_sobre_fr}:
-\begin{align}
-[T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \label{resultado_1_again_2}
-\end{align}
-onde $\beta_j$ é uma base ortonormal obtida a partir da solução do primeiro problema auxiliar formulado em \eqref{funcao_F_harm_T1}--\eqref{funcao_F_cc_T1_5}, e os Funcionais de Reciprocidade, representados por $\Re(F_{1,j})$, são calculados através da expressão \eqref{calculo_FR_F1_antes} deduzida na seção \ref{secao_com_funcionais}:
-\begin{align}
-\Re(F_{1,j})
-& =
--\frac{q}{k_1}\bar{\psi}_{j,0} + \frac{\mathbb{A}_{j,0} - \bar{\psi}_{j,0}}{ab}\int_0^a Y(x)dx + \nonumber \\
-& \frac{2}{a}\sum_{m=1}^M \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)\int_0^a Y(x)\cos\mu_m x dx
-\label{calculo_FR_F1_antes_again}
-\end{align}
+A primeira análise a ser feita corresponde à quantidade ótima de parcelas a serem somadas no cálculo da estimativa do salto de temperatura na interface. Para tanto, foram calculadas as normas correspondentes às diferenças sucessivas de estimativas de salto de temperatura, conforme definição estabelecida na equação \eqref{metrica_norma_1}.
 
-Os termos $\mathbb{A}_{j,m}$, por sua vez, são soluções do sistema linear definido pelas equações \eqref{sistema_para_coeficientes_3}--\eqref{sistema_para_coeficientes_3_end}.
+Conforme comentado anteriormente, foi possível observar uma melhora progressiva das estimativas com o aumento no número de parcelas até um certo número de termos, a partir do qual a diferença entre duas estimativas sucessivas cresce rapidamente.
 
-O parêmetro $M$, limite superior do somatório em \eqref{calculo_FR_F1_antes_again}, deve-se à necessidade de se truncar a série infinta de autofunções usada para representar a família de funções $F_{1,j}$, a partir da qual se calculam as funções $\beta_j$. Uma escolha adequada do parâmetro $M$ deve levar alguns aspectos em consideração, tais como desempenho computacional na resolução dos sistemas lineares que fornecem os coeficientes $\mathbb{A}_{j,m}$, o nível de condicionamento desses sistemas e a taxa de convergência dos somatórios que representam as funções $F_{1,j}$.
+Outra constatação feita foi de que, aumentando o nível de ruído das temperaturas sintéticas (ou seja, aumentando o parâmetro $\sigma$, correspondente ao desvio padrão do erro de medição conforme a equação \eqref{modelagem_erro}), diminui a quantidade termos suficientes ao somatório da estimativa de salto de temperatura.
 
-\begin{align}
-\epsilon = \max \abs{\frac{\sum_{m=N+1}^{N + \Delta N} \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{1,j,m}(y)}{\sum_{m=0}^{N + \Delta N} \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{1,j,m}(y)}}
-\end{align}
+Os valores das normas 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%TODO apenas para acelerar a compilação
+%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{figure}[h!b]
+%	\graficoerrorms{norma}{delta_temperatura}{1}{1}{[T_1 - T_2]_\Gamma}{a}
+%	\graficoerrorms{norma}{delta_temperatura}{1}{2}{[T_1 - T_2]_\Gamma}{b}
+%	\graficoerrorms{norma}{delta_temperatura}{1}{3}{[T_1 - T_2]_\Gamma}{c}
+%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[T_1 - T_2]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 1: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%\end{figure}
+
+%\textit{\begin{align}
+%\epsilon = \max \abs{\frac{\sum_{m=N+1}^{N + \Delta N} \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{1,j,m}(y)}{\sum_{m=0}^{N + \Delta N} \frac{X(\mu_m, x)}{N(\mu_m)}\bar{F}_{1,j,m}(y)}}
+%\end{align}}
 
 
 %%%%%%%%%%%%%%
 
-\begin{figure}[h!b]
-	\graficoestimativa{delta_temperatura}{1}{1}{10}{06}{02}{a}{\Delta T\big|_{\Gamma}}{\celsius}
-	\graficoestimativa{delta_temperatura}{1}{2}{10}{04}{04}{a}{\Delta T\big|_{\Gamma}}{\celsius}
-	\graficoestimativa{delta_temperatura}{1}{3}{11}{06}{03}{a}{\Delta T\big|_{\Gamma}}{\celsius}
-	\caption{Comparação entre as estimativas de $[T_1 - T_2]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 1: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-	%\label{figura_temperaturas_sinteticas_interface_01}
-\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%TODO apenas para acelerar a compilação
+%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{figure}[h!b]
+%	\graficoestimativa{delta_temperatura}{1}{1}{10}{06}{02}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+%	\graficoestimativa{delta_temperatura}{1}{2}{10}{04}{04}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+%	\graficoestimativa{delta_temperatura}{1}{3}{11}{06}{03}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+%	\caption{Comparação entre as estimativas de $[T_1 - T_2]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 1: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	%\label{figura_temperaturas_sinteticas_interface_01}
+%\end{figure}
 
-\begin{figure}[h!b]
-	\graficoerrorms{norma}{delta_temperatura}{1}{1}{[T_1 - T_2]_\Gamma}{a}
-	\graficoerrorms{norma}{delta_temperatura}{1}{2}{[T_1 - T_2]_\Gamma}{b}
-	\graficoerrorms{norma}{delta_temperatura}{1}{3}{[T_1 - T_2]_\Gamma}{c}
-	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[T_1 - T_2]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 1: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%TODO apenas para acelerar a compilação
+%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{figure}[h!b]
+%	\graficoestimativa{fluxo_calor}{1}{1}{10}{06}{02}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+%	\graficoestimativa{fluxo_calor}{1}{2}{10}{04}{04}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+%	\graficoestimativa{fluxo_calor}{1}{3}{11}{06}{03}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+%	\caption{Comparação entre as estimativas de $\left[-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\right]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 1: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	%\label{figura_temperaturas_sinteticas_interface_01}
+%\end{figure}
 
-\begin{figure}[h!b]
-	\graficoestimativa{fluxo_calor}{1}{1}{10}{06}{02}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
-	\graficoestimativa{fluxo_calor}{1}{2}{10}{04}{04}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
-	\graficoestimativa{fluxo_calor}{1}{3}{11}{06}{03}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
-	\caption{Comparação entre as estimativas de $\left[-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\right]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 1: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-	%\label{figura_temperaturas_sinteticas_interface_01}
-\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%TODO apenas para acelerar a compilação
+%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{figure}[h!b]
+%	\graficoerrorms{norma}{fluxo_calor}{1}{1}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{a}
+%	\graficoerrorms{norma}{fluxo_calor}{1}{2}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{b}
+%	\graficoerrorms{norma}{fluxo_calor}{1}{3}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{c}
+%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 1: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%\end{figure}
 
-\begin{figure}[h!b]
-	\graficoerrorms{norma}{fluxo_calor}{1}{1}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{a}
-	\graficoerrorms{norma}{fluxo_calor}{1}{2}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{b}
-	\graficoerrorms{norma}{fluxo_calor}{1}{3}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{c}
-	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 1: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-\end{figure}
-
-\begin{figure}[h!b]
-	\graficoctc{01}{01}{1}{a}
-	\graficoctc{01}{02}{2}{b}
-	\graficoctc{01}{03}{3}{c}
-	%\label{figura_temperaturas_sinteticas_interface_01}
-\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%TODO apenas para acelerar a compilação
+%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{figure}[h!b]
+%	\graficoctc{01}{01}{1}{a}
+%	\graficoctc{01}{02}{2}{b}
+%	\graficoctc{01}{03}{3}{c}
+%	%\label{figura_temperaturas_sinteticas_interface_01}
+%\end{figure}
 
 %%%%%%%%%%%%%
 
-\begin{figure}[h!b]
-	\graficoestimativa{delta_temperatura}{2}{1}{12}{06}{06}{a}{\Delta T\big|_{\Gamma}}{\celsius}
-	\graficoestimativa{delta_temperatura}{2}{2}{12}{08}{08}{a}{\Delta T\big|_{\Gamma}}{\celsius}
-	\graficoestimativa{delta_temperatura}{2}{3}{15}{08}{08}{a}{\Delta T\big|_{\Gamma}}{\celsius}
-	\caption{Comparação entre as estimativas de $[T_1 - T_2]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-	%\label{figura_temperaturas_sinteticas_interface_01}
-\end{figure}
-
-\begin{figure}[h!b]
-	\graficoerrorms{norma}{delta_temperatura}{2}{1}{[T_1 - T_2]_\Gamma}{a}
-	\graficoerrorms{norma}{delta_temperatura}{2}{2}{[T_1 - T_2]_\Gamma}{b}
-	\graficoerrorms{norma}{delta_temperatura}{2}{3}{[T_1 - T_2]_\Gamma}{c}
-	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[T_1 - T_2]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-\end{figure}
-
-\begin{figure}[h!b]
-	\graficoestimativa{fluxo_calor}{2}{1}{12}{06}{04}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
-	\graficoestimativa{fluxo_calor}{2}{2}{10}{04}{02}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
-	\graficoestimativa{fluxo_calor}{2}{3}{11}{06}{03}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
-	\caption{Comparação entre as estimativas de $\left[-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\right]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-	%\label{figura_temperaturas_sinteticas_interface_01}
-\end{figure}
-
-\begin{figure}[h!b]
-	\graficoerrorms{erro_rms}{fluxo_calor}{2}{1}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{a}
-	\graficoerrorms{erro_rms}{fluxo_calor}{2}{2}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{b}
-	\graficoerrorms{erro_rms}{fluxo_calor}{2}{3}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{c}
-	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-\end{figure}
-
-\begin{figure}[h!b]
-	\graficoctc{02}{01}{1}{a}
-	\graficoctc{02}{02}{2}{b}
-	\graficoctc{02}{03}{3}{c}
-\end{figure}
-
-%%%%%%%%%%%%%%%%%%%%
-
-\begin{figure}[h!b]
-	\graficoestimativa{delta_temperatura}{3}{1}{15}{07}{06}{a}{\Delta T\big|_{\Gamma}}{\celsius}
-	\graficoestimativa{delta_temperatura}{3}{2}{13}{06}{05}{a}{\Delta T\big|_{\Gamma}}{\celsius}
-	\graficoestimativa{delta_temperatura}{3}{3}{10}{06}{06}{a}{\Delta T\big|_{\Gamma}}{\celsius}
-	\caption{Comparação entre as estimativas de $[T_1 - T_2]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 3: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-	%\label{figura_temperaturas_sinteticas_interface_01}
-\end{figure}
-
-\begin{figure}[h!b]
-	\graficoerrorms{erro_rms}{delta_temperatura}{3}{1}{[T_1 - T_2]_\Gamma}{a}
-	\graficoerrorms{erro_rms}{delta_temperatura}{3}{2}{[T_1 - T_2]_\Gamma}{b}
-	\graficoerrorms{erro_rms}{delta_temperatura}{3}{3}{[T_1 - T_2]_\Gamma}{c}
-	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[T_1 - T_2]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 3: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-\end{figure}
-
-\begin{figure}[h!b]
-	\graficoestimativa{fluxo_calor}{3}{1}{11}{06}{03}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
-	\graficoestimativa{fluxo_calor}{3}{2}{11}{04}{04}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
-	\graficoestimativa{fluxo_calor}{3}{3}{11}{06}{03}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
-	\caption{Comparação entre as estimativas de $\left[-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\right]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 3: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-	%\label{figura_temperaturas_sinteticas_interface_01}
-\end{figure}
-
-\begin{figure}[h!b]
-	\graficoerrorms{erro_rms}{fluxo_calor}{3}{1}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{a}
-	\graficoerrorms{erro_rms}{fluxo_calor}{3}{2}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{b}
-	\graficoerrorms{erro_rms}{fluxo_calor}{3}{3}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{c}
-	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-\end{figure}
-
-\begin{figure}[h!b]
-	\graficoctc{03}{01}{1}{a}
-	\graficoctc{03}{02}{2}{b}
-	\graficoctc{03}{03}{3}{c}
-\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%TODO apenas para acelerar a compilação
+%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{figure}[h!b]
+%	\graficoestimativa{delta_temperatura}{2}{1}{12}{06}{06}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+%	\graficoestimativa{delta_temperatura}{2}{2}{12}{08}{08}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+%	\graficoestimativa{delta_temperatura}{2}{3}{15}{08}{08}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+%	\caption{Comparação entre as estimativas de $[T_1 - T_2]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	%\label{figura_temperaturas_sinteticas_interface_01}
+%\end{figure}
+%
+%\begin{figure}[h!b]
+%	\graficoerrorms{norma}{delta_temperatura}{2}{1}{[T_1 - T_2]_\Gamma}{a}
+%	\graficoerrorms{norma}{delta_temperatura}{2}{2}{[T_1 - T_2]_\Gamma}{b}
+%	\graficoerrorms{norma}{delta_temperatura}{2}{3}{[T_1 - T_2]_\Gamma}{c}
+%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[T_1 - T_2]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%\end{figure}
+%
+%\begin{figure}[h!b]
+%	\graficoestimativa{fluxo_calor}{2}{1}{12}{06}{04}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+%	\graficoestimativa{fluxo_calor}{2}{2}{10}{04}{02}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+%	\graficoestimativa{fluxo_calor}{2}{3}{11}{06}{03}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+%	\caption{Comparação entre as estimativas de $\left[-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\right]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	%\label{figura_temperaturas_sinteticas_interface_01}
+%\end{figure}
+%
+%\begin{figure}[h!b]
+%	\graficoerrorms{erro_rms}{fluxo_calor}{2}{1}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{a}
+%	\graficoerrorms{erro_rms}{fluxo_calor}{2}{2}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{b}
+%	\graficoerrorms{erro_rms}{fluxo_calor}{2}{3}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{c}
+%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%\end{figure}
+%
+%\begin{figure}[h!b]
+%	\graficoctc{02}{01}{1}{a}
+%	\graficoctc{02}{02}{2}{b}
+%	\graficoctc{02}{03}{3}{c}
+%\end{figure}
+%
+%%%%%%%%%%%%%%%%%%%%%
+%
+%\begin{figure}[h!b]
+%	\graficoestimativa{delta_temperatura}{3}{1}{15}{07}{06}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+%	\graficoestimativa{delta_temperatura}{3}{2}{13}{06}{05}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+%	\graficoestimativa{delta_temperatura}{3}{3}{10}{06}{06}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+%	\caption{Comparação entre as estimativas de $[T_1 - T_2]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 3: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	%\label{figura_temperaturas_sinteticas_interface_01}
+%\end{figure}
+%
+%\begin{figure}[h!b]
+%	\graficoerrorms{erro_rms}{delta_temperatura}{3}{1}{[T_1 - T_2]_\Gamma}{a}
+%	\graficoerrorms{erro_rms}{delta_temperatura}{3}{2}{[T_1 - T_2]_\Gamma}{b}
+%	\graficoerrorms{erro_rms}{delta_temperatura}{3}{3}{[T_1 - T_2]_\Gamma}{c}
+%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[T_1 - T_2]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 3: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%\end{figure}
+%
+%\begin{figure}[h!b]
+%	\graficoestimativa{fluxo_calor}{3}{1}{11}{06}{03}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+%	\graficoestimativa{fluxo_calor}{3}{2}{11}{04}{04}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+%	\graficoestimativa{fluxo_calor}{3}{3}{11}{06}{03}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+%	\caption{Comparação entre as estimativas de $\left[-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\right]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 3: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	%\label{figura_temperaturas_sinteticas_interface_01}
+%\end{figure}
+%
+%\begin{figure}[h!b]
+%	\graficoerrorms{erro_rms}{fluxo_calor}{3}{1}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{a}
+%	\graficoerrorms{erro_rms}{fluxo_calor}{3}{2}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{b}
+%	\graficoerrorms{erro_rms}{fluxo_calor}{3}{3}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{c}
+%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%\end{figure}
+%
+%\begin{figure}[h!b]
+%	\graficoctc{03}{01}{1}{a}
+%	\graficoctc{03}{02}{2}{b}
+%	\graficoctc{03}{03}{3}{c}
+%\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%TODO

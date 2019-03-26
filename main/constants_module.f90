@@ -13,7 +13,7 @@ module constants_module
     integer, parameter :: mmax_T = 40 !numero total de autofuncoes a serem calculadas para T1 e T2
     integer, parameter :: mmax_F = 30 !numero total de autofuncoes a serem calculadas para F1 e F2
     integer, parameter :: mmax_G = 30 !numero total de autofuncoes a serem calculadas para G1
-    integer, parameter :: mmax_phi = 30 !maior valor entre mmax_F e mmax_G
+    integer, parameter :: mmax_phi = 40 !maior valor entre mmax_T, mmax_F e mmax_G
     integer, parameter :: delta_m = 30       !incremento no numero de termos
     integer, parameter :: N = 30            !numero total de funcionais de reciprocidade
     double precision, parameter :: reltol = 0.0 !1.0D-8

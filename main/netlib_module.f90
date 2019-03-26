@@ -227,4 +227,15 @@ module netlib_module
             integer, intent(out) :: info
         end subroutine
     end interface
+
+    interface
+        subroutine extrap(init, eps, maxcol, sk, ginit, result, info)
+            integer, intent(inout) :: init
+            double precision, intent(in) :: eps, sk
+            integer, intent(in) :: maxcol
+            double precision, dimension(2*(maxcol + 1)), intent(in) :: ginit
+            double precision, intent(out) :: result
+            integer, intent(out) :: info
+        end subroutine
+    end interface
 end module netlib_module
