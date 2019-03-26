@@ -118,7 +118,6 @@ contains
             m = m + 1
             keep_1 = m <= mmax_T
         end do
-        keep_1 = m <= mmax_T
 
         do while (keep_1)
             p = m

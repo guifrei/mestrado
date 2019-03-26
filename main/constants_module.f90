@@ -27,7 +27,7 @@ module constants_module
     double precision, parameter :: b2 = 0.008
 
     integer, parameter ::tnmax = 120
-    integer, parameter ::tmax = 100          ! para o levantamento do campo de temperaturas
+    integer, parameter ::tmax = 1000          ! para o levantamento do campo de temperaturas
 end module constants_module
 
 

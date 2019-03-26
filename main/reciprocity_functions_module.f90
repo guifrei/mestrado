@@ -317,7 +317,7 @@ contains
             end if
         end do
 
-        write(*, *)'Generating matrices for F'
+        !write(*, *)'Generating matrices for F'
 
         mxF = 0.0
         do j = 0, mmax_F
@@ -333,7 +333,7 @@ contains
             end do
         end do
 
-        write(*, *)'Generating matrices for G'
+        !write(*, *)'Generating matrices for G'
 
         mxG = 0.0
         do j = 0, mmax_G
@@ -349,7 +349,7 @@ contains
 
 
         ! Solucao do sistema
-        write(*, *)'Solving systems'
+        !write(*, *)'Solving systems'
         fact = 'E'
         equed = 'B'
 
@@ -362,7 +362,7 @@ contains
         coeffsG = tmpcoeffsG
 
         ! Algoritmo de ortogonalizacao de Gram-Schmidt
-        write(*, *)'Gram Schmidt'
+        !write(*, *)'Gram Schmidt'
         call gram_schmidt(interface_idx)
 
     !        block

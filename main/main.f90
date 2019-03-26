@@ -120,7 +120,7 @@ program main
                 close(2)
                 close(3)
 
-                write(*, *)'Integrating y = b'
+                ! write(*, *)'Integrating y = b'
                 call calculate_integrals_Y(interface_idx, condutance_idx, stdev_idx)
                 call calculate_reciprocity_coefficients(interface_idx, condutance_idx)
 
