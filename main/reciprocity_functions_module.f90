@@ -439,10 +439,8 @@ contains
         do while (keep_1)
             r_acc = r_acc + parcela(j, m, x, y, v(m))
             m = m + 1
-            keep_1 = m <= delta_m
+            keep_1 = m <= mmax
         end do
-
-        keep_1 = .true.
 
         do while (keep_1)
             p = m

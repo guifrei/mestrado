@@ -16,7 +16,7 @@ module constants_module
     integer, parameter :: mmax_phi = 30 !maior valor entre mmax_F e mmax_G
     integer, parameter :: delta_m = 30       !incremento no numero de termos
     integer, parameter :: N = 30            !numero total de funcionais de reciprocidade
-    double precision, parameter :: reltol = 1.0D-8
+    double precision, parameter :: reltol = 0.0 !1.0D-8
     !    double precision, dimension(*), parameter :: pts = [0.0D0, a/5.0, a/4.0, 2.0*a/5.0, a/2.0, 3.0*a/5.0, 3.0*a/4.0, 4.0*a/5.0, a]
     double precision, dimension(*), parameter :: pts = [0.0D0, a/4.0, a/2.0, 3.0*a/4.0, a]
     !        double precision, dimension(*), parameter :: pts = [0.0D0, a]
