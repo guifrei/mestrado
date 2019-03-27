@@ -1,24 +1,29 @@
 module wynn_module
     implicit none
 
+
 contains
 
-    subroutine ok
-        integer :: j, k
-        double precision, dimension(0:4) :: s = [4.000, 2.667, 3.467, 2.895, 3.340]
-        double precision, dimension(0:4) :: eps_1, eps, eps_new
+    function wynn(mmax, kmax, s) result(r)
+        integer, intent(in) :: mmax
+        integer, intent(in) :: kmax !kmax <= mmax + 1
+        double precision :: r
+        double precision, dimension(1:mmax, 1:kmax) :: eps
+        integer :: k, j, cnt
+        double precision, dimension(1:mmax), intent(in) :: s
 
-        do k = 0,4
-            if (k == 0) then
-                eps_1 = 0
-                eps = s
-            else
-                do j = 0, 3
-                    eps_new(j) = eps_1(j + 1) + 1.0/(eps(j + 1) - eps(j))
-                end do
-                eps = eps_new
-            end if
-            write(*, *)eps
+        eps = 0.0
+
+        eps(:,1) = 0.0
+        eps(:,2) = s
+
+        cnt = 1
+        do k = 3, kmax
+            do j = 1, mmax - cnt
+                eps(j, k) = eps(j + 1, k - 2) + 1.0/(eps(j + 1, k - 1) - eps(j, k - 1))
+            end do
+            cnt = cnt + 1
         end do
-    end subroutine
+        r = eps(1, kmax)
+    end function
 end module wynn_module
