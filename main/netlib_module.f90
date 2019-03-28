@@ -6,6 +6,22 @@ module netlib_module
     common /rkcom7/  outch, mcheps, dwarf
 
     interface
+        subroutine dgels(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info)
+            character(len = 1), intent(in) :: trans
+            integer, intent(in) :: m
+            integer, intent(in) :: n
+            integer, intent(in) :: nrhs
+            integer, intent(in) :: lda
+            integer, intent(in) :: ldb
+            integer, intent(in) :: lwork
+            integer, intent(out) :: info
+            double precision, dimension(lda, n), intent(inout) :: a
+            double precision, dimension(ldb, nrhs), intent(inout) :: b
+            double precision, dimension(lwork), intent(out) :: work
+        end subroutine
+    end interface
+
+    interface
         subroutine envirn(outch, mcheps, dwarf)
             import
             double precision, intent(out) :: outch, mcheps, dwarf

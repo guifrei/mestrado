@@ -167,6 +167,10 @@ contains
             deallocate(wrk)
         end do
         deallocate(t, c, iwrk)
+
+        block
+            call dgels('N', mx, n, nrhs, a, lda, b, ldb, work, lwork, info)
+        end block
     end subroutine
 
     function reciprocity_f(j) result(r)
@@ -285,7 +289,7 @@ contains
         double precision, dimension(4*mmax_G+4) :: workG
         integer, dimension(2*mmax_F+2) :: iworkF
         integer, dimension(mmax_G+1) :: iworkG
-        character(1) :: equed, fact
+        character(1) :: equed, fact, trans
         double precision, dimension(0: 2*mmax_F + 1, 0: 2*mmax_F + 1) :: mxF
         double precision, dimension(0: mmax_G, 0: mmax_G) :: mxG
         character(len = 2) :: str_idx, str_cdx
@@ -345,21 +349,23 @@ contains
             end do
         end do
 
-        !            factored = .false.
-
-
         ! Solucao do sistema
         !write(*, *)'Solving systems'
         fact = 'E'
+        trans = 'N'
         equed = 'B'
 
-        call dgesvx('E', 'N', 2*mmax_F+2, N+1, mxF, 2*mmax_F+2, afF, 2*mmax_F+2, ipivF, equed, &
+        call dgesvx(fact, trans, 2*mmax_F+2, N+1, mxF, 2*mmax_F+2, afF, 2*mmax_F+2, ipivF, equed, &
             rF, cF, coeffsF, 2*mmax_F+2, tmpcoeffsF, 2*mmax_F+2, rcond, ferr, berr, workF, iworkF, info)
-        coeffsF = tmpcoeffsF
+        do j = 0, N
+            coeffsF(:, j) = tmpcoeffsF(:, j)/cF
+        end do
 
-        call dgesvx('E', 'N', mmax_G+1, N+1, mxG, mmax_G+1, afG, mmax_G+1, ipivG, equed, &
+        call dgesvx(fact, trans, mmax_G+1, N+1, mxG, mmax_G+1, afG, mmax_G+1, ipivG, equed, &
             rG, cG, coeffsG, mmax_G+1, tmpcoeffsG, mmax_G+1, rcond, ferr, berr, workG, iworkG, info)
-        coeffsG = tmpcoeffsG
+        do j = 0, N
+            coeffsG(:, j) = tmpcoeffsG(:, j)/cG
+        end do
 
         ! Algoritmo de ortogonalizacao de Gram-Schmidt
         !write(*, *)'Gram Schmidt'
