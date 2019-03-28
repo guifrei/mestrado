@@ -52,45 +52,81 @@ program main
     hlist(8) = c_funloc(h8)
     hlist(9) = c_funloc(h9)
 
-    block
-        double precision :: fact
-        double precision, dimension(1:21) :: s
+    !    block
+    !        integer :: nn = 20
+    !        double precision, dimension(1:20) :: s
+    !        double precision :: fact
+    !
+    !        fact = -1
+    !        s(1) = 4.0
+    !        do k = 2, nn
+    !            s(k) = s(k - 1) + 4.0*fact/(2.0*dble(k) - 1.0)
+    !            fact = -fact
+    !        end do
+    !
+    !        do while (nn > 0)
+    !            call ok(nn, s)
+    !            write(*, *)nn, s(1:nn) - 4.0*atan(1.0)
+    !        end do
+    !    end block
+    !    stop
 
-        s(1) = 4.0
-        fact = -1
-        do j = 2, 21
-            s(j) = s(j - 1) + 4.0*fact/(2.0*dble(j) - 1)
-            fact = -fact
-        end do
-
-        write(*, *)wynn(21, 22, s) - 4.0*atan(1.0)
-    end block
+    !    block
+    !        double precision :: fact
+    !        double precision, dimension(1:21) :: s
+    !
+    !        s(1) = 4.0
+    !        fact = -1
+    !        do j = 2, 21
+    !            s(j) = s(j - 1) + 4.0*fact/(2.0*dble(j) - 1)
+    !            fact = -fact
+    !        end do
+    !
+    !        write(*, *)wynn(21, 22, s) - 4.0*atan(1.0)
+    !    end block
 
     block
         double precision, dimension(0: 30) :: s
         double precision :: r
         double precision :: x
+        integer :: nt = 30, nn
 
-        interface_idx = 2
-        condutance_idx = 3
-        stdev_idx = 2
+        interface_idx = 3
+        condutance_idx = 2
+        stdev_idx = 0
 
         call calculate_temperature_coefficients(interface_idx, condutance_idx)
         call calculate_integrals_Y(interface_idx, condutance_idx, stdev_idx)
         call calculate_reciprocity_coefficients(interface_idx, condutance_idx)
 
-        x = a/2.0
+        do k = 0, 30
+            write(*, *)k, reciprocity_g(k), fgamma(k, x, interface_idx)
+        end do
 
-        r = 0.0
-        do j = 0, 30
-            !r = r + parcela_delta_temperatura(x, j, interface_idx)
-            r = r + parcela_fluxo_calor(x, j, interface_idx)
-            s(j) = r
+        dx = a/dble(tnmax - 1)
+        open(unit = 1, file = '/home/cx3d/mestrado/teste.dat')
+        do k = 0, tnmax - 1
+            x = dble(k)*dx
+
+            r = 0.0
+            nn = nt
+            do j = 0, nn
+                !r = r + parcela_delta_temperatura(x, j, interface_idx)
+                r = r + parcela_fluxo_calor(x, j, interface_idx)
+                s(j) = r
+                write(*, *)j, r
+            end do
+            do while (nn >= 2)
+                call ok(nn, s)
+            end do
+
+            write(*, *)'=============='
+
+            write(1, *)x, s(0)
         end do
-        write(*, *)s
-        do j = 2, 30, 2
-            write(*, *)wynn(31, j, s)
-        end do
+        close(1)
+
+
     end block
 
 
