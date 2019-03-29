@@ -168,9 +168,32 @@ contains
         end do
         deallocate(t, c, iwrk)
 
-        block
-            call dgels('N', mx, n, nrhs, a, lda, b, ldb, work, lwork, info)
-        end block
+!        block
+!            integer, parameter :: mm = tnmax
+!            integer, parameter :: nn = mmax_phi + 1
+!            double precision, dimension(mm, 0: nn - 1) :: mxa
+!            double precision, dimension(1: mm, 1) :: vb
+!            double precision, dimension(:), allocatable :: work
+!            integer :: lwork, info, i, j
+!            double precision :: x
+!            lwork =  2*min(mm,nn)
+!
+!            allocate(work(lwork))
+!
+!            do i = 1, mm
+!                x = vx(i)
+!                do j = 0, nn - 1
+!                    mxa(i, j) = cos(mu(j)*x)
+!                end do
+!                vb(i, 1) = sample_y(i)
+!            end do
+!
+!            call dgels('N', mm, nn, 1, mxa, mm, vb, mm, work, lwork, info)
+!            integrals_Y(0) = vb(1, 1)*a
+!            integrals_Y(1:nn - 1) = vb(2:nn, 1)*a/2.0
+!
+!            deallocate(work)
+!        end block
     end subroutine
 
     function reciprocity_f(j) result(r)
@@ -269,8 +292,8 @@ contains
         end do
     end subroutine gram_schmidt
 
-    subroutine calculate_reciprocity_coefficients(interface_idx, conductance_idx)
-        integer, intent(in) :: interface_idx, conductance_idx
+    subroutine calculate_reciprocity_coefficients(interface_idx)
+        integer, intent(in) :: interface_idx
         integer :: j, m
         procedure(w_proc_t), pointer :: w
         procedure(dw_proc_t), pointer :: dw
@@ -292,10 +315,9 @@ contains
         character(1) :: equed, fact, trans
         double precision, dimension(0: 2*mmax_F + 1, 0: 2*mmax_F + 1) :: mxF
         double precision, dimension(0: mmax_G, 0: mmax_G) :: mxG
-        character(len = 2) :: str_idx, str_cdx
+        character(len = 2) :: str_idx
 
         write(str_idx, '(I2.2)') interface_idx
-        write(str_cdx, '(I2.2)') conductance_idx
 
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
@@ -357,15 +379,17 @@ contains
 
         call dgesvx(fact, trans, 2*mmax_F+2, N+1, mxF, 2*mmax_F+2, afF, 2*mmax_F+2, ipivF, equed, &
             rF, cF, coeffsF, 2*mmax_F+2, tmpcoeffsF, 2*mmax_F+2, rcond, ferr, berr, workF, iworkF, info)
-        do j = 0, N
-            coeffsF(:, j) = tmpcoeffsF(:, j)/cF
-        end do
+!        do j = 0, N
+!            coeffsF(:, j) = tmpcoeffsF(:, j)/cF
+!        end do
+        coeffsF = tmpcoeffsF
 
         call dgesvx(fact, trans, mmax_G+1, N+1, mxG, mmax_G+1, afG, mmax_G+1, ipivG, equed, &
             rG, cG, coeffsG, mmax_G+1, tmpcoeffsG, mmax_G+1, rcond, ferr, berr, workG, iworkG, info)
-        do j = 0, N
-            coeffsG(:, j) = tmpcoeffsG(:, j)/cG
-        end do
+!        do j = 0, N
+!            coeffsG(:, j) = tmpcoeffsG(:, j)/cG
+!        end do
+        coeffsG = tmpcoeffsG
 
         ! Algoritmo de ortogonalizacao de Gram-Schmidt
         !write(*, *)'Gram Schmidt'
