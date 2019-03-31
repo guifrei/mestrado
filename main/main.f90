@@ -4,6 +4,7 @@ program main
     use conductances_module
     use temperature_functions_module
     use reciprocity_functions_module
+    use netlib_module
     implicit none
 
     integer :: interface_idx, condutance_idx, k, j, nmax, stdev_idx, n_delta_temperatura, n_fluxo_calor
@@ -12,6 +13,9 @@ program main
     procedure(dw_proc_t), pointer :: dw
     double precision :: x, stdev, dx, desv, y1, y2, norma, dnorma, norma_acc, rms, norma_delta_temperatura, norma_fluxo_calor
     character(len = 2) :: str_idx, str_cdx, str_N, str_N_prev, str_stdev, str_N_delta_temperatura, str_N_fluxo_calor
+    integer, parameter :: ord = 5
+    double precision, dimension(:), allocatable :: t, c
+    integer :: nn
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -52,9 +56,16 @@ program main
     hlist(9) = c_funloc(h9)
 
     block
-        double precision, dimension(tnmax) :: vx, vy
+        double precision, dimension(tnmax) :: vx, vy, hy
+        integer :: iopt, nest, lwrk, nmax1, nmax2, ier
+        double precision, dimension(tnmax) :: w
+        double precision :: r1, r2, tcalc
+        double precision :: s, fpf
+        integer, dimension(:), allocatable :: iwrk
+        double precision, dimension(:), allocatable :: wrk
+        double precision :: norm
 
-        interface_idx = 2
+        interface_idx = 1
         condutance_idx = 2
         stdev_idx = 5
 
@@ -71,12 +82,13 @@ program main
             stdev = 0.5
         end if
 
+        call c_f_procpointer(hlist(condutance_idx), h)
+        call calculate_temperature_coefficients(interface_idx, condutance_idx, h)
         call calculate_integrals_Y(interface_idx, condutance_idx, stdev_idx)
+        call calculate_reciprocity_coefficients(interface_idx)
+
 
         ! Recuperando temperaturas medidas
-        write(*, *)'File = ', '/home/cx3d/mestrado/' // &
-            'data/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx // &
-            '_stdev_'// str_stdev // '.dat'
         open(unit = 1, file = '/home/cx3d/mestrado/' // &
             'data/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx // &
             '_stdev_'// str_stdev // '.dat')
@@ -85,17 +97,65 @@ program main
         end do
         close(1)
 
-        call calculate_reciprocity_coefficients(interface_idx)
-        call calculate_temperature_coefficients(interface_idx, condutance_idx, hest, .false.)
+        do nmax1 = 4, 7
+            do nmax2 = 4, 7
+                iopt = 0
+                nest=tnmax+ord+1
+                lwrk = tnmax*(ord+1)+nest*(7+3*ord)
+                w = 1.0
 
-        call c_f_procpointer(hlist(condutance_idx), h)
+                allocate(t(nest), c(nest), iwrk(nest))
 
-        open(unit = 2, file = '/tmp/a.dat')
-        do k = 1, tnmax
-            write(2, *)vx(k), t1(vx(k), b), vy(k), hest(vx(k)), h(vx(k))
+                do j = 1, tnmax
+                    r1 = delta_temperatura(vx(j), interface_idx, nmax1)
+                    r2 = fluxo_calor(vx(j), interface_idx, nmax2)
+                    hy(j) = r2/r1
+                end do
+
+                s = 0.0
+
+                do j = 1, ord+1
+                    t(j)=0.0
+                    t(j+ord+1)=a
+                end do
+
+                allocate(wrk((tnmax*(ord+1)+nest*(7+3*ord))))
+
+                call curfit(iopt, tnmax, vx, hy, w, 0.0D0, a, ord, s, nest, nn, t, c, fpf, wrk, lwrk, iwrk, ier)
+
+                if (ier > 0) then
+                    write(*, *)'Error in curfit. Ier = ', ier
+                    stop
+                end if
+
+                call calculate_temperature_coefficients(interface_idx, condutance_idx, hest, .false.)
+
+                open(unit = 2, file = '/home/cx3d/mestrado/hest.dat')
+                do k = 1, tnmax
+                    write(2, *)vx(k), hest(vx(k))
+                end do
+                close(2)
+
+                open(unit = 2, file = '/home/cx3d/mestrado/test.dat')
+                do k = 1, tnmax
+                    write(2, *)vx(k), t1(vx(k), b), vy(k)
+                end do
+                close(2)
+
+                norm = 0.0
+                do k = 1, tnmax
+                    tcalc = t1(vx(k), b)
+                    norm = norm + (vy(k) - tcalc)**2
+                end do
+                norm = sqrt(norm/dble(tnmax))
+
+                deallocate(wrk)
+
+                deallocate(iwrk)
+                deallocate(t, c)
+                write(*, *)nmax1, nmax2, norm
+            end do
         end do
-        close(2)
-
     end block
 
     stop
@@ -201,15 +261,27 @@ program main
 contains
     function hest(x) result(r)
         double precision, intent(in) :: x
-        double precision :: r, r1, r2
-        integer :: nmax1, nmax2
+        double precision :: r
+        double precision, dimension(1) :: argx, argy
+        integer :: ier
 
-        nmax1 = 4
-        nmax2 = 4
+        argx(1) = x
 
-        r1 = delta_temperatura(x, interface_idx, nmax1)
-        r2 = fluxo_calor(x, interface_idx, nmax2)
-        r = r2/r1
+        call splev(t, nn, c, ord, argx, argy, 1, ier)
+        if (ier /= 0) then
+            write(*, *)'Error in curfit. Ier = ', ier
+            stop
+        end if
+        r = argy(1)
+    !        double precision :: r1, r2
+    !        integer :: nmax1, nmax2
+    !
+    !        nmax1 = 4
+    !        nmax2 = 4
+    !
+    !        r1 = delta_temperatura(x, interface_idx, nmax1)
+    !        r2 = fluxo_calor(x, interface_idx, nmax2)
+    !        r = r2/r1
     end function
 
 end program main
