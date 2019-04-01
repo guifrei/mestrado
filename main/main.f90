@@ -55,110 +55,113 @@ program main
     hlist(8) = c_funloc(h8)
     hlist(9) = c_funloc(h9)
 
-    block
-        double precision, dimension(tnmax) :: vx, vy, hy
-        integer :: iopt, nest, lwrk, nmax1, nmax2, ier
-        double precision, dimension(tnmax) :: w
-        double precision :: r1, r2, tcalc
-        double precision :: s, fpf
-        integer, dimension(:), allocatable :: iwrk
-        double precision, dimension(:), allocatable :: wrk
-        double precision :: norm
-
-        interface_idx = 1
-        condutance_idx = 2
-        stdev_idx = 5
-
-        write(str_idx, '(I2.2)') interface_idx
-        write(str_cdx, '(I2.2)') condutance_idx
-        if (stdev_idx == 0) then
-            str_stdev = '00'
-            stdev = 0.0
-        else if (stdev_idx == 1) then
-            str_stdev = '01'
-            stdev = 0.1
-        else
-            str_stdev = '05'
-            stdev = 0.5
-        end if
-
-        call c_f_procpointer(hlist(condutance_idx), h)
-        call calculate_temperature_coefficients(interface_idx, condutance_idx, h)
-        call calculate_integrals_Y(interface_idx, condutance_idx, stdev_idx)
-        call calculate_reciprocity_coefficients(interface_idx)
-
-
-        ! Recuperando temperaturas medidas
-        open(unit = 1, file = '/home/cx3d/mestrado/' // &
-            'data/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx // &
-            '_stdev_'// str_stdev // '.dat')
-        do k = 1, tnmax
-            read(1, *)vx(k), vy(k)
-        end do
-        close(1)
-
-        do nmax1 = 4, 7
-            do nmax2 = 4, 7
-                iopt = 0
-                nest=tnmax+ord+1
-                lwrk = tnmax*(ord+1)+nest*(7+3*ord)
-                w = 1.0
-
-                allocate(t(nest), c(nest), iwrk(nest))
-
-                do j = 1, tnmax
-                    r1 = delta_temperatura(vx(j), interface_idx, nmax1)
-                    r2 = fluxo_calor(vx(j), interface_idx, nmax2)
-                    hy(j) = r2/r1
-                end do
-
-                s = 0.0
-
-                do j = 1, ord+1
-                    t(j)=0.0
-                    t(j+ord+1)=a
-                end do
-
-                allocate(wrk((tnmax*(ord+1)+nest*(7+3*ord))))
-
-                call curfit(iopt, tnmax, vx, hy, w, 0.0D0, a, ord, s, nest, nn, t, c, fpf, wrk, lwrk, iwrk, ier)
-
-                if (ier > 0) then
-                    write(*, *)'Error in curfit. Ier = ', ier
-                    stop
-                end if
-
-                call calculate_temperature_coefficients(interface_idx, condutance_idx, hest, .false.)
-
-                open(unit = 2, file = '/home/cx3d/mestrado/hest.dat')
-                do k = 1, tnmax
-                    write(2, *)vx(k), hest(vx(k))
-                end do
-                close(2)
-
-                open(unit = 2, file = '/home/cx3d/mestrado/test.dat')
-                do k = 1, tnmax
-                    write(2, *)vx(k), t1(vx(k), b), vy(k)
-                end do
-                close(2)
-
-                norm = 0.0
-                do k = 1, tnmax
-                    tcalc = t1(vx(k), b)
-                    norm = norm + (vy(k) - tcalc)**2
-                end do
-                norm = sqrt(norm/dble(tnmax))
-
-                deallocate(wrk)
-
-                deallocate(iwrk)
-                deallocate(t, c)
-                write(*, *)nmax1, nmax2, norm
-            end do
-        end do
-    end block
-
-    stop
+!    block
+!        double precision, dimension(tnmax) :: vx, vy, hy
+!        integer :: iopt, nest, lwrk, nmax1, nmax2, ier
+!        double precision, dimension(tnmax) :: w
+!        double precision :: r1, r2, tcalc
+!        double precision :: s, fpf
+!        integer, dimension(:), allocatable :: iwrk
+!        double precision, dimension(:), allocatable :: wrk
+!        double precision :: norm
+!
+!        do interface_idx = 1, 3
+!            do condutance_idx = 1, 3
+!                call c_f_procpointer(hlist(condutance_idx), h)
+!                do stdev_idx = 0, 2
+!                    write(str_idx, '(I2.2)') interface_idx
+!                    write(str_cdx, '(I2.2)') condutance_idx
+!                    if (stdev_idx == 0) then
+!                        str_stdev = '00'
+!                        stdev = 0.0
+!                    else if (stdev_idx == 1) then
+!                        str_stdev = '01'
+!                        stdev = 0.1
+!                    else
+!                        str_stdev = '05'
+!                        stdev = 0.5
+!                    end if
+!
+!                    write(*, *)'Interface = ', interface_idx, ', conductance = ', condutance_idx, ', stdev = ', stdev
+!
+!                    call calculate_temperature_coefficients(interface_idx, condutance_idx, h)
+!                    call calculate_integrals_Y(interface_idx, condutance_idx, stdev_idx)
+!                    call calculate_reciprocity_coefficients(interface_idx)
+!
+!                    ! Recuperando temperaturas medidas
+!                    open(unit = 1, file = '/home/cx3d/mestrado/' // &
+!                        'data/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx // &
+!                        '_stdev_'// str_stdev // '.dat')
+!                    do k = 1, tnmax
+!                        read(1, *)vx(k), vy(k)
+!                    end do
+!                    close(1)
+!
+!                    do nmax1 = 4, 18
+!                        do nmax2 = 4, 18
+!                            iopt = 0
+!                            nest=tnmax+ord+1
+!                            lwrk = tnmax*(ord+1)+nest*(7+3*ord)
+!                            w = 1.0
+!
+!                            allocate(t(nest), c(nest), iwrk(nest))
+!
+!                            do j = 1, tnmax
+!                                r1 = delta_temperatura(vx(j), interface_idx, nmax1)
+!                                r2 = fluxo_calor(vx(j), interface_idx, nmax2)
+!                                hy(j) = r2/r1
+!                            end do
+!
+!                            s = 0.0
+!
+!                            do j = 1, ord+1
+!                                t(j)=0.0
+!                                t(j+ord+1)=a
+!                            end do
+!
+!                            allocate(wrk((tnmax*(ord+1)+nest*(7+3*ord))))
+!
+!                            call curfit(iopt, tnmax, vx, hy, w, 0.0D0, a, ord, s, nest, nn, t, c, fpf, wrk, lwrk, iwrk, ier)
+!
+!                            if (ier > 0) then
+!                                write(*, *)'Error in curfit. Ier = ', ier
+!                                stop
+!                            end if
+!
+!                            call calculate_temperature_coefficients(interface_idx, condutance_idx, hest, .false.)
+!
+!                            open(unit = 2, file = '/home/cx3d/mestrado/hest.dat')
+!                            do k = 1, tnmax
+!                                write(2, *)vx(k), hest(vx(k))
+!                            end do
+!                            close(2)
+!
+!                            open(unit = 2, file = '/home/cx3d/mestrado/test.dat')
+!                            do k = 1, tnmax
+!                                write(2, *)vx(k), t1(vx(k), b), vy(k)
+!                            end do
+!                            close(2)
+!
+!                            norm = 0.0
+!                            do k = 1, tnmax
+!                                tcalc = t1(vx(k), b)
+!                                norm = norm + (vy(k) - tcalc)**2
+!                            end do
+!                            norm = sqrt(norm/dble(tnmax))
+!
+!                            deallocate(wrk)
+!
+!                            deallocate(iwrk)
+!                            deallocate(t, c)
+!                            write(*, *)nmax1, nmax2, norm
+!                        end do
+!                    end do
+!                end do
+!            end do
+!        end do
+!    end block
+!
+!    stop
 
     dx = a/dble(tmax - 1)
 
@@ -273,15 +276,6 @@ contains
             stop
         end if
         r = argy(1)
-    !        double precision :: r1, r2
-    !        integer :: nmax1, nmax2
-    !
-    !        nmax1 = 4
-    !        nmax2 = 4
-    !
-    !        r1 = delta_temperatura(x, interface_idx, nmax1)
-    !        r2 = fluxo_calor(x, interface_idx, nmax2)
-    !        r = r2/r1
     end function
 
 end program main
