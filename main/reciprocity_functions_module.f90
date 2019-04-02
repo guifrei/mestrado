@@ -380,28 +380,65 @@ contains
         tmpcoeffsF = 0.0
         tmpcoeffsG = 0.0
 
-        do j = 0, N
-            call art(2*mmax_F+2, mxF, coeffsF(:, j), tmpcoeffsF(:, j), 1.0, 1000)
-        end do
 
-        !        call dgesvx(fact, trans, 2*mmax_F+2, N+1, mxF, 2*mmax_F+2, afF, 2*mmax_F+2, ipivF, equed, &
-        !            rF, cF, coeffsF, 2*mmax_F+2, tmpcoeffsF, 2*mmax_F+2, rcond, ferr, berr, workF, iworkF, info)
-        !        !        do j = 0, N
-        !        !            coeffsF(:, j) = tmpcoeffsF(:, j)/cF
-        !        !        end do
-        write(*, *)matmul(mxF, tmpcoeffsF) - coeffsF
+        !https://www.sintef.no/globalassets/project/evitameeting/2005/lcurve.pdf
+        !http://www2.compute.dtu.dk/~pcha/DIP/chap4.pdf
+        !http://www2.compute.dtu.dk/~pcha/DIP/chap5.pdf
+        !        block
+        !            double precision, dimension(0: 4*mmax_F + 3, 0: 2*mmax_F + 1) :: new_mxF
+        !            double precision, dimension(0: 4*mmax_F + 3, 0: N) :: new_coeffsF
+        !            double precision :: lambda
+        !            integer :: k
+        !            integer, parameter :: lwork = (4*mmax_F + 4)*32
+        !            double precision, dimension(lwork) :: work
+        !
+        !            lambda = 1.0D-10
+        !            do k = 1, 10
+        !                lambda = lambda*10.0
+        !                new_mxF = 0.0
+        !                new_mxF(0:2*mmax_F + 1, 0:2*mmax_F + 1) = mxF
+        !                do j = 0, 2*mmax_F + 1
+        !                    new_mxF(2*mmax_F + 2 + j, j) = lambda
+        !                end do
+        !                new_coeffsF(0: 2*mmax_F + 1, :) = coeffsF
+        !                new_coeffsF(2*mmax_F + 2: 4*mmax_F + 3, :) = 0.0
+        !
+        !                call dgels(trans, 4*mmax_F + 4, 2*mmax_F + 2, N + 1, new_mxF, 4*mmax_F + 4, new_coeffsF, &
+        !                    4*mmax_F + 4, work, lwork, info)
+        !            end do
+        !            coeffsF = new_coeffsF(0: 2*mmax_F + 1, :)
+        !        end block
+
+        call dgesvx(fact, trans, 2*mmax_F+2, N+1, mxF, 2*mmax_F+2, afF, 2*mmax_F+2, ipivF, equed, &
+            rF, cF, coeffsF, 2*mmax_F+2, tmpcoeffsF, 2*mmax_F+2, rcond, ferr, berr, workF, iworkF, info)
         coeffsF = tmpcoeffsF
 
-        do j = 0, N
-            call art(mmax_G+1, mxG, coeffsG(:, j), tmpcoeffsG(:, j), 1.8, 1000)
-        end do
+        !        block
+        !            double precision, dimension(0: 2*mmax_G + 1, 0: mmax_G) :: new_mxG
+        !            double precision, dimension(0:  2*mmax_G + 1, 0: N) :: new_coeffsG
+        !            double precision :: lambda
+        !            integer :: k
+        !            integer, parameter :: lwork = (2*mmax_G + 2)*32
+        !            double precision, dimension(lwork) :: work
+        !
+        !            lambda = 0.001
+        !            do k = 1, 1
+        !                new_mxG = 0.0
+        !                new_mxG(0:mmax_G, 0:mmax_G) = mxG
+        !                do j = 0, mmax_G
+        !                    new_mxG(mmax_G + 1 + j, j) = lambda
+        !                end do
+        !                new_coeffsG(0: mmax_G, 0:) = coeffsG
+        !                new_coeffsG(mmax_G + 1: 2*mmax_G + 1, 0:) = 0.0
+        !
+        !                call dgels(trans, 2*mmax_G + 2, mmax_G + 1, N + 1, new_mxG, 2*mmax_G + 2, new_coeffsG, &
+        !                    2*mmax_G + 2, work, lwork, info)
+        !            end do
+        !            coeffsG = new_coeffsG(0: mmax_G, :)
+        !        end block
 
-        !        call dgesvx(fact, trans, mmax_G+1, N+1, mxG, mmax_G+1, afG, mmax_G+1, ipivG, equed, &
-        !            rG, cG, coeffsG, mmax_G+1, tmpcoeffsG, mmax_G+1, rcond, ferr, berr, workG, iworkG, info)
-        !        !        do j = 0, N
-        !        !            coeffsG(:, j) = tmpcoeffsG(:, j)/cG
-        !        !        end do
-        write(*, *)matmul(mxG, tmpcoeffsG) - coeffsG
+        call dgesvx(fact, trans, mmax_G+1, N+1, mxG, mmax_G+1, afG, mmax_G+1, ipivG, equed, &
+            rG, cG, coeffsG, mmax_G+1, tmpcoeffsG, mmax_G+1, rcond, ferr, berr, workG, iworkG, info)
         coeffsG = tmpcoeffsG
 
         ! Algoritmo de ortogonalizacao de Gram-Schmidt

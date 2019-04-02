@@ -96,13 +96,14 @@ contains
         double precision :: r1, r2, r3
 
         do k = 1, imax
-            i = mod(k, m) + 1
-            rowA = mA(i, :)
-            r1 = dot_product(rowA, mX)
-            r2 = norm2(rowA)**2
-            r3 = lambda*(mB(i) - r1)/r2
-            mX = mX + r3*rowA
-!            write(*, *)mX
+            do i = 1, m
+                rowA = mA(i, :)
+                r1 = dot_product(rowA, mX)
+                r2 = norm2(rowA)**2
+                r3 = lambda*(mB(i) - r1)/r2
+                mX = mX + r3*rowA
+            !            write(*, *)mX
+            end do
         end do
 
     end subroutine art
