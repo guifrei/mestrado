@@ -1,5 +1,4 @@
 module auxiliary_functions_module
-    use iso_c_binding
     use constants_module
     use integration_module
     implicit none

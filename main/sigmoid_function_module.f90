@@ -1,5 +1,4 @@
 module sigmoid_function_module
-    use iso_c_binding
     use constants_module
     implicit none
 

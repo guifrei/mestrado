@@ -1,10 +1,10 @@
 program main
-    use iso_c_binding
     use interfaces_module
     use conductances_module
     use temperature_functions_module
     use reciprocity_functions_module
     use netlib_module
+    use algebraic_reconstruction_technique_module
     implicit none
 
     integer :: interface_idx, condutance_idx, k, j, nmax, stdev_idx, n_delta_temperatura, n_fluxo_calor
@@ -55,36 +55,36 @@ program main
     hlist(8) = c_funloc(h8)
     hlist(9) = c_funloc(h9)
 
-! thorsted m. buzug - computed tomography
-    block
-        integer, parameter :: m = 3
-        double precision, dimension(m, m):: mA
-        double precision, dimension(m):: mX
-        double precision, dimension(m):: mB
-        double precision, dimension(m):: rowA
-        integer :: i, k
-        double precision :: r1, r2, r3, lambda
+    ! thorsted m. buzug - computed tomography
+!    block
+!        integer, parameter :: m = 5
+!        integer :: imax = 500
+!        double precision, dimension(m, m):: mA
+!        double precision, dimension(m):: mX
+!        double precision, dimension(m):: mB
+!        double precision :: lambda
+!
+!        mA(1, :) = [5, 3, 2, 0, 4]
+!        mA(2, :) = [-1, 4, 6, 2, 0]
+!        mA(3, :) = [0, 1, 3, -1, 1]
+!        mA(4, :) = [2, 0, 0, -3, 4]
+!        mA(5, :) = [5, 2, 0, -1, 0]
+!
+!        mX = [-1, 2, -3, 4, -5]
+!
+!
+!        mB = [-25, -1, -16, -34, -5]
+!        mX = 0
+!
+!        lambda = 1.8
+!
+!        call art(m, mA, mB, mX, lambda, imax)
+!        write(*, *)mX
+!
+!
+!    end block
 
-        mA(1, :) = [5, 3, 2]
-        mA(2, :) = [-1, 4, 6]
-        mA(3, :) = [0, 1, 3]
-
-        mB = [-5, -9, -7]
-        mX = [0, 0, 0]
-
-        lambda = 1.4
-
-        do k = 1, 100
-            i = mod(k, m) + 1
-            rowA = mA(i, :)
-            r1 = dot_product(rowA, mX)
-            r2 = norm2(rowA)**2
-            r3 = lambda*(mB(i) - r1)/r2
-            mX = mX + r3*rowA
-            write(*, *)mX
-        end do
-
-    end block
+!    stop
 
     block
         double precision, dimension(tnmax) :: vx, vy, hy
@@ -128,8 +128,8 @@ program main
                     end do
                     close(1)
 
-                    do nmax1 = 1, 1
-                        do nmax2 = 3, 3
+                    do nmax1 = 1, 6
+                        do nmax2 = 1, 6
                             iopt = 0
                             nest=tnmax+ord+1
                             lwrk = tnmax*(ord+1)+nest*(7+3*ord)

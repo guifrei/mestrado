@@ -1,5 +1,4 @@
 module temperature_functions_module
-    use iso_c_binding
     use constants_module
     use eigenfunctions_module
     use netlib_module

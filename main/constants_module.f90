@@ -1,5 +1,4 @@
 module constants_module
-    use iso_c_binding
     implicit none
 
     double precision, parameter :: pi = 4.0*atan(1.0)
@@ -11,11 +10,11 @@ module constants_module
     double precision, parameter :: hmax = 1000.0
     double precision, parameter :: gamma = 50000.0
     integer, parameter :: mmax_T = 35 !numero total de autofuncoes a serem calculadas para T1 e T2
-    integer, parameter :: mmax_F = 35 !numero total de autofuncoes a serem calculadas para F1 e F2
-    integer, parameter :: mmax_G = 35 !numero total de autofuncoes a serem calculadas para G1
+    integer, parameter :: mmax_F = 4 !numero total de autofuncoes a serem calculadas para F1 e F2
+    integer, parameter :: mmax_G = 4 !numero total de autofuncoes a serem calculadas para G1
     integer, parameter :: mmax_phi = 35 !maior valor entre mmax_T, mmax_F e mmax_G
     integer, parameter :: delta_m = 35      !incremento no numero de termos
-    integer, parameter :: N = 20            !numero total de funcionais de reciprocidade
+    integer, parameter :: N = 2            !numero total de funcionais de reciprocidade
     double precision, parameter :: reltol = 0.0 !1.0D-8
     !    double precision, dimension(*), parameter :: pts = [0.0D0, a/5.0, a/4.0, 2.0*a/5.0, a/2.0, 3.0*a/5.0, 3.0*a/4.0, 4.0*a/5.0, a]
     double precision, dimension(*), parameter :: pts = [0.0D0, a/4.0, a/2.0, 3.0*a/4.0, a]

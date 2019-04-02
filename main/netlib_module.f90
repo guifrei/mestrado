@@ -1,5 +1,4 @@
 module netlib_module
-    use iso_c_binding
     implicit none
 
     double precision :: outch, mcheps, dwarf
