@@ -5,6 +5,7 @@ program main
     use reciprocity_functions_module
     use netlib_module
     use algebraic_reconstruction_technique_module
+    use estimated_h_module
     implicit none
 
     integer :: interface_idx, condutance_idx, k, j, nmax, stdev_idx, n_delta_temperatura, n_fluxo_calor
@@ -13,10 +14,6 @@ program main
     procedure(dw_proc_t), pointer :: dw
     double precision :: x, stdev, dx, desv, y1, y2, norma, dnorma, norma_acc, rms, norma_delta_temperatura, norma_fluxo_calor
     character(len = 2) :: str_idx, str_cdx, str_N, str_N_prev, str_stdev, str_N_delta_temperatura, str_N_fluxo_calor
-    integer, parameter :: ord = 5
-    integer, parameter :: nest = tnmax+ord+1
-    double precision, dimension(:), allocatable :: t, c
-    integer :: nn
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -56,43 +53,12 @@ program main
     hlist(8) = c_funloc(h8)
     hlist(9) = c_funloc(h9)
 
-    ! thorsted m. buzug - computed tomography
-    !    block
-    !        integer, parameter :: m = 5
-    !        integer :: imax = 500
-    !        double precision, dimension(m, m):: mA
-    !        double precision, dimension(m):: mX
-    !        double precision, dimension(m):: mB
-    !        double precision :: lambda
-    !
-    !        mA(1, :) = [5, 3, 2, 0, 4]
-    !        mA(2, :) = [-1, 4, 6, 2, 0]
-    !        mA(3, :) = [0, 1, 3, -1, 1]
-    !        mA(4, :) = [2, 0, 0, -3, 4]
-    !        mA(5, :) = [5, 2, 0, -1, 0]
-    !
-    !        mX = [-1, 2, -3, 4, -5]
-    !
-    !
-    !        mB = [-25, -1, -16, -34, -5]
-    !        mX = 0
-    !
-    !        lambda = 1.8
-    !
-    !        call art(m, mA, mB, mX, lambda, imax)
-    !        write(*, *)mX
-    !
-    !
-    !    end block
-
-    !    stop
-
     block
-        double precision, dimension(tnmax) :: vx, vy
+        double precision, dimension(tnmax) :: vx, vy, hy
         double precision :: tcalc
         double precision :: norm
+        double precision, dimension(tnmax) :: r1, r2
         integer :: nmax1, nmax2
-
 
         do interface_idx = 3, 3
             call calculate_reciprocity_coefficients(interface_idx)
@@ -126,11 +92,14 @@ program main
                     end do
                     close(1)
 
-                    allocate(t(nest), c(nest))
-
-                    do nmax1 = 7, 20
-                        do nmax2 = 7, 20
-                            call spline_interpolation_hest(nmax1, nmax2, vx)
+                    do nmax1 = 4,4
+                        do nmax2 = 8,8
+                            do j = 1, tnmax
+                                r1(j) = delta_temperatura(vx(j), interface_idx, nmax1)
+                                r2(j) = fluxo_calor(vx(j), interface_idx, nmax2)
+                                hy(j) = r2(j)/r1(j)
+                            end do
+                            call spline_interpolation_hest(vx, hy)
 
                             call calculate_temperature_coefficients(interface_idx, condutance_idx, hest, .false.)
 
@@ -155,8 +124,6 @@ program main
                             write(*, *)nmax1, nmax2, norm
                         end do
                     end do
-
-                    deallocate(t, c)
                 end do
             end do
         end do
@@ -261,65 +228,4 @@ program main
             end do
         end do
     end do
-
-contains
-    subroutine spline_interpolation_hest(nmax1, nmax2, vx)
-        integer, intent(in) :: nmax1, nmax2
-        double precision, dimension(tnmax), intent(in) :: vx
-        integer :: iopt, lwrk, ier
-        double precision :: r1, r2
-        double precision, dimension(tnmax) :: hy
-        double precision :: s, fpf
-        integer, dimension(:), allocatable :: iwrk
-        double precision, dimension(:), allocatable :: wrk
-        double precision, dimension(tnmax) :: w
-
-        iopt = 0
-        lwrk = tnmax*(ord+1)+nest*(7+3*ord)
-        w = 1.0
-
-        allocate(iwrk(nest))
-        allocate(wrk((tnmax*(ord+1)+nest*(7+3*ord))))
-
-        do j = 1, tnmax
-            r1 = delta_temperatura(vx(j), interface_idx, nmax1)
-            r2 = fluxo_calor(vx(j), interface_idx, nmax2)
-            hy(j) = r2/r1
-        end do
-
-        s = 0.0
-
-        do j = 1, ord+1
-            t(j)=0.0
-            t(j+ord+1)=a
-        end do
-
-
-
-        call curfit(iopt, tnmax, vx, hy, w, 0.0D0, a, ord, s, nest, nn, t, c, fpf, wrk, lwrk, iwrk, ier)
-
-        if (ier > 0) then
-            write(*, *)'Error in curfit. Ier = ', ier
-            stop
-        end if
-
-        deallocate(iwrk, wrk)
-    end subroutine
-
-    function hest(x) result(r)
-        double precision, intent(in) :: x
-        double precision :: r
-        double precision, dimension(1) :: argx, argy
-        integer :: ier
-
-        argx(1) = x
-
-        call splev(t, nn, c, ord, argx, argy, 1, ier)
-        if (ier /= 0) then
-            write(*, *)'Error in curfit. Ier = ', ier
-            stop
-        end if
-        r = argy(1)
-    end function
-
 end program main

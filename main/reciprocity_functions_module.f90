@@ -168,32 +168,104 @@ contains
         end do
         deallocate(t, c, iwrk)
 
-    !        block
-    !            integer, parameter :: mm = tnmax
-    !            integer, parameter :: nn = mmax_phi + 1
-    !            double precision, dimension(mm, 0: nn - 1) :: mxa
-    !            double precision, dimension(1: mm, 1) :: vb
-    !            double precision, dimension(:), allocatable :: work
-    !            integer :: lwork, info, i, j
-    !            double precision :: x
-    !            lwork =  2*min(mm,nn)
-    !
-    !            allocate(work(lwork))
-    !
-    !            do i = 1, mm
-    !                x = vx(i)
-    !                do j = 0, nn - 1
-    !                    mxa(i, j) = cos(mu(j)*x)
-    !                end do
-    !                vb(i, 1) = sample_y(i)
-    !            end do
-    !
-    !            call dgels('N', mm, nn, 1, mxa, mm, vb, mm, work, lwork, info)
-    !            integrals_Y(0) = vb(1, 1)*a
-    !            integrals_Y(1:nn - 1) = vb(2:nn, 1)*a/2.0
-    !
-    !            deallocate(work)
-    !        end block
+        !        block
+        !            !http://www2.compute.dtu.dk/~pcha/DIP/chap4.pdf
+        !            integer, parameter :: mm = tnmax
+        !            integer, parameter :: nn = mmax_phi + 1
+        !            double precision, dimension(mm + nn, 1: nn) :: mxa
+        !            double precision, dimension(1: mm + nn, 1) :: vb
+        !            double precision, dimension(:), allocatable :: work
+        !            integer :: lwork, info, i, j
+        !            double precision :: x
+        !            double precision :: lambda
+        !
+        !            lwork =  2*nn
+        !
+        !            lambda = 10.0
+        !
+        !            allocate(work(lwork))
+        !
+        !            mxa = 0.0
+        !            do i = 1, mm
+        !                x = vx(i)
+        !                do j = 1, nn
+        !                    mxa(i, j) = cos(mu(j - 1)*x)
+        !                end do
+        !                mxa(i + nn, i) = lambda
+        !            end do
+        !
+        !            vb = 0.0
+        !            vb(1:mm, 1) = sample_y
+        !
+        !            call dgels('N', mm + nn, nn, 1, mxa, mm + nn, vb, mm + nn, work, lwork, info)
+        !            integrals_Y(0) = vb(1, 1)*a
+        !            integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
+        !
+        !            deallocate(work)
+        !        end block
+
+        block
+            integer, parameter :: mm = tnmax
+            integer, parameter :: nn = mmax_phi + 1
+            double precision, dimension(mm, nn) :: mxa
+            double precision, dimension(nn, nn) :: newmxa
+            double precision, dimension(mm, 1) :: vb
+            double precision, dimension(nn, 1) :: newvb
+            double precision, dimension(mm) :: newvx
+            double precision, dimension(nn, nn) :: afF
+            double precision, dimension(:), allocatable :: work
+            integer, dimension(nn) :: ipivF
+            integer :: lwork, info, i, j, k
+            double precision :: x, rcond
+            double precision, dimension(1) :: ferr, berr
+            double precision, dimension(6) :: lambda
+            double precision, dimension(nn) :: rF, cF
+            double precision, dimension(3*nn) :: workF
+            integer, dimension(nn) :: iworkF
+            character(len = 1) :: equed
+
+            equed = 'B'
+
+            lwork =  2*min(mm + nn, nn)*32
+
+            lambda = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1]
+
+            allocate(work(lwork))
+
+            vb = 0.0
+            mxa = 0.0
+            do i = 1, mm
+                x = vx(i)
+                do j = 1, nn
+                    mxa(i, j) = cos(mu(j - 1)*x)
+                end do
+            end do
+
+            vb(1:mm, 1) = sample_y
+
+            do k = 1, 6
+
+                newmxa = matmul(transpose(mxa), mxa)
+                do i = 1, nn
+                    newmxa(i, i) = newmxa(i, i) + lambda(k)
+                end do
+                newvb = matmul(transpose(mxa), vb)
+
+                !                call dgels('N', nn, nn, 1, newmxa, nn, newvb, nn, work, lwork, info)
+
+                call dgesvx('E', 'N', nn, 1, newmxa, nn, afF, nn, ipivF, equed, &
+                    rF, cF, newvb, nn, newvx, nn, rcond, ferr, berr, workF, iworkF, info)
+
+                    write(*, *)info
+
+                write(*, *)norm2(matmul(mxa, newvx) - vb)**2, norm2(newvx)**2
+
+            end do
+            integrals_Y(0) = newvb(1, 1)*a
+            integrals_Y(1:nn - 1) = newvb(2:nn, 1)*a/2.0
+
+            deallocate(work)
+        end block
     end subroutine
 
     function reciprocity_f(j) result(r)
@@ -408,6 +480,7 @@ contains
         !            end do
         !            coeffsF = new_coeffsF(0: 2*mmax_F + 1, :)
         !        end block
+
 
         call dgesvx(fact, trans, 2*mmax_F+2, N+1, mxF, 2*mmax_F+2, afF, 2*mmax_F+2, ipivF, equed, &
             rF, cF, coeffsF, 2*mmax_F+2, tmpcoeffsF, 2*mmax_F+2, rcond, ferr, berr, workF, iworkF, info)
