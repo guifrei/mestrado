@@ -13,44 +13,7 @@ module reciprocity_functions_module
     double precision, dimension(0: N, 0: mmax_phi), target :: vpsi, vphi
     double precision, dimension(0: mmax_phi) :: vvY
 
-    integer, parameter :: ID_F1 = 0
-    integer, parameter :: ID_DF1DX = 1
-    integer, parameter :: ID_DF1DY = 2
-    integer, parameter :: ID_F2 = 3
-    integer, parameter :: ID_DF2DX = 4
-    integer, parameter :: ID_DF2DY = 5
-    integer, parameter :: ID_G1 = 6
-    integer, parameter :: ID_DG1DX = 7
-    integer, parameter :: ID_DG1DY = 8
 contains
-    function f_aux_psi(j, x, interface_idx) result(r)
-        integer, intent(in) :: j, interface_idx
-        double precision, intent(in) :: x
-        double precision :: r
-
-        r = cos(mu(j)*x)
-
-        if (j == 0) then
-            r = r/sqrt(a)
-        else
-            r = r/sqrt(a/2.0)
-        end if
-    end function
-
-    function f_aux_phi(j, x, interface_idx) result(r)
-        integer, intent(in) :: j, interface_idx
-        double precision, intent(in) :: x
-        double precision :: r
-
-        r = cos(mu(j)*x)
-
-        if (j == 0) then
-            r = r/sqrt(a)
-        else
-            r = r/sqrt(a/2.0)
-        end if
-    end function
-
     function fpsi(j, x) result(r)
         double precision, intent(in) :: x
         integer, intent(in) :: j
@@ -85,17 +48,21 @@ contains
         double precision, dimension(tnmax) :: sample_y
         double precision, dimension(tnmax) :: vy
         character(len = 2) :: str_idx, str_cdx, str_stdev
-        integer :: iopt
-        integer :: ord
-        integer :: nest
-        integer :: nn, ier, lwrk
+        integer :: nn, ier
         double precision, dimension(tnmax) :: w
-        double precision, dimension(:), allocatable :: wrk
         double precision :: s, fp
-        double precision, dimension(:), allocatable :: t, c
-        integer, dimension(:), allocatable :: iwrk
         double precision, dimension(tnmax) :: rand_u, rand_v, rand_epsilon
         double precision, dimension(0: mmax_phi) :: integrals_Y
+
+        integer, parameter :: iopt = 0
+        integer, parameter :: ord = 5
+        integer, parameter :: nest = tnmax+ord+1
+        integer, parameter :: lwrk = (tnmax*(ord+1)+nest*(7+3*ord))
+        integer, parameter :: lwrk_int = tnmax + ord + 1
+        double precision, dimension(nest) :: t, c
+        integer, dimension(nest) :: iwrk
+        double precision, dimension(lwrk) :: wrk
+        double precision, dimension(lwrk_int) :: wrk_int
 
         write(str_idx, '(I2.2)') interface_idx
         write(str_cdx, '(I2.2)') condutance_idx
@@ -133,13 +100,7 @@ contains
         end do
         close(1)
 
-        iopt = 0
-        ord = 5
-        nest=tnmax+ord+1
-        lwrk = tnmax*(ord+1)+nest*(7+3*ord)
         w = 1.0
-
-        allocate(t(nest), c(nest), iwrk(nest))
 
         do k = 0, mmax_phi
             do j = 1, tnmax
@@ -153,8 +114,6 @@ contains
                 t(j+ord+1)=a
             end do
 
-            allocate(wrk((tnmax*(ord+1)+nest*(7+3*ord))))
-
             call curfit(iopt,tnmax,vx,vy,w,0.0D0,a,ord,s,nest,nn,t,c,fp, &
                 wrk,lwrk,iwrk,ier)
             if (ier > 0) then
@@ -162,68 +121,120 @@ contains
                 stop
             end if
 
-            deallocate (wrk)
-            allocate(wrk(nn))
-            integrals_Y(k) = splint(t,nn,c,ord,0.0D0,a,wrk)
-            deallocate(wrk)
+            integrals_Y(k) = splint(t,nn,c,ord,0.0D0,a,wrk_int)
         end do
-        vvY(1) = integrals_Y(1)/a
-        vvY(2:nn) = integrals_Y(2:nn)*2.0/a
-        deallocate(t, c, iwrk)
+        vvY(0) = integrals_Y(0)/a
+        vvY(1:nn - 1) = integrals_Y(1:nn - 1)*2.0/a
+    end subroutine
 
-        block
-            !http://www2.compute.dtu.dk/~pcha/DIP/chap4.pdf
-            integer, parameter :: mm = tnmax
-            integer, parameter :: nn = mmax_phi + 1
-            double precision, dimension(mm + nn, 1: nn) :: mxa
-            double precision, dimension(1: mm, 1: nn) :: mxa_orig
-            double precision, dimension(1: mm + nn, 1) :: vb
-            double precision, dimension(1: mm) :: vb_orig
-            integer :: info, i, j, k
-            integer, parameter :: lwork = 2*nn
-            double precision, dimension(8) :: lambda = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 0.5, 1.0]
-            double precision, dimension(lwork) :: work
-            double precision :: x, y
+    subroutine least_squares_for_Y(vx, vy)
+        double precision, dimension(tnmax), intent(in) :: vx
+        double precision, dimension(tnmax), intent(in) :: vy
+        integer, parameter :: mm = tnmax
+        integer, parameter :: nn = mmax_phi + 1
+        double precision, dimension(mm, nn) :: mxa
+        double precision, dimension(mm, 1) :: vb
+        integer :: info, i, j
+        integer, parameter :: lwork = 64*nn
+        double precision, dimension(lwork) :: work
+        double precision :: x, y
+        double precision, dimension(0: mmax_phi) :: integrals_Y
 
-                        !            lambda = 0.0001
-
-            k = 6
-            mxa = 0.0
-            do i = 1, mm
-                x = vx(i)
-                do j = 1, nn
-                    mxa(i, j) = cos(mu(j - 1)*x)
-                    mxa_orig(i, j) = cos(mu(j - 1)*x)
-                end do
+        mxa = 0.0
+        vb = 0.0
+        do i = 1, mm
+            x = vx(i)
+            do j = 1, nn
+                mxa(i, j) = cos(mu(j - 1)*x)
             end do
+        end do
 
-            do i = 1, nn
-                mxa(i + mm, i) = lambda(k)
+        vb(1:mm, 1) = vy
+
+        call dgels('N', mm, nn, 1, mxa, mm, vb, mm, work, lwork, info)
+        integrals_Y(0) = vb(1, 1)*a
+        integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
+        vvY = vb(1:nn, 1)
+
+        open(unit = 5, file = '/home/cx3d/a.txt')
+        do i = 1, mm
+            x = vx(i)
+            y = 0.0
+            do j = 1, nn
+                y = y + vb(j, 1)*cos(mu(j - 1)*x)
             end do
+            write(5, *)x, vy(i), y
+        end do
+        close(5)
+    end subroutine
 
-            vb = 0.0
-            vb(1:mm, 1) = sample_y(1:mm)
-            vb_orig = sample_y
+    subroutine tikhonov(lambda, vx, vy)
+        !http://www2.compute.dtu.dk/~pcha/DIP/chap4.pdf, chap8
+        integer, parameter :: deriv_ord = 0
+        double precision, intent(in) :: lambda
+        double precision, dimension(tnmax), intent(in) :: vx
+        double precision, dimension(tnmax), intent(in) :: vy
+        integer, parameter :: mm = tnmax
+        integer, parameter :: nn = mmax_phi + 1
+        double precision, dimension(mm + nn - deriv_ord, nn) :: mxa
+        double precision, dimension(mm + nn - deriv_ord, 1) :: vb
+        integer :: info, i, j
+        integer, parameter :: lwork = 64*nn
+        double precision, dimension(lwork) :: work
+        double precision :: x, y
+        double precision, dimension(0: mmax_phi) :: integrals_Y
+        double precision, dimension(nn - deriv_ord, nn) :: mL !operador derivativo
 
-            call dgels('N', mm + nn, nn, 1, mxa, mm + nn, vb, mm + nn, work, lwork, info)
-            integrals_Y(0) = vb(1, 1)*a
-            integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
-            vvY = vb(1:nn, 1)
+                    !            lambda = 0.0001
 
-            !                write(*, *)norm2(matmul(mxa_orig, vb(1:nn, 1)) - vb_orig), norm2(vb(1:nn, 1))
+        mL = 0.0
 
-                    open(unit = 5, file = '/home/cx3d/a.txt')
-                    do i = 1, mm
-                        x = vx(i)
-                        y = 0.0
-                        do j = 1, nn
-                            y = y + vb(j, 1)*cos(mu(j - 1)*x)
-                        end do
-                        write(5, *)x, sample_y(i), y
-                    end do
-                   close(5)
+        if (deriv_ord == 0) then
+            do i = 1, nn - deriv_ord
+                mL(i, i) = sqrt(lambda)
+            end do
+        else if (deriv_ord == 1) then
+            do i = 1, nn - deriv_ord
+                mL(i, i) = -sqrt(lambda)
+                mL(i, i + 1) = sqrt(lambda)
+            end do
+        else if (deriv_ord == 2) then
+            do i = 1, nn - deriv_ord
+                mL(i, i) = sqrt(lambda)
+                mL(i, i + 1) = -2.0*sqrt(lambda)
+                mL(i, i + 2) = sqrt(lambda)
+            end do
+        end if
 
-        end block
+        mxa = 0.0
+        vb = 0.0
+        do i = 1, mm
+            x = vx(i)
+            do j = 1, nn
+                mxa(i, j) = cos(mu(j - 1)*x)
+            end do
+        end do
+
+        mxa(mm + 1: mm + nn - deriv_ord, :) = mL
+
+        vb(1:mm, 1) = vy
+        vb(mm + 1:mm + nn - deriv_ord, 1) = matmul(mL, vvY)
+
+        call dgels('N', mm + nn - deriv_ord, nn, 1, mxa, mm + nn - deriv_ord, vb, mm + nn - deriv_ord, work, lwork, info)
+        integrals_Y(0) = vb(1, 1)*a
+        integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
+        vvY = vb(1:nn, 1)
+
+        open(unit = 5, file = '/home/cx3d/a.txt')
+        do i = 1, mm
+            x = vx(i)
+            y = 0.0
+            do j = 1, nn
+                y = y + vb(j, 1)*cos(mu(j - 1)*x)
+            end do
+            write(5, *)x, vy(i), y
+        end do
+        close(5)
     end subroutine
 
     function reciprocity_f(j) result(r)
@@ -353,14 +364,6 @@ contains
 
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
-
-
-        !        do j = 0, N
-        !            do m = 0, mmax_phi
-        !                vpsi(j, m) = ftransform(f_aux_psi, j, m, interface_idx)
-        !                vphi(j, m) = ftransform(f_aux_phi, j, m, interface_idx)
-        !            end do
-        !        end do
 
         vpsi = 0.0
         vphi = 0.0
@@ -527,7 +530,7 @@ contains
     !        end block
     end subroutine
 
-    function soma_controle_erro(parcela, j, x, y, v, mmax, id) result(r)
+    function soma_controle_erro(parcela, j, x, y, v, mmax) result(r)
         interface
             function parcela(j, m, x, y, va) result(r)
                 import
@@ -538,7 +541,6 @@ contains
         end interface
         double precision, intent(in) :: x, y
         double precision, dimension(0:), intent(in) :: v
-        integer, intent(in) :: id
         integer, intent(in) :: j
         integer, intent(in) :: mmax
         double precision :: r, partial_r, eps, r_acc
@@ -571,19 +573,6 @@ contains
             keep_1 = keep_1 .and. (.not. converged)
         end do
         r = r_acc
-    !        if (.not. converged) then
-    !            if (id == ID_F1) then
-    !                write(*, *)'F1   ', ': eps = ', eps, ', x = ', x, ', y = ', y, ', j = ', j
-    !            else if (id == ID_F2) then
-    !                write(*, *)'F2   ', ': eps = ', eps, ', x = ', x, ', y = ', y, ', j = ', j
-    !            else if (id == ID_G1) then
-    !                if (eps .eq. 0) then
-    !                    write(*, *)'G1   ', ': val = ', r, ', x = ', x, ', y = ', y, ', j = ', j
-    !                else
-    !                    write(*, *)'G1   ', ': eps = ', eps, ', x = ', x, ', y = ', y, ', j = ', j
-    !                end if
-    !            end if
-    !        end if
     end function
 
     function parcela_F1(j, m, x, y, va) result(r)
@@ -705,7 +694,7 @@ contains
         integer, intent(in) :: j
         double precision :: r
 
-        r = soma_controle_erro(parcela_F1, j, x, y, coeffsF(0::2, j), mmax_F, ID_F1)
+        r = soma_controle_erro(parcela_F1, j, x, y, coeffsF(0::2, j), mmax_F)
     end function
 
     function dF1dx(j, x, y) result(r)
@@ -713,7 +702,7 @@ contains
         integer, intent(in) :: j
         double precision :: r
 
-        r = soma_controle_erro(parcela_dF1dx, j, x, y, coeffsF(0::2, j), mmax_F, ID_DF1DX)
+        r = soma_controle_erro(parcela_dF1dx, j, x, y, coeffsF(0::2, j), mmax_F)
     end function
 
     function dF1dy(j, x, y) result(r)
@@ -721,7 +710,7 @@ contains
         integer, intent(in) :: j
         double precision :: r
 
-        r = soma_controle_erro(parcela_dF1dy, j, x, y, coeffsF(0::2, j), mmax_F, ID_DF1DY)
+        r = soma_controle_erro(parcela_dF1dy, j, x, y, coeffsF(0::2, j), mmax_F)
     end function
 
     function F2(j, x, y) result(r)
@@ -729,7 +718,7 @@ contains
         integer, intent(in) :: j
         double precision :: r
 
-        r = soma_controle_erro(parcela_F2, j, x, y, coeffsF(1::2, j), mmax_F, ID_F2)
+        r = soma_controle_erro(parcela_F2, j, x, y, coeffsF(1::2, j), mmax_F)
     end function
 
     function dF2dx(j, x, y) result(r)
@@ -737,7 +726,7 @@ contains
         integer, intent(in) :: j
         double precision :: r
 
-        r = soma_controle_erro(parcela_dF2dx, j, x, y, coeffsF(1::2, j), mmax_F, ID_DF2DX)
+        r = soma_controle_erro(parcela_dF2dx, j, x, y, coeffsF(1::2, j), mmax_F)
     end function
 
     function dF2dy(j, x, y) result(r)
@@ -745,7 +734,7 @@ contains
         integer, intent(in) :: j
         double precision :: r
 
-        r = soma_controle_erro(parcela_dF2dy, j, x, y, coeffsF(1::2, j), mmax_F, ID_DF2DY)
+        r = soma_controle_erro(parcela_dF2dy, j, x, y, coeffsF(1::2, j), mmax_F)
     end function
 
     function G1(j, x, y) result(r)
@@ -753,7 +742,7 @@ contains
         integer, intent(in) :: j
         double precision :: r
 
-        r = soma_controle_erro(parcela_G1, j, x, y, coeffsG(0:, j), mmax_G, ID_G1)
+        r = soma_controle_erro(parcela_G1, j, x, y, coeffsG(0:, j), mmax_G)
     end function
 
     function dG1dx(j, x, y) result(r)
@@ -761,7 +750,7 @@ contains
         integer, intent(in) :: j
         double precision :: r
 
-        r = soma_controle_erro(parcela_dG1dx, j, x, y, coeffsG(0:, j), mmax_G, ID_DG1DX)
+        r = soma_controle_erro(parcela_dG1dx, j, x, y, coeffsG(0:, j), mmax_G)
     end function
 
     function dG1dy(j, x, y) result(r)
@@ -769,7 +758,7 @@ contains
         integer, intent(in) :: j
         double precision :: r
 
-        r = soma_controle_erro(parcela_dG1dy, j, x, y, coeffsG(0:, j), mmax_G, ID_DG1DY)
+        r = soma_controle_erro(parcela_dG1dy, j, x, y, coeffsG(0:, j), mmax_G)
     end function
 
     function dF1dn(j, x, interface_idx) result(r)
@@ -923,13 +912,6 @@ contains
 
         call c_f_procpointer(wlist(interface_idx), w)
 
-        !        if (j == 0) then
-        !            r = -a*w(x)/b
-        !        else
-        !            r = - a* (sinh(mu(j) * w(x)) / sinh(mu(j) * b)) * cos(mu(j)*x)
-        !        end if
-
-
         r = -vpsi(j, 0)*w(x)/b
         do m = 1, mmax_F
             r = r - 2.0*vpsi(j, m)* (sinh(mu(m) * w(x)) / sinh(mu(m) * b)) * cos(mu(m)*x)
@@ -985,13 +967,6 @@ contains
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
 
-        !        if (j == 0) then
-        !            r = -a*k1/b
-        !        else
-        !            r = - a *k1 * mu(j) * (dw(x) * (sinh(mu(j) * w(x)) / sinh(mu(j) * b)) * sin(mu(j)*x) + &
-        !                (cosh(mu(j) * w(x)) / sinh(mu(j) * b)) * cos(mu(j)*x))
-        !        end if
-
         r = -vpsi(j, 0) * k1 / b
         do m = 1, mmax_F
             r = r - 2.0 * vpsi(j, m) * k1 * mu(j) * (dw(x) * (sinh(mu(m) * w(x)) / sinh(mu(m) * b)) * sin(mu(m)*x) + &
@@ -1027,13 +1002,6 @@ contains
 
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
-
-        !        if (j == 0) then
-        !            r = -a/b
-        !        else
-        !            r = - a * mu(j) * (dw(x) * (sinh(mu(j) * w(x)) / sinh(mu(j) * b)) * sin(mu(j)*x) + &
-        !                (cosh(mu(j) * w(x)) / sinh(mu(j) * b)) * cos(mu(j)*x))
-        !        end if
 
         r = -vphi(j, 0)/ b
         do m = 1, mmax_G

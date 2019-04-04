@@ -166,7 +166,7 @@ program main
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
         call calculate_reciprocity_coefficients(interface_idx)
-        do condutance_idx = 1, 3
+        do condutance_idx = 3, 3
             write(str_cdx, '(I2.2)') condutance_idx
             call c_f_procpointer(hlist(condutance_idx), h)
             call calculate_temperature_coefficients(interface_idx, condutance_idx, h)
@@ -179,7 +179,7 @@ program main
                     stdev = 0.1
                 else
                     str_stdev = '05'
-                    stdev = 0.5
+                    stdev = 0.3882
                 end if
                 write(*, *)'Interface = ', interface_idx, ', conductance = ', condutance_idx, ', stdev = ', stdev
 
