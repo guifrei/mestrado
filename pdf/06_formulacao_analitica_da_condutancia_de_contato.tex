@@ -241,6 +241,14 @@ Y(x) \approx \sum_{n=0}^M y_n \cos \mu_n(x)
 \sum_{m=1}^M \mu_m \left(\frac{\mathbb{E}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\phi}_{j, m}}{\tanh\mu_m b}\right)y_m
 \end{align}
 
+\begin{align}
+\frac{1}{\sinh z} = \frac{2}{e^z - e^{-z}} = \frac{2e^{-z}}{1 - e^{-2z}} \approx 2e^{-z}
+\end{align}
+
+\begin{align}
+\frac{1}{\tanh z} = \frac{e^z + e^{-z}}{e^z - e^{-z}} = \frac{1 + e^{-2z}}{1 - e^{-2z}} \approx 1
+\end{align}
+
 Aproximação por mínimos quadrados:
 \begin{align}
 Y(x_k) \approx \sum_{n=0}^M y_n \cos \mu_n(x_k), k=0,1,2,..., K
