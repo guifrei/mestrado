@@ -7,13 +7,6 @@ module temperature_functions_module
     implicit none
 
     double precision, dimension(0: 2*mmax_T+1), target :: vst
-
-    integer, parameter :: ID_T1 = 0
-    integer, parameter :: ID_DT1DX = 1
-    integer, parameter :: ID_DT1DY = 2
-    integer, parameter :: ID_T2 = 3
-    integer, parameter :: ID_DT2DX = 4
-    integer, parameter :: ID_DT2DY = 5
 contains
     function eta(m, x, interface_idx) result(r)
         integer, intent(in) :: m
@@ -98,7 +91,7 @@ contains
         r = cosh(mu(m) * (b - w(x))) * cos(mu(m) * x) * hc(x) * sqrt(1.0 + dw(x) ** 2) / cosh(mu(m) * b)
     end function
 
-    function soma_controle_erro(parcela, x, y, v, id) result(r)
+    function soma_controle_erro(parcela, x, y, v) result(r)
         interface
             function parcela(m, x, y, va) result(r)
                 import
@@ -109,7 +102,6 @@ contains
         end interface
         double precision, intent(in) :: x, y
         double precision, dimension(0:), intent(in) :: v
-        integer, intent(in) :: id
         double precision :: r, partial_r, eps, r_acc
         integer :: m, p
         logical :: keep_1, keep_2, converged
@@ -140,13 +132,6 @@ contains
             keep_1 = keep_1 .and. (.not. converged)
         end do
         r = r_acc
-    !        if (.not. converged) then
-    !            if (id == ID_T1) then
-    !                write(*, *)'T1   ', ': eps = ', eps, ', x = ', x, ', y = ', y
-    !            else if (id == ID_T2) then
-    !                write(*, *)'T2   ', ': eps = ', eps, ', x = ', x, ', y = ', y
-    !            end if
-    !        end if
     end function
 
     function parcela_t1(j, x, y, vc) result(r)
@@ -225,42 +210,42 @@ contains
         double precision, intent(in) :: x, y
         double precision :: r
 
-        r = soma_controle_erro(parcela_t1, x, y, vst(1::2), ID_T1)
+        r = soma_controle_erro(parcela_t1, x, y, vst(1::2))
     end function
 
     function d_t1_dx(x, y) result(r)
         double precision, intent(in) :: x, y
         double precision :: r
 
-        r = soma_controle_erro(parcela_d_t1_dx, x, y, vst(1::2), ID_DT1DX)
+        r = soma_controle_erro(parcela_d_t1_dx, x, y, vst(1::2))
     end function
 
     function d_t1_dy(x, y) result(r)
         double precision, intent(in) :: x, y
         double precision :: r
 
-        r = soma_controle_erro(parcela_d_t1_dy, x, y, vst(1::2), ID_DT1DY)
+        r = soma_controle_erro(parcela_d_t1_dy, x, y, vst(1::2))
     end function
 
     function t2(x, y) result(r)
         double precision, intent(in) :: x, y
         double precision :: r
 
-        r = soma_controle_erro(parcela_t2, x, y, vst(0::2), ID_T2)
+        r = soma_controle_erro(parcela_t2, x, y, vst(0::2))
     end function
 
     function d_t2_dx(x, y) result(r)
         double precision, intent(in) :: x, y
         double precision :: r
 
-        r = soma_controle_erro(parcela_d_t2_dx, x, y, vst(0::2), ID_DT2DX)
+        r = soma_controle_erro(parcela_d_t2_dx, x, y, vst(0::2))
     end function
 
     function d_t2_dy(x, y) result(r)
         double precision, intent(in) :: x, y
         double precision :: r
 
-        r = soma_controle_erro(parcela_d_t2_dy, x, y, vst(0::2), ID_DT2DY)
+        r = soma_controle_erro(parcela_d_t2_dy, x, y, vst(0::2))
     end function
 
     ! Determinação dos coeficientes via mínimos quadrados

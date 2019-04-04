@@ -38,6 +38,67 @@ contains
         end do
     end function
 
+    subroutine add_error(sample_y, stdev)
+        double precision, dimension(tnmax), intent(inout) :: sample_y
+        double precision, intent(in) :: stdev
+        double precision, dimension(tnmax) :: rand_u, rand_v, rand_epsilon
+
+        if (stdev > 0) then
+            call random_seed
+            call random_number(rand_u)
+            call random_number(rand_v)
+            rand_epsilon = cos(2.0*pi*rand_v)*sqrt(-2.0*log(rand_u))
+            sample_y = sample_y + stdev*rand_epsilon
+        end if
+    end subroutine
+
+    subroutine integrate_synthetic_temperatures(vx, sample_y)
+        integer :: k, j
+        double precision, dimension(tnmax), intent(in) :: vx
+        double precision, dimension(tnmax), intent(in) :: sample_y
+        double precision, dimension(tnmax) :: vy
+        integer :: nn, ier
+        double precision, dimension(tnmax) :: w
+        double precision :: s, fp
+        double precision, dimension(0: mmax_phi) :: integrals_Y
+
+        integer, parameter :: iopt = 0
+        integer, parameter :: ord = 5
+        integer, parameter :: nest = tnmax+ord+1
+        integer, parameter :: lwrk = (tnmax*(ord+1)+nest*(7+3*ord))
+        integer, parameter :: lwrk_int = tnmax + ord + 1
+        double precision, dimension(nest) :: t, c
+        integer, dimension(nest) :: iwrk
+        double precision, dimension(lwrk) :: wrk
+        double precision, dimension(lwrk_int) :: wrk_int
+
+        w = 1.0
+
+        do k = 0, mmax_phi
+            do j = 1, tnmax
+                vy(j) = sample_y(j)*cos(mu(k)*vx(j))
+            end do
+
+            s = 0.0
+
+            do j = 1, ord+1
+                t(j)=0.0
+                t(j+ord+1)=a
+            end do
+
+            call curfit(iopt,tnmax,vx,vy,w,0.0D0,a,ord,s,nest,nn,t,c,fp, &
+                wrk,lwrk,iwrk,ier)
+            if (ier > 0) then
+                write(*, *)'Error in curfit. Ier = ', ier
+                stop
+            end if
+
+            integrals_Y(k) = splint(t,nn,c,ord,0.0D0,a,wrk_int)
+        end do
+        vvY(0) = integrals_Y(0)/a
+        vvY(1:nn - 1) = integrals_Y(1:nn - 1)*2.0/a
+    end subroutine
+
     subroutine calculate_integrals_Y(interface_idx, condutance_idx, stdev_idx)
         integer, intent(in) :: interface_idx
         integer, intent(in) :: condutance_idx
@@ -51,7 +112,6 @@ contains
         integer :: nn, ier
         double precision, dimension(tnmax) :: w
         double precision :: s, fp
-        double precision, dimension(tnmax) :: rand_u, rand_v, rand_epsilon
         double precision, dimension(0: mmax_phi) :: integrals_Y
 
         integer, parameter :: iopt = 0
@@ -84,13 +144,7 @@ contains
         end do
         close(1)
 
-        if (stdev > 0) then
-            call random_seed
-            call random_number(rand_u)
-            call random_number(rand_v)
-            rand_epsilon = cos(2.0*pi*rand_v)*sqrt(-2.0*log(rand_u))
-            sample_y = sample_y + stdev*rand_epsilon
-        end if
+        call add_error(sample_y, stdev)
 
         open(unit = 1, file = '/home/cx3d/mestrado/' // &
             'data/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx // &
