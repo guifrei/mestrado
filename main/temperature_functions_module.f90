@@ -356,6 +356,7 @@ contains
         call c_f_procpointer(dwlist(interface_idx), dw)
 
         ! Geracao das temperaturas
+!        write(*, *)'Assembling system...'
         do n = 0, mmax_T
             do j = 0, mmax_T
                 mx(n * 2, j * 2) = transform(fa, n, c_loc(j), pts)
@@ -369,6 +370,7 @@ contains
 
         equed = 'B'
 
+!        write(*, *)'Invoking LU...'
         call dgesvx('E', 'N', 2*mmax_T+2, 1, mx, 2*mmax_T+2, af, 2*mmax_T+2, ipiv, equed, &
             r, c, vz, 2*mmax_T+2, vst, 2*mmax_T+2, rcond, ferr, berr, work, iwork, info)
 

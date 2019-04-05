@@ -306,6 +306,21 @@ contains
         end do
     end function
 
+    function reciprocity_g(j) result(r)
+        integer, intent(in) :: j
+        double precision :: r
+        integer :: m
+        double precision, dimension(:), pointer :: vE
+        double precision :: arg
+
+        vE(0:) => coeffsG(0:, j)
+        r = -q * vphi(j, 0) / k1 + (vE(0) - vphi(j, 0)) * vvY(0) / b
+        do m = 1, mmax_G
+            arg = mu(m) * b
+            r = r + mu(m) * (vE(m) / sinh(arg) - vphi(j, m) / tanh(arg)) * vvY(m)
+        end do
+    end function
+
     function parcela_delta_temperatura(x, j, interface_idx) result(r)
         double precision, intent(in) :: x
         integer, intent(in) :: j
@@ -324,19 +339,6 @@ contains
         r = 0
         do j = 0, kmax
             r = r + parcela_delta_temperatura(x, j, interface_idx)
-        end do
-    end function
-
-    function reciprocity_g(j) result(r)
-        integer, intent(in) :: j
-        double precision :: r
-        integer :: m
-        double precision, dimension(:), pointer :: vE
-
-        vE(0:) => coeffsG(0:, j)
-        r = -q * vphi(j, 0) / k1 + (vE(0) - vphi(j, 0)) * vvY(0) / b
-        do m = 1, mmax_G
-            r = r + mu(m) * (vE(m) / sinh(mu(m) * b) - vphi(j, m) / tanh(mu(m) * b)) * vvY(m)
         end do
     end function
 
@@ -633,12 +635,15 @@ contains
         integer, intent(in) :: j, m
         double precision, intent(in) :: x, y, va
         double precision :: r
+        double precision :: arg1, arg2
 
         if (m == 0) then
             r = (va*(b - y) + vpsi(j, 0)*y)/(a*b)
         else
-            r = (2.0/a)*(va*sinh(mu(m)*(b - y))/sinh(mu(m)*b) +&
-                vpsi(j, m)*sinh(mu(m)*y)/sinh(mu(m)*b))*cos(mu(m)*x)
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = (2.0/a)*(va*sinh(arg2 - arg1)/sinh(arg2) +&
+                vpsi(j, m)*sinh(arg1)/sinh(arg2))*cos(mu(m)*x)
         end if
     end function
 
@@ -646,12 +651,15 @@ contains
         integer, intent(in) :: j, m
         double precision, intent(in) :: x, y, va
         double precision :: r
+        double precision :: arg1, arg2
 
         if (m == 0) then
             r = 0.0
         else
-            r = - mu(m)*(2.0/a)*(va*sinh(mu(m)*(b - y))/sinh(mu(m)*b) +&
-                vpsi(j, m)*sinh(mu(m)*y)/sinh(mu(m)*b))*sin(mu(m)*x)
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = - mu(m)*(2.0/a)*(va*sinh(arg2 - arg1)/sinh(arg2) +&
+                vpsi(j, m)*sinh(arg1)/sinh(arg2))*sin(mu(m)*x)
         end if
     end function
 
@@ -659,12 +667,15 @@ contains
         integer, intent(in) :: j, m
         double precision, intent(in) :: x, y, va
         double precision :: r
+        double precision :: arg1, arg2
 
         if (m == 0) then
             r = (vpsi(j, 0) - va)/(a*b)
         else
-            r = mu(m)*(2.0/a)*(-va*cosh(mu(m)*(b - y))/sinh(mu(m)*b) +&
-                vpsi(j, m)*cosh(mu(m)*y)/sinh(mu(m)*b))*cos(mu(m)*x)
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = mu(m)*(2.0/a)*(-va*cosh(arg2 - arg1)/sinh(arg2) +&
+                vpsi(j, m)*cosh(arg1)/sinh(arg2))*cos(mu(m)*x)
         end if
     end function
 
@@ -672,11 +683,14 @@ contains
         integer, intent(in) :: j, m
         double precision, intent(in) :: x, y, vd
         double precision :: r
+        double precision :: arg1, arg2
 
         if (m == 0) then
             r = vd*y/(a*b)
         else
-            r = (2.0/a)*(vd*sinh(mu(m)*y)/sinh(mu(m)*b))*cos(mu(m)*x)
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = (2.0/a)*(vd*sinh(arg1)/sinh(arg2))*cos(mu(m)*x)
         end if
     end function
 
@@ -684,11 +698,14 @@ contains
         integer, intent(in) :: j, m
         double precision, intent(in) :: x, y, vd
         double precision :: r
+        double precision :: arg1, arg2
 
         if (m == 0) then
             r = 0.0
         else
-            r = - mu(m)*(2.0/a)*(vd*sinh(mu(m)*y)/sinh(mu(m)*b))*sin(mu(m)*x)
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = - mu(m)*(2.0/a)*(vd*sinh(arg1)/sinh(arg2))*sin(mu(m)*x)
         end if
     end function
 
@@ -696,11 +713,14 @@ contains
         integer, intent(in) :: j, m
         double precision, intent(in) :: x, y, vd
         double precision :: r
+        double precision :: arg1, arg2
 
         if (m == 0) then
             r = vd/(a*b)
         else
-            r = mu(m)*(2.0/a)*(vd*cosh(mu(m)*y)/sinh(mu(m)*b))*cos(mu(m)*x)
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = mu(m)*(2.0/a)*(vd*cosh(arg1)/sinh(arg2))*cos(mu(m)*x)
         end if
     end function
 
@@ -708,12 +728,15 @@ contains
         integer, intent(in) :: j, m
         double precision, intent(in) :: x, y, ve
         double precision :: r
+        double precision :: arg1, arg2
 
         if (m == 0) then
             r = (ve*(b - y) + vphi(j, 0)*y)/(a*b)
         else
-            r = (2.0/a)*(ve*sinh(mu(m)*(b - y))/sinh(mu(m)*b) +&
-                vphi(j, m)*sinh(mu(m)*y)/sinh(mu(m)*b))*cos(mu(m)*x)
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = (2.0/a)*(ve*sinh(arg2 - arg1)/sinh(arg2) +&
+                vphi(j, m)*sinh(arg1)/sinh(arg2))*cos(mu(m)*x)
         end if
     end function
 
@@ -721,12 +744,15 @@ contains
         integer, intent(in) :: j, m
         double precision, intent(in) :: x, y, ve
         double precision :: r
+        double precision :: arg1, arg2
 
         if (m == 0) then
             r = 0.0
         else
-            r = - mu(m)*(2.0/a)*(ve*sinh(mu(m)*(b - y))/sinh(mu(m)*b) +&
-                vphi(j, m)*sinh(mu(m)*y)/sinh(mu(m)*b))*sin(mu(m)*x)
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = - mu(m)*(2.0/a)*(ve*sinh(arg2 - arg1)/sinh(arg2) +&
+                vphi(j, m)*sinh(arg1)/sinh(arg2))*sin(mu(m)*x)
         end if
     end function
 
@@ -734,12 +760,15 @@ contains
         integer, intent(in) :: j, m
         double precision, intent(in) :: x, y, ve
         double precision :: r
+        double precision :: arg1, arg2
 
         if (m == 0) then
             r = (vpsi(j, 0) - ve)/(a*b)
         else
-            r = mu(m)*(2.0/a)*(-ve*cosh(mu(m)*(b - y))/sinh(mu(m)*b) + &
-                vphi(j, m)*cosh(mu(m)*y)/sinh(mu(m)*b))*cos(mu(m)*x)
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = mu(m)*(2.0/a)*(-ve*cosh(arg2 - arg1)/sinh(arg2) + &
+                vphi(j, m)*cosh(arg1)/sinh(arg2))*cos(mu(m)*x)
         end if
     end function
 
@@ -934,12 +963,16 @@ contains
         double precision, intent(in) :: x
         double precision :: r
         procedure(w_proc_t), pointer :: w
+        double precision :: y, arg1, arg2
 
         call c_f_procpointer(wlist(interface_idx), w)
+        y = w(x)
         if (j == 0) then
-            r = (b - w(x)) / b
+            r = (b - y) / b
         else
-            r = 2.0 * (sinh(mu(j) * (b - w(x))) / sinh(mu(j) * b)) * cos(mu(j)*x)
+            arg1 = mu(j)*y
+            arg2 = mu(j)*b
+            r = 2.0 * (sinh(arg2 - arg1) / sinh(arg2)) * cos(mu(j)*x)
         end if
     end function
 
@@ -948,12 +981,16 @@ contains
         double precision, intent(in) :: x
         double precision :: r
         procedure(w_proc_t), pointer :: w
+        double precision :: y, arg1, arg2
 
         call c_f_procpointer(wlist(interface_idx), w)
+        y = w(x)
         if (j == 0) then
-            r = - w(x) / b
+            r = - y / b
         else
-            r = -2.0 * (sinh(mu(j) * w(x)) / sinh(mu(j) * b)) * cos(mu(j)*x)
+            arg1 = mu(j)*y
+            arg2 = mu(j)*b
+            r = -2.0 * (sinh(arg1) / sinh(arg2)) * cos(mu(j)*x)
         end if
     end function
 
@@ -963,12 +1000,16 @@ contains
         double precision :: r
         procedure(w_proc_t), pointer :: w
         integer :: m
+        double precision :: y, arg1, arg2
 
         call c_f_procpointer(wlist(interface_idx), w)
 
-        r = -vpsi(j, 0)*w(x)/b
+        y = w(x)
+        r = -vpsi(j, 0)*y/b
         do m = 1, mmax_F
-            r = r - 2.0*vpsi(j, m)* (sinh(mu(m) * w(x)) / sinh(mu(m) * b)) * cos(mu(m)*x)
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = r - 2.0*vpsi(j, m)* (sinh(arg1) / sinh(arg2)) * cos(mu(m)*x)
         end do
     end function
 
@@ -979,6 +1020,7 @@ contains
         double precision :: r
         procedure(w_proc_t), pointer :: w
         procedure(dw_proc_t), pointer :: dw
+        double precision :: y, arg1, arg2
 
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
@@ -986,8 +1028,11 @@ contains
         if (j == 0) then
             r = -k1 / b
         else
-            r = -2.0 * k1 * mu(j)*(-dw(x) * (sinh(mu(j) * (b - w(x))) / sinh(mu(j) * b)) * sin(mu(j)*x) + &
-                (cosh(mu(j) * (b - w(x))) / sinh(mu(j) * b)) * cos(mu(j)*x))
+            y = w(x)
+            arg1 = mu(j)*y
+            arg2 = mu(j)*b
+            r = -2.0 * k1 * mu(j)*(-dw(x) * (sinh(arg2 - arg1) / sinh(arg2)) * sin(mu(j)*x) + &
+                (cosh(arg2 - arg1) / sinh(arg2)) * cos(mu(j)*x))
         end if
     end function
 
@@ -998,6 +1043,7 @@ contains
         double precision :: r
         procedure(w_proc_t), pointer :: w
         procedure(dw_proc_t), pointer :: dw
+        double precision :: y, arg1, arg2
 
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
@@ -1005,8 +1051,11 @@ contains
         if (j == 0) then
             r = -k2 / b
         else
-            r = - 2.0 * k2 * mu(j) * (dw(x) * (sinh(mu(j) * w(x)) / sinh(mu(j) * b)) * sin(mu(j)*x) + &
-                (cosh(mu(j) * w(x)) / sinh(mu(j) * b)) * cos(mu(j)*x))
+            y = w(x)
+            arg1 = mu(j)*y
+            arg2 = mu(j)*b
+            r = - 2.0 * k2 * mu(j) * (dw(x) * (sinh(arg1) / sinh(arg2)) * sin(mu(j)*x) + &
+                (cosh(arg1) / sinh(arg2)) * cos(mu(j)*x))
         end if
     end function
 
@@ -1017,14 +1066,18 @@ contains
         procedure(w_proc_t), pointer :: w
         procedure(dw_proc_t), pointer :: dw
         integer :: m
+        double precision :: y, arg1, arg2
 
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
 
         r = -vpsi(j, 0) * k1 / b
+        y = w(x)
         do m = 1, mmax_F
-            r = r - 2.0 * vpsi(j, m) * k1 * mu(j) * (dw(x) * (sinh(mu(m) * w(x)) / sinh(mu(m) * b)) * sin(mu(m)*x) + &
-                (cosh(mu(m) * w(x)) / sinh(mu(m) * b)) * cos(mu(m)*x))
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = r - 2.0 * vpsi(j, m) * k1 * mu(j) * (dw(x) * (sinh(arg1) / sinh(arg2)) * sin(mu(m)*x) + &
+                (cosh(arg1) / sinh(arg2)) * cos(mu(m)*x))
         end do
     end function
 
@@ -1034,6 +1087,7 @@ contains
         double precision :: r
         procedure(w_proc_t), pointer :: w
         procedure(dw_proc_t), pointer :: dw
+        double precision :: y, arg1, arg2
 
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
@@ -1041,8 +1095,11 @@ contains
         if (j == 0) then
             r = -1.0 / b
         else
-            r = -2.0 * mu(j)*(-dw(x) * (sinh(mu(j) * (b - w(x))) / sinh(mu(j) * b)) * sin(mu(j)*x) + &
-                (cosh(mu(j) * (b - w(x))) / sinh(mu(j) * b)) * cos(mu(j)*x))
+            y = w(x)
+            arg1 = mu(j)*y
+            arg2 = mu(j)*b
+            r = -2.0 * mu(j)*(-dw(x) * (sinh(arg2 - arg1) / sinh(arg2)) * sin(mu(j)*x) + &
+                (cosh(arg2 - arg1) / sinh(arg2)) * cos(mu(j)*x))
         end if
     end function
 
@@ -1053,14 +1110,18 @@ contains
         procedure(w_proc_t), pointer :: w
         procedure(dw_proc_t), pointer :: dw
         integer :: m
+        double precision :: y, arg1, arg2
 
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
 
+        y = w(x)
         r = -vphi(j, 0)/ b
         do m = 1, mmax_G
-            r = r - 2.0 * vphi(j, m) * mu(j) * (dw(x) * (sinh(mu(m) * w(x)) / sinh(mu(m) * b)) * sin(mu(m)*x) + &
-                (cosh(mu(m) * w(x)) / sinh(mu(m) * b)) * cos(mu(m)*x))
+            arg1 = mu(m)*y
+            arg2 = mu(m)*b
+            r = r - 2.0 * vphi(j, m) * mu(j) * (dw(x) * (sinh(arg1) / sinh(arg2)) * sin(mu(m)*x) + &
+                (cosh(arg1) / sinh(arg2)) * cos(mu(m)*x))
         end do
     end function
 end module reciprocity_functions_module

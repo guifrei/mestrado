@@ -162,6 +162,7 @@ Através dessas funções, é possível determinar as funções $\psi_j(x)$ e $\
 
 
 %%%%%TODO
+\newpage
 \begin{align}
 \beta_j(x) = \frac{k_1}{\sqrt{1 + w'(x)^2}}\sum_{m=0}^M [\mathbb{A}_{j,m}\xi_m(x) - \bar{\psi}_{j, m}\omega_m(x)]
 \end{align}
@@ -247,6 +248,13 @@ Y(x) \approx \sum_{n=0}^M y_n \cos \mu_n(x)
 
 \begin{align}
 \frac{1}{\tanh z} = \frac{e^z + e^{-z}}{e^z - e^{-z}} = \frac{1 + e^{-2z}}{1 - e^{-2z}} \approx 1
+\end{align}
+
+\begin{align}
+\frac{\sinh z_1}{\sinh z_2} = \frac{e^{z_1} - e^{-z_1}}{e^{z_2} - e^{-z_2}}
+ = \frac{e^{z_1-z_2} - e^{-z_1-z_2}}{1 - e^{-2z_2}}
+  = \frac{e^{-(z_2-z_1)} - e^{-(z_2+z_1)}}{1 - e^{-2z_2}}
+  \approx e^{-(z_2-z_1)}
 \end{align}
 
 Aproximação por mínimos quadrados:

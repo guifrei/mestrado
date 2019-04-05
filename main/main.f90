@@ -8,17 +8,16 @@ program main
     use estimated_h_module
     implicit none
 
-    integer :: interface_idx, condutance_idx, k, j, nmax, stdev_idx, n_delta_temperatura, n_fluxo_calor
     procedure(h_proc_t), pointer :: h
     procedure(w_proc_t), pointer :: w
     procedure(dw_proc_t), pointer :: dw
-    double precision :: x, stdev, dx, desv, y1, y2, norma, dnorma, norma_acc, rms, norma_delta_temperatura, norma_fluxo_calor
-    character(len = 2) :: str_idx, str_cdx, str_N, str_N_prev, str_stdev, str_N_delta_temperatura, str_N_fluxo_calor
-    integer :: idx, nmax1, nmax2
     double precision, dimension(tnmax, 0: N) :: m_fluxo_calor, m_delta_temperatura
     double precision, dimension(tnmax, 0: (N + 1)**2 - 1) :: m_condutancia_contato
     double precision, dimension(tnmax) :: vx, vy, tcalc
     double precision :: norm
+    character(len = 2) :: str_idx, str_cdx, str_stdev, str_N
+    integer :: interface_idx, condutance_idx, nmax, stdev_idx, j, k, nmax1, nmax2, m
+    double precision :: desv, x, y1, y2, dx, stdev, arg
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -88,19 +87,19 @@ program main
 
     dx = a/dble(tnmax - 1)
 
-    do interface_idx = 1, 3
+    do interface_idx = 3, 3
         write(*, *)'Interface = ', interface_idx
         write(str_idx, '(I2.2)') interface_idx
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
         call calculate_reciprocity_coefficients(interface_idx)
-        do condutance_idx = 1, 3
+
+        do condutance_idx = 3, 3
             write(*, *)'    Condutance = ', interface_idx
             write(str_cdx, '(I2.2)') condutance_idx
             call c_f_procpointer(hlist(condutance_idx), h)
             call calculate_temperature_coefficients(interface_idx, condutance_idx, h)
             do stdev_idx = 0, 2
-                write(*, *)'        Stdev = ', stdev
                 if (stdev_idx == 0) then
                     str_stdev = '00'
                     stdev = 0.0
@@ -111,6 +110,7 @@ program main
                     str_stdev = '05'
                     stdev = 0.3882
                 end if
+!                write(*, *)'        Stdev = ', stdev
                 write(*, *)'Interface = ', interface_idx, ', conductance = ', condutance_idx, ', stdev = ', stdev
 
                 !    Geracao do arquivo de comparacao de temperaturas medidas
@@ -139,6 +139,14 @@ program main
                 m_fluxo_calor = 0.0
                 m_delta_temperatura = 0.0
                 do nmax = 0, N
+                    write(*, *)'N = ', nmax
+                    write(str_N, '(I2.2)') nmax
+                    open(unit = 4, file = '/home/cx3d/mestrado/' // &
+                        'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_'//str_cdx// &
+                        '_stdev_' // str_stdev // '_N_' // str_N // '.dat')
+                    open(unit = 5, file = '/home/cx3d/mestrado/' // &
+                        'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_'//str_cdx// &
+                        '_stdev_' // str_stdev // '_N_' // str_N // '.dat')
                     do j = 1, tnmax
                         x = vx(j)
                         if (nmax == 0) then
@@ -150,28 +158,37 @@ program main
                             m_delta_temperatura(j, nmax) = m_delta_temperatura(j, nmax - 1) + &
                                 parcela_delta_temperatura(x, nmax, interface_idx)
                         end if
+                        write(4, *)x, m_delta_temperatura(j, nmax)
+                        write(5, *)x, m_fluxo_calor(j, nmax)
                     end do
+                    close(5)
+                    close(4)
                 end do
 
-                write(*, *)'Calculating conductances...'
-                do nmax = 0, (N + 1)**2 - 1
-                    nmax1 = nmax/(N + 1)
-                    nmax2 = mod(nmax, N + 1)
-                    m_condutancia_contato(:, nmax) = m_fluxo_calor(:, nmax1)/m_delta_temperatura(:, nmax2)
-
-                    ! Resolvendo o problema direto
-                    write(*, *)'Spline interpolation...'
-                    call spline_interpolation_hest(vx, m_condutancia_contato(:, nmax))
-                    write(*, *)'Direct problem solving...'
-                    call calculate_temperature_coefficients(interface_idx, condutance_idx, hest, .false.)
-                    write(*, *)'Temperature calculation...'
-                    do k = 1, tnmax
-                        tcalc(k) = t1(vx(k), b)
-                    end do
-                    write(*, *)'Norm calculation...'
-                    norm = norm2(vy - tcalc)
-                    write(*, *)nmax1, nmax2, norm
+                do j = 2, N
+                write(*, *)j, (dble(j)/dble(j-1))*dabs(vvY(j)/vvY(j - 1)) !dabs(parcela_fluxo_calor(a/2.0, j, interface_idx)/parcela_fluxo_calor(a/2.0, j - 1, interface_idx))
                 end do
+
+
+!                write(*, *)'Calculating conductances...'
+!                do nmax = 0, (N + 1)**2 - 1
+!                    nmax1 = nmax/(N + 1)
+!                    nmax2 = mod(nmax, N + 1)
+!                    m_condutancia_contato(:, nmax) = m_fluxo_calor(:, nmax1)/m_delta_temperatura(:, nmax2)
+!
+!                    ! Resolvendo o problema direto
+!                    !                    write(*, *)'Spline interpolation...'
+!                    call spline_interpolation_hest(vx, m_condutancia_contato(:, nmax))
+!                    !                    write(*, *)'Direct problem solving...'
+!                    call calculate_temperature_coefficients(interface_idx, condutance_idx, hest, .false.)
+!                    !                    write(*, *)'Temperature calculation...'
+!                    do k = 1, tnmax
+!                        tcalc(k) = t1(vx(k), b)
+!                    end do
+!                    write(*, *)'Norm calculation...'
+!                    norm = norm2(vy - tcalc)
+!                    write(*, *)nmax1, nmax2, norm
+!                end do
             end do
         end do
     end do
