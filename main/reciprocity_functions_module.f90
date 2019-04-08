@@ -52,30 +52,37 @@ contains
         end if
     end subroutine
 
-    subroutine integrate_synthetic_temperatures(vx, sample_y)
-        integer :: k, j
-        double precision, dimension(tnmax), intent(in) :: vx
-        double precision, dimension(tnmax), intent(in) :: sample_y
-        double precision, dimension(tnmax) :: vy
+    subroutine integrate_synthetic_temperatures(vx, sample_y, sz)
+        integer, intent(in) :: sz
+        double precision, dimension(sz), intent(in) :: vx
+        double precision, dimension(sz), intent(in) :: sample_y
+        double precision, dimension(sz) :: vy
         integer :: nn, ier
-        double precision, dimension(tnmax) :: w
+        double precision, dimension(sz) :: w
         double precision :: s, fp
         double precision, dimension(0: mmax_phi) :: integrals_Y
+        integer :: k, j
 
         integer, parameter :: iopt = 0
         integer, parameter :: ord = 5
-        integer, parameter :: nest = tnmax+ord+1
-        integer, parameter :: lwrk = (tnmax*(ord+1)+nest*(7+3*ord))
-        integer, parameter :: lwrk_int = tnmax + ord + 1
-        double precision, dimension(nest) :: t, c
-        integer, dimension(nest) :: iwrk
-        double precision, dimension(lwrk) :: wrk
-        double precision, dimension(lwrk_int) :: wrk_int
+        integer :: nest
+        integer :: lwrk
+        integer :: lwrk_int
+        double precision, dimension(:), allocatable :: t, c
+        integer, dimension(:), allocatable :: iwrk
+        double precision, dimension(:), allocatable :: wrk
+        double precision, dimension(:), allocatable :: wrk_int
+
+        nest = sz+ord+1
+        lwrk = (sz*(ord+1)+nest*(7+3*ord))
+        lwrk_int = sz + ord + 1
 
         w = 1.0
 
+        allocate(t(nest), c(nest), iwrk(nest), wrk(lwrk), wrk_int(lwrk_int))
+
         do k = 0, mmax_phi
-            do j = 1, tnmax
+            do j = 1, sz
                 vy(j) = sample_y(j)*cos(mu(k)*vx(j))
             end do
 
@@ -86,7 +93,7 @@ contains
                 t(j+ord+1)=a
             end do
 
-            call curfit(iopt,tnmax,vx,vy,w,0.0D0,a,ord,s,nest,nn,t,c,fp, &
+            call curfit(iopt,sz,vx,vy,w,0.0D0,a,ord,s,nest,nn,t,c,fp, &
                 wrk,lwrk,iwrk,ier)
             if (ier > 0) then
                 write(*, *)'Error in curfit. Ier = ', ier
@@ -96,7 +103,9 @@ contains
             integrals_Y(k) = splint(t,nn,c,ord,0.0D0,a,wrk_int)
         end do
         vvY(0) = integrals_Y(0)/a
-        vvY(1:nn - 1) = integrals_Y(1:nn - 1)*2.0/a
+        vvY(1:mmax_phi) = integrals_Y(1:mmax_phi)*2.0/a
+
+        deallocate(t, c, iwrk, wrk, wrk_int)
     end subroutine
 
     subroutine calculate_integrals_Y(interface_idx, condutance_idx, stdev_idx)

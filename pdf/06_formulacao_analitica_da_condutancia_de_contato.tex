@@ -249,7 +249,48 @@ Y(x) \approx \sum_{n=0}^M y_n \cos \mu_n(x)
 %
 & \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{\displaystyle \frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b}}{1 - e^{-2\mu_{m+1} b}} - \frac{\bar{\psi}_{j, m+1}(1 + e^{-2\mu_{m+1} b})}{1 - e^{-2\mu_{m+1} b}}}{\displaystyle \frac{2\mathbb{A}_{j,m}e^{-\mu_m b}}{1 - e^{-2\mu_m b}} - \frac{\bar{\psi}_{j, m}(1 + e^{-2\mu_m b})}{1 - e^{-2\mu_m b}}} = \nonumber \\
 %
-& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{1 - e^{-2\mu_m b}}{1 - e^{-2\mu_{m+1} b}}\frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b} - \bar{\psi}_{j, m+1}(1 + e^{-2\mu_{m+1} b})}{2\mathbb{A}_{j,m}e^{-\mu_m b} - \bar{\psi}_{j, m}(1 + e^{-2\mu_m b})} = \nonumber \\
+& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{1 - e^{-2\mu_m b}}{1 - e^{-2\mu_{m+1} b}}\frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b} - \bar{\psi}_{j, m+1}(1 + e^{-2\mu_{m+1} b})}{2\mathbb{A}_{j,m}e^{-\mu_m b} - \bar{\psi}_{j, m}(1 + e^{-2\mu_m b})} \approx \nonumber \\
+& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b} - \bar{\psi}_{j, m+1}}{2\mathbb{A}_{j,m}e^{-\mu_m b} - \bar{\psi}_{j, m}}
+\end{align}
+
+\begin{align}
+& \int_0^a \tilde{Y}(x) \cos\mu_m x dx = \int_0^a Y(x) \cos\mu_m x dx + \sigma\int_0^a \epsilon(x) \cos\mu_m x dx \nonumber \\
+& \therefore \frac{\tilde{y}_m a}{2} = \frac{y_m a}{2} + \sigma\int_0^a \epsilon(x) \cos\mu_m x dx\nonumber \\
+& \therefore \frac{\tilde{y}_m a}{2\sigma} = \frac{y_m a}{2\sigma} + \int_0^a \epsilon(x) \cos\mu_m x dx\nonumber \\
+& \therefore \abs{\frac{\tilde{y}_m a}{2\sigma}} \le \abs{\frac{y_m a}{2\sigma}} + \abs{\int_0^a \epsilon(x) \cos\mu_m x dx} \nonumber \\
+& \Rightarrow \abs{\frac{\tilde{y}_m a}{2\sigma}} - \abs{\frac{y_m a}{2\sigma}} \le \abs{\int_0^a \epsilon(x) \cos\mu_m x dx}
+\end{align}
+
+Cauchy-Schwartz:
+\begin{align}
+\left[\int_0^a \epsilon(x) \cos\mu_m x dx\right]^2 \le \int_0^a \epsilon(x)^2 dx \int_0^a(\cos\mu_m x)^2 dx
+\end{align}
+
+Mas
+\begin{align}
+\int_0^a(\cos\mu_m x)^2 dx = \frac{a}{2}
+\end{align}
+
+Logo:
+\begin{align}
+& \left[\int_0^a \epsilon(x) \cos\mu_m x dx\right]^2 \le \frac{a}{2}\int_0^a \epsilon(x)^2 dx \nonumber \\
+& \Rightarrow \abs{\int_0^a \epsilon(x) \cos\mu_m x dx} \le \sqrt{\frac{a}{2}}\sqrt{\int_0^a \epsilon(x)^2 dx}
+\end{align}
+
+Assim:
+\begin{align}
+& \abs{\frac{\tilde{y}_m a}{2\sigma}} - \abs{\frac{y_m a}{2\sigma}} \le \sqrt{\frac{a}{2}}\sqrt{\int_0^a \epsilon(x)^2 dx} \nonumber \\
+& \therefore \abs{\tilde{y}_m} - \abs{y_m} \le \sigma\sqrt{\frac{2}{a}}\sqrt{\int_0^a \epsilon(x)^2 dx}
+\end{align}
+
+Mas (Qui-quadrado):
+\begin{align}
+\frac{1}{a}\int_0^a \epsilon(x)^2 dx \approx 1 \Rightarrow \int_0^a \epsilon(x)^2 dx \approx a
+\end{align}
+
+Logo:
+\begin{align}
+\abs{\tilde{y}_m} - \abs{y_m} \le \sigma\sqrt{2a}
 \end{align}
 
 \begin{align}
