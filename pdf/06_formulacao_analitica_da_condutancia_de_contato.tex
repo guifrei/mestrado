@@ -243,6 +243,16 @@ Y(x) \approx \sum_{n=0}^M y_n \cos \mu_n(x)
 \end{align}
 
 \begin{align}
+& \frac{\displaystyle \mu_{m+1} \left(\frac{\mathbb{A}_{j,{m+1}}}{\sinh\mu_{m+1} b} - \frac{\bar{\psi}_{j, {m+1}}}{\tanh\mu_{m+1} b}\right)y_{m+1}}{\displaystyle \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)y_m} = \nonumber \\
+& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{\displaystyle  \frac{\mathbb{A}_{j,{m+1}}}{\sinh\mu_{m+1} b} - \frac{\bar{\psi}_{j, {m+1}}}{\tanh\mu_{m+1} b}}{\displaystyle \frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}} = \nonumber \\
+& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{\displaystyle \frac{2\mathbb{A}_{j,m+1}}{e^{\mu_{m+1} b} - e^{-\mu_{m+1} b}} - \frac{\bar{\psi}_{j, m+1}(e^{\mu_{m+1} b} + e^{-\mu_{m+1} b})}{e^{\mu_{m+1} b} - e^{-\mu_{m+1} b}}}{\displaystyle \frac{2\mathbb{A}_{j,m}}{e^{\mu_m b} - e^{-\mu_m b}} - \frac{\bar{\psi}_{j, m}(e^{\mu_m b} + e^{-\mu_m b})}{e^{\mu_m b} - e^{-\mu_m b}}} = \nonumber \\
+%
+& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{\displaystyle \frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b}}{1 - e^{-2\mu_{m+1} b}} - \frac{\bar{\psi}_{j, m+1}(1 + e^{-2\mu_{m+1} b})}{1 - e^{-2\mu_{m+1} b}}}{\displaystyle \frac{2\mathbb{A}_{j,m}e^{-\mu_m b}}{1 - e^{-2\mu_m b}} - \frac{\bar{\psi}_{j, m}(1 + e^{-2\mu_m b})}{1 - e^{-2\mu_m b}}} = \nonumber \\
+%
+& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{1 - e^{-2\mu_m b}}{1 - e^{-2\mu_{m+1} b}}\frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b} - \bar{\psi}_{j, m+1}(1 + e^{-2\mu_{m+1} b})}{2\mathbb{A}_{j,m}e^{-\mu_m b} - \bar{\psi}_{j, m}(1 + e^{-2\mu_m b})} = \nonumber \\
+\end{align}
+
+\begin{align}
 \frac{1}{\sinh z} = \frac{2}{e^z - e^{-z}} = \frac{2e^{-z}}{1 - e^{-2z}} \approx 2e^{-z}
 \end{align}
 
