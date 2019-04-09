@@ -18,8 +18,8 @@ module interfaces_module
         end function
     end interface
 
-    type(c_funptr), dimension(13) :: wlist
-    type(c_funptr), dimension(13) :: dwlist
+    type(c_funptr), dimension(14) :: wlist
+    type(c_funptr), dimension(14) :: dwlist
 
 contains
     function w1(x) result(r)
@@ -276,4 +276,28 @@ contains
 
         r = (3*b/4-b/2)*sigmoid_d(x-a/4)+(b/2-3*b/4)*sigmoid_d(x-a/2)+ (b/4-b/2)*sigmoid_d(x-3*a/4)
     end function
+
+    function w14(x) result(r)
+        double precision, intent(in) :: x
+        double precision :: r
+
+        if (x <= a/4.0) then
+            r = b/2.0
+        else if (x <= a/2.0) then
+            r = 3.0*b/4.0
+        else if (x <= 3.0*a/4.0) then
+            r = b/2.0
+        else
+            r = b/4.0
+        end if
+
+    end function
+
+    function dw14(x) result(r)
+        double precision, intent(in) :: x
+        double precision :: r
+
+        r = 0.0
+    end function
+
 end module interfaces_module

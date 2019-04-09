@@ -36,6 +36,7 @@ program main
     wlist(11) = c_funloc(w11)
     wlist(12) = c_funloc(w12)
     wlist(13) = c_funloc(w13)
+    wlist(14) = c_funloc(w14)
 
     dwlist(1) = c_funloc(dw1)
     dwlist(2) = c_funloc(dw2)
@@ -50,6 +51,7 @@ program main
     dwlist(11) = c_funloc(dw11)
     dwlist(12) = c_funloc(dw12)
     dwlist(13) = c_funloc(dw13)
+    dwlist(14) = c_funloc(dw14)
 
     hlist(1) = c_funloc(h1)
     hlist(2) = c_funloc(h2)
@@ -91,19 +93,19 @@ program main
 
     dx = a/dble(tnmax - 1)
 
-    do interface_idx = 3, 3
+    do interface_idx = 13, 13 !2, 2
         write(*, *)'Interface = ', interface_idx
         write(str_idx, '(I2.2)') interface_idx
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
         call calculate_reciprocity_coefficients(interface_idx)
 
-        do condutance_idx = 3, 3
+        do condutance_idx = 1, 1
             write(*, *)'    Condutance = ', interface_idx
             write(str_cdx, '(I2.2)') condutance_idx
             call c_f_procpointer(hlist(condutance_idx), h)
             call calculate_temperature_coefficients(interface_idx, condutance_idx, h)
-            do stdev_idx = 2, 2
+            do stdev_idx = 0, 0
                 if (stdev_idx == 0) then
                     str_stdev = '00'
                     stdev = 0.0
@@ -159,7 +161,7 @@ program main
 
                     if (N <= nlim) nlim = N
 
-                    do nmax = 0, nlim
+                    do nmax = 0, N
                         write(str_N, '(I2.2)') nmax
                         open(unit = 4, file = '/home/cx3d/mestrado/' // &
                             'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_'//str_cdx// &
@@ -189,14 +191,22 @@ program main
                     write(*, *)'ndiv_idx = ', ndiv_idx
                 end do
 
-                do ndiv_idx = 2, szdiv
-                    write(*, '(I10)', advance='no') tnmax/ndiv(ndiv_idx) + mod(tnmax, ndiv(ndiv_idx))
-                    do nmax = 0, nlim
+                do nmax = 0, N - 1
+                    write(*, '(I10)', advance='no') nmax
+                    do ndiv_idx = 2, szdiv
                         norm = norm2(m_delta_temperatura(:, ndiv_idx, nmax) - &
                             m_delta_temperatura(:, ndiv_idx - 1, nmax))
+                        write(*, '(F30.6)', advance='no') norm/norm2(m_delta_temperatura(:, ndiv_idx - 1, nmax))
+                    end do
+                    write(*, *)
+                end do
+
+                do nmax = 0, N - 1
+                    write(*, '(I10)', advance='no') nmax
+                    do ndiv_idx = 2, szdiv
                         norm = norm2(m_fluxo_calor(:, ndiv_idx, nmax) - &
                             m_fluxo_calor(:, ndiv_idx - 1, nmax))
-                        write(*, '(F30.6)', advance='no') norm/norm2(m_fluxo_calor(:, ndiv_idx, nmax))
+                        write(*, '(F30.6)', advance='no') norm/norm2(m_fluxo_calor(:, ndiv_idx - 1, nmax))
                     end do
                     write(*, *)
                 end do
