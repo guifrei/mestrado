@@ -19,6 +19,9 @@ module constants_module
     double precision, dimension(*), parameter :: pts = [0.0D0, a/4.0, a/2.0, 3.0*a/4.0, a]
     !        double precision, dimension(*), parameter :: pts = [0.0D0, a]
 
+    integer, parameter :: szdiv = 12
+    integer, dimension(szdiv), parameter :: ndiv = [24, 20, 15, 10, 12, 8, 6, 5, 4, 3, 2, 1]
+
 
     double precision, parameter :: mp = 5.0
     double precision, parameter :: b1 = 0.012

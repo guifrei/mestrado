@@ -11,8 +11,7 @@ program main
     procedure(h_proc_t), pointer :: h
     procedure(w_proc_t), pointer :: w
     procedure(dw_proc_t), pointer :: dw
-    double precision, dimension(tnmax, 0: N) :: m_fluxo_calor, m_delta_temperatura
-    double precision, dimension(tnmax, 0: N) :: m_fluxo_calor_prev, m_delta_temperatura_prev
+    double precision, dimension(tnmax, szdiv, 0: N), target :: m_fluxo_calor, m_delta_temperatura
     double precision :: c_fluxo_calor, c_delta_temperatura
     double precision, dimension(tnmax, 0: (N + 1)**2 - 1) :: m_condutancia_contato
     double precision, dimension(tnmax) :: vx, vy, tcalc
@@ -20,7 +19,9 @@ program main
     character(len = 2) :: str_idx, str_cdx, str_stdev, str_N
     integer :: interface_idx, condutance_idx, nmax, stdev_idx, j, k, nmax1, nmax2, m, nlim, ndiv_idx
     double precision :: desv, x, y, y1, y2, dx, stdev, arg
-    integer, dimension(12), parameter :: ndiv = [24, 20, 15, 10, 12, 8, 6, 5, 4, 3, 2, 1]
+
+    double precision, pointer :: tmp
+
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -146,15 +147,18 @@ program main
 
                 call add_error(vy, stdev)
 
-                do ndiv_idx = 1, 12
+                tmp => m_fluxo_calor(1, 1, 0)
+
+                m_fluxo_calor = 0.0
+                m_delta_temperatura = 0.0
+
+                do ndiv_idx = 1, szdiv
                     nlim = tnmax/ndiv(ndiv_idx) + mod(tnmax, ndiv(ndiv_idx))
 
                     call integrate_synthetic_temperatures(vx(1::ndiv(ndiv_idx)), vy(1::ndiv(ndiv_idx)), nlim)
 
                     if (N <= nlim) nlim = N
 
-                    m_fluxo_calor = 0.0
-                    m_delta_temperatura = 0.0
                     do nmax = 0, nlim
                         write(str_N, '(I2.2)') nmax
                         open(unit = 4, file = '/home/cx3d/mestrado/' // &
@@ -169,52 +173,34 @@ program main
                                 c_fluxo_calor = parcela_fluxo_calor(x, nmax, interface_idx)
                                 c_delta_temperatura = parcela_delta_temperatura(x, nmax, interface_idx)
                             else
-                                c_fluxo_calor = m_fluxo_calor(j, nmax - 1) +&
+                                c_fluxo_calor = m_fluxo_calor(j, ndiv_idx, nmax - 1) +&
                                     parcela_fluxo_calor(x, nmax, interface_idx)
-                                c_delta_temperatura = m_delta_temperatura(j, nmax - 1) +&
+                                c_delta_temperatura = m_delta_temperatura(j, ndiv_idx, nmax - 1) +&
                                     parcela_delta_temperatura(x, nmax, interface_idx)
                             end if
-                            m_fluxo_calor(j, nmax) = c_fluxo_calor
-                            m_delta_temperatura(j, nmax) = c_delta_temperatura
-                            write(4, *)x, m_delta_temperatura(j, nmax)
-                            write(5, *)x, m_fluxo_calor(j, nmax)
+                            m_fluxo_calor(j, ndiv_idx, nmax) = c_fluxo_calor
+                            m_delta_temperatura(j, ndiv_idx, nmax) = c_delta_temperatura
+                            write(4, *)x, m_delta_temperatura(j, ndiv_idx, nmax)
+                            write(5, *)x, m_fluxo_calor(j, ndiv_idx, nmax)
                         end do
                         close(5)
                         close(4)
                     end do
-                    if(ndiv_idx /= 1) then
-                        do nmax = 0, nlim
-                            write(*, *)nmax, norm2(m_delta_temperatura_prev(:, nmax) - m_delta_temperatura(:, nmax)), &
-                            norm2(m_fluxo_calor_prev(:, nmax) - m_fluxo_calor(:, nmax))
-                        end do
-                    end if
-                    m_delta_temperatura_prev = m_delta_temperatura
-                    m_fluxo_calor_prev = m_fluxo_calor
                     write(*, *)'ndiv_idx = ', ndiv_idx
                 end do
 
+                do ndiv_idx = 2, szdiv
+                    write(*, '(I10)', advance='no') tnmax/ndiv(ndiv_idx) + mod(tnmax, ndiv(ndiv_idx))
+                    do nmax = 0, nlim
+                        norm = norm2(m_delta_temperatura(:, ndiv_idx, nmax) - &
+                            m_delta_temperatura(:, ndiv_idx - 1, nmax))
+                        norm = norm2(m_fluxo_calor(:, ndiv_idx, nmax) - &
+                            m_fluxo_calor(:, ndiv_idx - 1, nmax))
+                        write(*, '(F30.6)', advance='no') norm/norm2(m_fluxo_calor(:, ndiv_idx, nmax))
+                    end do
+                    write(*, *)
+                end do
 
-
-
-            !                write(*, *)'Calculating conductances...'
-            !                do nmax = 0, (N + 1)**2 - 1
-            !                    nmax1 = nmax/(N + 1)
-            !                    nmax2 = mod(nmax, N + 1)
-            !                    m_condutancia_contato(:, nmax) = m_fluxo_calor(:, nmax1)/m_delta_temperatura(:, nmax2)
-            !
-            !                    ! Resolvendo o problema direto
-            !                    !                    write(*, *)'Spline interpolation...'
-            !                    call spline_interpolation_hest(vx, m_condutancia_contato(:, nmax))
-            !                    !                    write(*, *)'Direct problem solving...'
-            !                    call calculate_temperature_coefficients(interface_idx, condutance_idx, hest, .false.)
-            !                    !                    write(*, *)'Temperature calculation...'
-            !                    do k = 1, tnmax
-            !                        tcalc(k) = t1(vx(k), b)
-            !                    end do
-            !                    write(*, *)'Norm calculation...'
-            !                    norm = norm2(vy - tcalc)
-            !                    write(*, *)nmax1, nmax2, norm
-            !                end do
             end do
         end do
     end do
