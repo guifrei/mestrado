@@ -18,7 +18,7 @@ program main
     double precision :: norm
     character(len = 2) :: str_idx, str_cdx, str_stdev, str_N
     integer :: interface_idx, condutance_idx, nmax, stdev_idx, j, k, nmax1, nmax2, m, nlim, ndiv_idx
-    double precision :: desv, x, y, y1, y2, dx, stdev, arg
+    double precision :: desv, x, y, y1, y2, dx, stdev, arg, norm_acc
 
     double precision, pointer :: tmp
 
@@ -93,7 +93,7 @@ program main
 
     dx = a/dble(tnmax - 1)
 
-    do interface_idx = 13, 13 !2, 2
+    do interface_idx = 2, 2 !2, 2
         write(*, *)'Interface = ', interface_idx
         write(str_idx, '(I2.2)') interface_idx
         call c_f_procpointer(wlist(interface_idx), w)
@@ -105,7 +105,7 @@ program main
             write(str_cdx, '(I2.2)') condutance_idx
             call c_f_procpointer(hlist(condutance_idx), h)
             call calculate_temperature_coefficients(interface_idx, condutance_idx, h)
-            do stdev_idx = 0, 0
+            do stdev_idx = 2, 2
                 if (stdev_idx == 0) then
                     str_stdev = '00'
                     stdev = 0.0
@@ -191,25 +191,27 @@ program main
                     write(*, *)'ndiv_idx = ', ndiv_idx
                 end do
 
-                do nmax = 0, N - 1
-                    write(*, '(I10)', advance='no') nmax
-                    do ndiv_idx = 2, szdiv
+                do ndiv_idx = 2, szdiv
+                    write(*, '(I10)', advance='no') tnmax/ndiv(ndiv_idx) + mod(tnmax, ndiv(ndiv_idx))
+                    do nmax = 1, N
                         norm = norm2(m_delta_temperatura(:, ndiv_idx, nmax) - &
                             m_delta_temperatura(:, ndiv_idx - 1, nmax))
-                        write(*, '(F30.6)', advance='no') norm/norm2(m_delta_temperatura(:, ndiv_idx - 1, nmax))
+                        !write(*, '(F30.6)', advance='no') norm/norm2(m_delta_temperatura(:, ndiv_idx, nmax))
+                        norm = parcela_delta_temperatura(a/2.0, nmax, interface_idx)
+                        write(*, '(F40.6)', advance='no') dabs(norm)
                     end do
                     write(*, *)
                 end do
 
-                do nmax = 0, N - 1
-                    write(*, '(I10)', advance='no') nmax
-                    do ndiv_idx = 2, szdiv
-                        norm = norm2(m_fluxo_calor(:, ndiv_idx, nmax) - &
-                            m_fluxo_calor(:, ndiv_idx - 1, nmax))
-                        write(*, '(F30.6)', advance='no') norm/norm2(m_fluxo_calor(:, ndiv_idx - 1, nmax))
-                    end do
-                    write(*, *)
-                end do
+            !                do nmax = 0, N - 1
+            !                    write(*, '(I10)', advance='no') nmax
+            !                    do ndiv_idx = 2, szdiv
+            !                        norm = norm2(m_fluxo_calor(:, ndiv_idx, nmax) - &
+            !                            m_fluxo_calor(:, ndiv_idx - 1, nmax))
+            !                        write(*, '(F30.6)', advance='no') norm/norm2(m_fluxo_calor(:, ndiv_idx - 1, nmax))
+            !                    end do
+            !                    write(*, *)
+            !                end do
 
             end do
         end do

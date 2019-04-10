@@ -20,7 +20,7 @@ module constants_module
     !        double precision, dimension(*), parameter :: pts = [0.0D0, a]
 
     integer, parameter :: szdiv = 12
-    integer, dimension(szdiv), parameter :: ndiv = [24, 20, 15, 10, 12, 8, 6, 5, 4, 3, 2, 1]
+    integer, dimension(szdiv), parameter :: ndiv = [24, 20, 15, 12, 10, 8, 6, 5, 4, 3, 2, 1]
 
 
     double precision, parameter :: mp = 5.0
