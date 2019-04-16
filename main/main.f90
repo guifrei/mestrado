@@ -18,7 +18,7 @@ program main
     double precision :: norm
     character(len = 2) :: str_idx, str_cdx, str_stdev, str_N
     integer :: interface_idx, condutance_idx, nmax, stdev_idx, j, k, nmax1, nmax2, m, nlim, ndiv_idx
-    double precision :: desv, x, y, y1, y2, dx, stdev, arg, norm_acc
+    double precision :: desv, x, y, y1, y2, dx, stdev, arg, norm_acc, y1prev, y2prev
 
     double precision, pointer :: tmp
 
@@ -100,12 +100,12 @@ program main
         call c_f_procpointer(dwlist(interface_idx), dw)
         call calculate_reciprocity_coefficients(interface_idx)
 
-        do condutance_idx = 1, 1
+        do condutance_idx = 3, 3
             write(*, *)'    Condutance = ', interface_idx
             write(str_cdx, '(I2.2)') condutance_idx
             call c_f_procpointer(hlist(condutance_idx), h)
             call calculate_temperature_coefficients(interface_idx, condutance_idx, h)
-            do stdev_idx = 2, 2
+            do stdev_idx = 0, 0
                 if (stdev_idx == 0) then
                     str_stdev = '00'
                     stdev = 0.0
@@ -149,6 +149,22 @@ program main
 
                 call add_error(vy, stdev)
 
+                ! TODO
+                nlim = tnmax/ndiv(szdiv) + mod(tnmax, ndiv(szdiv))
+                call integrate_synthetic_temperatures(vx(1::ndiv(szdiv)), vy(1::ndiv(szdiv)), nlim)
+                y1 = dabs(reciprocity_f(0))
+                y2 = dabs(reciprocity_g(0))
+                open(unit=100, file='/home/cx3d/a.txt')
+                do j = 1, N
+                    y1prev = y1
+                    y2prev = y2
+                    y1 = y1 + dabs(reciprocity_f(j))
+                    y2 = y2 + dabs(reciprocity_g(j))
+                    write(100, *)j, y1/y1prev, y2/y2prev
+                end do
+                close(100)
+                ! end TODO
+
                 tmp => m_fluxo_calor(1, 1, 0)
 
                 m_fluxo_calor = 0.0
@@ -158,6 +174,9 @@ program main
                     nlim = tnmax/ndiv(ndiv_idx) + mod(tnmax, ndiv(ndiv_idx))
 
                     call integrate_synthetic_temperatures(vx(1::ndiv(ndiv_idx)), vy(1::ndiv(ndiv_idx)), nlim)
+
+
+
 
                     if (N <= nlim) nlim = N
 
@@ -190,29 +209,6 @@ program main
                     end do
                     write(*, *)'ndiv_idx = ', ndiv_idx
                 end do
-
-                do ndiv_idx = 2, szdiv
-                    write(*, '(I10)', advance='no') tnmax/ndiv(ndiv_idx) + mod(tnmax, ndiv(ndiv_idx))
-                    do nmax = 1, N
-                        norm = norm2(m_delta_temperatura(:, ndiv_idx, nmax) - &
-                            m_delta_temperatura(:, ndiv_idx - 1, nmax))
-                        !write(*, '(F30.6)', advance='no') norm/norm2(m_delta_temperatura(:, ndiv_idx, nmax))
-                        norm = parcela_delta_temperatura(a/2.0, nmax, interface_idx)
-                        write(*, '(F40.6)', advance='no') dabs(norm)
-                    end do
-                    write(*, *)
-                end do
-
-            !                do nmax = 0, N - 1
-            !                    write(*, '(I10)', advance='no') nmax
-            !                    do ndiv_idx = 2, szdiv
-            !                        norm = norm2(m_fluxo_calor(:, ndiv_idx, nmax) - &
-            !                            m_fluxo_calor(:, ndiv_idx - 1, nmax))
-            !                        write(*, '(F30.6)', advance='no') norm/norm2(m_fluxo_calor(:, ndiv_idx - 1, nmax))
-            !                    end do
-            !                    write(*, *)
-            !                end do
-
             end do
         end do
     end do
