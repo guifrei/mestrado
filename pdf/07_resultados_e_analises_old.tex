@@ -129,8 +129,8 @@ Para fins de verificação, as mesmas combinações foram resolvidas numericamen
 		axis lines=left,
 		%		xmin = 0,
 		%		xmax = 0.04,
-		%		ymin = 0.085,
-		%		ymax = 0.105,
+				ymin = 0.085,
+				ymax = 0.105,
 		%		restrict y to domain=-500:2000,
 		scaled x ticks = false,
 		scaled y ticks = false,
@@ -213,27 +213,27 @@ Três níveis de desvio-padrão foram testados: $\sigma = \text{0,0}\celsius$ (c
 %%%%TODO apenas para acelerar a compilação
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{figure}[h!b]
-	\graficostemperatura{1}{1}{a}
-	\graficostemperatura{1}{2}{b}
-	\graficostemperatura{1}{3}{c}
-	\caption{Temperaturas sintéticas ($Y$) ao longo da superfície superior $\Gamma_0$, para os perfis de CTC de 1 a 3, referentes à interface de contato 1: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-	\label{figura_temperaturas_sinteticas_interface_01}
-\end{figure}
-\begin{figure}[h!b]
-	\graficostemperatura{2}{1}{a}
-	\graficostemperatura{2}{2}{b}
-	\graficostemperatura{2}{3}{c}
-	\caption{Temperaturas sintéticas ($Y$) ao longo da superfície superior $\Gamma_0$, para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-	\label{figura_temperaturas_sinteticas_interface_02}
-\end{figure}
-\begin{figure}[h!b]
-	\graficostemperatura{3}{1}{a}
-	\graficostemperatura{3}{2}{b}
-	\graficostemperatura{3}{3}{c}
-	\caption{Temperaturas sintéticas ($Y$) ao longo da superfície superior $\Gamma_0$, para os perfis de CTC de 1 a 3, referentes à interface de contato 3: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-	\label{figura_temperaturas_sinteticas_interface_03}
-\end{figure}
+%\begin{figure}[h!b]
+%	\graficostemperatura{1}{1}{a}
+%	\graficostemperatura{1}{2}{b}
+%	\graficostemperatura{1}{3}{c}
+%	\caption{Temperaturas sintéticas ($Y$) ao longo da superfície superior $\Gamma_0$, para os perfis de CTC de 1 a 3, referentes à interface de contato 1: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	\label{figura_temperaturas_sinteticas_interface_01}
+%\end{figure}
+%\begin{figure}[h!b]
+%	\graficostemperatura{2}{1}{a}
+%	\graficostemperatura{2}{2}{b}
+%	\graficostemperatura{2}{3}{c}
+%	\caption{Temperaturas sintéticas ($Y$) ao longo da superfície superior $\Gamma_0$, para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	\label{figura_temperaturas_sinteticas_interface_02}
+%\end{figure}
+%\begin{figure}[h!b]
+%	\graficostemperatura{3}{1}{a}
+%	\graficostemperatura{3}{2}{b}
+%	\graficostemperatura{3}{3}{c}
+%	\caption{Temperaturas sintéticas ($Y$) ao longo da superfície superior $\Gamma_0$, para os perfis de CTC de 1 a 3, referentes à interface de contato 3: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$, $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+%	\label{figura_temperaturas_sinteticas_interface_03}
+%\end{figure}
 
 \subsection{Código computacional}\label{sobre_o_programa}
 
@@ -275,9 +275,9 @@ Todas as combinações analisadas são, de certo modo, condições ideais, no se
 - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j \label{resultado_2_again}
 \end{align}
 
-Em teoria, quanto maiores fossem os limites dos somatórios $N_1$ e $N_2$, melhores seriam as estimativas fornecidas de salto de temperatura e fluxo de calor. No desenvolvimento deste trabalho, porém, observou-se que esse padrão era seguido até algum número máximo de termos nos somatórios \eqref{resultado_1_again} e \eqref{resultado_2_again}, a partir do qual as estimativas afastavam-se cada vez mais dos valores exatos correspondentes. Ou seja, ao contrário do que normalmente se observa numa série numérica, um incremento na quantidade de parcelas a serem somadas naquelas expressões não implicava obrigatoriamente numa tendência consistente de convergência do somatório para um valor finito. Em outras palavras, os somatórios que representam o salto de temperatura na interface e o fluxo de calor na interface têm comportamento \textit{semi-convergente}.
+Em teoria, quanto maiores fossem os limites dos somatórios $N_1$ e $N_2$, melhores seriam as estimativas fornecidas de salto de temperatura e fluxo de calor. No desenvolvimento deste trabalho, porém, observou-se que esse padrão era seguido até algum número máximo de termos nos somatórios \eqref{resultado_1_again} e \eqref{resultado_2_again}, a partir do qual as estimativas afastavam-se cada vez mais dos valores exatos correspondentes. Ou seja, ao contrário do que normalmente se observa numa série numérica, um incremento na quantidade de parcelas a serem somadas naquelas expressões não implicava obrigatoriamente numa tendência consistente de convergência do somatório para um valor finito.
 
-É necessário, portanto, estabelecer um critério para determinação do número máximo de parcelas nos somatórios que representavam as estimativas. Para levantamento desse número ótimo de termos, \cite{tese_padilha} empregou, como métrica de avaliação da qualidade da estimativa, uma norma baseada nas diferenças entre duas estimativas sucessivas ao longo da superfície $\Gamma$:
+Foi necessário, portanto, estabelecer um critério para determinação do número máximo de parcelas nos somatórios que representavam as estimativas. Para levantamento desse número ótimo de termos, foi adotada neste trabalho a proposta apresentada por \cite{tese_padilha}, que empregou, como métrica de avaliação da qualidade da estimativa, uma norma baseada nas diferenças entre duas estimativas sucessivas ao longo da superfície $\Gamma$:
 
 %Muito embora os resultados numéricos obtidos para as estimativas de CTC em cada um dos casos discutidos nas seções anteriores só sejam apresentados posteriormente neste trabalho, cabe aqui comentar aspectos referentes a uma característica notável do problema inverso de condução de calor estudado, qual seja, o comportamento instável da estimativa do salto de temperatura e do fluxo de calor na interface $\Gamma$ (vide Figura \ref{fig2}) em relação à quantidade de termos $N_1$ e $N_2$ usados nas suas respectivas expansões em somatórios de combinações lineares de funcionais de reciprocidade, deduzidas na seção \ref{secao_sobre_fr}:
 %\begin{align}
@@ -302,17 +302,11 @@ Em teoria, quanto maiores fossem os limites dos somatórios $N_1$ e $N_2$, melho
 \end{align}
 onde $J$ é o número de termos da série para uma determinada estimativa, $p$ corresponde à posição $(x_p, y_p)$ ao longo da interface $\Gamma$ e $N_x$ é o número total de pontos considerados ao longo desta interface.
 
-Outra métrica estabelecida e analisada por \cite{tese_padilha} foi a norma acumulada, definida por:
-\begin{align}
-& \mathbb{N}_{[T_1 - T_2]_\Gamma}(J) = \sum_{j=2}^J \aleph_{[T_1 - T_2]_\Gamma}(j) \label{metrica_norma_acc_1} \\ \nonumber \\
-& \mathbb{N}_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma}(J) = \sum_{j=2}^J \aleph_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma}(j) \label{metrica_norma_acc_2}
-\end{align}
-
-Este trabalho propõe uma forma diferente de se avaliar a semi-convergência das aproximações representadas por \eqref{resultado_1_again} e \eqref{resultado_2_again}. Deve-se observar primeiro que os termos $\Re(F_{1,j})$ e $\Re(G_{1,j})$ têm um comportamento distinto dos termos $\beta_j(x)$ e $\gamma_j(x)$, à medida em que se varia o valor do índice $j$. Sejam, por exemplo, os valores médios $\bar{\beta}_j$ e $\bar{\gamma}_j$, definidos por:
-\begin{align}
-& \bar{\beta}_j = \frac{1}{a}\int_0^a \beta_j(x) dx \\ \nonumber \\
-& \bar{\gamma}_j = \frac{1}{a}\int_0^a \gamma_j(x) dx
-\end{align}
+%\textit{A outra métrica estabelecida por \cite{tese_padilha} foi a norma acumulada, definida por:
+%\begin{align}
+%& \mathbb{N}_{[T_1 - T_2]_\Gamma}(J) = \sum_{j=2}^J \aleph_{[T_1 - T_2]_\Gamma}(j) \label{metrica_norma_acc_1} \\ \nonumber \\
+%& \mathbb{N}_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma}(J) = \sum_{j=2}^J \aleph_{\left[- k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\right]_\Gamma}(j) \label{metrica_norma_acc_2}
+%\end{align}}
 
 Assim, comparando e analisando as métricas expressas nas equações \eqref{metrica_norma_1} a \eqref{metrica_norma_2}, foi possível investigar o comportamento da convergência das séries que representam o salto de temperatura e o fluxo de calor na interface de contato à medida em que se aumentava o número de parcelas nos somatórios. Também foi analisada a relação entre estas métricas e os erros de medição adicionados às temperaturas sintéticas na interface superior do corpo de prova.
 

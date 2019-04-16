@@ -162,161 +162,161 @@ Através dessas funções, é possível determinar as funções $\psi_j(x)$ e $\
 
 
 %%%%%TODO
-\newpage
-\begin{align}
-\beta_j(x) = \frac{k_1}{\sqrt{1 + w'(x)^2}}\sum_{m=0}^M [\mathbb{A}_{j,m}\xi_m(x) - \bar{\psi}_{j, m}\omega_m(x)]
-\end{align}
-
-\begin{align}
-\xi_m(x) = \left\lbrace
-\begin{array}{ll}
-\displaystyle \frac{1}{ab}, & m = 0 \\ \nonumber \\
-\displaystyle \frac{2\mu_m[\cos\mu_m x\cosh\mu_m v(x) - w(x)\sin\mu_m x\sinh\mu_m v(x)]}{a\sinh\mu_m b}, & m \ne 0
-\end{array}
-\right.
-\end{align}
-
-\begin{align}
-\omega_m(x) = \left\lbrace
-\begin{array}{ll}
-\displaystyle \frac{1}{ab}, & m = 0 \\ \nonumber \\
-\displaystyle \frac{2\mu_m[w'(x)\sin\mu_m x\sinh\mu_m w(x) + \cos\mu_m x\cosh\mu_m w(x)]}{a\sinh\mu_m b}, & m \ne 0
-\end{array}
-\right.
-\end{align}
-
-\begin{align}
-\gamma_j(x) = \sum_{m=0}^M [\mathbb{E}_{j,m}\chi_m(x) + \bar{\phi}_{j, m}\lambda_m(x)]
-\end{align} 
-
-\begin{align}
-\chi_m(x) = \left\lbrace
-\begin{array}{ll}
-\displaystyle \frac{b - w(x)}{ab}, & m = 0 \\ \nonumber \\
-\displaystyle \frac{2\sinh\mu_m [b - w(x)]}{a\sinh\mu_m b}, & m \ne 0
-\end{array}
-\right.
-\end{align}
-
-\begin{align}
-\lambda_m(x) = \left\lbrace
-\begin{array}{ll}
-\displaystyle \frac{w(x)}{ab}, & m = 0 \\ \nonumber \\
-\displaystyle \frac{2\sinh\mu_m w(x)}{a\sinh\mu_m b}, & m \ne 0
-\end{array}
-\right.
-\end{align}
-
-\begin{align}
-[T_1 - T_2]_\Gamma & = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \sum_{m=0}^M [\mathbb{A}_{j,m}\xi_m(x) - \bar{\psi}_{j, m}\omega_m(x)] \nonumber \\
-& = k_1 \sum_{m=0}^M \sum_{j=1}^{N_1} \Re(F_{1,j}) [\mathbb{A}_{j,m}\xi_m(x) - \bar{\psi}_{j, m}\omega_m(x)] \nonumber \\
-\end{align}
-
-\begin{align}
-\langle \beta_j, \beta_k\rangle = k_1^2 \sum_{m=0}^M \sum_{n=0}^M \int_0^a \frac{[\mathbb{A}_{j,m}\xi_m(x) - \bar{\psi}_{j, m}\omega_m(x)][\mathbb{A}_{k,n}\xi_n(x) - \bar{\psi}_{k, n}\omega_n(x)]}{\sqrt{1 + w'(x)^2}} dx
-\end{align}
-
-\newpage
-
-%%%%%%%%%%%%TODO
-\begin{align}
-Y(x) \approx \sum_{n=0}^M y_n \cos \mu_n(x)
-\end{align}
-
-\begin{align}
-& \int_0^a Y(x) dx = y_0 a \nonumber \\
-& \int_0^a Y(x) \cos\mu_m x dx = \frac{y_m a}{2}
-\end{align}
-
-\begin{align}
-\Re(F_{1,j})
-& =
--\frac{q}{k_1}\bar{\psi}_{j,0} + \frac{\mathbb{A}_{j,0} - \bar{\psi}_{j,0}}{b}y_0 + 
-\sum_{m=1}^M \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)y_m
-\end{align}
+%\newpage
+%\begin{align}
+%\beta_j(x) = \frac{k_1}{\sqrt{1 + w'(x)^2}}\sum_{m=0}^M [\mathbb{A}_{j,m}\xi_m(x) - \bar{\psi}_{j, m}\omega_m(x)]
+%\end{align}
 %
-\begin{align}
-\Re(G_{1,j})
-& =
--\frac{q}{k_1}\bar{\phi}_{j,0} + \frac{\mathbb{E}_{j,0} - \bar{\phi}_{j,0}}{b}y_0 + 
-\sum_{m=1}^M \mu_m \left(\frac{\mathbb{E}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\phi}_{j, m}}{\tanh\mu_m b}\right)y_m
-\end{align}
-
-\begin{align}
-& \frac{\displaystyle \mu_{m+1} \left(\frac{\mathbb{A}_{j,{m+1}}}{\sinh\mu_{m+1} b} - \frac{\bar{\psi}_{j, {m+1}}}{\tanh\mu_{m+1} b}\right)y_{m+1}}{\displaystyle \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)y_m} = \nonumber \\
-& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{\displaystyle  \frac{\mathbb{A}_{j,{m+1}}}{\sinh\mu_{m+1} b} - \frac{\bar{\psi}_{j, {m+1}}}{\tanh\mu_{m+1} b}}{\displaystyle \frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}} = \nonumber \\
-& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{\displaystyle \frac{2\mathbb{A}_{j,m+1}}{e^{\mu_{m+1} b} - e^{-\mu_{m+1} b}} - \frac{\bar{\psi}_{j, m+1}(e^{\mu_{m+1} b} + e^{-\mu_{m+1} b})}{e^{\mu_{m+1} b} - e^{-\mu_{m+1} b}}}{\displaystyle \frac{2\mathbb{A}_{j,m}}{e^{\mu_m b} - e^{-\mu_m b}} - \frac{\bar{\psi}_{j, m}(e^{\mu_m b} + e^{-\mu_m b})}{e^{\mu_m b} - e^{-\mu_m b}}} = \nonumber \\
+%\begin{align}
+%\xi_m(x) = \left\lbrace
+%\begin{array}{ll}
+%\displaystyle \frac{1}{ab}, & m = 0 \\ \nonumber \\
+%\displaystyle \frac{2\mu_m[\cos\mu_m x\cosh\mu_m v(x) - w(x)\sin\mu_m x\sinh\mu_m v(x)]}{a\sinh\mu_m b}, & m \ne 0
+%\end{array}
+%\right.
+%\end{align}
 %
-& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{\displaystyle \frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b}}{1 - e^{-2\mu_{m+1} b}} - \frac{\bar{\psi}_{j, m+1}(1 + e^{-2\mu_{m+1} b})}{1 - e^{-2\mu_{m+1} b}}}{\displaystyle \frac{2\mathbb{A}_{j,m}e^{-\mu_m b}}{1 - e^{-2\mu_m b}} - \frac{\bar{\psi}_{j, m}(1 + e^{-2\mu_m b})}{1 - e^{-2\mu_m b}}} = \nonumber \\
+%\begin{align}
+%\omega_m(x) = \left\lbrace
+%\begin{array}{ll}
+%\displaystyle \frac{1}{ab}, & m = 0 \\ \nonumber \\
+%\displaystyle \frac{2\mu_m[w'(x)\sin\mu_m x\sinh\mu_m w(x) + \cos\mu_m x\cosh\mu_m w(x)]}{a\sinh\mu_m b}, & m \ne 0
+%\end{array}
+%\right.
+%\end{align}
 %
-& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{1 - e^{-2\mu_m b}}{1 - e^{-2\mu_{m+1} b}}\frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b} - \bar{\psi}_{j, m+1}(1 + e^{-2\mu_{m+1} b})}{2\mathbb{A}_{j,m}e^{-\mu_m b} - \bar{\psi}_{j, m}(1 + e^{-2\mu_m b})} \approx \nonumber \\
-& \frac{m+1}{m} \frac{y_{m+1}}{y_m} \frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b} - \bar{\psi}_{j, m+1}}{2\mathbb{A}_{j,m}e^{-\mu_m b} - \bar{\psi}_{j, m}}
-\end{align}
-
-\begin{align}
-& \int_0^a \tilde{Y}(x) \cos\mu_m x dx = \int_0^a Y(x) \cos\mu_m x dx + \sigma\int_0^a \epsilon(x) \cos\mu_m x dx \nonumber \\
-& \therefore \frac{\tilde{y}_m a}{2} = \frac{y_m a}{2} + \sigma\int_0^a \epsilon(x) \cos\mu_m x dx\nonumber \\
-& \therefore \frac{\tilde{y}_m a}{2\sigma} = \frac{y_m a}{2\sigma} + \int_0^a \epsilon(x) \cos\mu_m x dx\nonumber \\
-& \therefore \abs{\frac{\tilde{y}_m a}{2\sigma}} \le \abs{\frac{y_m a}{2\sigma}} + \abs{\int_0^a \epsilon(x) \cos\mu_m x dx} \nonumber \\
-& \Rightarrow \abs{\frac{\tilde{y}_m a}{2\sigma}} - \abs{\frac{y_m a}{2\sigma}} \le \abs{\int_0^a \epsilon(x) \cos\mu_m x dx}
-\end{align}
-
-Cauchy-Schwartz:
-\begin{align}
-\left[\int_0^a \epsilon(x) \cos\mu_m x dx\right]^2 \le \int_0^a \epsilon(x)^2 dx \int_0^a(\cos\mu_m x)^2 dx
-\end{align}
-
-Mas
-\begin{align}
-\int_0^a(\cos\mu_m x)^2 dx = \frac{a}{2}
-\end{align}
-
-Logo:
-\begin{align}
-& \left[\int_0^a \epsilon(x) \cos\mu_m x dx\right]^2 \le \frac{a}{2}\int_0^a \epsilon(x)^2 dx \nonumber \\
-& \Rightarrow \abs{\int_0^a \epsilon(x) \cos\mu_m x dx} \le \sqrt{\frac{a}{2}}\sqrt{\int_0^a \epsilon(x)^2 dx}
-\end{align}
-
-Assim:
-\begin{align}
-& \abs{\frac{\tilde{y}_m a}{2\sigma}} - \abs{\frac{y_m a}{2\sigma}} \le \sqrt{\frac{a}{2}}\sqrt{\int_0^a \epsilon(x)^2 dx} \nonumber \\
-& \therefore \abs{\tilde{y}_m} - \abs{y_m} \le \sigma\sqrt{\frac{2}{a}}\sqrt{\int_0^a \epsilon(x)^2 dx}
-\end{align}
-
-Mas (Qui-quadrado):
-\begin{align}
-\frac{1}{a}\int_0^a \epsilon(x)^2 dx \approx 1 \Rightarrow \int_0^a \epsilon(x)^2 dx \approx a
-\end{align}
-
-Logo:
-\begin{align}
-\abs{\tilde{y}_m} - \abs{y_m} \le \sigma\sqrt{2a}
-\end{align}
-
-\begin{align}
-\frac{1}{\sinh z} = \frac{2}{e^z - e^{-z}} = \frac{2e^{-z}}{1 - e^{-2z}} \approx 2e^{-z}
-\end{align}
-
-\begin{align}
-\frac{1}{\tanh z} = \frac{e^z + e^{-z}}{e^z - e^{-z}} = \frac{1 + e^{-2z}}{1 - e^{-2z}} \approx 1
-\end{align}
-
-\begin{align}
-\frac{\sinh z_1}{\sinh z_2} = \frac{e^{z_1} - e^{-z_1}}{e^{z_2} - e^{-z_2}}
- = \frac{e^{z_1-z_2} - e^{-z_1-z_2}}{1 - e^{-2z_2}}
-  = \frac{e^{-(z_2-z_1)} - e^{-(z_2+z_1)}}{1 - e^{-2z_2}}
-  \approx e^{-(z_2-z_1)}
-\end{align}
-
-Aproximação por mínimos quadrados:
-\begin{align}
-Y(x_k) \approx \sum_{n=0}^M y_n \cos \mu_n(x_k), k=0,1,2,..., K
-\end{align}
-
-Ou
-\begin{align}
-\mathbf{A}\mathbf{c} \approx \mathbf{y}
-\end{align}
+%\begin{align}
+%\gamma_j(x) = \sum_{m=0}^M [\mathbb{E}_{j,m}\chi_m(x) + \bar{\phi}_{j, m}\lambda_m(x)]
+%\end{align} 
+%
+%\begin{align}
+%\chi_m(x) = \left\lbrace
+%\begin{array}{ll}
+%\displaystyle \frac{b - w(x)}{ab}, & m = 0 \\ \nonumber \\
+%\displaystyle \frac{2\sinh\mu_m [b - w(x)]}{a\sinh\mu_m b}, & m \ne 0
+%\end{array}
+%\right.
+%\end{align}
+%
+%\begin{align}
+%\lambda_m(x) = \left\lbrace
+%\begin{array}{ll}
+%\displaystyle \frac{w(x)}{ab}, & m = 0 \\ \nonumber \\
+%\displaystyle \frac{2\sinh\mu_m w(x)}{a\sinh\mu_m b}, & m \ne 0
+%\end{array}
+%\right.
+%\end{align}
+%
+%\begin{align}
+%[T_1 - T_2]_\Gamma & = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \sum_{m=0}^M [\mathbb{A}_{j,m}\xi_m(x) - \bar{\psi}_{j, m}\omega_m(x)] \nonumber \\
+%& = k_1 \sum_{m=0}^M \sum_{j=1}^{N_1} \Re(F_{1,j}) [\mathbb{A}_{j,m}\xi_m(x) - \bar{\psi}_{j, m}\omega_m(x)] \nonumber \\
+%\end{align}
+%
+%\begin{align}
+%\langle \beta_j, \beta_k\rangle = k_1^2 \sum_{m=0}^M \sum_{n=0}^M \int_0^a \frac{[\mathbb{A}_{j,m}\xi_m(x) - \bar{\psi}_{j, m}\omega_m(x)][\mathbb{A}_{k,n}\xi_n(x) - \bar{\psi}_{k, n}\omega_n(x)]}{\sqrt{1 + w'(x)^2}} dx
+%\end{align}
+%
+%\newpage
+%
+%%%%%%%%%%%%%TODO
+%\begin{align}
+%Y(x) \approx \sum_{n=0}^M y_n \cos \mu_n(x)
+%\end{align}
+%
+%\begin{align}
+%& \int_0^a Y(x) dx = y_0 a \nonumber \\
+%& \int_0^a Y(x) \cos\mu_m x dx = \frac{y_m a}{2}
+%\end{align}
+%
+%\begin{align}
+%\Re(F_{1,j})
+%& =
+%-\frac{q}{k_1}\bar{\psi}_{j,0} + \frac{\mathbb{A}_{j,0} - \bar{\psi}_{j,0}}{b}y_0 + 
+%\sum_{m=1}^M \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)y_m
+%\end{align}
+%%
+%\begin{align}
+%\Re(G_{1,j})
+%& =
+%-\frac{q}{k_1}\bar{\phi}_{j,0} + \frac{\mathbb{E}_{j,0} - \bar{\phi}_{j,0}}{b}y_0 + 
+%\sum_{m=1}^M \mu_m \left(\frac{\mathbb{E}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\phi}_{j, m}}{\tanh\mu_m b}\right)y_m
+%\end{align}
+%
+%\begin{align}
+%& \frac{\displaystyle \mu_{m+1} \left(\frac{\mathbb{A}_{j,{m+1}}}{\sinh\mu_{m+1} b} - \frac{\bar{\psi}_{j, {m+1}}}{\tanh\mu_{m+1} b}\right)y_{m+1}}{\displaystyle \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)y_m} = \nonumber \\
+%& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{\displaystyle  \frac{\mathbb{A}_{j,{m+1}}}{\sinh\mu_{m+1} b} - \frac{\bar{\psi}_{j, {m+1}}}{\tanh\mu_{m+1} b}}{\displaystyle \frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}} = \nonumber \\
+%& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{\displaystyle \frac{2\mathbb{A}_{j,m+1}}{e^{\mu_{m+1} b} - e^{-\mu_{m+1} b}} - \frac{\bar{\psi}_{j, m+1}(e^{\mu_{m+1} b} + e^{-\mu_{m+1} b})}{e^{\mu_{m+1} b} - e^{-\mu_{m+1} b}}}{\displaystyle \frac{2\mathbb{A}_{j,m}}{e^{\mu_m b} - e^{-\mu_m b}} - \frac{\bar{\psi}_{j, m}(e^{\mu_m b} + e^{-\mu_m b})}{e^{\mu_m b} - e^{-\mu_m b}}} = \nonumber \\
+%%
+%& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{\displaystyle \frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b}}{1 - e^{-2\mu_{m+1} b}} - \frac{\bar{\psi}_{j, m+1}(1 + e^{-2\mu_{m+1} b})}{1 - e^{-2\mu_{m+1} b}}}{\displaystyle \frac{2\mathbb{A}_{j,m}e^{-\mu_m b}}{1 - e^{-2\mu_m b}} - \frac{\bar{\psi}_{j, m}(1 + e^{-2\mu_m b})}{1 - e^{-2\mu_m b}}} = \nonumber \\
+%%
+%& \frac{\mu_{m+1}}{\mu_m} \frac{y_{m+1}}{y_m} \frac{1 - e^{-2\mu_m b}}{1 - e^{-2\mu_{m+1} b}}\frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b} - \bar{\psi}_{j, m+1}(1 + e^{-2\mu_{m+1} b})}{2\mathbb{A}_{j,m}e^{-\mu_m b} - \bar{\psi}_{j, m}(1 + e^{-2\mu_m b})} \approx \nonumber \\
+%& \frac{m+1}{m} \frac{y_{m+1}}{y_m} \frac{2\mathbb{A}_{j,m+1}e^{-\mu_{m+1} b} - \bar{\psi}_{j, m+1}}{2\mathbb{A}_{j,m}e^{-\mu_m b} - \bar{\psi}_{j, m}}
+%\end{align}
+%
+%\begin{align}
+%& \int_0^a \tilde{Y}(x) \cos\mu_m x dx = \int_0^a Y(x) \cos\mu_m x dx + \sigma\int_0^a \epsilon(x) \cos\mu_m x dx \nonumber \\
+%& \therefore \frac{\tilde{y}_m a}{2} = \frac{y_m a}{2} + \sigma\int_0^a \epsilon(x) \cos\mu_m x dx\nonumber \\
+%& \therefore \frac{\tilde{y}_m a}{2\sigma} = \frac{y_m a}{2\sigma} + \int_0^a \epsilon(x) \cos\mu_m x dx\nonumber \\
+%& \therefore \abs{\frac{\tilde{y}_m a}{2\sigma}} \le \abs{\frac{y_m a}{2\sigma}} + \abs{\int_0^a \epsilon(x) \cos\mu_m x dx} \nonumber \\
+%& \Rightarrow \abs{\frac{\tilde{y}_m a}{2\sigma}} - \abs{\frac{y_m a}{2\sigma}} \le \abs{\int_0^a \epsilon(x) \cos\mu_m x dx}
+%\end{align}
+%
+%Cauchy-Schwartz:
+%\begin{align}
+%\left[\int_0^a \epsilon(x) \cos\mu_m x dx\right]^2 \le \int_0^a \epsilon(x)^2 dx \int_0^a(\cos\mu_m x)^2 dx
+%\end{align}
+%
+%Mas
+%\begin{align}
+%\int_0^a(\cos\mu_m x)^2 dx = \frac{a}{2}
+%\end{align}
+%
+%Logo:
+%\begin{align}
+%& \left[\int_0^a \epsilon(x) \cos\mu_m x dx\right]^2 \le \frac{a}{2}\int_0^a \epsilon(x)^2 dx \nonumber \\
+%& \Rightarrow \abs{\int_0^a \epsilon(x) \cos\mu_m x dx} \le \sqrt{\frac{a}{2}}\sqrt{\int_0^a \epsilon(x)^2 dx}
+%\end{align}
+%
+%Assim:
+%\begin{align}
+%& \abs{\frac{\tilde{y}_m a}{2\sigma}} - \abs{\frac{y_m a}{2\sigma}} \le \sqrt{\frac{a}{2}}\sqrt{\int_0^a \epsilon(x)^2 dx} \nonumber \\
+%& \therefore \abs{\tilde{y}_m} - \abs{y_m} \le \sigma\sqrt{\frac{2}{a}}\sqrt{\int_0^a \epsilon(x)^2 dx}
+%\end{align}
+%
+%Mas (Qui-quadrado):
+%\begin{align}
+%\frac{1}{a}\int_0^a \epsilon(x)^2 dx \approx 1 \Rightarrow \int_0^a \epsilon(x)^2 dx \approx a
+%\end{align}
+%
+%Logo:
+%\begin{align}
+%\abs{\tilde{y}_m} - \abs{y_m} \le \sigma\sqrt{2a}
+%\end{align}
+%
+%\begin{align}
+%\frac{1}{\sinh z} = \frac{2}{e^z - e^{-z}} = \frac{2e^{-z}}{1 - e^{-2z}} \approx 2e^{-z}
+%\end{align}
+%
+%\begin{align}
+%\frac{1}{\tanh z} = \frac{e^z + e^{-z}}{e^z - e^{-z}} = \frac{1 + e^{-2z}}{1 - e^{-2z}} \approx 1
+%\end{align}
+%
+%\begin{align}
+%\frac{\sinh z_1}{\sinh z_2} = \frac{e^{z_1} - e^{-z_1}}{e^{z_2} - e^{-z_2}}
+% = \frac{e^{z_1-z_2} - e^{-z_1-z_2}}{1 - e^{-2z_2}}
+%  = \frac{e^{-(z_2-z_1)} - e^{-(z_2+z_1)}}{1 - e^{-2z_2}}
+%  \approx e^{-(z_2-z_1)}
+%\end{align}
+%
+%Aproximação por mínimos quadrados:
+%\begin{align}
+%Y(x_k) \approx \sum_{n=0}^M y_n \cos \mu_n(x_k), k=0,1,2,..., K
+%\end{align}
+%
+%Ou
+%\begin{align}
+%\mathbf{A}\mathbf{c} \approx \mathbf{y}
+%\end{align}
 
 %Na próxima seção, será feita uma validação dos resultados até então encontrados, aplicando-os para o caso estudado por \cite{tese_padilha}, a fim de deduzir a mesma expressão analítica de estimativa de CTC encontrada naquele trabalho.
 %
