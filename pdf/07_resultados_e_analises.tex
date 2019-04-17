@@ -269,7 +269,7 @@ Serão apresentados agora os resultados numéricos obtidos a partir da aplicaç�
 
 Para cada combinação possível de geometria de interface (tabela \ref{tabela_interfaces}), perfil de condutância térmica de contato (tabela \ref{tabela_ctc}) e desvio-padrão de erros de medição ($\sigma = \text{0,0}\celsius$, $\sigma = \text{0,1}\celsius$ e $\sigma = \text{0,5}\celsius$), foram calculadas estimativas de salto de temperatura e fluxo de calor na interface de contato, e os resultados foram comparados com os respectivos valores teóricos esperados para cada combinação. A estimativa do perfil de condutância térmica de contato, calculada através da razão entre o salto de temperartura e fluxo de calor estimados na interface, também foi comparada com o perfil teórico correspondente, e que foi usado para determinação prévia das temperaturas sintéticas através de simulações de cada configuração do problema no módulo de transferência de calor no simulador COMSOL \textit{Multiphysics}\textsuperscript{\textregistered}.
 
-Todas as combinações analisadas são, de certo modo, condições ideais, no sentido de que a solução exata esperada para cada problema-teste já era previamente conhecida. Num problema real, entretanto, a distribuição da condutância térmica de contato ao longo da interface $\Gamma$ é desconhecida -- com efeito, trata-se da função que se deseja estimar -- tampouco se conhece a distribuição do salto de temperatura e do fluxo de calor naquela interface. Estes últimos parâmetros foram estimados a partir de dois somatórios envolvendo os funcionais de reciprocidade (equações \eqref{resultado_1} e \eqref{resultado_2}), ou seja:
+Todas as combinações analisadas são, de certo modo, condições ideais, no sentido de que a solução exata esperada para cada problema-teste já era previamente conhecida. Num problema real, entretanto, a distribuição da condutância térmica de contato ao longo da interface $\Gamma$ é desconhecida -- com efeito, trata-se da função que se deseja estimar -- tampouco se conhece a distribuição do salto de temperatura e do fluxo de calor naquela interface. Estes últimos parâmetros foram estimados a partir dos dois somatórios envolvendo os funcionais de reciprocidade (equações \eqref{resultado_1} e \eqref{resultado_2}), obtidos nas seções anteriores, ou seja:
 \begin{align}
 [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \label{resultado_1_again} \\ \nonumber \\
 - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j \label{resultado_2_again}
@@ -313,6 +313,42 @@ Este trabalho propõe uma forma diferente de se avaliar a semi-convergência das
 & \bar{\beta}_j = \frac{1}{a}\int_0^a \beta_j(x) dx \\ \nonumber \\
 & \bar{\gamma}_j = \frac{1}{a}\int_0^a \gamma_j(x) dx
 \end{align}
+
+\begin{minipage}[t][6cm][c]{4.5cm}
+	\centering		
+	\begin{tikzpicture}[scale=0.75]
+	\begin{axis}[
+	axis lines=left,
+	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	ymode = log,
+	grid=major,
+	legend style={legend pos=north west}
+	xmin = 1,
+	xmax = 20,
+	%ymin = 0,
+	%ymax = 90,
+	scaled x ticks = true,
+	scaled y ticks = true,
+	x tick label style={/pgf/number format/fixed},
+	y tick label style={/pgf/number format/fixed},
+	%xtick = {0,5,10,15,20,25,30,35,40,45,50},
+	anchor=east,  
+	width=7cm,
+	height=6cm,
+	label style={font=\footnotesize},
+	xlabel = $j$,
+	ylabel= $J$,
+	ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
+	\pgfplotstableread{../data/metricas_interface_01_conductance_01_stdev_00.dat} 
+	\teff
+	\addplot[color=blue,mark=o,mark options={mark size=2.0pt}] table[x index = {0}, y index = {2}] from \teff;	
+	\end{axis}
+	\end{tikzpicture}
+	\caption*{AAA}
+\end{minipage}
+
+
+
 
 Assim, comparando e analisando as métricas expressas nas equações \eqref{metrica_norma_1} a \eqref{metrica_norma_2}, foi possível investigar o comportamento da convergência das séries que representam o salto de temperatura e o fluxo de calor na interface de contato à medida em que se aumentava o número de parcelas nos somatórios. Também foi analisada a relação entre estas métricas e os erros de medição adicionados às temperaturas sintéticas na interface superior do corpo de prova.
 

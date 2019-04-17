@@ -110,11 +110,14 @@ program main
         call c_f_procpointer(dwlist(interface_idx), dw)
         call calculate_reciprocity_coefficients(interface_idx)
 
+        open(unit = 1, file='/home/cx3d/mestrado/' // &
+                'data/media_beta_gamma_interface_'//str_idx//'.dat')
         do j = 0, N
             f_args(1) = j
             f_args(2) = interface_idx
-            write(*, *)j, integrate(f_aux_beta, c_loc(f_args), pts)
+            write(1, *)j, integrate(f_aux_beta, c_loc(f_args), pts), integrate(f_aux_gamma, c_loc(f_args), pts)
         end do
+        close(1)
 
         do condutance_idx = 1, 3
             write(*, *)'    Condutance = ', interface_idx
@@ -243,5 +246,10 @@ contains
         double precision, intent(in) :: x
         type(c_ptr), intent(in) :: args
         double precision :: r
+
+        integer, dimension(:), pointer :: ptr
+
+        call c_f_pointer(args, ptr, [2])
+        r = fgamma(ptr(1), x, ptr(2))
     end function
 end program main
