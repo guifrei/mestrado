@@ -11,13 +11,13 @@ program main
     procedure(h_proc_t), pointer :: h
     procedure(w_proc_t), pointer :: w
     procedure(dw_proc_t), pointer :: dw
-    double precision, dimension(tnmax, szdiv, 0: N), target :: m_fluxo_calor, m_delta_temperatura
+    double precision, dimension(tnmax, 0: N), target :: m_fluxo_calor, m_delta_temperatura
     double precision :: c_fluxo_calor, c_delta_temperatura
     double precision, dimension(tnmax, 0: (N + 1)**2 - 1) :: m_condutancia_contato
     double precision, dimension(tnmax) :: vx, vy, tcalc
     double precision :: norm
-    character(len = 2) :: str_idx, str_cdx, str_stdev, str_N
-    integer :: interface_idx, condutance_idx, nmax, stdev_idx, k, nmax1, nmax2, m, j
+    character(len = 2) :: str_idx, str_cdx, str_stdev, str_N, str_n_fluxo_calor, str_n_delta_temperatura
+    integer :: interface_idx, condutance_idx, nmax, stdev_idx, k, nmax1, nmax2, m, j, n_fluxo_calor, n_delta_temperatura
     double precision :: desv, x, y, y1, y2, dx, stdev, arg, norm_acc, y1prev, y2prev
     integer, target, dimension(2) :: f_args
 
@@ -111,11 +111,11 @@ program main
         call calculate_reciprocity_coefficients(interface_idx)
 
         open(unit = 1, file='/home/cx3d/mestrado/' // &
-                'data/media_beta_gamma_interface_'//str_idx//'.dat')
+            'data/media_beta_gamma_interface_'//str_idx//'.dat')
         do j = 0, N
             f_args(1) = j
             f_args(2) = interface_idx
-            write(1, *)j, integrate(f_aux_beta, c_loc(f_args), pts), integrate(f_aux_gamma, c_loc(f_args), pts)
+            write(1, *)j, integrate(f_aux_beta, c_loc(f_args), pts)/a, integrate(f_aux_gamma, c_loc(f_args), pts)/a
         end do
         close(1)
 
@@ -196,15 +196,15 @@ program main
                             c_fluxo_calor = parcela_fluxo_calor(x, nmax, interface_idx)
                             c_delta_temperatura = parcela_delta_temperatura(x, nmax, interface_idx)
                         else
-                            c_fluxo_calor = m_fluxo_calor(j, 1, nmax - 1) +&
+                            c_fluxo_calor = m_fluxo_calor(j, nmax - 1) +&
                                 parcela_fluxo_calor(x, nmax, interface_idx)
-                            c_delta_temperatura = m_delta_temperatura(j, 1, nmax - 1) +&
+                            c_delta_temperatura = m_delta_temperatura(j, nmax - 1) +&
                                 parcela_delta_temperatura(x, nmax, interface_idx)
                         end if
-                        m_fluxo_calor(j, 1, nmax) = c_fluxo_calor
-                        m_delta_temperatura(j, 1, nmax) = c_delta_temperatura
-                        write(4, *)x, m_delta_temperatura(j, 1, nmax)
-                        write(5, *)x, m_fluxo_calor(j, 1, nmax)
+                        m_fluxo_calor(j, nmax) = c_fluxo_calor
+                        m_delta_temperatura(j, nmax) = c_delta_temperatura
+                        write(4, *)x, m_delta_temperatura(j, nmax)
+                        write(5, *)x, m_fluxo_calor(j, nmax)
                     end do
                     close(5)
                     close(4)
@@ -225,6 +225,71 @@ program main
                     write(1, *)j, y1/y1prev, y2/y2prev
                 end do
                 close(1)
+
+                ! Estimativas de CTC
+                if (interface_idx == 1) then
+                    if (condutance_idx == 1) then
+                        if (stdev == 0.0) then
+                            n_delta_temperatura = 13
+                            n_fluxo_calor = 11
+                        else if (stdev == 0.1) then
+                            n_delta_temperatura = 3
+                            n_fluxo_calor = 3
+                        else
+                            n_delta_temperatura = 3
+                            n_fluxo_calor = 3
+                        end if
+                    else if (condutance_idx == 2) then
+                        if (stdev == 0.0) then
+                            n_delta_temperatura = 11
+                            n_fluxo_calor = 10
+                        else if (stdev == 0.1) then
+                            n_delta_temperatura = 3
+                            n_fluxo_calor = 4
+                        else
+                            n_delta_temperatura = 3
+                            n_fluxo_calor = 3
+                        end if
+                    else
+                        if (stdev == 0.0) then
+                            n_delta_temperatura = 8
+                            n_fluxo_calor = 8
+                        else if (stdev == 0.1) then
+                            n_delta_temperatura = 6
+                            n_fluxo_calor = 6
+                        else
+                            n_delta_temperatura = 6
+                            n_fluxo_calor = 4
+                        end if
+                    end if
+                else
+                end if
+
+
+                write(str_n_delta_temperatura, '(I2.2)') n_delta_temperatura
+                write(str_n_fluxo_calor, '(I2.2)') n_fluxo_calor
+
+                open(unit = 4, file = '/home/cx3d/mestrado/' // &
+                    'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_'//str_cdx// &
+                    '_stdev_' // str_stdev // '_N_' // str_n_delta_temperatura // '.dat')
+                open(unit = 5, file = '/home/cx3d/mestrado/' // &
+                    'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_'//str_cdx// &
+                    '_stdev_' // str_stdev // '_N_' // str_n_fluxo_calor // '.dat')
+
+                open(unit = 7, file = '/home/cx3d/mestrado/' // &
+                    'data/estimativa_ctc_interface_'//str_idx//'_conductance_'//str_cdx// &
+                    '_stdev_' // str_stdev // '.dat')
+
+                do j = 1, tnmax
+                    read(4, *)x, c_delta_temperatura
+                    read(5, *)x, c_fluxo_calor
+                    write(7, *)x, c_fluxo_calor/c_delta_temperatura
+                end do
+
+                close(7)
+                close(4)
+                close(5)
+
             end do
         end do
     end do

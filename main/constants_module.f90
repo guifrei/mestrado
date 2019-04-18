@@ -10,8 +10,8 @@ module constants_module
     double precision, parameter :: hmax = 1000.0
     double precision, parameter :: gamma = 50000.0
     integer, parameter :: mmax_T = 35 !numero total de autofuncoes a serem calculadas para T1 e T2
-    integer, parameter :: mmax_F = 60 !numero total de autofuncoes a serem calculadas para F1 e F2
-    integer, parameter :: mmax_G = 60 !numero total de autofuncoes a serem calculadas para G1
+    integer, parameter :: mmax_F = 35 !numero total de autofuncoes a serem calculadas para F1 e F2
+    integer, parameter :: mmax_G = 35 !numero total de autofuncoes a serem calculadas para G1
     integer, parameter :: mmax_phi = max(mmax_T, mmax_F, mmax_G) !maior valor entre mmax_T, mmax_F e mmax_G
     integer, parameter :: delta_m = 60      !incremento no numero de termos
     double precision, parameter :: reltol = 0.0 !1.0D-8
@@ -19,16 +19,13 @@ module constants_module
     double precision, dimension(*), parameter :: pts = [0.0D0, a/4.0, a/2.0, 3.0*a/4.0, a]
     !        double precision, dimension(*), parameter :: pts = [0.0D0, a]
 
-    integer, parameter :: szdiv = 12
-    integer, dimension(szdiv), parameter :: ndiv = [24, 20, 15, 12, 10, 8, 6, 5, 4, 3, 2, 1]
-
 
     double precision, parameter :: mp = 5.0
     double precision, parameter :: b1 = 0.012
     double precision, parameter :: b2 = 0.008
 
     integer, parameter :: tnmax = 121
-    integer, parameter :: N = 60 ! tnmax/ndiv + 1 !min(mmax_F, mmax_G)           !numero total de funcionais de reciprocidade
+    integer, parameter :: N = 30 ! tnmax/ndiv + 1 !min(mmax_F, mmax_G)           !numero total de funcionais de reciprocidade
     integer, parameter :: tmax = 1000          ! para o levantamento do campo de temperaturas
 end module constants_module
 
