@@ -262,6 +262,41 @@ program main
                             n_fluxo_calor = 4
                         end if
                     end if
+                else if (interface_idx == 2) then
+                    if (condutance_idx == 1) then
+                        if (stdev == 0.0) then
+                            n_delta_temperatura = 15
+                            n_fluxo_calor = 5
+                        else if (stdev == 0.1) then
+                            n_delta_temperatura = 7
+                            n_fluxo_calor = 5
+                        else
+                            n_delta_temperatura = 8
+                            n_fluxo_calor = 3
+                        end if
+                    else if (condutance_idx == 2) then
+                        if (stdev == 0.0) then
+                            n_delta_temperatura = 15
+                            n_fluxo_calor = 3
+                        else if (stdev == 0.1) then
+                            n_delta_temperatura = 5
+                            n_fluxo_calor = 3
+                        else
+                            n_delta_temperatura = 3
+                            n_fluxo_calor = 3
+                        end if
+                    else
+                        if (stdev == 0.0) then
+                            n_delta_temperatura = 15
+                            n_fluxo_calor = 4
+                        else if (stdev == 0.1) then
+                            n_delta_temperatura = 8
+                            n_fluxo_calor = 4
+                        else
+                            n_delta_temperatura = 8
+                            n_fluxo_calor = 5
+                        end if
+                    end if
                 else
                 end if
 
