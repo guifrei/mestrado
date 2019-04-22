@@ -103,7 +103,7 @@ program main
     end do
     close(1)
 
-    do interface_idx = 1, 3 !2, 2
+    do interface_idx = 1, 3
         write(*, *)'Interface = ', interface_idx
         write(str_idx, '(I2.2)') interface_idx
         call c_f_procpointer(wlist(interface_idx), w)
