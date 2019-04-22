@@ -40,14 +40,14 @@ contains
         double precision, intent(in) :: x
         double precision :: r
 
-        r = b/2 + (b/20.0)*cos(2.0*pi*x/a) + (b/20.0)*cos(4.0*pi*x/a)
+        r = b/2 + (b/20.0)*cos(4.0*pi*x/a) + (b/40.0)*cos(8.0*pi*x/a)
     end function
 
     function dw2(x) result(r)
         double precision, intent(in) :: x
         double precision :: r
 
-        r = -(b/20.0)*(2.0*pi/a)*sin (2.0*pi*x/a) - (b/20.0)*(4.0*pi/a)*sin(4.0*pi*x/a)
+        r = -(b/20.0)*(4.0*pi/a)*sin (4.0*pi*x/a) - (b/40.0)*(8.0*pi/a)*sin(8.0*pi*x/a)
     end function
 
     function w3(x) result(r)
