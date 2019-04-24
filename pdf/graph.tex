@@ -1,0 +1,80 @@
+\documentclass[tikz]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{indentfirst}
+\usepackage{empheq}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{gensymb}
+\usepackage{commath}
+\usepackage{cancel}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage{tcolorbox}
+\usepackage{pgfplots}
+\usepackage{filecontents}
+\usepackage{natbib} 
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage{enumerate}
+\usepackage{nccmath}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{wasysym}
+\usepackage{xcolor}
+\usetikzlibrary{shapes.geometric,calc}
+\pgfplotsset{compat=1.4}
+\pgfplotsset{compat=newest} % Allows to place the legend below plot
+\usepgfplotslibrary{units} % Allows to enter the units nicely
+
+\newcommand{\graficoestimativa}[9]{%
+	\begin{minipage}[t][6cm][c]{4.5cm}
+		\centering		
+		\begin{tikzpicture}[scale=0.65]
+		\begin{axis}[
+		axis lines=left,
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		%		xmin = 0,
+		%		xmax = 0.04,
+		%		ymin = 310,
+		%		ymax = 340,
+		%		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=7cm,
+		height=6cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $#8$ (#9),
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
+		\pgfplotstableread{../data/comsol/#1_interface_0#2_conductance_0#3.dat} 
+		\teff
+		\addplot[color=black, line width=1.5pt] table from \teff;
+		\pgfplotstableread{../data/fortran/#1_interface_0#2_conductance_0#3_stdev_00_N_#4.dat} 
+		\teff
+		\addplot[only marks, color=blue,mark=o,mark options={mark size=1.5pt}] table from \teff;
+		\pgfplotstableread{../data/fortran/#1_interface_0#2_conductance_0#3_stdev_01_N_#5.dat} 
+		\teff
+		\addplot[only marks,color=red,mark=square,mark options={mark size=1.5pt}] table from \teff;
+		\pgfplotstableread{../data/fortran/#1_interface_0#2_conductance_0#3_stdev_05_N_#6.dat} 
+		\teff
+		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=1.5pt}] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+	\end{minipage}
+}%
+
+\begin{document}
+
+	\graficoestimativa{delta_temperatura}{1}{1}{13}{03}{03}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+	\graficoestimativa{delta_temperatura}{1}{2}{11}{03}{03}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+	\graficoestimativa{delta_temperatura}{1}{3}{08}{06}{06}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+
+\end{document}
+
