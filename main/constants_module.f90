@@ -8,8 +8,8 @@ module constants_module
     double precision, parameter :: k2 = 14.0
     double precision, parameter :: q = -100000.0
     double precision, parameter :: hmax = 1000.0
-    double precision, parameter :: gamma = 50000.0
-    integer, parameter :: mmax_T = 40 !numero total de autofuncoes a serem calculadas para T1 e T2
+    double precision, parameter :: gamma = 5000.0
+    integer, parameter :: mmax_T = 35 !numero total de autofuncoes a serem calculadas para T1 e T2
     integer, parameter :: mmax_F = 20 !numero total de autofuncoes a serem calculadas para F1 e F2
     integer, parameter :: mmax_G = 20 !numero total de autofuncoes a serem calculadas para G1
     integer, parameter :: mmax_phi = max(mmax_T, mmax_F, mmax_G) !maior valor entre mmax_T, mmax_F e mmax_G
@@ -21,8 +21,8 @@ module constants_module
 
 
     double precision, parameter :: mp = 4.0
-    double precision, parameter :: b1 = 0.012
-    double precision, parameter :: b2 = 0.008
+    double precision, parameter :: b1 = 0.011
+    double precision, parameter :: b2 = 0.009
 
     integer, parameter :: tnmax = 121
     integer, parameter :: N = 20 ! tnmax/ndiv + 1 !min(mmax_F, mmax_G)           !numero total de funcionais de reciprocidade

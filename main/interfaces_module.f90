@@ -40,14 +40,14 @@ contains
         double precision, intent(in) :: x
         double precision :: r
 
-        r = b/2 + (b/10.0)*sin(2.0*pi*x/a) + (b/20.0)*cos(4.0*pi*x/a)
+        r = b/2 + (b/20.0)*cos(4.0*pi*x/a) + (b/40.0)*cos(8.0*pi*x/a)
     end function
 
     function dw2(x) result(r)
         double precision, intent(in) :: x
         double precision :: r
 
-        r = (b/10.0)*(2.0*pi/a)*cos(2.0*pi*x/a) - (b/20.0)*(4.0*pi/a)*sin(4.0*pi*x/a)
+        r = -(b/20.0)*(4.0*pi/a)*sin (4.0*pi*x/a) - (b/40.0)*(8.0*pi/a)*sin(8.0*pi*x/a)
     end function
 
     function w3(x) result(r)
@@ -144,14 +144,14 @@ contains
         double precision, intent(in) :: x
         double precision :: r
 
-        r = b/2.0 + (b/10.0)*sin(2.0*pi*x/a) + (b/40.0)*cos(4.0*pi*x/a)
+        r = b/2.0 + (b/20.0)*sin(2.0*pi*x/a) - (b/20.0)*cos(8.0*pi*x/a)
     end function
 
     function dw8(x) result(r)
         double precision, intent(in) :: x
         double precision :: r
 
-        r =  (b/10.0)*(2.0*pi/a)*cos(2.0*pi*x/a) - (b/40.0)*(4.0*pi/a)*sin(4.0*pi*x/a)
+        r =  (b/20.0)*(2.0*pi/a)*cos(2.0*pi*x/a) + (b/20.0)*(8.0*pi/a)*sin(8.0*pi*x/a)
     end function
 
     function w9(x) result(r)
@@ -233,16 +233,14 @@ contains
         double precision, intent(in) :: x
         double precision :: r
 
-        if (x < a/5.0) then
-            r = b1-5.0*(b1-b2)*x/a
-        else if (x < 2.0*a/5.0) then
-            r = b2+5.0*(b1-b2)*(x-a/5.0)/a
-        else if (x < 3.0*a/5.0) then
-            r = b1-5.0*(b1-b2)*(x-2.0*a/5.0)/a
-        else if (x < 4.0*a/5.0) then
-            r = b2+5.0*(b1-b2)*(x-3.0*a/5.0)/a
+        if (x < a/4.0) then
+            r = b1-4.0*(b1-b2)*x/a
+        else if (x < a/2.0) then
+            r = b2+4.0*(b1-b2)*(x-a/4.0)/a
+        else if (x < 3.0*a/4.0) then
+            r = b1-4.0*(b1-b2)*(x-a/2.0)/a
         else
-            r = b1-5.0*(b1-b2)*(x-4.0*a/5.0)/a
+            r = b2+4.0*(b1-b2)*(x-3.0*a/4.0)/a
         end if
     end function
 
@@ -250,16 +248,14 @@ contains
         double precision, intent(in) :: x
         double precision :: r
 
-        if (x < a/5.0) then
-            r = -5.0*(b1-b2)/a
-        else if (x < 2.0*a/5.0) then
-            r = 5.0*(b1-b2)/a
-        else if (x < 3.0*a/5.0) then
-            r = -5.0*(b1-b2)/a
-        else if (x < 4.0*a/5.0) then
-            r = 5.0*(b1-b2)/a
+        if (x < a/4.0) then
+            r = -4.0*(b1-b2)/a
+        else if (x < a/2.0) then
+            r = 4.0*(b1-b2)/a
+        else if (x < 3.0*a/4.0) then
+            r = -4.0*(b1-b2)/a
         else
-            r = -5.0*(b1-b2)/a
+            r = 4.0*(b1-b2)/a
         end if
     end function
 

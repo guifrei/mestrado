@@ -5,6 +5,19 @@ module netlib_module
     common /rkcom7/  outch, mcheps, dwarf
 
     interface
+        subroutine mpinv(sz, n, m, minnm, a, ainv, s, e, u, v, work, irank, ierr)
+            integer, intent(in) :: sz, n, m, minnm
+            double precision, intent(in), dimension(sz, m) :: a
+            double precision, intent(out), dimension(sz, n) :: ainv
+            double precision, intent(out), dimension(minnm) :: s, e
+            double precision, intent(out), dimension(sz, n) :: u
+            double precision, intent(out), dimension(sz, m) :: v
+            double precision, intent(out), dimension(n) :: work
+            integer, intent(out) :: irank, ierr
+        end subroutine mpinv
+    end interface
+
+    interface
         subroutine dgels(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info)
             character(len = 1), intent(in) :: trans
             integer, intent(in) :: m

@@ -12,6 +12,7 @@ module reciprocity_functions_module
     double precision, dimension(0: mmax_G, 0: N), target :: coeffsG
     double precision, dimension(0: N, 0: mmax_phi), target :: vpsi, vphi
     double precision, dimension(0: mmax_phi) :: vvY
+    double precision, dimension(0: N) :: reciprocity_f, reciprocity_g
 
 contains
     function fpsi(j, x) result(r)
@@ -300,7 +301,7 @@ contains
         close(5)
     end subroutine
 
-    function reciprocity_f(j) result(r)
+    function calc_reciprocity_f(j) result(r)
         integer, intent(in) :: j
         double precision :: r
         integer :: m
@@ -315,7 +316,7 @@ contains
         end do
     end function
 
-    function reciprocity_g(j) result(r)
+    function calc_reciprocity_g(j) result(r)
         integer, intent(in) :: j
         double precision :: r
         integer :: m
