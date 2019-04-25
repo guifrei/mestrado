@@ -40,14 +40,26 @@ contains
         double precision, intent(in) :: x
         double precision :: r
 
-        r = b/2 + (b/20.0)*cos(4.0*pi*x/a) + (b/40.0)*cos(8.0*pi*x/a)
+        if (x <= a/3.0) then
+            r = 19.0*b*x**2/(8.0*a**2)-7.0*b*x/(24.0*a)+b/2.0
+        else if (x <= 2.0*a/3.0) then
+            r = -25.0*b*x**2/(8.0*a**2)+27.0*b*x/(8.0*a)-b/9.0
+        else
+            r = b*x**2/(8.0*a**2)-23.0*b*x/(24.0*a)+4.0*b/3.0
+        end if
     end function
 
     function dw2(x) result(r)
         double precision, intent(in) :: x
         double precision :: r
 
-        r = -(b/20.0)*(4.0*pi/a)*sin (4.0*pi*x/a) - (b/40.0)*(8.0*pi/a)*sin(8.0*pi*x/a)
+        if (x <= a/3.0) then
+            r = 38.0*b*x/(8.0*a**2)-7.0*b/(24.0*a)
+        else if (x <= 2.0*a/3.0) then
+            r = -50.0*b*x/(8.0*a**2)+27.0*b/(8.0*a)
+        else
+            r = 2.0*b*x/(8.0*a**2)-23.0*b/(24.0*a)
+        end if
     end function
 
     function w3(x) result(r)

@@ -1,98 +1,28 @@
 \section{oops}
 
 \begin{align}
+y(x) \approx \sum_{m=0}^M \bar{y}_m \cos\mu_m x
+\end{align}
+
+Assim:
+\begin{align}
+& \int_0^a Y(x)dx = a \bar{y}_0 \\ \nonumber \\
+& \int_0^a Y(x)\cos\mu_m dx = \frac{a}{2}\bar{y}_m
+\end{align}
+
+\begin{align}
 \Re(F_{1,j})
 & =
 -\frac{q}{k_1}\bar{\psi}_{j,0} + \frac{\mathbb{A}_{j,0} - \bar{\psi}_{j,0}}{b} \bar{y}_0 + \sum_{m=1}^M \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)\bar{y}_m
 \end{align}
 
+E se
 \begin{align}
-& \begin{bmatrix}
-\scriptstyle\Re(F_{1,0}) \\ \scriptstyle\Re(F_{1,1}) \\ \scriptstyle\Re(F_{1,2}) \\ ... \\ \scriptstyle\Re(F_{1,N_1})
-\end{bmatrix}
- = -\frac{q}{k_1}\begin{bmatrix}
-\scriptstyle\bar{\psi}_{0,0} \\ \scriptstyle\bar{\psi}_{1,0} \\ \scriptstyle\bar{\psi}_{2,0} \\ ... \\ \scriptstyle\bar{\psi}_{N_1,0}
-\end{bmatrix}
-+ \nonumber \\
-&
-\begin{bmatrix}
-\frac{\mathbb{A}_{0,0} - \bar{\psi}_{0,0}}{b} & \scriptstyle\mu_1 \left(\frac{\mathbb{A}_{0,1}}{\sinh\mu_1 b} - \frac{\bar{\psi}_{0, 1}}{\tanh\mu_1 b}\right) & \scriptstyle\mu_2 \left(\frac{\mathbb{A}_{0,2}}{\sinh\mu_2 b} - \frac{\bar{\psi}_{0, 2}}{\tanh\mu_2 b}\right) & ... & \scriptstyle\mu_M \left(\frac{\mathbb{A}_{0,M}}{\sinh\mu_M b} - \frac{\bar{\psi}_{0, M}}{\tanh\mu_M b}\right) \\
-%
-\frac{\mathbb{A}_{1,0} - \bar{\psi}_{1,0}}{b} & \scriptstyle\mu_1 \left(\frac{\mathbb{A}_{1,1}}{\sinh\mu_1 b} - \frac{\bar{\psi}_{1, 1}}{\tanh\mu_1 b}\right) & \scriptstyle\mu_2 \left(\frac{\mathbb{A}_{1,2}}{\sinh\mu_2 b} - \frac{\bar{\psi}_{1, 2}}{\tanh\mu_2 b}\right) & ... & \scriptstyle\mu_M \left(\frac{\mathbb{A}_{1,M}}{\sinh\mu_M b} - \frac{\bar{\psi}_{1, M}}{\tanh\mu_M b}\right) \\
-%
-\frac{\mathbb{A}_{2,0} - \bar{\psi}_{2,0}}{b} & \scriptstyle\mu_1 \left(\frac{\mathbb{A}_{2,1}}{\sinh\mu_1 b} - \frac{\bar{\psi}_{2, 1}}{\tanh\mu_1 b}\right) & \scriptstyle\mu_2 \left(\frac{\mathbb{A}_{2,2}}{\sinh\mu_2 b} - \frac{\bar{\psi}_{2, 2}}{\tanh\mu_2 b}\right) & ... & \scriptstyle\mu_M \left(\frac{\mathbb{A}_{2,M}}{\sinh\mu_M b} - \frac{\bar{\psi}_{2, M}}{\tanh\mu_M b}\right) \\
-%
-... & ... & ... & \ddots & ... \\
-%
-%
-\frac{\mathbb{A}_{N_1,0} - \bar{\psi}_{N_1,0}}{b} & \scriptstyle\mu_1 \left(\frac{\mathbb{A}_{N_1,1}}{\sinh\mu_1 b} - \frac{\bar{\psi}_{N_1, 1}}{\tanh\mu_1 b}\right) & \scriptstyle\mu_2 \left(\frac{\mathbb{A}_{N_1,2}}{\sinh\mu_2 b} - \frac{\bar{\psi}_{N_1, 2}}{\tanh\mu_2 b}\right) & ... & \scriptstyle\mu_M \left(\frac{\mathbb{A}_{N_1,M}}{\sinh\mu_M b} - \frac{\bar{\psi}_{N_1, M}}{\tanh\mu_M b}\right)
-\end{bmatrix} \nonumber \\
-\times
-%
-&
-\begin{bmatrix}
-\scriptstyle\bar{y}_0 \\ \scriptstyle\bar{y}_1 \\ \scriptstyle\bar{y}_2 \\ ... \\ \scriptstyle\bar{y}_M
-\end{bmatrix}
+y(x) \approx \bar{y}_0 + \sum_{m=1}^M \bar{y}_m \sin\mu_m x
 \end{align}
 
-Seja
+Então
 \begin{align}
-\mathbf{r} = \begin{bmatrix}
-\scriptstyle\Re(F_{1,0}) \\ \scriptstyle\Re(F_{1,1}) \\ \scriptstyle\Re(F_{1,2}) \\ ... \\ \scriptstyle\Re(F_{1,N_1})
-\end{bmatrix}
-+
-\frac{q}{k_1}\begin{bmatrix}
-\scriptstyle\bar{\psi}_{0,0} \\ \scriptstyle\bar{\psi}_{1,0} \\ \scriptstyle\bar{\psi}_{2,0} \\ ... \\ \scriptstyle\bar{\psi}_{N_1,0}
-\end{bmatrix}
-\end{align}
-e
-\begin{align}
-\mathbf{\bar{y}} = \begin{bmatrix}
-\scriptstyle\bar{y}_0 \\ \scriptstyle\bar{y}_1 \\ \scriptstyle\bar{y}_2 \\ ... \\ \scriptstyle\bar{y}_M
-\end{bmatrix}
-\end{align}
-e
-\begin{align}
-\mathbf{T} = 
-\begin{bmatrix}
-\frac{\mathbb{A}_{0,0} - \bar{\psi}_{0,0}}{b} & \scriptstyle\mu_1 \left(\frac{\mathbb{A}_{0,1}}{\sinh\mu_1 b} - \frac{\bar{\psi}_{0, 1}}{\tanh\mu_1 b}\right) & \scriptstyle\mu_2 \left(\frac{\mathbb{A}_{0,2}}{\sinh\mu_2 b} - \frac{\bar{\psi}_{0, 2}}{\tanh\mu_2 b}\right) & ... & \scriptstyle\mu_M \left(\frac{\mathbb{A}_{0,M}}{\sinh\mu_M b} - \frac{\bar{\psi}_{0, M}}{\tanh\mu_M b}\right) \\
-%
-\frac{\mathbb{A}_{1,0} - \bar{\psi}_{1,0}}{b} & \scriptstyle\mu_1 \left(\frac{\mathbb{A}_{1,1}}{\sinh\mu_1 b} - \frac{\bar{\psi}_{1, 1}}{\tanh\mu_1 b}\right) & \scriptstyle\mu_2 \left(\frac{\mathbb{A}_{1,2}}{\sinh\mu_2 b} - \frac{\bar{\psi}_{1, 2}}{\tanh\mu_2 b}\right) & ... & \scriptstyle\mu_M \left(\frac{\mathbb{A}_{1,M}}{\sinh\mu_M b} - \frac{\bar{\psi}_{1, M}}{\tanh\mu_M b}\right) \\
-%
-\frac{\mathbb{A}_{2,0} - \bar{\psi}_{2,0}}{b} & \scriptstyle\mu_1 \left(\frac{\mathbb{A}_{2,1}}{\sinh\mu_1 b} - \frac{\bar{\psi}_{2, 1}}{\tanh\mu_1 b}\right) & \scriptstyle\mu_2 \left(\frac{\mathbb{A}_{2,2}}{\sinh\mu_2 b} - \frac{\bar{\psi}_{2, 2}}{\tanh\mu_2 b}\right) & ... & \scriptstyle\mu_M \left(\frac{\mathbb{A}_{2,M}}{\sinh\mu_M b} - \frac{\bar{\psi}_{2, M}}{\tanh\mu_M b}\right) \\
-%
-... & ... & ... & \ddots & ... \\
-%
-%
-\frac{\mathbb{A}_{N_1,0} - \bar{\psi}_{N_1,0}}{b} & \scriptstyle\mu_1 \left(\frac{\mathbb{A}_{N_1,1}}{\sinh\mu_1 b} - \frac{\bar{\psi}_{N_1, 1}}{\tanh\mu_1 b}\right) & \scriptstyle\mu_2 \left(\frac{\mathbb{A}_{N_1,2}}{\sinh\mu_2 b} - \frac{\bar{\psi}_{N_1, 2}}{\tanh\mu_2 b}\right) & ... & \scriptstyle\mu_M \left(\frac{\mathbb{A}_{N_1,M}}{\sinh\mu_M b} - \frac{\bar{\psi}_{N_1, M}}{\tanh\mu_M b}\right)
-\end{bmatrix}
-\end{align}
-
-Logo:
-\begin{align}
-\mathbf{r} = \mathbf{T}\mathbf{\bar{y}}
-\end{align}
-
-ou
-\begin{align}
-\mathbf{\bar{y}} = \mathbf{T}^{+}\mathbf{r}
-\end{align}
-onde $\mathbf{T}^{+}$ é a pseudo-inversa (inversa generalizada de Moore-Penrose).
-
-Tikhonov:
-\begin{align}
-\norm{\mathbf{T}^{+}\mathbf{r} - \mathbf{\bar{y}}}^2 + \delta^2\norm{\mathbf{r}}^2
-\end{align}
-ou
-\begin{align}
-\norm{
-\begin{bmatrix}
-\mathbf{T}^{+}\mathbf{r} \\ \delta\mathbf{I}
-\end{bmatrix}
-\mathbf{r}
--
-\begin{bmatrix}
-\mathbf{\bar{y}} \\ 0
-\end{bmatrix}
-}^2
+& \int_0^a Y(x)dx = a \bar{y}_0 + \frac{a}{\pi}\sum_{m=1}^M \bar{y}_m \frac{1 - (-1)^m}{m} \\ \nonumber \\
+& \int_0^a Y(x)\cos\mu_n dx =\frac{a}{\pi}\sum_{m=1,m\ne n}^M \bar{y}_m \frac{m[1 - (-1)^{m+n}]}{m^2 - n^2}
 \end{align}

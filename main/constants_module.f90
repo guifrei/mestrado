@@ -16,7 +16,7 @@ module constants_module
     integer, parameter :: delta_m = 60      !incremento no numero de termos
     double precision, parameter :: reltol = 0.0 !1.0D-8
     !    double precision, dimension(*), parameter :: pts = [0.0D0, a/5.0, a/4.0, 2.0*a/5.0, a/2.0, 3.0*a/5.0, 3.0*a/4.0, 4.0*a/5.0, a]
-    double precision, dimension(*), parameter :: pts = [0.0D0, a/4.0, a/2.0, 3.0*a/4.0, a]
+    double precision, dimension(*), parameter :: pts = [0.0D0, a/4.0, a/3.0, a/2.0, 2.0*a/3.0, 3.0*a/4.0, a]
     !        double precision, dimension(*), parameter :: pts = [0.0D0, a]
 
 
