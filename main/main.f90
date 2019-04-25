@@ -205,7 +205,8 @@ program main
                 m_delta_temperatura = 0.0
 
 
-                call integrate_synthetic_temperatures(vx, vy, tnmax)
+                !call integrate_synthetic_temperatures(vx, vy, tnmax)
+                call least_squares_for_Y(vx, vy)
 
                 do j = 0, N
                     reciprocity_f(j) = calc_reciprocity_f(j)
