@@ -53,6 +53,15 @@ contains
         end if
     end subroutine
 
+    subroutine regularize(vx, vy, sz)
+        integer, intent(in) :: sz
+        double precision, dimension(sz), intent(in) :: vx
+        double precision, dimension(sz), intent(inout) :: vy
+        double precision, dimension(sz) :: tmp, rw, res
+
+
+    end subroutine
+
     subroutine integrate_synthetic_temperatures(vx, sample_y, sz)
         integer, intent(in) :: sz
         double precision, dimension(sz), intent(in) :: vx

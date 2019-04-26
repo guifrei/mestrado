@@ -5,6 +5,31 @@ module netlib_module
     common /rkcom7/  outch, mcheps, dwarf
 
     interface
+        subroutine lowesd(versio, iv, liv, lv, v, d, n, f, ideg, nvmax, setlf)
+            logical :: setlf
+            integer :: d, ideg, liv, lv, n, nvmax, versio
+            integer, dimension(liv) :: iv
+            double precision :: f
+            double precision, dimension(lv) :: v
+        end subroutine
+
+        subroutine lowesb(xx, yy, ww, diagl, infl, iv, liv, lv, wv)
+            logical :: infl
+            integer, dimension(*) :: iv
+            double precision, dimension(*) :: diagl, wv, ww, xx, yy
+        end subroutine
+
+        subroutine lowese(iv, liv, lv, wv, m, z, s)
+            integer :: m
+            integer :: liv
+            integer, dimension(liv) :: iv
+            double precision, dimension(m) :: s
+            double precision, dimension(m, 1) :: z
+            double precision, dimension(*) :: wv
+        end subroutine
+    end interface
+
+    interface
         subroutine mpinv(sz, n, m, minnm, a, ainv, s, e, u, v, work, irank, ierr)
             integer, intent(in) :: sz, n, m, minnm
             double precision, intent(in), dimension(sz, m) :: a

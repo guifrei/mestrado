@@ -200,6 +200,7 @@ program main
                 close(1)
 
                 call add_error(vy, stdev)
+                call regularize(vx, vy, tnmax)
 
                 m_fluxo_calor = 0.0
                 m_delta_temperatura = 0.0
