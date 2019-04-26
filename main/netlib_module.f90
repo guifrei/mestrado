@@ -21,7 +21,7 @@ module netlib_module
 
         subroutine lowese(iv, liv, lv, wv, m, z, s)
             integer :: m
-            integer :: liv
+            integer :: liv, lv
             integer, dimension(liv) :: iv
             double precision, dimension(m) :: s
             double precision, dimension(m, 1) :: z
