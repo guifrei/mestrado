@@ -171,3 +171,29 @@
 		\caption*{(#4) Perfil #3}
 	\end{minipage}
 }%
+
+\newcommand{\graficosmetricas}[4]{%
+	\begin{minipage}[t][6cm][c]{4.5cm}
+	\centering		
+	\begin{tikzpicture}[scale=0.75]
+	\begin{axis}[
+	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	axis lines=left,
+	ymode = log,
+	scaled x ticks = false,
+	scaled y ticks = false,
+	x tick label style={/pgf/number format/fixed},
+	y tick label style={/pgf/number format/fixed},
+	anchor=east,  
+	width=7cm,
+	height=5cm,
+	label style={font=\footnotesize},
+	xlabel = $x$(m),
+	ylabel= $T_1\big|_{\Gamma_0}$ (\celsius),
+	ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+	\addplot[color=blue,mark=triangle,mark options={mark size=2.0pt}] table[x index=0,y index=#4] {../data/erro_rms_interface_0#1_conductance_0#2_stdev_0#3.dat};				
+	\end{axis}
+	\end{tikzpicture}
+	%\caption*{(#3) Perfil #2}
+	\end{minipage}
+}%

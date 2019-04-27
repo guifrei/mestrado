@@ -53,15 +53,6 @@ contains
         end if
     end subroutine
 
-    subroutine regularize(vx, vy, sz)
-        integer, intent(in) :: sz
-        double precision, dimension(sz), intent(in) :: vx
-        double precision, dimension(sz), intent(inout) :: vy
-        double precision, dimension(sz) :: tmp, rw, res
-
-
-    end subroutine
-
     subroutine integrate_synthetic_temperatures(vx, sample_y, sz)
         integer, intent(in) :: sz
         double precision, dimension(sz), intent(in) :: vx
@@ -164,14 +155,6 @@ contains
         close(1)
 
         call add_error(sample_y, stdev)
-
-        open(unit = 1, file = '/home/cx3d/mestrado/' // &
-            'data/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx // &
-            '_stdev_'// str_stdev // '.dat')
-        do k = 1, tnmax
-            write(1, *)vx(k), sample_y(k)
-        end do
-        close(1)
 
         w = 1.0
 
