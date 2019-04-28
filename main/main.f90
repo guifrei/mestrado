@@ -22,6 +22,7 @@ program main
     double precision :: fluxo_calor_teorico, delta_temperatura_teorico, norm_f, norm_t
     integer, target, dimension(2) :: f_args
     integer :: nmax_delta_temperatura, nmax_fluxo_calor
+    double precision :: start, finish
 
 
     !    block
@@ -136,7 +137,13 @@ program main
         write(str_idx, '(I2.2)') interface_idx
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
+
+        !===>
+        call cpu_time(start)
         call calculate_reciprocity_coefficients(interface_idx)
+        call cpu_time(finish)
+!        write(*, *)'Elapsed time = ', (finish - start), ' s'
+        !===>
 
         open(unit = 1, file='/home/cx3d/mestrado/' // &
             'data/media_beta_gamma_interface_'//str_idx//'.dat')
@@ -219,10 +226,13 @@ program main
                 end do
                 close(1)
 
+                call cpu_time(start)
                 do j = 0, N
                     reciprocity_f(j) = calc_reciprocity_f(j)
                     reciprocity_g(j) = calc_reciprocity_g(j)
                 end do
+                call cpu_time(finish)
+!                write(*, *)'    Elapsed time = ', (finish - start)*1000.0, ' ms'
 
                 open(unit = 10, file = '/home/cx3d/mestrado/' // &
                     'data/erro_rms_interface_'//str_idx//'_conductance_'//str_cdx // &

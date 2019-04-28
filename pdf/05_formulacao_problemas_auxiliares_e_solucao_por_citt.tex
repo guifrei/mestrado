@@ -49,7 +49,7 @@ Assim como as funções $\psi_j$, elas também ficarão em aberto por enquanto.
 Os conjuntos de equações \eqref{funcao_F_harm_T1} a \eqref{funcao_F_cc_T1_5} e \eqref{funcao_G_harm_T1} a \eqref{funcao_G_cc_grad_T1}, numa primeira análise,
 não estão restritas a algum sistema de coordenadas em particular. Por outro lado, a seção transversal do corpo de prova tem formato retangular; por isso,
 a fim de favorecer o uso da Técnica da Transformada Integral Clássica, a ser descrita na próxima seção,
-será feita a formulação do problemas auxiliares em termos de coordenadas cartesianas e a redefinição do domínio físico sobre o qual essess problemas
+será feita a formulação do problemas auxiliares em termos de coordenadas cartesianas e a redefinição do domínio físico sobre o qual esses problemas
 serão resolvidos.
 
 \subsubsection{A Técnica da Transformada Integral Clássica}
@@ -130,7 +130,7 @@ De acordo com \cite{livro_cotta}, a solução dos problemas via CITT requer a ap
 	\item Desenvolver o par transformada-inversa apropriado;
 	\item Aplicar a transformação integral à equação diferencial parcial do problema de valor de contorno original, empregando as condições de contorno no
 	desenvolvimento dos cálculos;
-	\item Resolver o sistema de equações diferenciais ordinárias desacopladas; e
+	\item Resolver o sistema de equações diferenciais ordinárias desacopladas gerado a partir da transformação integral; e
 	\item Aplicar a fórmula de inversão previamente estabelecida no passo (ii) para construir a solução completa do problema.
 \end{enumerate}
 
@@ -201,7 +201,7 @@ seja também o vetor tangente $\mathbf{T}$ na mesma posição, em relação à s
 
 A curva que representa $\Gamma$ pode ser escrita de forma paramétrica como segue:
 \begin{align}
-\Gamma(t) = x(t) \mathbf{a}_x + y(t) \mathbf{a}_y \label{forma_parametrica}
+\Gamma(t) = x(t) \mathbf{a}_x + y(t) \mathbf{a}_y, \quad 0 \le t \le a \label{forma_parametrica}
 \end{align}
 onde $\mathbf{a}_x$ e $\mathbf{a}_y$ são os vetores unitários da base canônica do sistema cartesiano.
 
@@ -327,9 +327,8 @@ que envolverão respectivamente os subdomínios originais e que efetivamente coi
 satisfazerem as condições de contorno dos subdomínios originais.
 Desse modo, as soluções analíticas das funções $F_{1, j}$ e $G_{1, j}$ serão obtidas a partir do domínio estendido representado na figura \ref{fig5}, enquanto que
 as soluções analíticas das funções $F_{2, j}$ serão obtidas a partir do domínio estendido representado na figura \ref{fig6}.
-\newpage
 
-\begin{figure}[h!b]
+\begin{figure}[H]
 	\begin{center}
 		\begin{tikzpicture}[scale=0.7]
 		
@@ -391,7 +390,7 @@ as soluções analíticas das funções $F_{2, j}$ serão obtidas a partir do do
 	\end{center}
 \end{figure}
 
-\begin{figure}[h!b]
+\begin{figure}[H]
 	\begin{center}
 		\begin{tikzpicture}[scale=0.7]
 		
@@ -843,7 +842,9 @@ deve ser truncado até uma quantidade finita de termos representada por $M$, de 
 As relações \eqref{compacta_aprox_1} e \eqref{compacta_aprox_2} são válidas para todo o domínio contínuo $0 \le x \le a$, e são funções apenas de $x$. Para eliminar a dependência com a variável $x$, pode-se aplicar a transformação integral nessas equações:
 \begin{align}
 & \sum_{m = 0}^M \mathbb{A}_{j,m}\int_0^a a_m(x)X(\mu_n, x)dx + \sum_{m = 0}^M \mathbb{D}_{j,m} \int_0^a b_m(x)X(\mu_n, x)dx \approx \nonumber \\ 
-& \quad\quad\quad\quad\int_0^a c_{j}(x)X(\mu_n, x)dx \label{compacta_aprox_1_integr} \\
+& \quad\quad\quad\quad\int_0^a c_{j}(x)X(\mu_n, x)dx \label{compacta_aprox_1_integr}
+\end{align}
+\begin{align}
 & \sum_{m = 0}^M \mathbb{A}_{j,m}\int_0^a p_m(x)X(\mu_n, x)dx + \sum_{m = 0}^M \mathbb{D}_{j,m} \int_0^a q_m(x)X(\mu_n, x)dx \approx \nonumber \\ 
 & \quad\quad\quad\quad\int_0^a r_{j}(x)X(\mu_n, x)dx  \label{compacta_aprox_2_integr}
 \end{align}
@@ -865,10 +866,14 @@ onde
 \mathbf{M} =
 \begin{bmatrix}
 \bar{a}_{0,0} & \bar{b}_{0,0} & \bar{a}_{0,1} & \bar{b}_{0,1} &  \ldots & \bar{a}_{0,M} & \bar{b}_{0,M} \\
+\bar{p}_{0,0} & \bar{q}_{0,0} & \bar{p}_{0,1} & \bar{q}_{0,1} &  \ldots & \bar{p}_{0,M} & \bar{q}_{0,M} \\
 \bar{a}_{1,0} & \bar{b}_{1,0} & \bar{a}_{1,1} & \bar{b}_{1,1} &  \ldots & \bar{a}_{1,M} & \bar{b}_{1,M} \\
+\bar{p}_{1,0} & \bar{q}_{1,0} & \bar{p}_{1,1} & \bar{q}_{1,1} &  \ldots & \bar{p}_{1,M} & \bar{q}_{1,M} \\
 \bar{a}_{2,0} & \bar{b}_{2,0} & \bar{a}_{2,1} & \bar{b}_{2,1} &  \ldots & \bar{a}_{2,M} & \bar{b}_{2,M} \\
+\bar{p}_{2,0} & \bar{q}_{2,0} & \bar{p}_{2,1} & \bar{q}_{2,1} &  \ldots & \bar{p}_{2,M} & \bar{q}_{2,M} \\
 \ldots & \ldots & \ldots & \ldots & \ddots & \ldots & \ldots\\
 \bar{a}_{M,0} & \bar{b}_{M,0} & \bar{a}_{M,1} & \bar{b}_{M,1} &  \ldots & \bar{a}_{M,M} & \bar{b}_{M,M} \\
+\bar{p}_{M,0} & \bar{q}_{M,0} & \bar{p}_{M,1} & \bar{q}_{M,1} &  \ldots & \bar{p}_{M,M} & \bar{q}_{M,M}
 \end{bmatrix}
 \end{align}
 
@@ -951,7 +956,6 @@ Calculando separadamente as derivadas parciais de $F_{1, j}$ e truncando o somat
 \end{align}
 
 Substituindo em \eqref{expansao_beta} as expressões \eqref{derivada_parcial_F1_x} e \eqref{derivada_parcial_F1_y} avaliadas em $y = w(x)$, obtém-se:
-\newpage
 \begin{align}
 \beta_j(x) = & \frac{k_1}{\sqrt{1 + w'(x)^2}}\left\lbrace \frac{\mathbb{A}_{j,0} - \bar{\psi}_{j,0}}{ab} \right.  + \nonumber \\
 \frac{2}{a}\sum_{m=1}^M \mu_m & \left[ \mathbb{A}_{j,m}\frac{\cos\mu_m x\cosh\mu_m v(x) - w'(x)\sin\mu_m x\sinh\mu_m v(x)}{\sinh\mu_m b} \right. - \nonumber \\
@@ -1195,7 +1199,7 @@ As relações \eqref{expressao_relaciona_psi} e \eqref{expressao_relaciona_zeta}
 \psi_j(x) = \frac{1}{\norm{\nu_j}} \hat{\psi}_j(x) - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \psi_k(x), \quad m=0,1,2,\ldots \label{expressao_relaciona_phi}
 \end{align}
 
-Os resultados encontrados permitem esboçar um algoritmo básico para determinação das funções $F_{1,j}$ e $\beta_j$, necessárias para determinação da condutância térmica de contato, expressa pela equação \eqref{equacao_definicao_f_r_expl}:
+Os resultados encontrados permitem esboçar um algoritmo básico para determinação das funções $F_{1,j}$ e $\beta_j$, necessárias para determinação da estimativa do salto de temperatura na interface de contato, expressa pela equação \eqref{resultado_1}:
 \begin{enumerate}
 	\item Gerar a matriz $\mathbf{M}$ do sistema linear referente às equações \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2};
 	\item Escolher um conjunto de funções linearmente independentes $\hat{\psi}_j(x), j=0,1,\ldots,N_1$;
@@ -1228,7 +1232,7 @@ onde
 \upsilon_j = \hat{\gamma}_j - \displaystyle\sum_{k = 0}^{j - 1} \langle \hat{\gamma}_j, \gamma_k\rangle\gamma_k
 \end{align}
 
-Pode-se então adaptar o algoritmo básico elaborado para as funções $F_{1,j}$ e $\beta_j$, a fim de obter as funções $G_{1,j}$ e $\gamma_j$, necessárias para determinação da condutância térmica de contato, expressa pela equação \eqref{equacao_definicao_f_r_expl}:
+Pode-se então adaptar o algoritmo básico elaborado para as funções $F_{1,j}$ e $\beta_j$, a fim de obter as funções $G_{1,j}$ e $\gamma_j$, necessárias para determinação da estimativa do fluxo de calor na interface de contato, expressa pela equação \eqref{resultado_2}:
 \begin{enumerate}
 	\item Gerar a matriz $\mathbf{M}$ do sistema linear referente à equação \eqref{sistema_para_coeficientes_20};
 	\item Escolher um conjunto de funções linearmente independentes $\hat{\phi}_j(x), j=0,1,\ldots,N_2$;

@@ -1,5 +1,32 @@
 \section{Conclusões}
 
-Este trabalho apresentou o desenvolvimento de uma solução analítica para o problema inverso de transferência de calor para a estimativa da distribuição da condutância térmica de contato ao longo da interface de um corpo de seção reta constituído de dois materiais, empregando o método dos Funcionais de Reciprocidade aliado à Técnica da Transformada Integral Clássica. Estas ferramentas foram aplicadas no trabalho desenvolvido por \cite{tese_padilha}, em que a interface de contato consistia em uma superfície plana paralela 
+Este trabalho apresentou o desenvolvimento de uma solução analítico-numérica para o problema inverso de transferência de calor correspondente à estimativa da distribuição da condutância térmica de contato ao longo da interface de contato irregular de um corpo de seção reta retangular constituído de dois materiais, empregando o método dos Funcionais de Reciprocidade aliado à Técnica da Transformada Integral Clássica. Estas ferramentas foram originalmente aplicadas no trabalho desenvolvido por \cite{tese_padilha}, em que a interface de contato consistia em uma superfície plana horizontal. Assim como naquele trabalho, a técnica desenvolvida caracterizou-se por ser não iterativa e não intrusiva.
 
-O método proposto previu de forma consideravelmente
+O problema inverso analisado foi formulado em regime permanente, conforme proposto por \cite{reciproc_2}, e estendido em relação à configuração original, substituindo a interface de contato plana horizontal por uma interface cuja curva é representada por uma equação $w(x)$. A condutância térmica de contato foi levantada de forma indireta, através do cálculo da razão entre as estimativas de fluxo de calor e de salto de temperatura na interface de contato.
+
+As estimativas de cada uma dessas funções foram obtidas através da técnica do funcional de reciprocidade, aplicada a duas famílias de funções auxiliares, obtidas através da solução analítica dos respectivos problemas auxiliares, via transformação integral clássica. Cada problema foi resolvido para o domínio completo composto pelos dois materiais e a respectiva solução foi particularizada para o subdomínio correspondente. Através desta abordagem, contornou-se a dificuldade associada à solução de um problema difusivo via transformação integral quando o domínio de trabalho não é regular.
+
+A partir das funções auxiliares obtidas no passo anterior, foi gerado um novo conjunto de funções auxiliares ortonormais, através do algoritmo de Gram-Schmidt, uma técnica normalmente aplicada a vetores "clássicos", mas que pode ser aplicada a espaços lineares para os quais se defina uma operação consistente de produto interno. 
+
+Finalmente, as estimativas de salto de temperatura e de fluxo de calor na interface foram representadas como combinações lineares destas funções ortonormais, em que os coeficientes são exatamente os funcionais de reciprocidade. Os funcionais, por sua vez, puderam ser calculados através de expressões analíticas simples envolvendo medidas de temperatura obtidas no exterior do corpo de prova.
+
+Para verificar a eficácia do método, foram resolvidos vários problemas-teste, combinando diferentes geometrias de interface e diferentes perfis teóricos de condutância térmica de contato. As medidas experimentais de temperatura na superfície superior do corpo de prova foram simuladas a partir da solução do problema direto correspondente. Diferentes níveis de ruido foram somados às medidas sintéticas de temperatura, a fim de avaliar seus efeitos na estimativa da condutância térmica de contato.
+
+As estimativas encontradas para os problemas-teste mostraram-se muito boas, especialmente para os casos em que não se adicionavam erros às medições experimentais de temperatura. Nos outros casos, as estimativas exibiram um comportamento qualitativo consistente com o comportamento teórico esperado.
+
+Os resultados obtidos e as análises efetuadas demonstraram o enorme potencial do método do Funcional de Reciprocidade em recuperar, de forma rápida e eficaz, as distribuições de salto de temperatura e fluxo de calor na interface de contato, e consequentemente o perfil de condutância térmica de contato. Para aplicações práticas na indústria, tais como identificação de falhas em processos de fabricação ou verificação da qualidade de isolamentos térmicos, estes resultados podem ser extremamente vantajosos.
+
+
+\subsection{Sugestões para trabalhos futuros}
+
+De todos as questões levantadas ao longo do desenvolvimento do trabalho, talvez a mais desafiadora seja a grande influência dos erros de medição na qualidade da estimativa da condutância térmica de contato. As simulações realizadas forneceram excelentes resultados para os casos em que não havia ruídos nas temperaturas experimentais; infelizmente tais condições não ocorrem na prática. Técnicas de regularização ou de filtragem de ruídos, suavizando as medidas experimentais de temperatura, e aproximando os cenários de estudo de situações ideais, poderiam contribuir na melhoria das estimativas dos perfis de salto de temperatura e de fluxo de calor na interface de contato, fornecendo perfis de condutância de contato mais confiáveis e menos sensíveis à quantidade de parcelas usadas nos somatórios de cálculo das estimativas.
+
+A geometria da interface de contato é, de certa forma, um fator limitante à aplicação do método. Interfaces cuja curva representativa cruze o plano $yz$ em mais de um ponto (ou seja, que "passem sobre si mesmas"), ou que possuam descontinuidades ou "degraus" (pontos em que a derivada $w'(x)$ seja infinita) introduzem dificuldades, devido à natureza matemática do desenvolvimento. O caso da interface com descontinuidade poderia ser contornado representando a vizinhança da descontinuidade através de uma função \textit{sigmoide}, definida como:
+\begin{align}
+\sigma(x) = \frac{1}{1 + e^{-\gamma x}}
+\end{align}
+onde o parâmetro $\gamma$ é uma constante real positiva arbitrariamente grande.
+
+Os problemas analisados nesta dissertação foram bidimensionais em regime permanente. A extensão do método para geometrias tridimensionais com superfícies arbitrárias parametrizáveis em duas coordenadas é imediata. Da mesma forma, uma modificação do problema original formulado neste trabalho para uma versão em regime transiente, mais adequado às aplicações práticas de engenharia, também é possível. Assim como aconteceu na condução deste estudo, tais propostas, pelo menos em tese, também levariam a resultados pelo menos tão bons quanto os encontrados aqui.
+
+Por fim, uma validação prática, através da construção de um aparato experimental implementando alguma das interfaces de contato analisadas, seria um elemento agregador ao método e contribuiria para atestar sua robustez e eficácia.
