@@ -87,7 +87,7 @@ Para fins de verificação, as mesmas combinações foram resolvidas numericamen
 \epsilon_i = 100\abs{\frac{T\textsuperscript{COMSOL}_i - T\textsuperscript{CITT}_i}{T\textsuperscript{COMSOL}_i}}, i \in \Gamma_0
 \end{align}
 
-\begin{figure}[h!b]
+\begin{figure}[H]
 	\begin{minipage}[t][8cm][c]{\textwidth}
 		\centering
 		\begin{tikzpicture}
@@ -305,7 +305,7 @@ Os gráficos utilizados na análise estão agrupados por geometria de interface;
 A primeira geometria de interface de contato para a qual foram realizadas estimativas de condutância térmica de contato é a referente ao índice 1 na tabela \ref{tabela_interfaces}. Esse formato de interface, basicamente uma superfície plana e horizontal paralela às bases do corpo de prova de seção reta retangular (cf. Figura \ref{figura_interfaces}), corresponde exatamente à configuração inicialmente estudada por \cite{reciproc_3}, e que culminou no trabalho desenvolvido por \cite{tese_padilha}. Esta configuração foi o ponto de partida das primeiras pesquisas envolvendo a aplicação do método dos Funcionais de Reciprocidade na estimativa da condutância térmica de contato. Desse modo, este problema-teste serviu como base de referência para verificação da metodologia proposta neste trabalho.
 
 As estimativas para o salto de temperatura ao longo da interface de contato, correspondentes aos três perfis teóricos de CTC, estão plotadas nos gráficos da Figura \ref{figura_delta_temperaturas_interface_01}. Verificou-se uma excelente concordância entre as estimativas e os valores exatos; para o caso específico em que o desvio padrão é zero, as estimativas praticamente coincidiram com as medidas sintéticas. Notou-se também que as regiões em que o salto de temperatura atinge valores maiores correspondem às regiões onde a condutância térmica é menor. Assim, o comportamento da distribuição estimada do salto de temperatura mostrou-se consistente com o comportamento teórico esperado.
-\begin{figure}[h!b]
+\begin{figure}[H]
 	\graficoestimativa{delta_temperatura}{1}{1}{20}{06}{02}{a}{\Delta T\big|_{\Gamma}}{\celsius}
 	\graficoestimativa{delta_temperatura}{1}{2}{20}{04}{04}{a}{\Delta T\big|_{\Gamma}}{\celsius}
 	\graficoestimativa{delta_temperatura}{1}{3}{20}{06}{03}{a}{\Delta T\big|_{\Gamma}}{\celsius}
@@ -315,7 +315,7 @@ As estimativas para o salto de temperatura ao longo da interface de contato, cor
 
 As estimativas para o fluxo de calor ao longo da interface de contato, correspondentes aos três perfis teóricos de CTC, estão plotadas nos gráficos da Figura \ref{figura_fluxo_calor_interface_01}. Novamente pôde ser observada uma boa coerência entre as estimativas e os valores exatos. No caso $\sigma = \text{0,0}\celsius$ em especial, nota-se a manifestação de um fenômeno semelhante ao efeito Gibbs\citep{livro_boyce} para os perfis de condutância teóricos 1 e 3, que apresentam descontinuidades. O comportamento qualitativo do fluxo de calor também foi consistente com o esperado; de fato, fluxos de calor mais altos correspondiam a regiões em que a condutância térmica era maior.
  
-\begin{figure}[h!b]
+\begin{figure}[H]
 	\graficoestimativa{fluxo_calor}{1}{1}{20}{06}{04}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
 	\graficoestimativa{fluxo_calor}{1}{2}{20}{04}{04}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
 	\graficoestimativa{fluxo_calor}{1}{3}{20}{06}{04}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
@@ -324,7 +324,7 @@ As estimativas para o fluxo de calor ao longo da interface de contato, correspon
 \end{figure}
 
 Uma vez conhecidas as estimativas de fluxo de calor e salto de temperatura na interface de contato, a razão entre essas grandezas em cada ponto $x$ do domínio da interface ($0 \le x \le a$, onde $a$ é o comprimento do corpo de prova) fornece a estimativa do perfil de condutância térmica de contato, conforme a definição apresentada na equação \eqref{eq:definicao_3}. Desse modo, chega-se aos resultados representados graficamente na Figura \ref{figura_ctc_interface_01}\footnote{Os valores negativos de condutância térmica de contato, correspondentes aos perfis 1 e 3, não possuem significado físico, sendo consequência do comportamento oscilatório das funções $\psi_j(x)$ e $\phi_j(x)$ e das descontinuidades nestes perfis.}.
-\begin{figure}[h!b]
+\begin{figure}[H]
 	\graficoctc{01}{01}{1}{a}
 	\graficoctc{01}{02}{2}{b}
 	\graficoctc{01}{03}{3}{c}
