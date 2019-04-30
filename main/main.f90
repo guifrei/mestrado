@@ -63,6 +63,7 @@ program main
     wlist(12) = c_funloc(w12)
     wlist(13) = c_funloc(w13)
     wlist(14) = c_funloc(w14)
+    wlist(15) = c_funloc(w15)
 
     dwlist(1) = c_funloc(dw1)
     dwlist(2) = c_funloc(dw2)
@@ -78,6 +79,7 @@ program main
     dwlist(12) = c_funloc(dw12)
     dwlist(13) = c_funloc(dw13)
     dwlist(14) = c_funloc(dw14)
+    dwlist(15) = c_funloc(dw15)
 
     hlist(1) = c_funloc(h1)
     hlist(2) = c_funloc(h2)
@@ -142,7 +144,7 @@ program main
         call cpu_time(start)
         call calculate_reciprocity_coefficients(interface_idx)
         call cpu_time(finish)
-!        write(*, *)'Elapsed time = ', (finish - start), ' s'
+        !        write(*, *)'Elapsed time = ', (finish - start), ' s'
         !===>
 
         open(unit = 1, file='/home/cx3d/mestrado/' // &
@@ -232,7 +234,7 @@ program main
                     reciprocity_g(j) = calc_reciprocity_g(j)
                 end do
                 call cpu_time(finish)
-!                write(*, *)'    Elapsed time = ', (finish - start)*1000.0, ' ms'
+                !                write(*, *)'    Elapsed time = ', (finish - start)*1000.0, ' ms'
 
                 open(unit = 10, file = '/home/cx3d/mestrado/' // &
                     'data/erro_rms_interface_'//str_idx//'_conductance_'//str_cdx // &

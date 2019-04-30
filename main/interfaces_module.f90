@@ -18,8 +18,10 @@ module interfaces_module
         end function
     end interface
 
-    type(c_funptr), dimension(14) :: wlist
-    type(c_funptr), dimension(14) :: dwlist
+    integer, parameter :: wmax = 15
+
+    type(c_funptr), dimension(wmax) :: wlist
+    type(c_funptr), dimension(wmax) :: dwlist
 
 contains
     function w1(x) result(r)
@@ -306,6 +308,37 @@ contains
         double precision :: r
 
         r = 0.0
+    end function
+
+    function w15(x) result(r)
+        double precision, intent(in) :: x
+        double precision :: r
+        double precision :: deltax = a/100.0
+        double precision :: deltaw = b/5.0
+
+        if (x <= a/2.0 - deltax) then
+            r = b/2.0 - deltaw
+        else if (x <= a/2.0 + deltax) then
+            r = b/2.0 - deltaw + (deltaw/deltax)*(x - a/2.0 + deltax)
+        else
+            r = b/2.0 + deltaw
+        end if
+
+    end function
+
+    function dw15(x) result(r)
+        double precision, intent(in) :: x
+        double precision :: r
+        double precision :: deltax = a/100.0
+        double precision :: deltaw = b/5.0
+
+        if (x <= a/2.0 - deltax) then
+            r = 0.0
+        else if (x <= a/2.0 + deltax) then
+            r = deltaw/deltax
+        else
+            r = 0.0
+        end if
     end function
 
 end module interfaces_module

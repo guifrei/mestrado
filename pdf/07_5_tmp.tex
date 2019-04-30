@@ -1,4 +1,65 @@
 \section{oops}
 
+\begin{align}
+w(x)  =\left\lbrace
+\begin{array}{ll}
+w_1, & 0 \le x < \displaystyle\frac{a}{2} - \Delta x \\
+w_1 + \displaystyle\frac{w_2 - w_1}{2\Delta x}\left(x - \frac{a}{2} + \Delta x\right), & \displaystyle\frac{a}{2} - \Delta x \le x \le \displaystyle\frac{a}{2} + \Delta x\\
+w_2, & \displaystyle\frac{a}{2} + \Delta x < x \le a \\
+\end{array}
+\right.
+\end{align}
 
+\begin{align}
+w'(x)  =\left\lbrace
+\begin{array}{ll}
+0, & 0 \le x < \displaystyle\frac{a}{2} - \Delta x \\
+\displaystyle\frac{w_2 - w_1}{2\Delta x}, & \displaystyle\frac{a}{2} - \Delta x \le x \le \displaystyle\frac{a}{2} + \Delta x\\
+0, & \displaystyle\frac{a}{2} + \Delta x < x \le a \\
+\end{array}
+\right.
+\end{align}
 
+\begin{align}
+\int_0^a f(w(x))g(x)dx = & \int_0^{\frac{a}{2} - \Delta x} f(w_1)g(x)dx
++ \nonumber \\
+& \int_{\frac{a}{2} - \Delta x}^{\frac{a}{2} + \Delta x} f\left(w_1 + \frac{w_2 - w_1}{2\Delta x}\left(x - \frac{a}{2} + \Delta x\right)\right) g(x)dx
++ \nonumber \\
+&
+\int_{\frac{a}{2} + \Delta x}^a f(w_2)g(x)dx = \nonumber \\
+& f(w_1) \int_0^{\frac{a}{2} - \Delta x} g(x)dx
++ \nonumber \\
+& f\left(w_1 + \frac{w_2 - w_1}{2\Delta x}\left(\frac{a}{2} + \xi\Delta x - \frac{a}{2} + \Delta x\right)\right) g\left(\frac{a}{2} + \xi\Delta x\right) (2\Delta x)
++ \nonumber \\
+&
+f(w_2)\int_{\frac{a}{2} + \Delta x}^a g(x)dx = \nonumber \\
+& f(w_1) \int_0^{\frac{a}{2} - \Delta x} g(x)dx
++ \nonumber \\
+& f\left(w_1 + \frac{w_2 - w_1}{2}(\xi + 1)\right) g\left(\frac{a}{2} + \xi\Delta x\right) (2\Delta x)
++ \nonumber \\
+&
+f(w_2)\int_{\frac{a}{2} + \Delta x}^a g(x)dx
+\end{align}
+
+No limite $\Delta x \to 0$:
+\begin{align}
+\int_0^a f(w(x))g(x)dx = 
+& f(w_1) \int_0^{\frac{a}{2}} g(x)dx
++ 
+f(w_2)\int_{\frac{a}{2}}^a g(x)dx
+\end{align}
+
+\newpage
+\begin{align}
+\int_0^a f(w'(x))g(x)dx = & \int_{\frac{a}{2} - \Delta x}^{\frac{a}{2} + \Delta x} f\left(\frac{w_2 - w_1}{2\Delta x}\right) g(x)dx \nonumber \\
+= & f\left(\frac{w_2 - w_1}{2\Delta x}\right) g\left(\frac{a}{2} + \xi\Delta x\right) (2\Delta x)
+\end{align}
+
+No limite $\Delta x \to 0$:
+\begin{align}
+\int_0^a f(w'(x))g(x)dx = & 2 g\left(\frac{a}{2}\right) \lim_{\Delta x \to 0} f\left(\frac{w_2 - w_1}{2\Delta x}\right) \Delta x
+\end{align}
+ou
+\begin{align}
+\int_0^a f(w'(x))g(x)dx = & g\left(\frac{a}{2}\right) \lim_{\Delta x \to 0} f\left(\frac{w_2 - w_1}{\Delta x}\right) \Delta x
+\end{align}
