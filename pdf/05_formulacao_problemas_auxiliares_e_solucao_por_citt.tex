@@ -638,8 +638,15 @@ A combinação linear destas funções pode ser escrita na forma:
 & \bar{F}_{1,j,m}(y) = \mathbb{A}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \mathbb{B}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \label{solucao_temporaria_F1}\\ \nonumber \\
 & \bar{F}_{2,j,m}(y) = \mathbb{C}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \mathbb{D}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \label{solucao_temporaria_F2}
 \end{align} 
-onde $\mathbb{A}_{j,m}, \mathbb{B}_{j,m}, \mathbb{C}_{j,m}$ e $\mathbb{D}_{j,m}$ são constantes a determinar. Os argumentos das funções hiperbólicas em \eqref{solucao_temporaria_F1} e \eqref{solucao_temporaria_F2} escritos como $b - y$ também podem ser entendidos como combinações lineares das soluções \eqref{basic_1} e \eqref{basic_2}; essa forma de expressar as soluções facilitará a determinação dos coeficientes desta expressão, conforme será visto a seguir.
-
+onde $\mathbb{A}_{j,m}, \mathbb{B}_{j,m}, \mathbb{C}_{j,m}$ e $\mathbb{D}_{j,m}$ são constantes a determinar\footnote{A expressão \eqref{solucao_temporaria_F1}, através da expansão dos argumentos das funções hiberbólicas, pode ser reescrita como:
+	
+	\begin{align*}
+	& \bar{F}_{1,j,m}(y) = \left( \frac{\mathbb{B}_{j,m} - \mathbb{A}_{j,m} \cosh\mu_m b}{\sinh\mu_m b}\right)\sinh\mu_m y + \frac{\mathbb{A}_{j,m}\sinh\mu_m b}{\sinh\mu_m b}\cosh\mu_m y
+	\end{align*}	
+	que é uma combinação linear das soluções \eqref{basic_1} e \eqref{basic_2}; observações semelhantes podem ser feitas para a expressões \eqref{solucao_temporaria_F2}, \eqref{solucao_temporaria_F1_0} e \eqref{solucao_temporaria_F2_0}. Essa forma de expressar as soluções facilitará a determinação dos coeficientes $\mathbb{A}_{j,m}$, $\mathbb{B}_{j,m}$, $\mathbb{C}_{j,m}$ e $\mathbb{D}_{j,m}$, conforme será visto a seguir.
+	
+	}.
+	
 Aplicando-se a transformação integral às condições de contorno \eqref{funcao_F_cc_T1_2_cart} e \eqref{funcao_F_cc_T1_4_cart}, e substituindo as expressões \eqref{solucao_temporaria_F1} e \eqref{solucao_temporaria_F2}:
 
 \begin{align}
