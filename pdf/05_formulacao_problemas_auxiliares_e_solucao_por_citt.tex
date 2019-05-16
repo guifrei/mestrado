@@ -312,7 +312,7 @@ Já o segundo problema auxiliar assume a forma:
 	& G_{1,j}(x, b) = \phi_j(x) && 0 < x < a  \label{funcao_G_cc_T1_2_cart} \\ \nonumber \\
 	& \frac{\partial G_{1,j}(0, y)}{\partial x} = 0 && w(0) < y < b \label{funcao_G_cc_T1_1a_cart} \\ \nonumber \\
 	& \frac{\partial G_{1,j}(a, y)}{\partial x} = 0 && w(a) < y < b \label{funcao_G_cc_T1_1b_cart} \\ \nonumber \\
-	& w'(x)\frac{\partial G_{1,j}(x, w(x))}{\partial x} - \frac{\partial G_{1,j}(x, w(x))}{\partial y} = 0 \quad\quad\quad\quad && 0 < x < a \label{funcao_G_cc_grad_T1_cart}
+	& w'(x)\frac{\partial G_{1,j}(x, w(x))}{\partial x} - \frac{\partial G_{1,j}(x, w(x))}{\partial y} = 0 \quad\quad\quad && 0 < x < a \label{funcao_G_cc_grad_T1_cart}
 	\end{alignat}
 \end{subequations}
 
@@ -562,7 +562,7 @@ diferenciais parciais \eqref{funcao_F_harm_T1_cart} e \eqref{funcao_F_harm_T2_ca
 as funções transformadas $\bar{F}_{1,j,m}(y)$ e $\bar{F}_{2,j,m}(y)$. Este procedimento será realizado inicialmente para a equação \eqref{funcao_F_harm_T1_cart};
 os resultados serão análogos para a equação \eqref{funcao_F_harm_T2_cart}.
 
-Multiplicando-se então a equação \eqref{funcao_F_harm_T1_cart} por $X(\mu_m, x)$ e integrando em relação a $x$ no intervalo $0 < x < a$: 
+Multiplicando-se então a equação \eqref{funcao_F_harm_T1_cart} por $X(\mu_m, x)$ e integrando em relação a $x$ no intervalo $0 < x < a$, obtemos: 
 \begin{align}
 & \int_0^a  \frac{\partial^2 F_{1,j}(x, y)}{\partial x^2}X(\mu_m, x)dx + \int_0^a \frac{\partial^2 F_{1,j}(x, y)}{\partial y^2}X(\mu_m, x)dx = 0 
 \end{align}
@@ -630,7 +630,7 @@ Seguindo o mesmo procedimento para a equação \eqref{funcao_F_harm_T2_cart}, ob
 As soluções gerais das equações diferenciais \eqref{eq_dif_ord_F1} e \eqref{eq_dif_ord_F2} podem ser escritas como combinação linear das seguintes funções \citep{livro_boyce}:
 \begin{align}
 & f_{1,j,m}(y) = \sinh\mu_m y \label{basic_1}\\ \nonumber \\
-& f_{1,j,m}(y) = \cosh\mu_m y \label{basic_2}
+& g_{1,j,m}(y) = \cosh\mu_m y \label{basic_2}
 \end{align}
 
 A combinação linear destas funções pode ser escrita na forma:
@@ -953,7 +953,7 @@ Para obter a expressão analítica para a função $\beta_j$, aplica-se a defini
 \beta_j(x) = \frac{k_1}{\sqrt{1 + w'(x)^2}}\left[w'(x)\frac{\partial F_{1, j}(x, w(x))}{\partial x} - \frac{\partial F_{1, j}(x, w(x))}{\partial y}\right] \label{expansao_beta}
 \end{align}
 
-Calculando separadamente as derivadas parciais de $F_{1, j}$ e truncando o somatório até o índice $M$:
+Calculando separadamente as derivadas parciais de $F_{1, j}$, a partir de \eqref{solucao_transf_inversa_F1_com_dependencia}, e truncando o somatório até o índice $M$:
 \begin{align}
 \frac{\partial F_{1, j}(x, y)}{\partial x} = & -\frac{2}{a}\sum_{m=1}^M \mu_m \left[\mathbb{A}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \bar{\psi}_{j, m}\frac{\sinh\mu_m y}{\sinh\mu_m b}\right]\sin\mu_m x
 \label{derivada_parcial_F1_x} \\
@@ -1083,7 +1083,7 @@ Uma vez que os $\hat{\beta}_j$ são linearmente independentes, é possível gera
 \hat{\beta}_j - \langle \hat{\beta}_j, \beta_0\rangle\beta_0 - \langle \hat{\beta}_j, \beta_1\rangle\beta_1 - \ldots - \langle \hat{\beta}_j, \beta_{j - 1}\rangle\beta_{j - 1}
 \end{align}
 
-O algoritmo de Gram-Schmidt gera, a partir de uma conjunto linearmente independente de funções, uma nova base ortogonal de funções. É um procedimento sequencial, em o $j$-ésimo elemento é calculado usando os elementos calculados nos passos de $j-1$ até $0$.
+O algoritmo de Gram-Schmidt gera, a partir de uma conjunto linearmente independente de funções, uma nova base ortogonal de funções. É um procedimento sequencial, em que o $j$-ésimo elemento é calculado usando os elementos calculados nos passos de $j-1$ até $0$.
 
 O algoritmo de Gram-Schmidt pode ser adaptado para gerar uma base ortonormal, bastando dividir cada função encontrada pela sua norma correspondente:
 \begin{align}
@@ -1212,8 +1212,8 @@ Os resultados encontrados permitem esboçar um algoritmo básico para determina�
 	\item Escolher um conjunto de funções linearmente independentes $\hat{\psi}_j(x), j=0,1,\ldots,N_1$;
 	\item Para cada $j$:
 	\begin{enumerate}	
-		\item Calcular as transformadas integrais $\hat{\bar{\psi}}_{j,m}, m=0,1,2, \ldots, M$;
-		\item Resolver o sistema $\mathbf{M}\mathbf{\xi} = \mathbf{b}$ definido pelas equações \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2}, onde $\mathbf{M}$ é a matriz calculada no passo 1 e $\mathbf{b}$ é o vetor calculado através dos valores de $\hat{\bar{\psi}}_{j,m}$, obtendo assim os valores $\hat{\mathbb{A}}_{j,m}, m=0,1,2, \ldots, M$;
+		\item Calcular as transformadas integrais $\bar{\hat{\psi}}_{j,m}, m=0,1,2, \ldots, M$;
+		\item Resolver o sistema $\mathbf{M}\mathbf{\xi} = \mathbf{b}$ definido pelas equações \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2}, onde $\mathbf{M}$ é a matriz calculada no passo 1 e $\mathbf{b}$ é o vetor calculado através dos valores de $\bar{\hat{\psi}}_{j,m}$, obtendo assim os valores $\hat{\mathbb{A}}_{j,m}, m=0,1,2, \ldots, M$;
 		\item Calcular $\hat{F}_{1,j}$ a partir de \eqref{solucao_transf_inversa_F1_com_dependencia} usando os valores $\hat{\mathbb{A}}_{j,m}$;
 		\item Calcular $\hat{\beta}_j$ a partir de \eqref{serie_para_beta} usando os valores $\hat{\mathbb{A}}_{j,m}$;
 		\item Calcular $\nu_j$:
@@ -1227,7 +1227,7 @@ Os resultados encontrados permitem esboçar um algoritmo básico para determina�
 	\end{enumerate}
 \end{enumerate}
 
-É importante destacar que a matriz $\mathbf{M}$ da etapa 1 só precisa ser calculada uma vez, já que seus coeficientes não mudam a cada resolução do sistema, variando apenas o vetor do segundo membro. Também é interessante notar que a etapa 3 é iterativa, isto é, os resultados para o $j$-ésimo passo dependem dos resultados encontrados nos passos anteriores $j - 1, j - 2, \ldots$ até 0.
+É importante destacar que a matriz $\mathbf{M}$ da etapa 1 só precisa ser calculada uma vez, já que seus coeficientes não mudam a cada resolução do sistema, variando apenas o vetor do segundo membro. Também é interessante notar que a etapa 3 é recursiva, isto é, os resultados para o $j$-ésimo passo dependem dos resultados encontrados nos passos anteriores $j - 1, j - 2, \ldots$ até 0.
 
 Todas as análises feitas para determinação das funções $F_{1,j}$ e $\beta_j$ podem ser aplicadas para determinar as funções $G_{1,j}$ e $\gamma_j$, devido à linearidade do segundo problema auxiliar. Por exemplo, são válidas as expressões a seguir, obtida por analogia com os resultados em \eqref{expressao_relaciona_psi} e \eqref{expressao_relaciona_zeta}:
 \begin{align}
@@ -1245,8 +1245,8 @@ Pode-se então adaptar o algoritmo básico elaborado para as funções $F_{1,j}$
 	\item Escolher um conjunto de funções linearmente independentes $\hat{\phi}_j(x), j=0,1,\ldots,N_2$;
 	\item Para cada $j$:
 	\begin{enumerate}	
-		\item Calcular as transformadas integrais $\hat{\bar{\phi}}_{j,m}, m=0,1,2, \ldots, M$;
-		\item Resolver o sistema $\mathbf{M}\mathbf{\xi} = \mathbf{b}$ definido pela equação \eqref{sistema_para_coeficientes_20}, onde $\mathbf{M}$ é a matriz calculada no passo 1 e $\mathbf{b}$ é o vetor calculado através dos valores de $\hat{\bar{\phi}}_{j,m}$, obtendo assim os valores $\hat{\mathbb{E}}_{j,m}, m=0,1,2, \ldots, M$;
+		\item Calcular as transformadas integrais $\bar{\hat{\phi}}_{j,m}, m=0,1,2, \ldots, M$;
+		\item Resolver o sistema $\mathbf{M}\mathbf{\xi} = \mathbf{b}$ definido pela equação \eqref{sistema_para_coeficientes_20}, onde $\mathbf{M}$ é a matriz calculada no passo 1 e $\mathbf{b}$ é o vetor calculado através dos valores de $\bar{\hat{\phi}}_{j,m}$, obtendo assim os valores $\hat{\mathbb{E}}_{j,m}, m=0,1,2, \ldots, M$;
 		\item Calcular $\hat{G}_{1,j}$ a partir de \eqref{solucao_transf_inversa_G1_com_dependencia} usando os valores $\hat{\mathbb{E}}_{j,m}$;
 		\item Calcular $\hat{\gamma}_j$ a partir de \eqref{serie_para_gamma} usando os valores $\hat{\mathbb{E}}_{j,m}$;
 		\item Calcular $\upsilon_j$:
