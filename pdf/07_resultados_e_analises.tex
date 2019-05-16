@@ -11,8 +11,10 @@ Ainda seguindo a metodologia de trabalho conduzida por \cite{tese_padilha}, fora
 Em todas as simulações, considerou-se que o corpo de prova representado na figura \ref{fig2} era composto de dois compósitos de materiais diferentes. Para o material superior $\Omega_1$ adotou-se o valor de condutividade térmica do aço AISI 1050, de 54 W/(m \celsius); para o material inferior $\Omega_2$, foi usado o valor de condutividade térmica do Incomel, de 14 W/(m \celsius). As dimensões do corpo de prova, ou seja, o comprimento e a altura da sua seção reta, foram respectivamente de 0,04 m e de 0,02 m. A superfície superior $\Gamma_0$ do corpo de prova foi submetida a um fluxo de calor por unidade de área de 100.000 W/$\text{m}^2$. Esses valores foram os mesmos adotados por \cite{tese_padilha} na condução do seu trabalho.
 
 A Tabela \ref{tabela_params} sumariza os parâmetros físicos e geométricos usados no trabalho:
+\vspace{10mm}
 \begin{table}[H]
-\begin{center}
+	\centering
+	\caption{Parâmetros considerados nos problemas-teste}
 	\begin{tabular}{@{}cc@{}}
 		\toprule
 		\textbf{Parâmetro} & \textbf{Valor}    \\ \midrule
@@ -22,14 +24,13 @@ A Tabela \ref{tabela_params} sumariza os parâmetros físicos e geométricos usa
 		$k_2$     & 14 W/(m \celsius) \\ \\
 		$q$       & -100.000 W/$\text{m}^2$ \\ \bottomrule
 	\end{tabular}		
-\end{center}
-\caption{Parâmetros considerados nos problemas-teste}
 \label{tabela_params}
 \end{table}
 
 Foram testadas três possibilidades de geometrias de interfaces de contato. Para cada uma delas foi associada uma equação da forma $y = w(x)$, descrevendo algebricamente a curva que representa cada interface. A Tabela \ref{tabela_interfaces} apresenta a definição das expressões de cada interface de contato.
 \begin{table}[H]
-	\begin{center}
+	\centering
+	\caption{Geometrias de interface de contato}
 		\begin{tabular}{c|c}
 			\hline \\
 			\textbf{Geometria} & $w(x)$    \\ \\ \hline \\
@@ -40,9 +41,7 @@ Foram testadas três possibilidades de geometrias de interfaces de contato. Para
 			\displaystyle \frac{bx^2}{8a^2}-\frac{23bx}{24a}+\frac{4b}{3}, & \displaystyle \frac{2a}{3} \le x \le a
 			\end{array}$     \\ \\ \hline \\
 			3       & $\displaystyle \frac{b}{2} + \frac{1}{20} \cos\frac{4 \pi  x}{a}$ \\ \\ \hline
-		\end{tabular}		
-	\end{center}
-	\caption{Geometrias de interface de contato}
+		\end{tabular}			
 	\label{tabela_interfaces}
 \end{table}
 
@@ -54,7 +53,8 @@ De forma a melhor ilustrar e visualizar as diferentes geometrias de interface de
 
 Foram adotados três diferentes perfis de distribuição de CTC, extraídos do trabalho de \cite{tese_padilha} e trabalhos anteriores. Estes perfis estão listados na Tabela \ref{tabela_ctc}, onde $h_{max}$ corresponde ao valor máximo que a CTC pode assumir, fixado em 1000 W/($\text{m}^2$ \celsius), e $a$ é o comprimento do corpo de prova.
 \begin{table}[H]
-	\begin{center}
+	\centering
+	\caption{Perfis teóricos de condutância térmica de contato}
 		\begin{tabular}{c|c}
 			\hline \\
 			\textbf{Perfil} & $h_c(x)$[W/($\text{m}^2$ \celsius)]  \\ \\ \hline \\
@@ -65,9 +65,7 @@ Foram adotados três diferentes perfis de distribuição de CTC, extraídos do t
 %			5 & $h_{max}$ \\ \\ \hline \\
 			\multirow{3}{*}{3} & $h_{max}/2$ para $x < a/4$ e $a/2 < x < 3a/4$ \\ & $h_{max}$ para $a/4 < x < a/2$ \\ & 0 para $ x > 3a/4$
 			\\ \\ \hline
-		\end{tabular}		
-	\end{center}
-	\caption{Perfis teóricos de condutância térmica de contato}
+		\end{tabular}			
 	\label{tabela_ctc}
 \end{table}
 
@@ -442,7 +440,7 @@ Os perfis estimados de CTC, obtidos pela razão entre os fluxos de calor e os sa
 
 \subsection{Critério de parada para os somatórios correspondentes às estimativas de salto de temperatura e fluxo de calor na interface de contato}
 
-Todas as estimativas de salto de temperatura e fluxo de calor na interface de contato levantadas na seção anterior foram calculadas através da aplicação das equações \eqref{resultado_1} e \eqref{resultado_2}:
+Todas as estimativas de salto de temperatura e fluxo de calor na interface de contato levantadas na seção anterior foram calculadas através da aplicação das equações \eqref{resultado_1} e \eqref{resultado_2}, repetidas abaixo:
 \begin{align}
 & [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j(x)\label{resultado_1aa}  \\
 & - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j(x)\label{resultado_2aa}
