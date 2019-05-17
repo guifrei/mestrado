@@ -7,7 +7,7 @@ uma descontinuidade no perfil de temperatura, ou seja, o contato térmico nessa 
 Esse fenômeno ocorre devido à combinação dos efeitos de três componentes \citep{livro_madhusudana}:
 \begin{itemize}
   \item Condução de calor através dos pontos em que há contato efetivo sólido-sólido, devido à presença de irregularidades microscópicas e macroscópicas;
-  \item Condução de calor através do meio intersticial, preenchido por algum fluido (por exemplo, ar) ou vácuo;
+  \item Condução de calor através do meio intersticial, preenchido por algum fluido (por exemplo, ar);
   \item Radiação de calor, que é desprezada na maioria das aplicações. 
 \end{itemize} 
 
@@ -17,8 +17,7 @@ Esse fenômeno ocorre devido à combinação dos efeitos de três componentes \c
 % superfície efetiva de contato não coincide com a superfície total de contato.
 
 A figura \ref{fig1} ilustra o processo de transferência de calor através da interface de contato entre dois sólidos. As linhas de fluxo de calor
-sofrem uma \textit{constrição} nos pontos de contato; nos espaços entre os pontos, devido às dimensões das lacunas da ordem de micrômetros, a convecção
-de calor é desconsiderada em detrimento da condução.
+sofrem uma \textit{constrição} nos pontos de contato, e uma maior dispersão nos espaços entre os pontos.
 
 \begin{figure}[h!b]
 \begin{center}
@@ -43,7 +42,7 @@ devido à presença do contato imperfeito \citep{livro_madhusudana}:
 	h_c = \frac{Q_c/A}{\Delta T_c} = \frac{q_c}{\Delta T_c} \label{eq:definicao_1}
 \end{equation}
 onde $Q_C$ é o fluxo total de calor através da interface, $A$ é a área de contato nominal ou aparente, $q_c$ é o fluxo de calor por unidade de área e e $\Delta T_c$ é o salto de temperatura na interface. As unidades
-da CTC são as mesmas do coeficiente de transferência de calor por convecção ($W/m^2 K$ no SI).
+da CTC são as mesmas do coeficiente de transferência de calor por convecção (W/($\text{m}^2$ K) no SI).
 
 A inversa da CTC é denominada \textit{resistência térmica de contato} (RTC):
 \begin{equation}
@@ -89,18 +88,18 @@ direta da definição permite levantar a CTC, normalmente como um valor médio s
 de CTC registrados na literatura.
 
 O problema da estimativa da CTC tem características que permitem classificá-lo como um problema inverso de transferência de calor (IHTP, do termo em inglês
-\textit{Inverse Heat Transfer Problem}). Num problema direto de transferência de calor, conhecem-se as propriedades termofísicas dos materiais envolvidos,
+\textit{Inverse Heat Transfer Problem}). Num problema direto de transferência de calor, conhecem-se as propriedades termofísicas dos materiais envolvidos, a geometria do domínio, 
 a taxa de geração de calor e as
 condições de contorno e inicial; através desses parâmetros se obtém a distribuição de temperaturas no domínio de interesse. Já o problema inverso procura
 estimar algum dos parâmetros relacionados previamente, utilizando medidas de temperatura em um ou mais pontos do domínio \citep{livro_beck_2}.
-Nesse contexto, a CTC se enquadra como um parâmetro termofísico passível de ser estimado através da resolução de um IHTP. Uma grande vantagem dessa
-abordagem é a possibilidade de tratar a CTC como um parâmetro distribuído espacialmente ao longo da interface de contato; por outro lado, problemas
-inversos são bastante sensíveis a erros de medição dos parâmetros de entrada. Algumas estratégias podem ser aplicadas
+Nesse contexto, a CTC se enquadra como uma propriedade termofísica passível de ser estimada através da resolução de um IHTP. Uma grande vantagem dessa
+abordagem é a possibilidade de tratar a CTC como um parâmetro distribuído espacialmente ao longo da interface de contato, ou seja, uma função da posição sobre a interface; por outro lado, problemas
+inversos são bastante sensíveis a erros de medição dos dados de entrada. Algumas estratégias podem ser aplicadas
 a fim de contornar essas dificuldades, como por exemplo a técnica de regularização de Tikhonov \citep{livro_tikonov}.
 
 O tratamento da estimativa da CTC como um problema inverso de transferência de calor não eliminou a necessidade de se ter disponíveis as medições de
 temperatura na interface de contato. A determinação indireta da distribuição dessas temperaturas sobre a interface, através de métodos não intrusivos,
-tem sido objeto de pesquisas recentes, levando ao desenvolvimento de técnicas de estimativa de CTC mais precisas e mais eficientes computacionalmente
+tem sido objeto de pesquisas recentes, levando ao desenvolvimento de técnicas de estimativa de CTC mais eficientes computacionalmente
 \citep{artigo_colaco_1, artigo_colaco_2, artigo_colaco_3, artigo_colaco_4, artigo_padilha_3}. Tais técnicas, porém, têm sido aplicadas em configurações
 físicas e geométricas regulares, tais como interfaces de contato planas ou de seção transversal circular, o que simplifica consideravelmente o tratamento
 analítico-numérico do problema inverso de transferência de calor, em detrimento de uma maior abrangência em resolver problemas de estimativa de CTC
@@ -135,11 +134,11 @@ do domínio geométrico do problema.
 
 O presente capítulo introduziu a definição formal de condutância térmica de contato e apresentou os conceitos e ferramentas básicas a serem aplicados ao longo do trabalho (a saber, os Funcionais de Reciprocidade e a Técnica da Transformada Integral Clássica). Os fatores motivacionais e os objetivos principais da dissertação também foram apresentados.
 
-No capítulo 2 é apresentada uma revisão bibliográfica descrevendo separadamente a evolução das técnicas de solução de problemas difusivos e as abordagens do tratamento da estimativa da condutância térmica de contato. O problema matemático necessário para o cálculo dos Funcionais de Reciprocidade é basicamente um problema difusivo, para o qual existem diversas opções de técnicas de solução; já os primeiros problemas de determinação da condutância térmica de contato não eram entendidos como problemas inversos de condução de calor (que são difusivos por definição). Ambos aspectos são citados e desenvolvidos pelo ponto de vista histórico neste capítulo.
+No capítulo 2 é apresentada uma revisão bibliográfica descrevendo separadamente a evolução das técnicas de solução de problemas difusivos e as abordagens do tratamento da estimativa da condutância térmica de contato, desenvolvendo ambos os aspectos pelo ponto de vista histórico.
 
 O capítulo 3 apresenta a descrição do problema físico abordado neste estudo. A configuração física, que consiste basicamente em um corpo de prova de seção reta retangular feito de dois materias distintos em contato, foi estabelecida levando-se em conta que a interface de contato entre os materiais pode ser representada por uma curva. As hipóteses assumidas e a formulação matemática do problema de condução de calor, em que a CTC aparece como um dos parâmetros de entrada, são indicados neste capítulo.
 
-O capítulo 4 descreve o problema inverso de condução de calor referente ao arranjo físico estabelecido no capítulo 3, no qual a CTC passa a ser um parâmetro a ser estimado. Neste arranjo, assume-se que as medidas de temperatura na superfície superior do corpo de prova são conhecidas. O conceito de Funcional de Reciprocidade é descrito neste capítulo, bem como a sua formulação proposta para o problema estudado. Conceitos matemáticos de Álgebra Linear necessários para o embasamento teórico da técnica dos Funcionais de Reciprocidade, tais como espaços lineares, produtos internos e projeções ortogonais, também são discutidos.
+O capítulo 4 descreve o problema inverso de condução de calor referente ao arranjo físico estabelecido no capítulo 3, no qual a CTC passa a ser uma função a ser estimada. Neste arranjo, assume-se que as medidas de temperatura na superfície superior do corpo de prova são conhecidas. O conceito de Funcional de Reciprocidade é descrito neste capítulo, bem como a sua formulação proposta para o problema estudado. Conceitos matemáticos de Álgebra Linear necessários para o embasamento teórico da técnica dos Funcionais de Reciprocidade, tais como espaços lineares, produtos internos e projeções ortogonais, também são discutidos.
 
 No capítulo 5 são formulados os problemas difusivos auxiliares que fornecem as funções auxiliares necessárias para o cálculo dos Funcionais de Reciprocidade. Uma vez que a interface de contato entre os materiais que compõem o corpo de prova não é plana nem horizontal, faz-se necessário aplicar conceitos de Geometria Diferencial para expressar em coordenadas cartesianas o gradiente de temperatura ao longo da interface, que aparece nas condições de contorno dos problemas auxiliares. Desse modo, é feita uma adequação da formulação dos problemas para permitir a aplicação da Técnica da Transformada Integral Clássica para sua solução; todo o processo de resolução através desta ferramenta é detalhado neste capítulo. As funções obtidas são então ortogonalizadas através do algoritmo de Gram-Schmidt.
 

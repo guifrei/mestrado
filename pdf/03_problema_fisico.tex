@@ -79,7 +79,13 @@ Resumidamente, as seguintes hipóteses simplificadores foram adotadas:
   \item A variação espacial da CTC é unidimensional: $h_c(x, y) = h_c(x, w(x)) = \equiv h_c(x)$;
   \item O fluxo de calor $q$ sobre a superfície superior $\Gamma_0$ é constante e uniformemente distribuído;
   \item Não há dependência dos campos de temperatura com a componente $z$, ou seja, $T \equiv T(x, y)$; e
-  \item Condição de contorno de terceiro tipo, ou de Robin, na interface $\Gamma$:
+  \item Condição de contorno de terceiro tipo, ou de Robin, na interface $\Gamma$
+  \footnote{
+  	Dado um campo escalar $\Phi$, a notação $\frac{\partial \Phi}{\partial \mathbf{u}}$ representa a derivada de $\Phi$ na direção do vetor unitário $\mathbf{u}$, e equivale a: 
+  	\begin{equation*}
+  	\frac{\partial \Phi}{\partial \mathbf{u}} \equiv \nabla \Phi \cdot \mathbf{u}
+  	\end{equation*}
+  	}:
   		\begin{equation*}
   			-k_1\frac{\partial T_1}{\partial \mathbf{n}_1} = h_c(T_1 - T_2),
   		\end{equation*}   
