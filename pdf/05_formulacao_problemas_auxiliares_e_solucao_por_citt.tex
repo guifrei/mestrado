@@ -24,7 +24,7 @@ problema auxiliar, relacionado ao salto de temperatura na interface $\Gamma$ atr
 	\end{alignat}
 \end{subequations}
 
-Nas equações acima, para compor a condição de contorno na interface superior $\Gamma_0$, foi introduzida uma família de funções auxiliares $\psi_j(x), j=1,2,\ldots N_1$, a serem definidas posteriormente. A solução do sistema de equações \eqref{funcao_F_harm_T1} a \eqref{funcao_F_cc_T1_5} será escrita em termos daquelas funções. 
+Nas equações acima, para compor a condição de contorno na interface superior $\Gamma_0$, foi introduzida uma família de funções $\psi_j(x), j=1,2,\ldots N_1$, a serem definidas posteriormente. A solução do sistema de equações \eqref{funcao_F_harm_T1} a \eqref{funcao_F_cc_T1_5} será escrita em termos daquelas funções. 
 
 \subsection{Segundo problema auxiliar}\label{secao_do_segundo}
 Seja a família de funções harmônicas $G_{1, j}$, definida no domínio $\Omega_1$. Define-se assim o segundo
@@ -38,7 +38,7 @@ problema auxiliar, relacionado ao fluxo de calor por unidade de área através d
 	\end{alignat}
 \end{subequations}
 
-Assim como no primeiro problema, a fim de compor a condição de contorno na interface superior $\Gamma_0$, foi introduzida uma família de funções auxiliares $\phi_j(x), j=1,2,\ldots N2$, que serão definidas posteriormente. A solução do sistema de equações \eqref{funcao_G_harm_T1} a \eqref{funcao_G_cc_grad_T1} será escrita em termos daquelas funções. 
+Assim como no primeiro problema, a fim de compor a condição de contorno na interface superior $\Gamma_0$, foi introduzida uma família de funções $\phi_j(x), j=1,2,\ldots N_2$, que serão definidas posteriormente. A solução do sistema de equações \eqref{funcao_G_harm_T1} a \eqref{funcao_G_cc_grad_T1} será escrita em termos daquelas funções. 
 
 \subsection{Preparação dos problemas auxiliares para aplicação da Técnica da Transformada Integral Clássica}
 Os conjuntos de equações \eqref{funcao_F_harm_T1} a \eqref{funcao_F_cc_T1_5} e \eqref{funcao_G_harm_T1} a \eqref{funcao_G_cc_grad_T1}, numa primeira análise,
@@ -135,7 +135,7 @@ expressar em coordenadas cartesianas as derivadas direcionais presentes nas cond
 será feito a seguir.
 
 \subsubsection{Expressão das derivadas direcionais em coordenadas cartesianas}\label{secao_sobre_normal}
-Seja um campo escalar $\Phi$. A derivada direcional em relação ao vetor unitário $\mathbf{u}$ é dada por \citep{livro_stewart}:
+Seja um campo escalar $\Phi$. A derivada direcional em relação ao vetor unitário $\mathbf{u}$ é dada por \citep{livro_stewart_2}:
 \begin{align}
 & \frac{\partial\Phi}{\partial\mathbf{u}} = \nabla \Phi \cdot \mathbf{u} 
 \end{align} 
@@ -211,13 +211,13 @@ Substituindo em \eqref{forma_parametrica}, obtém-se:
 \Gamma(t) = t \mathbf{a}_x + w(t) \mathbf{a}_y \label{forma_parametrica_substituida}
 \end{align}
 
-O vetor tangente unitário $\mathbf{T}$ será dado por \citep{livro_stewart}:
+O vetor tangente unitário $\mathbf{T}$ será dado por \citep{livro_stewart_2}:
 \begin{align}
 & \mathbf{T}(t) = \frac{\Gamma'(t)}{\norm{\Gamma'(t)}} \nonumber \\
 & \Rightarrow \mathbf{T}(t) = \frac{\mathbf{a}_x + w'(t) \mathbf{a}_y}{\sqrt{1 + w'(t)^2}}
 \end{align}
 
-O vetor normal unitário principal $\mathbf{N}$ será dado por \citep{livro_stewart}:
+O vetor normal unitário principal $\mathbf{N}$ será dado por \citep{livro_stewart_2}:
 \begin{align}
 & \mathbf{N}(t) = \frac{\mathbf{T}'(t)}{\norm{\mathbf{T}'(t)}} \nonumber \\
 & \Rightarrow \mathbf{N}(t) = \frac{ \displaystyle\frac{d}{dt}\left[\frac{1}{\sqrt{1 + w'(t)^2}}\right]\mathbf{a}_x
@@ -235,28 +235,29 @@ O vetor normal unitário principal $\mathbf{N}$ será dado por \citep{livro_stew
 & \Rightarrow \mathbf{N}(t) = \frac{ \displaystyle\frac{w''(t)}{[1 + w'(t)^2]^{3/2}} [-w'(t)\mathbf{a}_x + \mathbf{a}_y] }
 {\sqrt{ \displaystyle \frac{w''(t)^2}{[1 + w'(t)^2]^3} [w'(t)^2	+ 1] }} \nonumber \\
 & \Rightarrow \mathbf{N}(t) = \frac{w''(t)}{\abs{w''(t)}} \frac{ -w'(t)\mathbf{a}_x + \mathbf{a}_y }
-{\sqrt{ 1 + w'(t)^2 }} \label{equacao_normal_geometria_diferencial}
+{\sqrt{ 1 + w'(t)^2 }} \nonumber \\
+& \Rightarrow \mathbf{N}(t) = \left\lbrace\begin{array}{ll}
+\displaystyle\frac{ -w'(t)\mathbf{a}_x + \mathbf{a}_y}{\sqrt{ 1 + w'(t)^2 }}, & w''(t) > 0 \\ \\
+\displaystyle\frac{ w'(t)\mathbf{a}_x - \mathbf{a}_y}{\sqrt{ 1 + w'(t)^2 }}, & w''(t) < 0
+\end{array}\right.
+\label{equacao_normal_geometria_diferencial}
 \end{align}
 
-O termo $\displaystyle\frac{w''(t)}{\abs{w''(t)}} $ presente em \eqref{equacao_normal_geometria_diferencial} interfere apenas no sentido para
-onde aponta o vetor $\mathbf{N}(t)$. Pode-se então abstrair desse fator e escrever:
+Uma característica do vetor normal principal é que ele sempre aponta para a parte côncava da superfície. Retornando à figura \ref{fig7}, pode-se observar que no ponto de exemplo onde os vetores unitários foram representados, o vetor unitário $\mathbf{n}_1$ é o que corresponde ao vetor normal principal. Como a concavidade neste ponto está voltada para baixo, a segunda derivada da equação que representa a superfície terá sinal negativo \cite{livro_stewart_1}, ou seja, $w''(t) \equiv w''(x) < 0$, logo, pela equação \eqref{equacao_normal_geometria_diferencial}:
 \begin{align}
-\mathbf{N}(t) = \frac{ -w'(t)\mathbf{a}_x + \mathbf{a}_y }{\sqrt{ 1 + w'(t)^2 }} \label{equacao_normal_geometria_diferencial_2}
-\end{align}
-
-Retornando à figura \ref{fig7}, pode-se observar que no ponto de exemplo onde os vetores unitários foram representados, o vetor unitário $\mathbf{n}_2$,
-que aponta para fora da região $\Omega_2$, é o que tem as componentes em $x$ e $y$ ambas positivas. Inspecionando a equação \eqref{equacao_normal_geometria_diferencial_2},
-nota-se que neste ponto a derivada $w'(x)$ é negativa, logo $-w'(t)$ é positiva e assim as componentes em $x$ e $y$ deste vetor normal unitário também são positivas. Logo, 
-pode-se escrever:
-\begin{align}
-\mathbf{n}_2 = \frac{ -w'(x)\mathbf{a}_x + \mathbf{a}_y }{\sqrt{ 1 + w'(x)^2 }}
+\mathbf{n}_1 = \frac{ w'(x)\mathbf{a}_x - \mathbf{a}_y }{\sqrt{ 1 + w'(x)^2 }} \label{equacao_normal_geometria_diferencial_1}
 \end{align}
 onde a variável paramétrica $t$ foi substituída por $x$, uma vez que são equivalentes.
 
-A expressão para $\mathbf{n}_1$ é imediata, uma vez que aponta para o sentido oposto ao de $\mathbf{n}_2$:
+A expressão para $\mathbf{n}_2$ é imediata, já que aponta para o sentido oposto ao de $\mathbf{n}_1$:
 \begin{align}
-\mathbf{n}_1 = \frac{ w'(x)\mathbf{a}_x - \mathbf{a}_y }{\sqrt{ 1 + w'(x)^2 }}
+\mathbf{n}_2 = \frac{ -w'(x)\mathbf{a}_x + \mathbf{a}_y }{\sqrt{ 1 + w'(x)^2 }} \label{equacao_normal_geometria_diferencial_2}
 \end{align}
+
+Nos trechos em que a concavidade está voltada para cima, a normal principal corresponderá a $\mathbf{n}_2$; como $w''(x) > 0$ nesses trechos, a expressão para $\mathbf{n}_2$ continuará sendo \eqref{equacao_normal_geometria_diferencial_2}. Assim, as equações \eqref{equacao_normal_geometria_diferencial_1} e \eqref{equacao_normal_geometria_diferencial_2} representam respectivamente os vetores normais $\mathbf{n}_1$ e $\mathbf{n}_2$ em qualquer ponto da superfície $\Gamma$.
+
+
+
 
 Desse modo, aplicando a equação \eqref{derivada_direcional_coodernadas_cartesianas} para o vetor unitário $\mathbf{n}_1$, obtém-se a derivada do campo escalar $\Phi$
 em relação a esse vetor, em coordenadas cartesianas: 
@@ -461,7 +462,7 @@ Assim, o problema de autovalor associado, ou de Sturm-Liouville, será o mesmo p
 	& \frac{d X(\mu_m, x)}{d x} = 0 && x = a \label{problema_vc_1c}
 	\end{alignat}
 \end{subequations}
-onde $\mu_m$ são os autovalores e $X(\mu_m, x)$ são as autofunções correspondentes. Resolvendo-se o problema de autovalor defindo em \eqref{problema_vc_1a}--\eqref{problema_vc_1c}, obtém-se \citep{livro_ozisik}:
+onde $\mu_m$ são os autovalores e $X(\mu_m, x)$ são as autofunções correspondentes. Resolvendo-se o problema de autovalor definido em \eqref{problema_vc_1a}--\eqref{problema_vc_1c}, obtém-se \citep{livro_ozisik}:
 \begin{align}
 & X(\mu_m, x) = \left\lbrace
 \begin{array}{ll}
@@ -482,13 +483,13 @@ N(\mu_m) = \int_0^a X(\mu_m, x)^2 dx
 \end{align}
 
 Os autovalores $\mu_m$ são dados por:
-\begin{alignat}{2}
-\mu_m = \frac{m\pi}{a} \quad\quad\quad && m = 1,2,3,\ldots
-\end{alignat}
-
-Uma vez que o problema de autovalor tem duas condições de contorno de segundo tipo, ele admite um autovalor nulo, isto é, $\mu_0 = 0$, cuja autofunção correspondente é:
 \begin{align}
-X(\mu_0, x) = 1
+\mu_m = \left\lbrace
+\begin{array}{ll}
+0, \quad\quad\quad\quad & m = 0 \\ \\
+\displaystyle\frac{m\pi}{a}, & m = 1,2,3,\ldots
+\end{array}
+\right.
 \end{align}
 
 As autofunções $X(\mu_m, x), m=0,1,2,3,\ldots$, do problema de autovalor \eqref{problema_vc_1a}--\eqref{problema_vc_1c}, atendem à condição de ortogonalidade:
@@ -524,7 +525,7 @@ termo de índice $m$, de modo que os coeficientes serão dados por:
 & D_{j,m}(y) = \frac{1}{N(\mu_m)}\int_0^a F_{2, j}(x, y)X(\mu_m, x)dx \label{coef_para_F2}
 \end{align}
 
-Substituindo as relações \eqref{coef_para_F1} e \eqref{coef_para_F2} nos somatórios \eqref{expansao_para_F1} e \eqref{expansao_para_F2}, respectivamente:
+Substituindo as relações \eqref{coef_para_F1} e \eqref{coef_para_F2} nos somatórios \eqref{expansao_para_F1} e \eqref{expansao_para_F2}, respectivamente, obtém-se:
 \begin{align}
 & F_{1, j}(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\int_0^a F_{1, j}(x', y)X(\mu_m, x')dx' \label{expansao_para_F1_nova}\\ \nonumber \\
 & F_{2, j}(x, y) = \sum_{m=0}^\infty \frac{X(\mu_m, x)}{N(\mu_m)}\int_0^a F_{2, j}(x', y)X(\mu_m, x')dx' \label{expansao_para_F2_nova}
@@ -598,7 +599,7 @@ Da equação do problema homogêneo de autovalor associado \eqref{problema_vc_1a
 \frac{d^2 X(\mu_m, x)}{d x^2} = -\mu_m^2 X(\mu_m, x) \label{substituicao_autofuncao}
 \end{align}
 
-Substituindo \eqref{substituicao_autofuncao} em \eqref{equacao_intermediaria_F1}:
+A substituição de \eqref{substituicao_autofuncao} em \eqref{equacao_intermediaria_F1} resulta em:
 \begin{align}
 &
 \int_0^a  F_{1,j}(x, y)[-\mu_m^2 X(\mu_m, x)] dx + \frac{\partial^2 \bar{F}_{1,j,m}(y)}{\partial y^2} = 0 \nonumber \\
@@ -622,13 +623,13 @@ Seguindo o mesmo procedimento para a equação \eqref{funcao_F_harm_T2_cart}, ob
 \mu_m^2 \bar{F}_{2,j,m}(y) = 0 \label{eq_dif_ord_F2}
 \end{align}
 
-As soluções gerais das equações diferenciais \eqref{eq_dif_ord_F1} e \eqref{eq_dif_ord_F2} podem ser escritas como combinação linear das seguintes funções \citep{livro_boyce}:
+Neste ponto justifica-se o emprego do recurso da extensão de domínio (cf. secão \ref{secao_formulacao_aux}): a aplicação da transformação integral em $x$ às equações diferenciais parciais originais do problema eliminou a dependência em $x$, fornecendo assim as equações diferenciais ordinárias \eqref{eq_dif_ord_F1} e \eqref{eq_dif_ord_F2}, dependentes apenas de $y$. Se estas equações fossem resolvidas respectivamente para os domínios $w(x) < y < b$ e $0 < y < w(x)$, a variável $x$ seria reintroduzida, trazendo dificuldades na busca da solução, o que não acontece quando se adota o domínio $0 < y < b$ para resolução de ambas as equações. Nessas condições, as equações diferenciais \eqref{eq_dif_ord_F1} e \eqref{eq_dif_ord_F2} admitem as seguintes soluções fundamentais \citep{livro_boyce}:
 \begin{align}
 & f_{1,j,m}(y) = \sinh\mu_m y \label{basic_1}\\ \nonumber \\
 & g_{1,j,m}(y) = \cosh\mu_m y \label{basic_2}
 \end{align}
 
-A combinação linear destas funções pode ser escrita na forma:
+As soluções gerais das equações \eqref{eq_dif_ord_F1} e \eqref{eq_dif_ord_F2} serão então dadas pela combinação linear destas funções, que podem ser escritas na forma:
 \begin{align}
 & \bar{F}_{1,j,m}(y) = \mathbb{A}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \mathbb{B}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \label{solucao_temporaria_F1}\\ \nonumber \\
 & \bar{F}_{2,j,m}(y) = \mathbb{C}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \mathbb{D}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \label{solucao_temporaria_F2}
@@ -1053,6 +1054,8 @@ A expressão analítica para a função $\gamma_j$ é facilmente obtida avaliand
 \end{align} 
 
 \subsubsection{Ortonormalização das funções $\beta_j(x)$ e $\gamma_j(x)$}\label{orto_beta_gama}
+
+As funções $\beta_j(x)$ e $\gamma_j(x)$, obtidas nas seções \ref{secao_reciprocidade_F} e \ref{secao_reciprocidade_G}, 
 
 Na seção \ref{secao_sobre_fr} foi dito que as funções $\beta_j(x)$ e $\gamma_j(x)$ compunham duas bases ortonormais em $L^2(\Gamma)$.
 Nas seções \ref{secao_do_primeiro} e \ref{secao_do_segundo}, foi dito que a ortonormalidade dessas funções dependia de uma definição adequada das funções $\psi_j(x)$
