@@ -1055,207 +1055,137 @@ A expressão analítica para a função $\gamma_j$ é facilmente obtida avaliand
 
 \subsubsection{Ortonormalização das funções $\beta_j(x)$ e $\gamma_j(x)$}\label{orto_beta_gama}
 
-As funções $\beta_j(x)$ e $\gamma_j(x)$, obtidas nas seções \ref{secao_reciprocidade_F} e \ref{secao_reciprocidade_G}, 
+Numa primeira análise, não se pode afirmar que as funções $\beta_j(x)$ e $\gamma_j(x)$, obtidas nas seções \ref{secao_reciprocidade_F} e \ref{secao_reciprocidade_G}, atendem às condições de ortonormalidade estabelecidas na seção \ref{secao_sobre_fr}; aquelas condições são necessárias para a formulação das expressões para o cálculo do fluxo de calor e do salto de temperatura na interface de contato, empregando os funcionais de reciprocidade. Porém, assumindo que as funções $\beta_j(x)$ e $\gamma_j(x)$ sejam linearmente independentes\footnote{Por definição, o conjunto de funções $\hat{\beta}_j, j = 1,2,...,N$ é linearmente independente se a relação $a_1\hat{\beta}_1 + a_2\hat{\beta}_2 + ... + a_N\hat{\beta}_N = 0$, onde $a_j, j=1,2,...,N$ são constantes, só será satisfeita se $a_1 = a_2 = ... = a_N = 0$ \citep{livro_axler}.}, é possível gerar um novo conjunto de funções $\hat{\beta}_j(x)$ e $\hat{\gamma}_j(x)$ que atendam àquelas condições, através da aplicação do \textit{método de ortogonalização de Gram-Schmidt} \citep{livro_axler}.
 
-Na seção \ref{secao_sobre_fr} foi dito que as funções $\beta_j(x)$ e $\gamma_j(x)$ compunham duas bases ortonormais em $L^2(\Gamma)$.
-Nas seções \ref{secao_do_primeiro} e \ref{secao_do_segundo}, foi dito que a ortonormalidade dessas funções dependia de uma definição adequada das funções $\psi_j(x)$
-ou $\phi_j(x)$, que aparecem nas condições de contorno dos dois problemas auxiliares. A definição dessas funções havia sido deixada em aberto. Nesta seção, será proposta uma metodologia para determinação das funções $\psi_j(x)$ e $\phi_j(x)$ que atendem ao quesito da ortonormalidade das funções $\beta_j(x)$ e $\gamma_j(x)$.
-
-Seja então, por exemplo, um conjunto de funções $\hat{\beta}_j$ linearmente independentes mas não necessariamente ortonormais\footnote{Por definição, o conjunto de funções $\hat{\beta}_j, j = 1,2,...,N$ é linearmente independente se a relação $a_1\hat{\beta}_1 + a_2\hat{\beta}_2 + ... + a_N\hat{\beta}_N = 0$, onde $a_j, j=1,2,...,N$ são constantes, só será satisfeita se $a_1 = a_2 = ... = a_N = 0$ \citep{livro_axler}.}, obtidas a partir da aplicação de um conjunto correspondente de funções $\hat{\psi}_j$ previamente definidas ao primeiro problema auxiliar cujas soluções serão denotadas por $\hat{F}_{1,j}$. A partir da definição \eqref{expressao_define_beta}, pode-se escrever:
+Seja então, por exemplo, o conjunto de funções $\beta_j$ linearmente independentes mas não necessariamente ortonormais, obtidas a partir da resolução do primeiro problema auxiliar para $F_{1,j}$. O método de ortogonalização de Gram-Schmidt permite obter um conjunto de funções ortogonais $\hat{\beta}_j$ cujos membros são combinações lineares das funções $\beta_j$, através das seguintes relações:
 \begin{align}
-\hat{\beta}_j = k_1 \frac{\partial \hat{F}_{1,j}}{\partial\mathbf{n_1}}\bigg|_\Gamma
-\end{align}
-
-Uma vez que os $\hat{\beta}_j$ são linearmente independentes, é possível gerar um conjunto de funções ortogonais $\beta_j$ cujos membros são combinações lineares das funções $\hat{\beta}_j$, através do processo de \textit{ortogonalização de Gram-Schmidt} \citep{livro_axler}:
-\begin{align}
-& \beta_0 = \hat{\beta}_0 \\
-& \beta_1
+& \hat{\beta}_0 = \beta_0 \\
+& \hat{\beta}_1
 =
-\hat{\beta}_1 - \langle \hat{\beta}_1, \beta_0\rangle\beta_0 \\
-& \beta_2
+\beta_1 - \langle \beta_1, \hat{\beta}_0\rangle\hat{\beta}_0 \\
+& \hat{\beta}_2
 =
-\hat{\beta}_2 - \langle \hat{\beta}_2, \beta_0\rangle\beta_0 - \langle \hat{\beta}_2, \beta_1\rangle\beta_1\\
+\beta_2 - \langle \beta_2, \hat{\beta}_0\rangle\hat{\beta}_0 - \langle \beta_2, \hat{\beta}_1\rangle\hat{\beta}_1\\
 & \ldots \nonumber \\
-& \beta_j
+& \hat{\beta}_j
 =
-\hat{\beta}_j - \langle \hat{\beta}_j, \beta_0\rangle\beta_0 - \langle \hat{\beta}_j, \beta_1\rangle\beta_1 - \ldots - \langle \hat{\beta}_j, \beta_{j - 1}\rangle\beta_{j - 1}
+\beta_j - \langle \beta_j, \hat{\beta}_0\rangle\hat{\beta}_0 - \langle \beta_j, \hat{\beta}_1\rangle\hat{\beta}_1 - \ldots - \langle \beta_j, \hat{\beta}_{j - 1}\rangle\hat{\beta}_{j - 1}
 \end{align}
 
 O algoritmo de Gram-Schmidt gera, a partir de uma conjunto linearmente independente de funções, uma nova base ortogonal de funções. É um procedimento sequencial, em que o $j$-ésimo elemento é calculado usando os elementos calculados nos passos de $j-1$ até $0$.
 
 O algoritmo de Gram-Schmidt pode ser adaptado para gerar uma base ortonormal, bastando dividir cada função encontrada pela sua norma correspondente:
 \begin{align}
-& \beta_0 = \frac{\hat{\beta}_0}{\norm{\hat{\beta}_0}} \label{gram_schmidt_01} \\
-& \beta_1
+& \hat{\beta}_0 = \frac{\beta_0}{\norm{\beta_0}} \label{gram_schmidt_01} \\
+& \hat{\beta}_1
 =
-\frac{\hat{\beta}_1 - \langle \hat{\beta}_1, \beta_0\rangle\beta_0}
-{\norm{\hat{\beta}_1 - \langle \hat{\beta}_1, \beta_0\rangle\beta_0}}\label{gram_schmidt_02} \\
-& \beta_2
+\frac{\beta_1 - \langle \beta_1, \hat{\beta}_0\rangle\hat{\beta}_0}
+{\norm{\beta_1 - \langle \beta_1, \hat{\beta}_0\rangle\hat{\beta}_0}}\label{gram_schmidt_02} \\
+& \hat{\beta}_2
 =
-\frac{\hat{\beta}_2 - \langle \hat{\beta}_2, \beta_0\rangle\beta_0 - \langle \hat{\beta}_2, \beta_1\rangle\beta_1}
-{\norm{\hat{\beta}_2 - \langle \hat{\beta}_2, \beta_0\rangle\beta_0 - \langle \hat{\beta}_2, \beta_1\rangle\beta_1}} \label{gram_schmidt_03} \\
+\frac{\beta_2 - \langle \beta_2, \hat{\beta}_0\rangle\hat{\beta}_0 - \langle \beta_2, \hat{\beta}_1\rangle\hat{\beta}_1}
+{\norm{\beta_2 - \langle \beta_2, \hat{\beta}_0\rangle\hat{\beta}_0 - \langle \beta_2, \hat{\beta}_1\rangle\hat{\beta}_1}} \label{gram_schmidt_03} \\
 & \ldots \nonumber \\
-& \beta_j
+& \hat{\beta}_j
 =
-\frac{\hat{\beta}_j - \langle \hat{\beta}_j, \beta_0\rangle\beta_0 - \langle \hat{\beta}_j, \beta_1\rangle\beta_1 - \ldots - \langle \hat{\beta}_j, \beta_{j - 1}\rangle\beta_{j - 1} }
-{\norm{\hat{\beta}_j - \langle \hat{\beta}_j, \beta_0\rangle\beta_0 - \langle \hat{\beta}_j, \beta_1\rangle\beta_1 - \ldots - \langle \hat{\beta}_j, \beta_{j - 1}\rangle\beta_{j - 1} }} \label{gram_schmidt_04}
+\frac{\beta_j - \langle \beta_j, \hat{\beta}_0\rangle\hat{\beta}_0 - \langle \beta_j, \hat{\beta}_1\rangle\hat{\beta}_1 - \ldots - \langle \beta_j, \hat{\beta}_{j - 1}\rangle\hat{\beta}_{j - 1} }
+{\norm{\beta_j - \langle \beta_j, \hat{\beta}_0\rangle\hat{\beta}_0 - \langle \beta_j, \hat{\beta}_1\rangle\hat{\beta}_1 - \ldots - \langle \beta_j, \hat{\beta}_{j - 1}\rangle\hat{\beta}_{j - 1} }} \label{gram_schmidt_04}
 \end{align}
 
-De forma análoga, seja um conjunto de funções $\hat{\gamma}_j$ linearmente independentes mas não necessariamente ortonormais, obtidas a partir da aplicação de um conjunto correspondente de funções $\hat{\phi}_j$ previamente definidas ao segundo problema auxiliar cujas soluções serão denotadas por $\hat{G}_{1,j}$. A aplicação do algoritmo de Gram-Schmidt permite gerar um conjunto de funções ortonormais $\gamma_j$ como segue:
+As equações acima podem ser escritas de forma resumida como:
 \begin{align}
-& \gamma_0 = \frac{\hat{\gamma}_0}{\norm{\hat{\gamma}_0}} \label{gram_schmidt_05} \\
-& \gamma_1
-=
-\frac{\hat{\gamma}_1 - \langle \hat{\gamma}_1, \gamma_0\rangle\gamma_0}
-{\norm{\hat{\gamma}_1 - \langle \hat{\gamma}_1, \gamma_0\rangle\gamma_0}} \label{gram_schmidt_06} \\
-& \gamma_2
-=
-\frac{\hat{\gamma}_2 - \langle \hat{\gamma}_2, \gamma_0\rangle\gamma_0 - \langle \hat{\gamma}_2, \gamma_1\rangle\gamma_1}
-{\norm{\hat{\gamma}_2 - \langle \hat{\gamma}_2, \gamma_0\rangle\gamma_0 - \langle \hat{\gamma}_2, \gamma_1\rangle\gamma_1}} \label{gram_schmidt_07} \\
-& \ldots \nonumber \\
-& \gamma_j
-=
-\frac{\hat{\gamma}_j - \langle \hat{\gamma}_j, \gamma_0\rangle\gamma_0 - \langle \hat{\gamma}_j, \gamma_1\rangle\gamma_1 - \ldots - \langle \hat{\gamma}_j, \gamma_{j - 1}\rangle\gamma_{j - 1} }
-{\norm{\hat{\gamma}_j - \langle \hat{\gamma}_j, \gamma_0\rangle\gamma_0 - \langle \hat{\gamma}_j, \gamma_1\rangle\gamma_1 - \ldots - \langle \hat{\gamma}_j, \gamma_{j - 1}\rangle\beta_{j - 1} }} \label{gram_schmidt_08}
-\end{align}
-
-Uma característica notável dos problemas auxiliares que fornecem as funções $F_{1,j}$ e $G_{1,j}$ é a sua linearidade. Em outras palavras, uma combinação linear de diferentes soluções de um problema linear ainda é uma solução, desde que as condições de contorno correspondentes sejam combinações lineares das condições de contorno originais. Com base nessa propriedade, pode-se, a partir das expressões \eqref{gram_schmidt_01} a \eqref{gram_schmidt_04}, escrever as soluções $F_{1,j}$, que fornecerão as funções ortogonais $\beta_j$, em termos das funções $\hat{F}_{1,j}$ como segue:
-\begin{align}
-& F_{1,0} = \frac{\hat{F}_{1,0}}{\norm{\hat{\beta}_0}} \label{gram_schmidt_F_01} \\
-& F_{1,1}
-=
-\frac{\hat{F}_{1,1} - \langle \hat{\beta}_1, \beta_0\rangle F_{1,0}}
-{\norm{\hat{\beta}_1 - \langle \hat{\beta}_1, \beta_0\rangle\beta_0}}\label{gram_schmidt_F_02} \\
-& F_{1,2}
-=
-\frac{\hat{F}_{1,2} - \langle \hat{\beta}_2, \beta_0\rangle F_{1,0} - \langle \hat{\beta}_2, \beta_1\rangle F_{1,1}}
-{\norm{\hat{\beta}_2 - \langle \hat{\beta}_2, \beta_0\rangle\beta_0 - \langle \hat{\beta}_2, \beta_1\rangle\beta_1}} \label{gram_schmidt_F_03} \\
-& \ldots \nonumber \\
-& F_{1,j}
-=
-\frac{\hat{F}_{1,j} - \langle \hat{\beta}_j, \beta_0\rangle F_{1,0} - \langle \hat{\beta}_j, \beta_1\rangle F_{1,1} - \ldots - \langle \hat{\beta}_j, \beta_{j - 1}\rangle F_{1,j - 1} }
-{\norm{\hat{\beta}_j - \langle \hat{\beta}_j, \beta_0\rangle\beta_0 - \langle \hat{\beta}_j, \beta_1\rangle\beta_1 - \ldots - \langle \hat{\beta}_j, \beta_{j - 1}\rangle\beta_{j - 1} }} \label{gram_schmidt_F_04}
-\end{align}
-
-A aplicação direta das equações \eqref{gram_schmidt_F_01} a \eqref{gram_schmidt_F_04} à definição de $\beta_j$ em \eqref{expressao_define_beta} fornece as equações \eqref{gram_schmidt_01} a \eqref{gram_schmidt_04}, o que ajuda a verificar a consistência daquelas expressões.
-
-As mesmas considerações podem ser feitas para as funções $G_{1,j}$, obtendo-se assim as seguintes relações:
-\begin{align}
-& G_{1,0} = \frac{\hat{G}_{1,0}}{\norm{\hat{\gamma}_0}} \label{gram_schmidt_G_01} \\
-& G_{1,1}
-=
-\frac{\hat{G}_{1,1} - \langle \hat{\gamma}_1, \gamma_0\rangle G_{1,0}}
-{\norm{\hat{\gamma}_1 - \langle \hat{\gamma}_1, \gamma_0\rangle\gamma_0}}\label{gram_schmidt_G_02} \\
-& G_{1,2}
-=
-\frac{\hat{G}_{1,2} - \langle \hat{\gamma}_2, \gamma_0\rangle G_{1,0} - \langle \hat{\gamma}_2, \gamma_1\rangle G_{1,1}}
-{\norm{\hat{\gamma}_2 - \langle \hat{\gamma}_2, \gamma_0\rangle\gamma_0 - \langle \hat{\gamma}_2, \gamma_1\rangle\gamma_1}} \label{gram_schmidt_G_03} \\
-& \ldots \nonumber \\
-& G_{1,j}
-=
-\frac{\hat{G}_{1,j} - \langle \hat{\gamma}_j, \gamma_0\rangle G_{1,0} - \langle \hat{\gamma}_j, \gamma_1\rangle G_{1,1} - \ldots - \langle \hat{\gamma}_j, \gamma_{j - 1}\rangle G_{1,j - 1} }
-{\norm{\hat{\gamma}_j - \langle \hat{\gamma}_j, \gamma_0\rangle\gamma_0 - \langle \hat{\gamma}_j, \gamma_1\rangle\gamma_1 - \ldots - \langle \hat{\gamma}_j, \gamma_{j - 1}\rangle\gamma_{j - 1} }} \label{gram_schmidt_G_04}
-\end{align}
-
-Retornando à fórmula \eqref{gram_schmidt_F_04}, nota-se que ela pode ser escrita na forma
-\begin{align}
-F_{1,j} = \frac{1}{\norm{\nu_j}}\hat{F}_{1,j} - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} F_{1,k} \label{termo_gram}
+& \hat{\beta}_j = \frac{1}{\norm{\nu_j}}\beta_j - \sum_{k=0}^{j-1} \frac{\langle \beta_j, \hat{\beta}_k \rangle}{\norm{\nu_j}} \hat{\beta}_k \label{termo_beta}
 \end{align}
 onde
 \begin{align}
-\nu_j = \hat{\beta}_j - \sum_{k = 0}^{j - 1} \langle \hat{\beta}_j, \beta_k\rangle\beta_k
+& \nu_j = \beta_j - \sum_{k = 0}^{j - 1} \langle \beta_j, \hat{\beta}_k\rangle\hat{\beta}_k
 \end{align}
 
-Substituindo então $F_{1,k}$ em \eqref{termo_gram} pela expressão em \eqref{definicao_da_transf_inv_F1}, na qual são feitas as substituições pelas expressões \eqref{solucao_temporaria_F1} e \eqref{solucao_temporaria_F1_0}, sendo o índice $j$ renomeado por $k$:
+De forma análoga, seja o conjunto de funções $\gamma_j$ linearmente independentes mas não necessariamente ortonormais, obtidas a partir da resolução do segundo problema auxiliar para $G_{1,j}$. A aplicação do algoritmo de Gram-Schmidt permite gerar um conjunto correspondente de funções ortonormais $\hat{\gamma}_j$ como segue:
 \begin{align}
-F_{1,j} = & \frac{X_0(x)}{N(\mu_0)}\left[\frac{1}{\norm{\nu_j}} \hat{\mathbb{A}}_{j,0}\frac{b - y}{b} + \frac{1}{\norm{\nu_j}} \hat{\mathbb{B}}_{j,0}\frac{y}{b}\right] \nonumber \\
-& + \sum_{m=1}^\infty \frac{X_m(x)}{N(\mu_m)}\left[\frac{1}{\norm{\nu_j}} \hat{\mathbb{A}}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \frac{1}{\norm{\nu_j}} \hat{\mathbb{B}}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b}\right] \nonumber \\
-& - \sum_{k=0}^{j-1} \frac{X_0(x)}{N(\mu_0)}\left[\frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{A}_{k,0}\frac{b - y}{b} + \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{B}_{k,0}\frac{y}{b}\right] \nonumber \\
-& - \sum_{k=0}^{j-1} \sum_{m=1}^\infty \frac{X_m(x)}{N(\mu_m)}\left[\frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{A}_{k,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{B}_{k,m}\frac{\sinh\mu_m y}{\sinh\mu_m b}\right]
+& \hat{\gamma}_0 = \frac{\gamma_0}{\norm{\gamma_0}} \label{gram_schmidt_05} \\
+& \hat{\gamma}_1
+=
+\frac{\gamma_1 - \langle \gamma_1, \hat{\gamma}_0\rangle\hat{\gamma}_0}
+{\norm{\gamma_1 - \langle \gamma_1, \hat{\gamma}_0\rangle\hat{\gamma}_0}}\label{gram_schmidt_06} \\
+& \hat{\gamma}_2
+=
+\frac{\gamma_2 - \langle \gamma_2, \hat{\gamma}_0\rangle\hat{\gamma}_0 - \langle \gamma_2, \hat{\gamma}_1\rangle\hat{\gamma}_1}
+{\norm{\gamma_2 - \langle \gamma_2, \hat{\gamma}_0\rangle\hat{\gamma}_0 - \langle \gamma_2, \hat{\gamma}_1\rangle\hat{\gamma}_1}} \label{gram_schmidt_07} \\
+& \ldots \nonumber \\
+& \hat{\gamma}_j
+=
+\frac{\gamma_j - \langle \gamma_j, \hat{\gamma}_0\rangle\hat{\gamma}_0 - \langle \gamma_j, \hat{\gamma}_1\rangle\hat{\gamma}_1 - \ldots - \langle \gamma_j, \hat{\gamma}_{j - 1}\rangle\hat{\gamma}_{j - 1} }
+{\norm{\gamma_j - \langle \gamma_j, \hat{\gamma}_0\rangle\hat{\gamma}_0 - \langle \gamma_j, \hat{\gamma}_1\rangle\hat{\gamma}_1 - \ldots - \langle \gamma_j, \hat{\gamma}_{j - 1}\rangle\hat{\gamma}_{j - 1} }}\label{gram_schmidt_08}
+\end{align}
+ou, de forma resumida,
+\begin{align}
+\hat{\gamma}_j = \frac{1}{\norm{\upsilon_j}}\gamma_j - \sum_{k=0}^{j-1} \frac{\langle \gamma_j, \hat{\gamma}_k \rangle}{\norm{\upsilon_j}} \hat{\gamma}_k \label{termo_gamma}
+\end{align}
+onde
+\begin{align}
+& \upsilon_j = \gamma_j - \sum_{k = 0}^{j - 1} \langle \gamma_j, \hat{\gamma}_k\rangle\hat{\gamma}_k
 \end{align}
 
-Permutando os somatórios e reorganizando:
+Uma característica notável dos problemas auxiliares que fornecem as funções $F_{1,j}$ e $G_{1,j}$ é a sua linearidade. Em outras palavras, uma combinação linear de diferentes soluções de um problema linear ainda é uma solução para o problema. Com base nessa propriedade, pode-se, a partir das expressões \eqref{termo_beta} e \eqref{termo_gamma}, escrever as soluções $\hat{F}_{1,j}$ e $\hat{G}_{1,j}$, referentes respectivamente às funções ortogonais $\hat{\beta}_j$ e $\hat{\gamma}_j$, em termos das funções originais $F_{1,j}$ e $G_{1,j}$ como segue:
 \begin{align}
-F_{1,j} = & \frac{X_0(x)}{N(\mu_0)}\left[ \left(\frac{1}{\norm{\nu_j}} \hat{\mathbb{A}}_{j,0} - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{A}_{k,0}\right)\frac{b - y}{b} \right. \nonumber \\
-& \left. + \left(\frac{1}{\norm{\nu_j}} \hat{\mathbb{B}}_{j,0} - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{B}_{k,0}\right)\frac{y}{b} \right] \nonumber \\
-& + \sum_{m=1}^\infty \frac{X_m(x)}{N(\mu_m)}\left[ \left(\frac{1}{\norm{\nu_j}} \hat{\mathbb{A}}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{A}_{k,m}\right)\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} \right. \nonumber \\
-& \left. + \left(\frac{1}{\norm{\nu_j}} \hat{\mathbb{B}}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{B}_{k,m}\right)\frac{\sinh\mu_m y}{\sinh\mu_m b} \right] \label{equacao_para_comparar_1}
+& \hat{F}_{1,j} = \frac{1}{\norm{\nu_j}}F_{1,j} - \sum_{k=0}^{j-1} \frac{\langle \beta_j, \hat{\beta}_k \rangle}{\norm{\nu_j}} \hat{F}_{1,k} \label{termo_gram}
+\\ 
+& \hat{G}_{1,j} = \frac{1}{\norm{\upsilon_j}}G_{1,j} - \sum_{k=0}^{j-1} \frac{\langle \gamma_j, \hat{\gamma}_k \rangle}{\norm{\upsilon_j}} \hat{G}_{1,k} \label{termo_gram_2}
 \end{align}
 
-A expressão acima é uma consequência direta e natural da propriedade de linearidade dos problemas auxiliares; de fato, seja a expressão em \eqref{definicao_da_transf_inv_F1}, na qual são feitas as substituições pelas expressões \eqref{solucao_temporaria_F1} e \eqref{solucao_temporaria_F1_0}:
+Partindo das expressões \eqref{termo_gram} e \eqref{termo_gram_2}, pode-se novamente empregar a propriedade da linearidade, obtendo-se as seguintes relações para os coeficientes $\hat{\mathbb{A}}_{j,m}$ e $\hat{\mathbb{E}}_{j,m}$, correspondentes às representações em somatório das funções $\hat{F}_{1,j}$ e $\hat{G}_{1,j}$ expressas pelas equações \eqref{solucao_transf_inversa_F1_com_dependencia} e \eqref{solucao_transf_inversa_G1_com_dependencia}:
 \begin{align}
-F_{1,j} = & \frac{X_0(x)}{N(\mu_0)}\left(\mathbb{A}_{j,0} \frac{b - y}{b} + \mathbb{B}_{j,0}\frac{y}{b}\right) \nonumber \\
-& + \sum_{m=1}^\infty \frac{X_m(x)}{N(\mu_m)}\left[\mathbb{A}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b}  + \mathbb{B}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b}\right]
-\label{equacao_para_comparar_2}
-\end{align}
-
-Comparando \eqref{equacao_para_comparar_1} com \eqref{equacao_para_comparar_2}, chega-se às seguintes expressões:
-\begin{align}
-\mathbb{A}_{j,m} = \frac{1}{\norm{\nu_j}} \hat{\mathbb{A}}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{A}_{k,m}, \quad m=0,1,2,\ldots
+\hat{\mathbb{A}}_{j,m} = \frac{1}{\norm{\nu_j}} \mathbb{A}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \beta_j, \hat{\beta}_k \rangle}{\norm{\nu_j}} \hat{\mathbb{A}}_{k,m}, \quad m=0,1,2,\ldots
 \label{expressao_relaciona_psi}
 \end{align}
 \begin{align}
-\mathbb{B}_{j,m} = \frac{1}{\norm{\nu_j}} \hat{\mathbb{B}}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \mathbb{B}_{k,m}, \quad m=0,1,2,\ldots
+\hat{\mathbb{E}}_{j,m} = \frac{1}{\norm{\upsilon_j}} \mathbb{E}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \gamma_j, \hat{\gamma}_k \rangle}{\norm{\upsilon_j}} \hat{\mathbb{E}}_{k,m}, \quad m=0,1,2,\ldots
 \label{expressao_relaciona_zeta}
 \end{align}
 
-As relações \eqref{expressao_relaciona_psi} e \eqref{expressao_relaciona_zeta} são basicamente relações de recorrência que permitem determinar os coeficientes $\mathbb{A}_{j,m}$ e $\mathbb{B}_{j,m}$, a partir dos coeficientes $\hat{\mathbb{A}}_{j,m}$ e $\hat{\mathbb{B}}_{j,m}$, obtidos por solução do sistema definido por \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2}. Lembrando que, de \eqref{resultado_cte_5} e \eqref{resultado_cte_2}, tem-se $\mathbb{B}_{j,m} \equiv \bar{\psi}_{j, m}$; assim, o conjunto de funções $\psi_j$ que fornece a base ortogonal $\beta_j$ pode ser obtida pela aplicação desse resultado em \eqref{expressao_relaciona_zeta}:
-\begin{align}
-\psi_j(x) = \frac{1}{\norm{\nu_j}} \hat{\psi}_j(x) - \sum_{k=0}^{j-1} \frac{\langle \hat{\beta}_j, \beta_k \rangle}{\norm{\nu_j}} \psi_k(x), \quad m=0,1,2,\ldots \label{expressao_relaciona_phi}
-\end{align}
+As relações \eqref{expressao_relaciona_psi} e \eqref{expressao_relaciona_zeta} são basicamente relações de recorrência que permitem determinar os coeficientes $\hat{\mathbb{A}}_{j,m}$ e $\hat{\mathbb{B}}_{j,m}$, a partir dos coeficientes $\mathbb{A}_{j,m}$ e $\mathbb{B}_{j,m}$, obtidos através da resolução do sistema definido por \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2}. Estes novos coeficientes, substituídos em \eqref{serie_para_beta} e \eqref{serie_para_gamma}, fornecem as funções $\hat{\beta}_j$ e $\hat{\gamma}_j$ que atendem aos critérios de ortonormalidade estabelecidos na seção \ref{secao_sobre_fr}.
 
-Os resultados encontrados permitem esboçar um algoritmo básico para determinação das funções $F_{1,j}$ e $\beta_j$, necessárias para determinação da estimativa do salto de temperatura na interface de contato, expressa pela equação \eqref{resultado_1}:
+Os resultados encontrados permitem esboçar um algoritmo básico para determinação das funções $\hat{F}_{1,j}$ e $\hat{\beta}_j$, necessárias para determinação da estimativa do salto de temperatura na interface de contato, expressa pela equação \eqref{resultado_1}:
 \begin{enumerate}
 	\item Gerar a matriz $\mathbf{M}$ do sistema linear referente às equações \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2};
-	\item Escolher um conjunto de funções linearmente independentes $\hat{\psi}_j(x), j=0,1,\ldots,N_1$;
+	\item Escolher um conjunto de funções linearmente independentes $\psi_j(x), j=0,1,\ldots,N_1$;
 	\item Para cada $j$:
 	\begin{enumerate}	
-		\item Calcular as transformadas integrais $\bar{\hat{\psi}}_{j,m}, m=0,1,2, \ldots, M$;
-		\item Resolver o sistema $\mathbf{M}\mathbf{\xi} = \mathbf{b}$ definido pelas equações \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2}, onde $\mathbf{M}$ é a matriz calculada no passo 1 e $\mathbf{b}$ é o vetor calculado através dos valores de $\bar{\hat{\psi}}_{j,m}$, obtendo assim os valores $\hat{\mathbb{A}}_{j,m}, m=0,1,2, \ldots, M$;
-		\item Calcular $\hat{F}_{1,j}$ a partir de \eqref{solucao_transf_inversa_F1_com_dependencia} usando os valores $\hat{\mathbb{A}}_{j,m}$;
-		\item Calcular $\hat{\beta}_j$ a partir de \eqref{serie_para_beta} usando os valores $\hat{\mathbb{A}}_{j,m}$;
+		\item Calcular as transformadas integrais $\bar{\psi}_{j,m}, m=0,1,2, \ldots, M$;
+		\item Resolver o sistema $\mathbf{M}\mathbf{\xi} = \mathbf{b}$ definido pelas equações \eqref{sistema_para_coeficientes_1} e \eqref{sistema_para_coeficientes_2}, onde $\mathbf{M}$ é a matriz calculada no passo 1 e $\mathbf{b}$ é o vetor calculado através dos valores de $\bar{\psi}_{j,m}$, obtendo assim os valores $\mathbb{A}_{j,m}, m=0,1,2, \ldots, M$;
+		\item Calcular $\beta_j$ a partir de \eqref{serie_para_beta} usando os valores $\mathbb{A}_{j,m}$;
 		\item Calcular $\nu_j$:
 		\begin{itemize}
-			\item Se $j = 0$, então $\nu_j = \hat{\beta}_j$;
-			\item Se $j \ne 0$, então $\nu_j = \hat{\beta}_j - \displaystyle\sum_{k = 0}^{j - 1} \langle \hat{\beta}_j, \beta_k\rangle\beta_k$;
+			\item Se $j = 0$, então $\nu_j = \beta_j$;
+			\item Se $j \ne 0$, então $\nu_j = \beta_j - \displaystyle\sum_{k = 0}^{j - 1} \langle \beta_j, \hat{\beta}_k\rangle\hat{\beta}_k$;
 		\end{itemize}
-		\item Calcular $\mathbb{A}_{j,m}, m=0,1,2, \ldots, M$ a partir de \eqref{expressao_relaciona_psi};
-		\item Calcular $F_{1,j}$ a partir de \eqref{solucao_transf_inversa_F1_com_dependencia} usando os valores $\mathbb{A}_{j,m}$;
-		\item Calcular $\beta_j$ a partir de \eqref{serie_para_beta} usando os valores $\mathbb{A}_{j,m}$.
+		\item Calcular $\hat{\mathbb{A}}_{j,m}, m=0,1,2, \ldots, M$ a partir de \eqref{expressao_relaciona_psi};
+		\item Calcular $\hat{F}_{1,j}$ a partir de \eqref{solucao_transf_inversa_F1_com_dependencia} usando os valores $\hat{\mathbb{A}}_{j,m}$;
+		\item Calcular $\hat{\beta}_j$ a partir de \eqref{serie_para_beta} usando os valores $\hat{\mathbb{A}}_{j,m}$.
 	\end{enumerate}
 \end{enumerate}
 
 É importante destacar que a matriz $\mathbf{M}$ da etapa 1 só precisa ser calculada uma vez, já que seus coeficientes não mudam a cada resolução do sistema, variando apenas o vetor do segundo membro. Também é interessante notar que a etapa 3 é recursiva, isto é, os resultados para o $j$-ésimo passo dependem dos resultados encontrados nos passos anteriores $j - 1, j - 2, \ldots$ até 0.
 
-Todas as análises feitas para determinação das funções $F_{1,j}$ e $\beta_j$ podem ser aplicadas para determinar as funções $G_{1,j}$ e $\gamma_j$, devido à linearidade do segundo problema auxiliar. Por exemplo, são válidas as expressões a seguir, obtida por analogia com os resultados em \eqref{expressao_relaciona_psi} e \eqref{expressao_relaciona_zeta}:
-\begin{align}
-& \mathbb{E}_{j,m} = \frac{1}{\norm{\upsilon_j}} \hat{\mathbb{E}}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \hat{\gamma}_j, \gamma_k \rangle}{\norm{\upsilon_j}} \mathbb{E}_{k,m}, \quad m=0,1,2,\ldots \label{expressao_relaciona_omega} \\ \nonumber \\
-& \phi_j(x) = \frac{1}{\norm{\upsilon_j}} \hat{\phi}_j(x) - \sum_{k=0}^{j-1} \frac{\langle \hat{\gamma}_j, \gamma_k \rangle}{\norm{\upsilon_j}} \phi_k(x), \quad m=0,1,2,\ldots \label{expressao_relaciona_phi_2}
-\end{align}
-onde
-\begin{align}
-\upsilon_j = \hat{\gamma}_j - \displaystyle\sum_{k = 0}^{j - 1} \langle \hat{\gamma}_j, \gamma_k\rangle\gamma_k
-\end{align}
-
-Pode-se então adaptar o algoritmo básico elaborado para as funções $F_{1,j}$ e $\beta_j$, a fim de obter as funções $G_{1,j}$ e $\gamma_j$, necessárias para determinação da estimativa do fluxo de calor na interface de contato, expressa pela equação \eqref{resultado_2}:
+Um algoritmo semelhante permite obter as funções $\hat{G}_{1,j}$ e $\hat{\gamma}_j$, necessárias para determinação da estimativa do fluxo de calor na interface de contato, expressa pela equação \eqref{resultado_2}:
 \begin{enumerate}
 	\item Gerar a matriz $\mathbf{M}$ do sistema linear referente à equação \eqref{sistema_para_coeficientes_20};
-	\item Escolher um conjunto de funções linearmente independentes $\hat{\phi}_j(x), j=0,1,\ldots,N_2$;
+	\item Escolher um conjunto de funções linearmente independentes $\phi_j(x), j=0,1,\ldots,N_2$;
 	\item Para cada $j$:
 	\begin{enumerate}	
-		\item Calcular as transformadas integrais $\bar{\hat{\phi}}_{j,m}, m=0,1,2, \ldots, M$;
-		\item Resolver o sistema $\mathbf{M}\mathbf{\xi} = \mathbf{b}$ definido pela equação \eqref{sistema_para_coeficientes_20}, onde $\mathbf{M}$ é a matriz calculada no passo 1 e $\mathbf{b}$ é o vetor calculado através dos valores de $\bar{\hat{\phi}}_{j,m}$, obtendo assim os valores $\hat{\mathbb{E}}_{j,m}, m=0,1,2, \ldots, M$;
-		\item Calcular $\hat{G}_{1,j}$ a partir de \eqref{solucao_transf_inversa_G1_com_dependencia} usando os valores $\hat{\mathbb{E}}_{j,m}$;
-		\item Calcular $\hat{\gamma}_j$ a partir de \eqref{serie_para_gamma} usando os valores $\hat{\mathbb{E}}_{j,m}$;
+		\item Calcular as transformadas integrais $\bar{\phi}_{j,m}, m=0,1,2, \ldots, M$;
+		\item Resolver o sistema $\mathbf{M}\mathbf{\xi} = \mathbf{b}$ definido pela equação \eqref{sistema_para_coeficientes_20}, onde $\mathbf{M}$ é a matriz calculada no passo 1 e $\mathbf{b}$ é o vetor calculado através dos valores de $\bar{\phi}_{j,m}$, obtendo assim os valores $\mathbb{E}_{j,m}, m=0,1,2, \ldots, M$;
+		\item Calcular $\gamma_j$ a partir de \eqref{serie_para_gamma} usando os valores $\mathbb{E}_{j,m}$;
 		\item Calcular $\upsilon_j$:
 		\begin{itemize}
-			\item Se $j = 0$, então $\upsilon_j = \hat{\gamma}_j$;
-			\item Se $j \ne 0$, então $\upsilon_j = \hat{\gamma}_j - \displaystyle\sum_{k = 0}^{j - 1} \langle \hat{\gamma}_j, \gamma_k\rangle\gamma_k$;
+			\item Se $j = 0$, então $\upsilon_j = \gamma_j$;
+			\item Se $j \ne 0$, então $\upsilon_j = \gamma_j - \displaystyle\sum_{k = 0}^{j - 1} \langle \gamma_j, \hat{\gamma}_k\rangle\hat{\gamma}_k$;
 		\end{itemize}
-		\item Calcular $\mathbb{E}_{j,m}, m=0,1,2, \ldots, M$ a partir de \eqref{expressao_relaciona_omega};
-		\item Calcular $G_{1,j}$ a partir de \eqref{solucao_transf_inversa_G1_com_dependencia} usando os valores $\mathbb{E}_{j,m}$;
-		\item Calcular $\gamma_j$ a partir de \eqref{serie_para_gamma} usando os valores $\mathbb{E}_{j,m}$.
+		\item Calcular $\hat{\mathbb{E}}_{j,m}, m=0,1,2, \ldots, M$ a partir de \eqref{expressao_relaciona_zeta};
+		\item Calcular $\hat{G}_{1,j}$ a partir de \eqref{solucao_transf_inversa_G1_com_dependencia} usando os valores $\hat{\mathbb{E}}_{j,m}$;
+		\item Calcular $\hat{\gamma}_j$ a partir de \eqref{serie_para_gamma} usando os valores $\hat{\mathbb{E}}_{j,m}$.
 	\end{enumerate}
 \end{enumerate}
 
-Uma vez que foram determinadas as funções $F_{1,j}$ e $G_{1,j}$, bem como as funções $\beta_j$ e $\gamma_j$, o próximo passo é aplicar estes resultados na determinação da expressão analítica que fornece a estimativa da condutância térmica de contato (CTC), que é o objetivo principal deste trabalho.
+Uma vez que foram determinadas as funções $\hat{F}_{1,j}$ e $\hat{G}_{1,j}$, bem como as famílias de funções ortonormais $\hat{\beta}_j$ e $\hat{\gamma}_j$, o próximo passo é aplicar estes resultados na determinação da expressão analítica que fornece a estimativa da condutância térmica de contato (CTC), que é o objetivo principal deste trabalho.

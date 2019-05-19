@@ -1,6 +1,6 @@
 \section{Formulação analítica para a condutância térmica de contato}
 
-No capítulo anterior, foram finalmente deduzidas as expressões para as funções auxiliares $F_{1,j}$ e $G_{1,j}$, bem como as funções $\beta_j$ e $\gamma_j$ que compõem as bases ortonormais em $L^2(\Gamma)$. Neste capítulo, estes resultados serão reunidos, a fim de levantar uma expressão analítica de uso geral, para estimativa da condutância térmica de contato ao longo da superfície irregular $\Gamma$. Como ponto de partida, será estabelecida a expressão em coordenadas cartesianas do produto interno entre as funções no espaço linear $L^2(\Gamma)$.
+No capítulo anterior, foram finalmente deduzidas as expressões para as funções auxiliares $F_{1,j}$ e $G_{1,j}$, bem como as funções $\beta_j$ e $\gamma_j$ que compõem as bases ortonormais em $L^2(\Gamma)$\footnote{A fim de simplificar a notação, e manter consistência com as equações estabelecidas na seção \ref{secao_sobre_fr}, será eliminado o símbolo $\hat{}$, usado para indicar as funções ortonormalizadas, assumindo a partir deste ponto que $\beta_j$ e $\gamma_j$ referem-se às funções obtidas \textit{após} o processo de ortogonalização de Gram-Schmidt.}. Neste capítulo, estes resultados serão reunidos, a fim de levantar uma expressão analítica de uso geral, para estimativa da condutância térmica de contato ao longo da superfície irregular $\Gamma$. Como ponto de partida, será estabelecida a expressão em coordenadas cartesianas do produto interno entre as funções no espaço linear $L^2(\Gamma)$.
 
 \subsection{Formulação do produto interno no espaço linear de funções $L^2(\Gamma)$ em coordenadas cartesianas}
 
@@ -13,7 +13,7 @@ Se a superfície $\Gamma$, sobre a qual é realizada a integração, possuir uma
 \begin{align}
 \Gamma(t) = x(t)\mathbf{a}_x + y(t)\mathbf{a}_y, \quad\quad\quad t_0 < t < t_1
 \end{align}
-onde $\mathbf{a}_x$ e $\mathbf{a}_y$ são os vetores unitários da base canônica do sistema cartesiano, então a integral \eqref{integral_da_definicao_produto_interno} pode ser escrita como \citep{livro_stewart}:
+onde $\mathbf{a}_x$ e $\mathbf{a}_y$ são os vetores unitários da base canônica do sistema cartesiano, então a integral \eqref{integral_da_definicao_produto_interno} pode ser escrita como \citep{livro_stewart_2}:
 \begin{align}
 \langle f_1, f_2\rangle = \int_{t=t_0}^{t=t_1}f_1(x(t), y(t))f_2(x(t), y(t))\sqrt{x'(t)^2 + y'(t)^2}dt \label{integral_da_definicao_produto_interno_2}
 \end{align}
@@ -43,14 +43,14 @@ A superfície $\Gamma_0$, representada no arranjo da figura \ref{fig2}, e sobre 
 \end{align}
 onde $b$ é a altura do corpo de prova representado na figura \ref{fig2}.
 
-O vetor $\mathbf{n}_1$, normal à superfície $\Gamma_0$, é o próprio vetor unitário $\mathbf{a}_y$ da base canônica. Logo, a derivada direcional de $F$ sobre esse vetor será dada por \citep{livro_stewart}:
+O vetor $\mathbf{n}_1$, normal à superfície $\Gamma_0$, é o próprio vetor unitário $\mathbf{a}_y$ da base canônica. Logo, a derivada direcional de $F$ sobre esse vetor será dada por \citep{livro_stewart_2}:
 \begin{align}
 \frac{\partial F}{\partial\mathbf{n}_1}\bigg|_{\Gamma_0} & = \nabla F \cdot \mathbf{a}_y \nonumber \\
 & = \left[\frac{\partial F(x, b)}{\partial x}\mathbf{a}_x + \frac{\partial F(x, b)}{\partial y}\mathbf{a}_y \right] \cdot \mathbf{a}_y \nonumber \\
 & = \frac{\partial F(x, b)}{\partial y}
 \end{align} 
 
-Substituindo na integral \eqref{integral_de_contorno_para_F}, obtém-se \citep{livro_stewart}:
+Substituindo na integral \eqref{integral_de_contorno_para_F}, obtém-se \citep{livro_stewart_2}:
 \begin{align}
 \Re(F)
 =
