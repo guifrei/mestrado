@@ -37,10 +37,7 @@ cartesianas feita por Fourier e em seguida apresentam a formulação equivalente
 por exemplo \cite{livro_carslaw}, \cite{livro_holman} e \cite{livro_ozisik}. Em tese, a formulação no sistema cartesiano é aplicável
 a qualquer tipo de geometria; a solução geral sempre poderá ser expressa em termos de somatórios de senos ou cossenos. Soluções analíticas obtidas
 nos sistemas de coordenadas esféricas ou cilíndricas envolvem somatórios de tipos diferentes de funções base ortogonais, obtidas através da aplicação do método
-de separação de variáveis \citep{livro_boyce}. Voltando a citar os trabalhos de Fourier, ao expressar
-as equações de condução para corpos esféricos ou cilíndricos, ele fez implicitamente um \textit{mapeamento} dessas geometrias a partir
-do sistema de coordenadas cartesiano para os sistemas de coordenadas cilíndricas ou esféricas \citep{livro_numerical_grid}, e, ao aplicar a
-separação de variáveis, encontra soluções em forma de séries que futuramente seriam associadas às funções de Bessel e Legendre \citep{livro_fourier}. 
+de separação de variáveis \citep{livro_boyce}. Voltando a citar os trabalhos de Fourier, em que são feitas análises do problema de condução de calor em corpos cilíndricos ou esféricos, as equações correspondentes são expressas nos sistemas de coordenadas cilíndricas ou esféricas, para as quais são esboçadas soluções em forma de séries \citep{livro_fourier}. 
 
 \cite{artigo_einsenhart, artigo_einsenhart_2} demonstrou que a equação de Helmholtz (da qual a equação
 de difusão é um caso particular) pode ser resolvida por separação de variáveis em onze diferentes
@@ -120,7 +117,7 @@ era irregular, porém descrita de forma algébrica no sistema de coordenadas car
 Já \cite{tese_sphaier} generaliza as técnicas de levantamento de autofunções nestes trabalhos e apresenta uma solução formal para domínios irregulares usando GITT;
 para fronteiras cuja descrição algébrica é desconhecida, Sphaier sugere aproximar por linhas poligonais (no caso bidimensional), em que cada
 trecho é representado por um segmento de reta. As autofunções levantadas no processo de solução são obtidas a partir de problemas auxiliares resolvidos no próprio
-domínio irregular do problema, e nesse caso diz-se que o domínio é \textit{coincidente}; é feita uma rápida citação sobre soluções de problemas difusivos em domínios \textit{envolventes}
+domínio irregular do problema, e nesse caso diz-se que o domínio é \textit{coincidente}; no trabalho de Sphaier também é feita uma rápida citação sobre soluções de problemas difusivos em domínios \textit{envolventes}
 (quando o domínio original é considerado como sendo contido por um domínio maior, regular, sobre o qual a solução geral é encontrada e então particularizada
 para aquele subdomínio).
 
@@ -157,14 +154,12 @@ teórico de CTC, baseado na hipótese de o contato entre as superfícies metáli
 nas regiões de vazios. A expressão analítica da CTC encontrada depende principalmente de três parâmetros: número de pontos de contato por unidade
 de área, altura média dos vazios e razão entre área efetiva de contato e área total. Esses parâmetros são obtidos a partir de medidas tomadas nas
 interfaces individuais, com auxílio de um perfilômetro. Os autores comparam os resultados teóricos com observações experimentais, e observam que,
-a baixas pressões, a CTC se aproxima da condutividade térmica do fluido que preenche os vazios da interface. É importante observar que neste trabalho
-e nos seguintes, a CTC é calculada como um valor único e constante sobre a superfície de contato.
+a baixas pressões, a CTC se aproxima da condutividade térmica do fluido que preenche os vazios da interface. É importante observar que neste trabalho, bem como em vários outros que se seguiram e são citados nesta revisão, CTC é calculada como um valor único e constante sobre a superfície de contato.
 
-Uma situação especialmente interessante para a área aeroespacial é o estudo da CTC em ambientes no vácuo. Este caso foi examinado por \cite{artigo_clausing}.
+Uma situação especialmente interessante para a área aeroespacial é o estudo da CTC envolvendo materiais metálicos em contato na ausência de fluido intersticial, em ambiente de vácuo. Este caso foi examinado por \cite{artigo_clausing}.
 Em seu modelo, os autores distinguem os efeitos de constrição microscópica e macroscópica, e afirmam que estes últimos têm influência preponderante
-na resistência térmica de contato. Tambem comentam sobre o efeito da chamada ``resistência de filme'', causado, por exemplo, pela presença de
-filmes de óxidos em superfícies metálicas, e que podem apresentar influência significativa em ambientes no vácuo, sendo normalmente desprezados
-nas análises em que há fluido presente no interstício. São definidos dois parâmetros adimensionais, baseados nas características geométricas e
+na resistência térmica de contato. Também comentam sobre o efeito da chamada ``resistência de filme'', causado, por exemplo, pela presença de
+filmes de óxidos em superfícies metálicas, e que podem apresentar influência significativa em ambientes no vácuo. São definidos dois parâmetros adimensionais, baseados nas características geométricas e
 físicas dos materiais, a partir dos quais é definida a CTC. 
 
 \cite{tese_mikic} levantou expressões analíticas para resistências térmicas nos pontos de contato entre corpos metálicos, havendo presença de
@@ -175,10 +170,7 @@ Neste trabalho, a fase experimental, para fins de comparação com o modelo teó
 os desvios-padrão das amplitudes das rugosidades. A concordância entre os valores de CTC calculados e medidos foi, em geral, satisfatória; ainda assim,
 para o caso de fluidos de baixa condutividade térmica, os valores de CTC previstos pelo modelo foram maiores do que os obtidos através dos experimentos. 
 
-Uma investigação do efeito da difusão de calor em regime transiente na CTC foi conduzida por \cite{artigo_beck}. Nesse artigo, os campos de temperatura são
-calculados separadamente para cada um dos dois corpos em contato, e medidas de temperatura são tomadas em pontos não necessariamente próximos da interface
-de contato. A estimativa da CTC é a que miminiza o erro quadrático médio entre as temperaturas medidas e calculadas nesses pontos, avaliado em cada instante
-discreto de tempo em que são feitas as medições.
+Uma investigação do efeito da difusão de calor em regime transiente na CTC foi conduzida por \cite{artigo_beck}. Nesse artigo, a estimativa da CTC (considerada constante em relação ao espaço e ao tempo) é a que miminiza o erro quadrático médio entre as temperaturas medidas e calculadas em determinados pontos sobre os domínios correspondentes aos dois corpos em contato (através da solução numérica dos problemas de condução de calor em cada um dos corpos). O procedimento é iterativo, partindo de uma estimativa inicial de CTC, e foi estendido para determinação de uma CTC variável com o tempo, divindo o intervalo de tempo total em subintervalos nos quais a CTC era considerada aproximadamente constante.
 
 Vários experimentos envolvendo fluidos diferentes na interface entre os corpos em contato, e sua influência na CTC, foram realizados por \cite{artigo_madhusudana}.
 Considerações teóricas não foram feitas nesse trabalho. O autor mostra empiricamente que a presença de um meio condutor de calor na interface melhora a CTC,
@@ -249,10 +241,10 @@ foram determinados de forma direta na primeira classe, e determinados através d
 
 A variação espacial da CTC ao longo da interface de contato foi considerada por \cite{artigo_gill}, que, na resolução do problema inverso, aplicaram
 o método dos elementos de contorno \citep{livro_bem} associado a um algoritmo genético para regularização das medidas de temperatura. O procedimento empregado
-envolvia a medição de temperaturas na interface. Uma simulação numérica do experimento foi implementada, sendo observada uma razoável sensibilidade
+envolvia a medição de temperaturas próximas à interface. Uma simulação numérica do experimento foi implementada, sendo observada uma razoável sensibilidade
 da solução em relação aos erros de medição. 
 
-Duas características comuns aos métodos até agora citados para determinação da CTC são: a) a necessidade de ter medidas de temperatura disponíveis na interface de contato,
+Duas características comuns aos métodos até agora citados para determinação da CTC são: a) a necessidade de ter medidas de temperatura disponíveis na interface de contato ou em suas proximidades,
 normalmente por meios intrusivos, ou seja, medidas diretas de temperatura no interior dos corpos de prova; b) a necessidade de se fazer alguma descrição física e geométrica, em
 escala microscópica, da interface de contato, o que pode exigir a separação dos materiais. Em face dessas dificuldades, \cite{reciproc_3} desenvolveram
 um método não-intrusivo e não-destrutivo para estimativa da distribuição espacial da CTC em regime permanente. Para tanto, a fim de resolver o problema inverso de condução de calor, os autores partiram do conceito de funcional de reciprocidade, originalmente
@@ -302,5 +294,3 @@ consideravelmente o cálculo desses coeficientes. Com isso,
 o problema inverso originalmente explorado por \cite{reciproc_3} foi desenvolvido analiticamente, fornecendo uma equação simples para o cálculo da CTC. O ganho
 computacional obtido através desta abordagem foi considerável, uma vez que a distribuição da CTC pôde ser obtida em frações de segundo, de forma direta, obtendo resultados consistentes
 com os encontrados através dos funcionais de reciprocidade empregando outras técnicas de solução.
-
-

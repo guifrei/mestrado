@@ -30,6 +30,7 @@ sofrem uma \textit{constrição} nos pontos de contato, e uma maior dispersão n
 \node[scale=0.8] at (0, 0.9) {Sólido 1};
 \node[scale=0.8] at (0, -1.1) {Sólido 2};
 \node[scale=0.8] at (4, 0.3) {Fluido};
+%\node[scale=0.8] at (-5.5, 0.05) {Interface de contato \Gamma};
 \end{tikzpicture}
 \caption{Transferência de calor através da interface entre dois corpos (adaptado de \citeauthor{livro_ozisik}, \citeyear{livro_ozisik})}
 \label{fig1}
@@ -53,22 +54,22 @@ Uma definição equivalente da CTC pode ser formulada a partir da análise do pr
 corpos em contato, através das condições de contorno avaliadas na interface de contato \citep{livro_ozisik}. Nessa região, pode-se afirmar que o fluxo
 de calor saindo ou entrando em cada um dos sólidos deve se igualar ao fluxo de calor através da interface.
 
-Sejam, portanto, $T_1$ e $T_2$ os campos de temperatura em cada um dos sólidos cuja interface é representada na figura \ref{fig1}. Sejam $k_1$ e $k_2$
+Sejam, portanto, $T_1$ e $T_2$ os campos de temperatura em cada um dos sólidos cuja interface, designada pelo símbolo $\Gamma$, é representada na figura \ref{fig1}. Sejam $k_1$ e $k_2$
 as respectivas condutividades térmicas dos sólidos, e seja $q_c$ o fluxo de calor por unidade de área através da interface de contato. Assim, o balanço de energia permite escrever:
 \begin{equation}
-	q_c = -k_1\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_i
+	q_c = -k_1\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\Gamma
 	=
-	h_c(T_1 - T_2)_i
+	h_c(T_1 - T_2)_\Gamma
 	=
-	k_2\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_i \label{eq:definicao_2}
+	k_2\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_\Gamma \label{eq:definicao_2}
 \end{equation}
 De onde se obtém:
 \begin{equation}
-	h_c = \frac{-k_1\displaystyle\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_i}{(T_1 - T_2)_i} = \frac{k_2\displaystyle\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_i}{(T_1 - T_2)_i} \label{eq:definicao_3}
+	h_c = \frac{-k_1\displaystyle\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_i}{(T_1 - T_2)_\Gamma} = \frac{k_2\displaystyle\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} \label{eq:definicao_3}
 \end{equation}
 Os gradientes de temperatura são calculados sobre as direções dos vetores normais
 $\mathbf{n}_1$ e $\mathbf{n}_2$, que apontam para fora das fronteiras que delimitam os corpos materiais correspondentes; em particular,
-na interface de contato teremos $\mathbf{n}_2 = -\mathbf{n}_1$. O subscrito $i$ indica que todas as avaliações são feitas sobre a superfície de contato.
+na interface de contato teremos $\mathbf{n}_2 = -\mathbf{n}_1$.
 
 Nota-se facilmente a partir da equação \eqref{eq:definicao_3} que a CTC é uma propriedade não necessariamente constante ao longo da interface de contato,
 uma vez que tanto o fluxo de calor como o salto entre as temperaturas podem variar em cada ponto sobre a interface. De fato, nos locais onde a diferença é nula (ou seja, o contato

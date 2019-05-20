@@ -1,4 +1,4 @@
-\newcommand{\graficostemperatura}[3]{%
+\newcommand{\graficostemperatura}[5]{%
 	\begin{minipage}[t][6cm][c]{4.5cm}
 		\centering		
 		\begin{tikzpicture}[scale=0.75]
@@ -7,8 +7,8 @@
 		axis lines=left,
 		%		xmin = 0,
 		%		xmax = 0.04,
-		%		ymin = 310,
-		%		ymax = 340,
+		%ymin = #4,
+		%ymax = #5,
 		%		restrict y to domain=-500:2000,
 		scaled x ticks = false,
 		scaled y ticks = false,
