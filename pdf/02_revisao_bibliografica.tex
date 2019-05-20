@@ -133,8 +133,8 @@ Recentemente, houve o aumento do interesse na aplicação de métodos numéricos
 de problemas difusivos em geometrias irregulares; tais métodos procuram superar as dificuldades computacionais envolvidas na geração
 de malhas de discretização, trabalhando com o conceito de nós distribuídos pelo domínio do problema, e com as interações entre nós
 vizinhos. Tais técnicas incluem, por exemplo, o emprego de redes neurais \citep{artigo_deng, artigo_heidari}, funções de base
-radial associadas ao método de colocação \citep{artigo_chen, artigo_dai}, o método SPH (\textit{smoothed particle hydrodynamics}) \citep{artigo_vishwakarma} e o método MLPG (\textit{Meshless Local Petrov-Galerkin})
-\citep{artigo_li}.
+radial associadas ao método de colocação \citep{artigo_chen, artigo_dai}, o método SPH (\textit{smoothed particle hydrodynamics}) \citep{artigo_vishwakarma}, o método MLPG (\textit{Meshless Local Petrov-Galerkin})
+\citep{artigo_li} e e o método das soluções fundamentais associado à iteração de Picard \citep{artigo_alves_2}.
 
 \subsection{Estimativa da condutância térmica de contato}
 
@@ -294,3 +294,6 @@ consideravelmente o cálculo desses coeficientes. Com isso,
 o problema inverso originalmente explorado por \cite{reciproc_3} foi desenvolvido analiticamente, fornecendo uma equação simples para o cálculo da CTC. O ganho
 computacional obtido através desta abordagem foi considerável, uma vez que a distribuição da CTC pôde ser obtida em frações de segundo, de forma direta, obtendo resultados consistentes
 com os encontrados através dos funcionais de reciprocidade empregando outras técnicas de solução.
+
+É nesse contexto que se insere o presente trabalho, apresentando uma generalização em relação aos trabalhos anteriores que empregaram o conceito do Funcional de Reciprocidade, sempre associado a alguma técnica de solução de problemas elípticos difusivos (no caso, problemas inversos de condução de calor relacionados à estimativa da CTC) em geometrias específicas (no caso, seção reta retangular com interface de contato plana horizontal). Procurou-se conservar as características singulares do método proposto (a saber, não intrusivo e não iterativo), beneficiando-se do uso da Técnica da Transformada Integral numa geometria que, à primeira vista, não tornaria sua aplicação favorável ou vantajosa.
+

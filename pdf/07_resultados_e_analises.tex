@@ -183,7 +183,7 @@ Três níveis de desvio-padrão foram testados: $\sigma = \text{0,0}\celsius$ (c
 	\label{figura_temperaturas_sinteticas_interface_03}
 \end{figure}
 
-\subsection{Interpolação das temperaturas sintéticas}
+\subsection{Interpolação das temperaturas sintéticas}\label{secao_interpolacao}
 Sejam as expressões dos funcionais de reciprocidade associados às funções auxiliares $F_{1, j}$ e $G_{1, j}$, deduzidas no capítulo anterior:
 \begin{align}
 \Re(F_{1,j})
@@ -198,9 +198,9 @@ Sejam as expressões dos funcionais de reciprocidade associados às funções au
 \label{calculo_FR_G1_antes_a}
 \end{align}
 
-Foi comentado anteriormente que a função $Y(x)$ representa as medidas experimentais de temperatura na superfície superior do corpo de prova, que foram obtidas artificialmente neste trabalho, através de simulação do problema direto. As integrais acima poderiam então ser imediatamente identificadas com a transformação integral da função $Y(x)$.
+Foi comentado anteriormente que a função $Y(x)$ representa as medidas experimentais de temperatura na superfície superior do corpo de prova, obtidas artificialmente neste trabalho, através de simulação do problema direto. As integrais acima poderiam então ser imediatamente identificadas com a transformação integral da função $Y(x)$.
 
-Na prática, porém, a função $Y(x)$ é desconhecida, e dispõe-se apenas de dados discretos, correspondentes às temperaturas medidas em pontos distintos da superfície superior. No trabalho de \cite{tese_padilha}, foi feita uma aproximação dessa função $Y(x)$ através de uma \textit{spline} que interpolava essas medidas. Naquele mesmo trabalho, foi comentada a possibilidade de se interpolar as medidas sintéticas por meio de uma expansão em série de funções ortogonais às autofunções do problema de autovalor. Ou seja, a função $Y(x)$ poderia ser escrita na forma
+Na prática, porém, a função $Y(x)$ é desconhecida, e dispõe-se apenas de dados discretos, correspondentes às temperaturas medidas em pontos distintos da superfície superior. No trabalho de \cite{tese_padilha}, foi feita uma aproximação dessa função $Y(x)$ através de uma \textit{spline} que interpolava essas medidas. Uma outra forma de interpolar as medidas sintéticas, por meio de uma expansão em série de funções ortogonais às autofunções do problema de autovalor, foi proposta por \cite{artigo_mocerino} em seu trabalho de determinação de coeficiente de troca térmica de calor na parte interna de tubulações de trocadores de calor, que também empregou a técnica dos funcionais de reciprocidade. Desse modo, empregando a segunda abordagem no caso em estudo, a função $Y(x)$ poderia ser escrita na forma
 \begin{align}
 Y(x) \approx \bar{y}_0 + \sum_{m=1}^M \bar{y}_m \cos\mu_m x \label{aproximacao_Y}
 \end{align}
@@ -246,9 +246,9 @@ onde cada par $(x_i, Y_i)$ corresponde respectivamente a um abscissa sobre a sup
 
 
 \subsection{Definição das funções $\psi_j(x)$ e $\phi_j(x)$}
-Uma questão que ficou em aberto até o momento é a que envolve a definição das funções $\psi_j(x)$ e $\phi_j(x)$ que garantam a ortonormalidade das funções $\beta_j(x)$ e $\gamma_j(x)$. Conforme discutido na seção \ref{orto_beta_gama}, a determinação destas funções é feita de forma indireta, a partir de uma escolha prévia de funções $\hat{\psi}_j(x)$ e $\hat{\phi}_j(x)$ e da aplicação do algoritmo de Gram-Schmidt. Neste trabalho foram empregadas as seguintes alternativas para estas funções:
+Uma questão que ficou em aberto até o momento é a que envolve a definição das funções $\psi_j(x)$ e $\phi_j(x)$, necessárias para a determinação das funções $\beta_j(x)$ e $\gamma_j(x)$. Neste trabalho foram empregadas as seguintes alternativas para estas funções:
 \begin{align}
-\hat{\psi}_j(x), \hat{\phi}_j(x) = \left\lbrace
+\psi_j(x), \phi_j(x) = \left\lbrace
 \begin{array}{ll}
 \displaystyle\sqrt{\frac{1}{a}}, & j = 0 \\ \nonumber \\
 \displaystyle\sqrt{\frac{2}{a}}\cos \mu_j x, & j = 1,2,3,\ldots
@@ -256,7 +256,16 @@ Uma questão que ficou em aberto até o momento é a que envolve a definição d
 \right.
 \end{align} 
 
-Através dessas funções, é possível determinar as funções $\psi_j(x)$ e $\phi_j(x)$ pelo emprego das relações \eqref{expressao_relaciona_phi} e \eqref{expressao_relaciona_phi_2}\footnote{Estas funções foram as mesmas usadas por \cite{tese_padilha} na sua tese de doutorado e se mostraram bastante vantajosas do ponto de vista computacional, tanto neste como naquele trabalho. De fato, no estudo do problema de determinação da CTC numa interface plana horizontal conduzido por \cite{tese_padilha}, foi demonstrado que o emprego destas funções diretamente nas condições de contorno dos problemas auxiliares para $F_{1,j}$, $F_{2,j}$ e $G_{1,j}$ garantia automaticamente a ortogonalidade das funções $\beta_j(x)$ e $\gamma_j(x)$.}.
+Estas funções foram as mesmas usadas por \cite{tese_padilha} na sua tese de doutorado e se mostraram bastante vantajosas do ponto de vista computacional, tanto neste como naquele trabalho. De fato, no estudo do problema de determinação da CTC numa interface plana horizontal no referido trabalho, foi demonstrado que o emprego destas funções diretamente nas condições de contorno dos problemas auxiliares para $F_{1,j}$, $F_{2,j}$ e $G_{1,j}$ garantia automaticamente a ortogonalidade das funções $\beta_j(x)$ e $\gamma_j(x)$. Já no presente trabalho, o grande benefício no uso destas funções reside na simplificação do cálculo das respectivas transformadas integrais:
+\begin{align}
+\bar{\psi}_{j, m}, \bar{\phi}_{j, m} = \left\lbrace
+\begin{array}{ll}
+\displaystyle\sqrt{\frac{a}{2}}, & j = m \ne 0 \\ \nonumber \\
+\displaystyle\sqrt{a}, & j = m = 0 \\ \nonumber \\
+0, & j \ne m 
+\end{array}
+\right.
+\end{align}
 
 \subsection{Código computacional}\label{sobre_o_programa}
 
@@ -294,6 +303,14 @@ Diversas otimizações foram implementadas a fim de minimizar o tempo de process
 Serão apresentados agora os resultados numéricos obtidos a partir da aplicação das equações \eqref{calculo_FR_F1_antes}, \eqref{calculo_FR_G1_antes} e \eqref{expressao_final_ctc} ao problema inverso de condução de calor descrito no capítulo \ref{sec_prob_inv}. Estas equações fornecem, respectivamente, as estimativas de salto de temperatura, fluxo de calor e condutância térmica de contato na interface entre os materiais que compõem o arranjo físico ilustrado na figura \ref{fig2}.
 
 Para cada combinação possível de geometria de interface (Tabela \ref{tabela_interfaces}), perfil de condutância térmica de contato (Tabela \ref{tabela_ctc}) e desvio-padrão de erros de medição ($\sigma = \text{0,0}\celsius$, $\sigma = \text{0,1}\celsius$ e $\sigma = \text{0,5}\celsius$), foram calculadas estimativas de salto de temperatura e fluxo de calor na interface de contato, e os resultados foram comparados com os respectivos valores teóricos esperados para cada combinação. A estimativa do perfil de condutância térmica de contato, calculada através da razão entre o fluxo de calor e o salto de temperatura estimados na interface, também foi comparada com o perfil teórico correspondente, e que foi usado para determinação prévia das temperaturas sintéticas através de simulações de cada configuração do problema no módulo de transferência de calor no simulador COMSOL \textit{Multiphysics}\textsuperscript{\textregistered}.
+
+Não foi realizada uma análise de convergência rigorosa dos somatórios nas expressões \eqref{serie_para_beta}, \eqref{serie_para_gamma}, \eqref{calculo_FR_F1_antes_b} e \eqref{calculo_FR_G1_antes_b}, que fornecem as funções $\beta_j$ e $\gamma_j$ e os funcionais de reciprocidade, nem das equações \eqref{resultado_1} e \eqref{resultado_2}, que representam o fluxo de calor e o salto de temperatura na interface de contato. Adotou-se $M=20$ para o número de autofunções empregados nos somatórios que fornecem $\beta_j$, $\gamma_j$ e para o número de termos a serem somados para determinação de $\Re(F_{1,j})$ e $\Re(G_{1,j})$. Para o cálculo do salto de temperatura e do fluxo de calor na interface de contato, em todos os casos estudados foram assumidos os seguintes limites máximos para os índices dos somatórios correspondentes:
+\begin{itemize}
+	\item $N_1 \le 20$ (número máximo de funcionais de reciprocidade calculados para as expansões de salto de temperatura)
+	\item $N_2 \le 20$ (número máximo de funcionais de reciprocidade calculados para as expansões de fluxo de calor)
+\end{itemize}
+
+Estes limites de somatórios permitiram a obtenção de resultados sem problemas de divergência ou estabilidade. Posteriormente serão tecidos comentários quanto ao caráter instável dos somatórios referentes aos cálculos dos funcionais de reciprocidade bem quanto às dificuldades de estabelecimento de critérios de parada destes somatórios.
 
 Os gráficos utilizados na análise estão agrupados por geometria de interface; em cada grupo, estão plotadas as estimativas de salto de temperatura e fluxo de calor na interface de contato. A estimativa da condutância térmica de contato é representada no último subgrupo de gráficos para cada interface.
 
@@ -452,7 +469,7 @@ Foi verificado neste trabalho que estas expansões das estimativas de salto de t
 \end{align}
 onde $n$ corresponde a cada posição ao longo da interface $\Gamma$ na qual foram obtidas as estimativas, $N_x$ é o número total de posições, $f^{\text{FR}+\text{CITT}}_{i,n}$ são os valores obtidos com o emprego do método dos Funcionais de Reciprocidade com Transformação Integral Clássica, $f_{i,n}^{\text{exato}}$ são os valores exatos obtidos através da solução do problema direto e o índice $i$ representa a função estimada na interface: o salto de temperatura ($i = [T_1 - T_2]$) ou o fluxo de calor ($i = -k_1 \frac{\partial T_1}{\partial \mathbf{n}}$). Desse modo, o número ideal de termos nos somatórios que determinam as estimativas em \eqref{resultado_1aa} e \eqref{resultado_2aa} são os que minimizam os respectivos desvios quadráticos médios.
 
-Esse comportamento instável das estimativas em função do nível de ruído e do número de parcelas a serem somadas foi originalmente observado por \cite{tese_padilha} no caso específico da interface de contato plana horizontal. Como foi dito anteriormente, naquele trabalho foi empregada uma aproximação via \textit{splines} da função $Y(x)$ que representa as medidas experimentais de temperatura na interface superior do corpo, e que entra na formulação dos funcionais de reciprocidade (cf. equações \eqref{calculo_FR_F1_antes_a} e \eqref{calculo_FR_G1_antes_a}). Também foi dito que o autor sugeriu representar $Y(x)$ como somatório de autofunções, numa tentativa de reduzir o efeito dos erros de medição, como se fosse um filtro, permitindo somar mais termos às expansões das estimativas. No presente trabalho, adotou-se a aproximação em somatório de autofunções para $Y(x)$, e como o mesmo comportamento associado à limitação do número de termos nas expansões foi observado para as estimativas com níveis de ruído não-nulos, concluiu-se que a abordagem sugerida não foi eficaz na filtragem dos erros de medição. As Figuras \ref{erro_rms_1} e \ref{erro_rms_2} ilustram esse fenômeno, respectivamente para o salto de temperatura e o fluxo na interface de contato $\Gamma$, para o problema-teste referente à interface de contato de índice 2 e condutância térmica de contato teórica de índice 1.
+Esse comportamento instável das estimativas em função do nível de ruído e do número de parcelas a serem somadas foi originalmente observado por \cite{tese_padilha} no caso específico da interface de contato plana horizontal. Como foi dito anteriormente, naquele trabalho foi empregada uma aproximação via \textit{splines} da função $Y(x)$ que representa as medidas experimentais de temperatura na interface superior do corpo, e que entra na formulação dos funcionais de reciprocidade (cf. equações \eqref{calculo_FR_F1_antes_a} e \eqref{calculo_FR_G1_antes_a}). No presente trabalho, adotou-se a aproximação em somatório de autofunções para $Y(x)$, numa tentativa de reduzir o efeito dos erros de medição, como se fosse um filtro, permitindo em tese somar mais termos às expansões das estimativas (cf. Seção \ref{secao_interpolacao}). Entretanto, o mesmo comportamento associado à limitação do número de termos nas expansões foi observado para as estimativas com níveis de ruído não-nulos, de modo que a abordagem sugerida não foi eficaz na filtragem dos erros de medição. As Figuras \ref{erro_rms_1} e \ref{erro_rms_2} ilustram esse fenômeno, respectivamente para o salto de temperatura e o fluxo na interface de contato $\Gamma$, para o problema-teste referente à interface de contato de índice 2 e condutância térmica de contato teórica de índice 1.
 
 \begin{figure}[H]
 	\begin{minipage}[t][8cm][c]{\textwidth}
@@ -516,9 +533,6 @@ Esse comportamento instável das estimativas em função do nível de ruído e d
 Em situações práticas, nas quais os perfis teóricos não são conhecidos, o critério de determinação do número ótimo de termos nos somatórios \eqref{resultado_1aa} e \eqref{resultado_2aa} baseado no desvio quadrático médio não poderia ser aplicado. \cite{tese_padilha}, a fim de contornar essa dificuldade, sugeriu duas métricas baseadas em normas calculadas a partir de sucessivas estimativas de perfis; porém, o autor teve dificuldade em estabelecer critérios objetivos e determinísticos baseados nestas normas.
 
 
-Ainda assim, a abordagem sugerida para representação de $Y(x)$ via somatório de autofunções trouxe um resultado inesperado e surpreendente: para o caso $\sigma = 0,0\celsius$, verificou-se que as expansões das estimativas de salto de temperatura e fluxo de calor na interface de contato \textit{não cresciam indefinidamente} com o aumento do número de parcelas (cf. Figuras \ref{erro_rms_1} e \ref{erro_rms_2}). Ou seja, numa situação ideal em que não houvesse erros de medição, \textit{tanto o salto de temperatura quanto o fluxo de calor na interface -- e portanto a condutância térmica de contato -- seriam facilmente estimados, sem necessidade de estabelecer um critério de parada}. Entretanto, no desenvolvimento numérico deste trabalho, observou-se que esse comportamento era diretamente influenciado pela ordem das matrizes referentes aos sistemas lineares \eqref{sistema_para_coeficientes_3} e \eqref{sistema_para_coeficientes_21}, e provavelmente relacionado à tendência de mal condicionamento daquelas matrizes. De fato, todos os resultados obtidos nas análises anteriores foram obtidos adotando-se $N = 20$ (número máximo de parcelas calculadas nas expansões de salto de temperatura e fluxo de calor) e $M = 20$ (número máximo de autofunções, sem contar a solução trivial), mostrando-se bastante satisfatórios.
+Ainda assim, a abordagem sugerida para representação de $Y(x)$ via somatório de autofunções trouxe um resultado inesperado e surpreendente: para o caso $\sigma = 0,0\celsius$, verificou-se que as expansões das estimativas de salto de temperatura e fluxo de calor na interface de contato \textit{permitiram empregar o número máximo de parcelas calculadas}, no caso $N_1 = N_2 = 20$ (cf. Figuras \ref{erro_rms_1} e \ref{erro_rms_2}), para todas as combinações de geometrias de interface de contato e de condutâncias térmicas de contato analisadas, sem prejuízo da estabilidade numérica dos resultados. No caso da interface de contato horizontal estudada por \cite{tese_padilha}, o número máximo de parcelas nas expansões das estivativas adotando-se $\sigma = 0,0\celsius$ era no máximo 14, tanto para o fluxo de calor quanto para o salto de temperatura. Uma vez que foi possível o acréscimo de mais parcelas, os resultados encontrados no trabalho presente para este tipo de interface mostraram-se melhores do que os obtidos naquele trabalho.
 
-
-
-
-
+Pode-se então conjecturar que, numa situação ideal em que não houvesse erros de medição, tanto o salto de temperatura quanto o fluxo de calor na interface -- e portanto a condutância térmica de contato -- seriam mais precisamente estimados desde que fosse feita uma representação analítica das temperaturas sintéticas na interface superior através de uma aproximação pelas mesmas autofunções do problema inverso. Entretanto, no desenvolvimento numérico deste trabalho, observou-se que esse comportamento era diretamente influenciado pelas ordens das matrizes $\mathbf{M}$ e $\mathbf{b}$, referentes aos sistemas lineares \eqref{sistema_para_coeficientes_3} e \eqref{sistema_para_coeficientes_21}, e provavelmente relacionado à tendência de mal condicionamento daqueles problemas. De fato, adotando-se limites de somatórios maiores do que os utilizados neste trabalho na realização dos cálculos, os mesmos problemas de instabilidade no cálculo dos funcionais de reciprocidade foram observados.
