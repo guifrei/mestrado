@@ -424,7 +424,7 @@ You can find below the instructions for the preparation of papers for the INVERS
 
 \section{Introduction}
 
-If heat transfer takes place through a common boundary between two bodies in physical contact, a discontinuity in the temperature profile is observed across the interface defined by that boundary, which indicates that the thermal contact is not perfect there. The ratio of the heat flux per area unit to the temperature drop, both measured at that interface, is called \textit{thermal contact conductance} (abreviated as TCC):
+If heat transfer takes place through a common boundary between two bodies in physical contact, a discontinuity in the temperature profile is observed across the interface defined by that boundary, which indicates that the thermal contact is not perfect there. The ratio of the heat flux per area unit to the temperature drop, both measured at that interface, is called \textit{thermal contact conductance} (abbreviated as TCC):
 
 \begin{equation}
 h_c = \frac{q_c}{\Delta T} \label{definicao_1}
@@ -446,7 +446,9 @@ which leads to
 h_c = \frac{-k_1\displaystyle\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} = \frac{k_2\displaystyle\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} \label{eq:definicao_3}
 \end{equation}
 
-The TCC may be seen as a parameter to evaluate the quality of the contact between two solid bodies. In extreme cases, for instance, the TCC vanishes on perfect thermally isolated regions along the contact interface, since the heat flux on the numerator in \eqref{definicao_1} will be zero, whereas an infinite value for TCC will be found where the contact itself is perfect, for which the temperature jump on the denominator in \eqref{definicao_1} will be zero. The TCC may also be useful for evaluating the presence of discontinuities or cracks inside heterogeneous materials; in fact, there will be temperature jumps at those regions and the temperature fields measured on the external boundaries of the material will show values different from the expected ones if those discontinuities did not exist.
+The TCC may be seen as a parameter to evaluate the quality of the contact between two solid bodies. In extreme cases, for instance, the TCC vanishes on perfect thermally isolated regions along the contact interface, since the heat flux on the numerator in \eqref{definicao_1} will be zero, whereas an infinite value for TCC will be found where the contact itself is perfect, for which the temperature jump on the denominator in \eqref{definicao_1} will be zero. The TCC may also be useful for evaluating the presence of discontinuities or cracks inside heterogeneous materials; in fact, there will be temperature jumps at those regions and the temperature fields measured on the external boundaries of the material will show values different from the expected ones if those discontinuities did not exist. Some examples of the necessity of calculating or estimating the TCC may be found in aerodynamics (citar LAMBERT), microelectronics (citar SNAITH) or heat exchanger projects (citar HUANG). 
+
+Measuring methods for estimating the TCC usually demand knowlegde of details of the surfaces in contact, as well as evaluations of temperature and heat flux inside the bodies in contact, resulting in complex or intrusive experimental assemblies. Still, indirect evaluation of temperature and heat flux distributions across contact interfaces has been the object of recent researches, leading to development of more computationally efficient estimation techniques for the TCC (citar os trabalhos pg 4). 
 
 
 

@@ -10,3 +10,5 @@
 *.syx
 *.gz
 main.pdf
+dissertacao*.pdf
+/tmp/
