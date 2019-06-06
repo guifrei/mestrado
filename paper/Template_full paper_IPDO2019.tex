@@ -57,6 +57,18 @@
 \usepackage{color}
 \usepackage{geometry}
 \usepackage{empheq}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes.geometric,calc}
+\pgfplotsset{compat=1.4}
+% \addtolength{\oddsidemargin}{-.875in}
+% \addtolength{\evensidemargin}{-.875in}
+% \addtolength{\textwidth}{1.75in}
+% 
+% \addtolength{\topmargin}{-.875in}
+% \addtolength{\textheight}{1.75in}
+\pgfplotsset{compat=newest} % Allows to place the legend below plot
+\usepgfplotslibrary{units} % Allows to enter the units nicely
 % Some/most Computer Society conferences require the compsoc mode option,
 % but others may want the standard conference format.
 %
@@ -446,11 +458,74 @@ which leads to
 h_c = \frac{-k_1\displaystyle\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} = \frac{k_2\displaystyle\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} \label{eq:definicao_3}
 \end{equation}
 
-The TCC may be seen as a parameter to evaluate the quality of the contact between two solid bodies. In extreme cases, for instance, the TCC vanishes on perfect thermally isolated regions along the contact interface, since the heat flux on the numerator in \eqref{definicao_1} will be zero, whereas an infinite value for TCC will be found where the contact itself is perfect, for which the temperature jump on the denominator in \eqref{definicao_1} will be zero. The TCC may also be useful for evaluating the presence of discontinuities or cracks inside heterogeneous materials; in fact, there will be temperature jumps at those regions and the temperature fields measured on the external boundaries of the material will show values different from the expected ones if those discontinuities did not exist. Some examples of the necessity of calculating or estimating the TCC may be found in aerodynamics (citar LAMBERT), microelectronics (citar SNAITH) or heat exchanger projects (citar HUANG). 
+The TCC may be seen as a parameter to evaluate the quality of the contact between two solid bodies. In extreme cases, the TCC vanishes on perfect thermally isolated regions along the contact interface, since the heat flux on the numerator in \eqref{definicao_1} will be zero, whereas an infinite value for TCC will be found where the contact itself is perfect, for which the temperature jump on the denominator in \eqref{definicao_1} will be zero. The TCC may also be useful for evaluating the presence of discontinuities or cracks inside heterogeneous materials; in fact, there will be temperature jumps at those regions and the temperature fields measured on the external boundaries of the material will show values different from the expected ones if those discontinuities did not exist. Some examples of the necessity of calculating or estimating the TCC may be found in aerodynamics (citar LAMBERT), microelectronics (citar SNAITH) or heat exchanger projects (citar HUANG). 
 
-Some measuring methods developed for estimating the TCC usually demand knowlegde of details of the surfaces in contact, as well as evaluations of temperature and heat flux inside the bodies in contact, either \textit{in loco} or through some kind of regression from measurements at inner points, resulting in complex or intrusive experimental assemblies (citar bibliografia). Still, due to its special features, this problem may be classified as an Inverse Heat Conduction Problem (abbreviated as IHCP); in that case, the distribution of TCC across the contact interface may be considered as the unknown function to be estimated, by means of the definition \eqref{definicao_1}. In any case, the distributions of heat flux and temperature jumps across the contact interface, which are necessary for estimation of TCC from \eqref{definicao_1}, still need to be measured or calculated. 
+Some measuring methods developed for estimating the TCC usually demand knowlegde of details of the surfaces in contact, as well as evaluations of temperature and heat flux inside the bodies in contact, either \textit{in loco} or through some kind of regression from measurements at inner points, resulting in complex or intrusive experimental assemblies (citar bibliografia). Still, due to its special features, this problem may be classified as an Inverse Heat Conduction Problem (abbreviated as IHCP); in that case, the distribution of TCC across the contact interface may be considered as the unknown function to be estimated, by means of the definition \eqref{definicao_1}. In any case, the distributions of heat flux and temperature jumps across the contact interface, which are necessary for estimation of TCC from \eqref{definicao_1}, still need to be measured or calculated.
 
-Indirect evaluation of temperature jumps and heat flux distributions across contact interfaces has been the object of recent researches, leading to development of more computationally efficient estimation techniques for the TCC (citar os trabalhos pg 4). However, these techniques have been applied to regular geometrical configurations, such as plane or circular-shaped cross section contact interfaces. 
+The concept of Reciprocity Functional (abbreviated as FR), introduced by Andrieux and Ben Abda (citar os trabalhos), has been applied in recent researches on indirect evaluation of temperature jumps and heat flux distributions across contact interfaces (citar os trabalhos de CTC envolvendo FR). These works resulted in development of non-intrusive, non-iterative, and more computationally efficient approaches for estimation of the TCC. However, these techniques have been applied to regular geometrical configurations, such as retangular or circular-shaped cross section contact interfaces. Nevertheless, the analytical development envolving the use of the FR approach is not restricted to any particular geometry, and may be expanded to more compreehensive configurations.
+
+This paper presents and discusses the problem of estimating the TCC between two solid bodies in contact, considering that the contact interface is not necessarily regular. The starting point is the work developed by Alves (citar) and Abreu (citar), who studied the specific case in which the contact interface is plane and horizontal, given that both bodies have a rectangular cross section shape. The auxiliary problems, which provide the necessary functions to be used in the FR approach, were solved using the Method of Fundamantal Solutions. Padilha (citar), by means of the Classic Integral Transform Technique (abbreviated CITT) (citar COTTA), deduced an analytic expression to estimate the TCC for this particular case model. In the more general case 
+
+\begin{figure}[h!b]
+	\begin{center}
+		\begin{tikzpicture}[scale=0.5]
+		
+		\draw [ultra thick] (0, 0) -- (10, 0);
+		%\draw [ultra thick] (0, 2) -- (7, 2);
+		%\draw [ultra thick] (8, 2) -- (10, 2);
+		\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
+		\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};
+		\draw [ultra thick] (0, 5) -- (10, 5);
+		\draw [ultra thick] (0, 0) -- (0, 5);
+		\draw [ultra thick] (10, 0) -- (10, 5);
+		
+		\draw (2.5, 3.5) node {$\Omega_1$};
+		\draw (7.5, 1) node {$\Omega_2$};	
+		\draw (3.3, 2.2) node {$\Gamma$};
+		\draw (-0.5, 3.5) node {$\Gamma_1$};
+		\draw (-0.5, 1) node {$\Gamma_2$};
+		\draw (10.5, 3.5) node {$\Gamma_1$};
+		\draw (10.5, 1) node {$\Gamma_2$};
+		\draw (5, -0.4) node {$\Gamma_\infty$};
+		\draw (2.5, 5.3) node {$\Gamma_0$};
+		\draw [blue](5, 6.5) node {$q$};
+		\draw (5, -1.3) node {$a$};
+		\draw (-3.9, 2.5) node {$b$};
+		\draw (-2.7, 1) node {$w(x)$};
+		
+		\node [above right] at (12, 0) {$x$};
+		\node [right] at (0, 8) {$y$};
+		
+		\draw [->, blue] (0, 6.2) -- (0, 5.2);
+		\draw [->, blue] (1, 6.2) -- (1, 5.2);
+		\draw [->, blue] (2, 6.2) -- (2, 5.2);
+		\draw [->, blue] (3, 6.2) -- (3, 5.2);
+		\draw [->, blue] (4, 6.2) -- (4, 5.2);
+		\draw [->, blue] (5, 6.2) -- (5, 5.2);
+		\draw [->, blue] (6, 6.2) -- (6, 5.2);
+		\draw [->, blue] (7, 6.2) -- (7, 5.2);
+		\draw [->, blue] (8, 6.2) -- (8, 5.2);
+		\draw [->, blue] (9, 6.2) -- (9, 5.2);
+		\draw [->, blue] (10, 6.2) -- (10, 5.2);
+		
+		\draw [->, very thick] (10.2,0) -- (12,0);
+		\draw [->, very thick] (0, 6.5) -- (0,8);
+		
+		\draw [-] (0, -0.2) -- (0, -1.2);
+		\draw [-] (10, -0.2) -- (10, -1.2);
+		\draw [<->] (0, -1) -- (10, -1);
+		
+		\draw [-] (-0.2, 0) -- (-3.8, 0);
+		\draw [-] (-0.2, 5) -- (-3.8, 5);
+		\draw [-] (-0.2, 2) -- (-2.2, 2);
+		\draw [<->] (-3.6, 0) -- (-3.6, 5);
+		\draw [<->] (-2.0, 0) -- (-2.0, 2);
+		
+		\end{tikzpicture}
+		\caption{Geometria do problema físico}
+		\label{fig2}
+	\end{center}
+\end{figure}
 
 
 
