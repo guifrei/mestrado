@@ -413,7 +413,11 @@ colaco@ufrj.br}}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-You can find below the instructions for the preparation of papers for the INVERSE PROBLEMS, DESIGN AND OPTIMIZATION SYMPOSIUM. The length of the paper is limited to \textbf{8 (eight) pages}. The paper must be submitted electronically, in PDF (Portable Document Format) format, as an attachment to an e-mail message to the address:  \textcolor{blue}{\underline {ipdo2019@hebut.edu.cn}}. Please name the file containing your paper according to the number of your abstract/paper, which was sent previously. The name of your file should be as follows: IPDO-.pdf, where  is the number of your paper. You should use the number of your paper as the subject of this e-mail message.
+The Reciprocity Functional method, associated to the Classic Integral Transform Technique (CITT), has been succesfully applied in obtaining analytical
+solutions for the inverse heat transfer problem that seeks to estimate the thermal contact conductance (TCC) distribution on the interface of a body composed of
+two materials. Yet, the theoretical development upon which this approach is based is not limited to the need of this interface to have a regular format.
+This work proposes to extend the method, thus obtaining an analytical development for the estimation of the TCC distribution on interfaces which
+are not necessarily regular. Several test problems were solved using the techniques described in this work, leading to very good results, with low CPU time usage by the computational implementation.
 
 \end{abstract}
 
@@ -436,10 +440,10 @@ You can find below the instructions for the preparation of papers for the INVERS
 
 \section{Introduction}
 
-If heat transfer takes place through a common boundary between two bodies in physical contact, a discontinuity in the temperature profile is observed across the interface defined by that boundary, which indicates that the thermal contact is not perfect there. The ratio of the heat flux per area unit to the temperature drop, both measured at that interface, is called \textit{thermal contact conductance} (abbreviated as TCC):
+If heat transfer takes place through a common boundary between two bodies in physical contact, a discontinuity in the temperature profile is observed across the contact interface, which indicates that the thermal contact is not perfect there. The ratio of the heat flux per area unit to the temperature drop, both measured at that interface, is called \textit{thermal contact conductance} (abbreviated as TCC):
 
 \begin{equation}
-h_c = \frac{q_c}{\Delta T} \label{definicao_1}
+h_c = \frac{q_c}{\Delta T_c} \label{definicao_1}
 \end{equation}
 
 An equivalent definition of the TCC may be established upon the analysis of the associated heat conduction problem, by means of the boundary conditions evaluated on the contact interface. Thus, if $T_1$ and $T_2$ are the temperature fields in each of the solids whose contact interface is designated by $\Gamma$, and  $k_1$ and $k_2$ are their respective thermal conductivities, then energy balance allows the following relation:
@@ -455,16 +459,36 @@ k_2\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_\Gamma \label{definicao_2}
 which leads to
 
 \begin{equation}
-h_c = \frac{-k_1\displaystyle\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} = \frac{k_2\displaystyle\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} \label{eq:definicao_3}
+h_c = \frac{-k_1\displaystyle\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} = \frac{k_2\displaystyle\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} \label{definicao_3}
 \end{equation}
 
-The TCC may be seen as a parameter to evaluate the quality of the contact between two solid bodies. In extreme cases, the TCC vanishes on perfect thermally isolated regions along the contact interface, since the heat flux on the numerator in \eqref{definicao_1} will be zero, whereas an infinite value for TCC will be found where the contact itself is perfect, for which the temperature jump on the denominator in \eqref{definicao_1} will be zero. The TCC may also be useful for evaluating the presence of discontinuities or cracks inside heterogeneous materials; in fact, there will be temperature jumps at those regions and the temperature fields measured on the external boundaries of the material will show values different from the expected ones if those discontinuities did not exist. Some examples of the necessity of calculating or estimating the TCC may be found in aerodynamics (citar LAMBERT), microelectronics (citar SNAITH) or heat exchanger projects (citar HUANG). 
+The TCC may be seen as a parameter to evaluate the quality of the contact between two solid bodies. In extreme cases, the TCC vanishes on perfect thermally insulated regions along the contact interface, since the heat flux on the numerator in \eqref{definicao_1} will be zero, whereas an infinite value for TCC will be found where the contact itself is perfect, for which the temperature jump on the denominator in \eqref{definicao_1} will be zero. The TCC may also be useful for evaluating the presence of discontinuities or cracks inside heterogeneous materials; in fact, there will be temperature jumps at those regions and the temperature fields measured on the external boundaries of the material will show values different from the expected ones if those discontinuities did not exist. Some examples of the necessity of calculating or estimating the TCC may be found in aerodynamics (citar LAMBERT), microelectronics (citar SNAITH) or heat exchanger projects (citar HUANG). 
 
-Some measuring methods developed for estimating the TCC usually demand knowlegde of details of the surfaces in contact, as well as evaluations of temperature and heat flux inside the bodies in contact, either \textit{in loco} or through some kind of regression from measurements at inner points, resulting in complex or intrusive experimental assemblies (citar bibliografia). Still, due to its special features, this problem may be classified as an Inverse Heat Conduction Problem (abbreviated as IHCP); in that case, the distribution of TCC across the contact interface may be considered as the unknown function to be estimated, by means of the definition \eqref{definicao_1}. In any case, the distributions of heat flux and temperature jumps across the contact interface, which are necessary for estimation of TCC from \eqref{definicao_1}, still need to be measured or calculated.
+Some measuring methods developed for estimating the TCC usually demand knowing details of the surfaces in contact, as well as evaluations of temperature and heat flux inside the bodies in contact, either \textit{in loco} or through some kind of regression from measurements at inner points, resulting in complex or intrusive experimental assemblies (citar bibliografia). Still, due to its special features, this problem may be classified as an Inverse Heat Conduction Problem (abbreviated as IHCP); in that case, the distribution of TCC across the contact interface may be considered as the unknown function to be estimated, by means of the definition \eqref{definicao_1}. In any case, the distributions of heat flux and temperature jumps across the contact interface, which are necessary for estimation of TCC from \eqref{definicao_1}, still need to be measured or calculated.
 
-The concept of Reciprocity Functional (abbreviated as FR), introduced by Andrieux and Ben Abda (citar os trabalhos), has been applied in recent researches on indirect evaluation of temperature jumps and heat flux distributions across contact interfaces (citar os trabalhos de CTC envolvendo FR). These works resulted in development of non-intrusive, non-iterative, and more computationally efficient approaches for estimation of the TCC. However, these techniques have been applied to regular geometrical configurations, such as retangular or circular-shaped cross section contact interfaces. Nevertheless, the analytical development envolving the use of the FR approach is not restricted to any particular geometry, and may be expanded to more compreehensive configurations.
+The concept of Reciprocity Functional (abbreviated as FR), introduced by Andrieux and Ben Abda (citar os trabalhos), has been applied in recent researches on indirect evaluation of temperature jumps and heat flux distributions across contact interfaces (citar os trabalhos de CTC envolvendo FR). These works resulted in development of non-intrusive, non-iterative, and more computationally efficient approaches for estimation of the TCC. However, these techniques have been applied to regular geometrical configurations, such as rectangular or circular-shaped cross section contact interfaces. Nevertheless, the analytical development envolving the use of the FR approach is not restricted to any particular geometry, and may be expanded to more compreehensive configurations.
 
-This paper presents and discusses the problem of estimating the TCC between two solid bodies in contact, considering that the contact interface is not necessarily regular. The starting point is the work developed by Alves (citar) and Abreu (citar), who studied the specific case in which the contact interface is plane and horizontal, given that both bodies have a rectangular cross section shape. The auxiliary problems, which provide the necessary functions to be used in the FR approach, were solved using the Method of Fundamantal Solutions. Padilha (citar), by means of the Classic Integral Transform Technique (abbreviated CITT) (citar COTTA), deduced an analytic expression to estimate the TCC for this particular case model. In this work, the contact interface has been represented by an equation $ y = w(x)$, 
+This paper presents and discusses the problem of estimating the TCC between two solid bodies in contact, considering that the contact interface is not necessarily regular. The starting point is the work developed by Colaço and Alves (citar), who studied the specific case in which the contact interface is plane and horizontal, given that both bodies have a rectangular cross section shape. The auxiliary problems, which provide the necessary functions to be used in the FR approach, were solved using the Method of Fundamental Solutions. Padilha (citar), by means of the Classic Integral Transform Technique (abbreviated CITT) (citar COTTA), deduced an algebraic expression to estimate the TCC for this particular case model.
+
+For the sake of generality, the contact interface will have a curvilinear format, represented by an equation of the form $y = w(x)$, and the assembly composed by the two bodies in contact will have a rectangular cross section shape. Under these conditions, the original test problem may be considered as a special case of the present work, in which the function $w(x)$ will assume a constant value. 
+
+\section{Physical problem}
+
+The two-dimensional, steady-state problem considered in this paper, whose physical assembly is shown in Fig. \ref{fig2}, is based on the configuration proposed by Colaço and Alves (citar) and Abreu et al (citar). It consists of a specimen $\Omega$ having a rectangular shaped cross section, composed by two isotropic bodies $\Omega_1$ and $\Omega_2$, having thermal conductivities $k_1$ and $k_2$ respectively. It is assumed that there is a TCC varying with the position along the contact interface $\Gamma$ between the bodies, represented by the function $h_c(x, y)$. The lateral boundary surfaces $\Gamma_1$ and $\Gamma_2$ from both layers are kept thermally insulated; the bottom surface $\Gamma_\infty$ is subject to a prescribed temperature, and the upper surface $\Gamma_0$ is subject to a prescribed heat flux $q$. The intersection between any plane parallel to the coordinate plane $xy$ and the interface $\Gamma$ generates a curve described by and equation of the form $y = w(x)$. Since the coordinates $x$ and $y$ are directly related along the interface, the TCC will depend only on $x$, that is, $h_c(x, y) \equiv h_c(x)$. The formulation of the direct steady-state heat conduction problem is given as follows:
+\begin{subequations}
+	\begin{alignat}{2}
+		& \nabla^2 T_1 = 0 \quad\quad\quad\quad && \text{ in } \Omega_1 \label{harm_T1} \\ \nonumber \\
+		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = q && \text{ on } \Gamma_0  \label{cc_T1_2} \\ \nonumber \\
+		& \frac{\partial T_1}{\partial \mathbf{n}_1} = 0 && \text{ on }  \Gamma_1 \label{cc_T1_1} \\ \nonumber \\
+		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = h_c(T_1-T_2) \quad\quad\quad\quad && \text{ on }  \Gamma \label{cc_grad_T1} \\ \nonumber \\
+		& \nabla^2 T_2 = 0 && \text{ in }  \Omega_2 \label{harm_T2} \\ \nonumber \\
+		& \frac{\partial T_2}{\partial \mathbf{n}_2} = 0 && \text{ on }  \Gamma_2 \label{cc_T1_3} \\ \nonumber \\
+		& T_2 = 0 && \text{ on }  \Gamma_\infty \label{cc_T1_4} \\ \nonumber \\
+		& k_2\frac{\partial T_2}{\partial\mathbf{n}_2} = - k_1\frac{\partial T_1}{\partial\mathbf{n}_1} && \text{ on }  \Gamma \label{cc_T1_5}
+	\end{alignat}
+\end{subequations}
+
+In the equations above, $T_1$ and $T_2$ are the temperature fields corresponding to domains $\Omega_1$ and $\Omega_2$ respectively, and the normal unitary vectors $\mathbf{n}_1$ and $\mathbf{n}_2$ point outward the corresponding domains. Particularly at the contact interface $\Gamma$, it can be observed that $\mathbf{n}_1 = -\mathbf{n}_2$.
 
 \begin{figure}[h!b]
 	\begin{center}
@@ -522,12 +546,109 @@ This paper presents and discusses the problem of estimating the TCC between two 
 		\draw [<->] (-2.0, 0) -- (-2.0, 2);
 		
 		\end{tikzpicture}
-		\caption{Geometria do problema físico}
+		\caption{Schematic representation of the physical problem}
 		\label{fig2}
 	\end{center}
 \end{figure}
 
+\subsection{Inverse problem}
 
+The inverse problem is the estimation of the function $h_c(x)$ by means of the equation \eqref{definicao_3} on the contact interface $\Gamma$ between the two bodies $\Omega_1$ and $\Omega_2$, according to the physical arrangement illustrated in Fig. \ref{fig2}. The estimation will be performed by using temperature measures $Y = T(\Gamma_0)$ taken, for example, by an infrared camera on interface $\Gamma_0$. Both surfaces $\Gamma_1$ and $\Gamma_2$ will be kept insulated, and the bottom surface $\Gamma_\infty$ will be kept subject to the same prescribed temperature as in the direct problem. The heat flux $q_c(x) = -k_1\frac{\partial T_1}{\partial \mathbf{n}_1}$ and the temperature jump $\Delta T_c(x) = T_1 - T_2$, both evaluated at the contact interface $\Gamma$, will be indirectly estimated by defining and solving two separated auxiliary problems, as proposed by Colaço and Alves (citar).
+
+\subsubsection{Application of the reciprocity functional} Based on the idea of reciprocity functional gap developed by Andrieux and Ben Abda(citar), COlaço and Alves (citar) introduced the concept of Reciprocity Functional (RF) through the following expression:
+\begin{align}
+	\Re(F) = \int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F - Y\frac{\partial F}{\partial\mathbf{n_1}}\right]d\Gamma_0
+	\label{def_funcional_reciprocidade}
+\end{align}
+
+where $F$ is a harmonic function defined over $\Omega_1$.
+
+COlaço and Alves (citar) formulated two diffusive problems for determining two classes of auxiliary functions $F_1$ and $G_1$, over the same domain $\Omega_1$. Combining the direct problem expressed in \eqref{harm_T1}--\eqref{cc_T1_5} with the auxiliary problems and the boundary condtions, and applying Green's second theorem, they were able to demonstrate the following identities, which relate the temperature jump and the heat flux at the inaccessible interface $\Gamma$ to the measured temperatures $Y$ along the external surface $\Gamma_0$:
+\begin{align}
+	& \Re(F_1)
+	=
+	\int_\Gamma k_1 \frac{\partial F_1}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma
+	\label{identidade_T} \\ \nonumber \\
+	& \Re(G_1)
+	=
+	\int_\Gamma -k_1 G_1 \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma
+	\label{identidade_q}
+\end{align}
+
+Now let $k_1 \frac{\partial F}{\partial\mathbf{n_1}}$, $T_1 - T_2$, $G$ e $-k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}$ belong to a linear space of functions $L^2(\Gamma)$, and let the inner product in this linear space be defined as:
+\begin{align}
+	\langle f_1, f_2\rangle_{L^2(\Gamma)} = \int_\Gamma f_1(\Gamma) f_2(\Gamma) d\Gamma \label{definicao_innner_product}
+\end{align} 
+
+By rasing two families of auxiliary functions $F_{1,j}, j=1,2,\ldots N_1$ and $G_{1,j}, j=1,2,\ldots N_2$ from the corresponding auxiliary problems, and using the definition of inner product in \eqref{definicao_innner_product}, expressions \eqref{identidade_T} and \eqref{identidade_q} may be rewritten as:
+\begin{align}
+	& k_1 \Re(F_{1,j})
+	=
+	\left\langle \left[T_1 - T_2\right]_\Gamma, \beta_j\right\rangle _{L^2(\Gamma)}
+	\label{identidade_T_inner} \\ \nonumber \\
+	& k_1 \Re(G_{1,j})
+	=
+	\left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j\right\rangle _{L^2(\Gamma)}
+	\label{identidade_q_inner}
+\end{align}
+
+where
+\begin{align}
+	& \beta_j = k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\bigg|_\Gamma \label{expressao_define_beta} \\ \nonumber \\
+	& \gamma_j = G_{1,j}\big|_\Gamma \label{expressao_define_gamma}
+\end{align}
+
+Assuming that $\beta_j, j=1,2,\ldots N_1$ and $\gamma_j, j=1,2,\ldots N_2$ form two sets of orthonormal functions, they define two linear subspaces over which $T_1 - T_2$ and $-k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}$ may be ortogonally projected, that is:
+\begin{align}
+	& [T_1 - T_2]_\Gamma \approx \sum_{j=1}^{N_1} \left\langle  \left[T_1 - T_2\right]_\Gamma, \beta_j \right\rangle_{L^2(\Gamma)} \beta_j \\ \nonumber \\
+	& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma \approx \sum_{j=1}^{N_2} \left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j \right\rangle_{L^2(\Gamma)} \gamma_j
+\end{align}
+
+Applying identities \eqref{identidade_T_inner} and \eqref{identidade_q_inner} to the equations above, and assuming that the orthogonal projections represents the corresponding functions in a reasonable manner, the following relations can be written:
+\begin{align}
+	& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \label{resultado_1} \\ \nonumber \\
+	& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j \label{resultado_2}
+\end{align}
+
+Finally, substituting these results in the definition of the TCC \eqref{definicao_3} leads to:
+\begin{align}
+	& h_c(x) % = \frac{- k_1 \displaystyle\frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma}{[T_1 - T_2]_\Gamma} 
+	= \frac{\displaystyle\sum_{j=1}^{N_2} \Re(G_{1,j}) \gamma_j(x)}{\displaystyle\sum_{j=1}^{N_1} \Re(F_{1,j}) \beta_j(x)}
+	\label{equacao_definicao_f_r}
+\end{align}
+
+The expression \eqref{equacao_definicao_f_r} allows the estimation of the TCC distribution along the contact interface $\Gamma$, by knowing the distribution of temperatures $Y$ measured along the external interface $\Gamma_0$, thus eliminating the previous need of knowing internal characteristics of the composite body, confirming the non-intrusive feature of the method. The families of functions $F_{1, j}$ and $G_{1, j}$, and the integrals that provide the Reciprocity Functional values envolving these functions, need to be calculated just once for a certain geometric and thermophysical characterization of the problem, so that the method is also non-iterative.
+
+\subsection{Formulation and solution of the auxiliary problems}
+
+\subsubsection{First auxiliary problem: estimation of $\Delta T_c(x) = T_1 - T_2$ at $\Gamma$}
+
+Let $F_{1,j}$ and $F_{2,j}$ be two families of harmonic functions, defined over the domains $\Omega_1$ and $\Omega_2$ respectively, and let $\psi_j(x), j=1,2,\ldots N_1$ be a family of linear independent functions. The first auxiliary problem, as proposed by Abreu et al(citar), may be defined as follows:
+\begin{subequations}
+	\begin{alignat}{2}
+		& \nabla^2 F_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ in } \Omega_1 \label{funcao_F_harm_T1} \\ \nonumber \\
+		& F_{1,j} = \psi_j && \text{ on } \Gamma_0  \label{funcao_F_cc_T1_2} \\ \nonumber \\
+		& \frac{\partial F_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ on }  \Gamma_1 \label{funcao_F_cc_T1_1} \\ \nonumber \\
+		& F_{1,j} = F_{2, j} \quad\quad\quad\quad\quad\quad\quad\quad && \text{ on }  \Gamma \label{funcao_F_cc_grad_T1} \\ \nonumber \\
+		& \nabla^2 F_{2,j} = 0 && \text{ in }  \Omega_2 \label{funcao_F_harm_T2} \\ \nonumber \\
+		& \frac{\partial F_{2,j}}{\partial \mathbf{n}_2} = 0 && \text{ on }  \Gamma_2 \label{funcao_F_cc_T1_3} \\ \nonumber \\
+		& F_{2,j} = 0 && \text{ on }  \Gamma_\infty \label{funcao_F_cc_T1_4} \\ \nonumber \\
+		& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} && \text{ on }  \Gamma \label{funcao_F_cc_T1_5}
+	\end{alignat}
+\end{subequations}
+
+\subsubsection{Second auxiliary problem: estimation of $\Delta T_c(x) = T_1 - T_2$ at $\Gamma$}
+Let $G_{1,j}$ be a family of harmonic functions, defined over the domain $\Omega_1$, and let $\phi_j(x), j=1,2,\ldots N_2$ be a family of linear independent functions. The second auxiliary problem, as proposed by Abreu et al(citar), may be defined as follows:
+\begin{subequations}
+	\begin{alignat}{2}
+		& \nabla^2 G_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ in } \Omega_1 \label{funcao_G_harm_T1} \\ \nonumber \\
+		& G_{1,j} = \phi_j && \text{ on } \Gamma_0  \label{funcao_G_cc_T1_2} \\ \nonumber \\
+		& \frac{\partial G_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ on }  \Gamma_1 \label{funcao_G_cc_T1_1} \\ \nonumber \\
+		& \frac{\partial G_{1,j}}{\partial\mathbf{n}_1} = 0 \quad\quad\quad\quad\quad\quad\quad\quad && \text{ on }  \Gamma \label{funcao_G_cc_grad_T1}
+	\end{alignat}
+\end{subequations}
+
+\subsubsection{Solution of the auxiliary problems using CITT}
 
 \newpage
 
