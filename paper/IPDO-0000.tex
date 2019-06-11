@@ -85,6 +85,7 @@
 \usepackage{wasysym}
 \usepackage{xcolor}
 \usepackage{fancyhdr}
+\usepackage{lastpage}
 \usetikzlibrary{shapes.geometric,calc}
 \pgfplotsset{compat=1.4}
 % \addtolength{\oddsidemargin}{-.875in}
@@ -373,10 +374,10 @@
 \newcommand{\graficoctc}[4]{%
 	\centering
 	%\begin{minipage}[t][6cm][c]{4.5cm}				
-		\begin{tikzpicture}[scale=1.0]
+		\begin{tikzpicture}[scale=0.81]
 		\begin{axis}[
 		axis lines=left,
-		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		%		xmin = 0,
 		%		xmax = 0.04,
 		%		ymin = 310,
@@ -408,7 +409,7 @@
 		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=1.5pt}] table from \teff;
 		\end{axis}
 		\end{tikzpicture}
-		\caption*{(#4) Profile #3}
+		%\caption*{(#4) Profile #3}
 	%\end{minipage}
 }%
 
@@ -416,6 +417,7 @@
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
 \lhead{\textit{Inverse Problems, Design and Optimization Symposium – IPDO2019}\\\textit{Tianjin, China, September 24-26, 2019}}
+\fancypagestyle{plain}{\pagestyle{fancy}}
 
 \begin{document}
 \thispagestyle{empty}
@@ -437,9 +439,9 @@
 % use a multiple column layout for up to three different
 % affiliations
 \author{
-\IEEEauthorblockN\textbf{Guilherme Camelo de Freitas}
+\IEEEauthorblockN\textbf{Guilherme C. de Freitas}
 \IEEEauthorblockA{Department of Mechanical Engineering,\\POLI/COPPE\\
-Federal University of Rio de Janeiro\\
+Federal University of Rio de Janeiro, UFRJ\\
 Rio de Janeiro, RJ, Brazil\\
 guifrei@coppe.mecanica.ufrj.br}
 \and
@@ -487,14 +489,14 @@ colaco@ufrj.br}}
 
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
-\begin{abstract}
-The Reciprocity Functional method, associated to the Classic Integral Transform Technique (CITT), has been succesfully applied in obtaining analytical
+\noindent{\fontfamily{phv}\selectfont \textbf{ABSTRACT}}
+
+The Reciprocity Functional method, associated to the Classic Integral Transform Technique (CITT), has been succesfully applied, obtaining analytical
 solutions for the inverse heat transfer problem that seeks to estimate the thermal contact conductance (TCC) distribution on the interface of a body composed of
 two materials. Yet, the theoretical development upon which this approach is based is not limited to the need of this interface to have a regular format.
 This work proposes to extend the method, thus obtaining an analytical development for the estimation of the TCC distribution on interfaces which
 are not necessarily regular. Several test problems were solved using the techniques described in this work, leading to very good results, with low CPU time usage by the computational implementation.
-
-\end{abstract}
+\\
 
 % no keywords
 
@@ -512,8 +514,8 @@ are not necessarily regular. Several test problems were solved using the techniq
 
 \IEEEpeerreviewmaketitle
 
+\noindent{\fontfamily{phv}\selectfont \textbf{INTRODUCTION}}
 
-\section{Introduction}
 
 If heat transfer takes place through a common boundary between two bodies in physical contact, a discontinuity in the temperature profile is observed across the contact interface, which indicates that the thermal contact is not perfect there. The ratio of the heat flux per area unit to the temperature drop, both evaluated at that interface, is called \textit{thermal contact conductance} (TCC):
 
@@ -530,41 +532,26 @@ h_c(T_1 - T_2)_\Gamma
 =
 k_2\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_\Gamma \label{definicao_2}
 \end{equation}
-
 which leads to
 
 \begin{equation}
 h_c = \frac{-k_1\displaystyle\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} = \frac{k_2\displaystyle\frac{\partial T_2}{\partial \mathbf{n}_2}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma} \label{definicao_3}
 \end{equation}
 
-The TCC may be seen as a parameter to evaluate the quality of the contact between two solid bodies. In extreme cases, the TCC vanishes on perfect thermally insulated regions long the contact interface, since the heat flux on the numerator in \eqref{definicao_1} will be zero, whereas an infinite value for TCC will be found where the contact itself is perfect, for which the temperature jump on the denominator in \eqref{definicao_1} will be zero. The TCC may also be useful for evaluating the presence of discontinuities or cracks inside heterogeneous materials; in fact, temperature jumps appear at those regions and the temperature fields measured on the external boundaries of the material will show values different from the expected ones if those discontinuities did not exist. Some examples of the necessity of calculating or estimating the TCC may be found in aerodynamics\cite{artigo_aerospacial}, microelectronics\cite{artigo_snaith} or heat exchanger projects\cite{artigo_huang}. 
+The TCC may be seen as a parameter to evaluate the quality of the contact between two solid bodies. In extreme cases, the TCC vanishes on perfect thermally insulated regions along the contact interface, since the heat flux on the numerator in \eqref{definicao_1} will be zero, whereas an infinite value for TCC will be found where the contact itself is perfect, for which the temperature jump on the denominator in \eqref{definicao_1} will be zero. The TCC may also be useful for evaluating the presence of discontinuities or cracks inside heterogeneous materials; in fact, temperature jumps appear at those regions and the temperature fields measured on the external boundaries of the material will show values different from the expected ones if those discontinuities did not exist. Some examples of the necessity of calculating or estimating the TCC may be found in aerodynamics\cite{artigo_aerospacial}, microelectronics\cite{artigo_snaith} or heat exchanger projects\cite{artigo_huang}. 
 
 Some measuring methods developed for estimating the TCC usually demand knowing details of the surfaces in contact, as well as evaluations of temperature and heat flux inside the bodies in contact, either \textit{in loco} or through some kind of regression from measurements at inner points, resulting in complex or intrusive experimental assemblies \cite{artigo_fenech, tese_mikic, artigo_beck, artigo_salgon}. Still, due to its special features, this problem may be classified as an Inverse Heat Conduction Problem (abbreviated as IHCP); in that case, the distribution of TCC across the contact interface may be considered as the unknown function to be estimated, by means of the definition \eqref{definicao_1}. In any case, the distributions of heat flux and temperature jumps across the contact interface, which are necessary for estimation of TCC from \eqref{definicao_1}, still need to be measured or calculated.
 
-The concept of Reciprocity Functional (RF), introduced by Andrieux and Ben Abda\cite{artigo_andrieux}, has been applied in recent researches on indirect evaluation of temperature jumps and heat flux distributions across contact interfaces\cite{reciproc_3, artigo_colaco_2, artigo_colaco_3, artigo_colaco_4, artigo_abreu_2,artigo_abreu_3, artigo_padilha_2, artigo_padilha_3}. These works resulted in the development of non-intrusive, non-iterative, and more computationally efficient approaches for estimation of the TCC. However, these techniques have been applied to regular geometrical configurations, such as rectangular or circular-shaped cross section contact interfaces. Nevertheless, the analytical development envolving the use of the RF approach is not restricted to any particular geometry, and may be expanded to more compreehensive configurations.
+The concept of Reciprocity Functional (RF), introduced by Andrieux and Ben Abda\cite{artigo_andrieux}, has been applied in recent researches on indirect evaluation of temperature jumps and heat flux distributions across contact interfaces\cite{reciproc_3, artigo_colaco_2, artigo_colaco_3, artigo_abreu_2,artigo_abreu_3, artigo_padilha_2}. These works resulted in the development of non-intrusive, non-iterative, and more computationally efficient approaches for estimation of the TCC. However, these techniques have been applied to regular geometrical configurations, such as rectangular or circular-shaped cross section contact interfaces. Nevertheless, the analytical development envolving the use of the RF approach is not restricted to any particular geometry, and may be expanded to more compreehensive configurations.
 
-This paper presents and discusses the problem of estimating the TCC between two solid bodies in contact, considering that the contact interface is not necessarily regular. The starting point is the work developed by Colaço and Alves\cite{reciproc_3}, who studied the specific case in which the contact interface is plane and horizontal, given that both bodies have a rectangular cross section shape. The auxiliary problems, which provide the necessary functions to be used in the RF approach, were solved using the Method of Fundamental Solutions. Padilha \textit{et al}\cite{artigo_padilha_3}, by means of the Classic Integral Transform Technique (CITT)\cite{livro_integral_transforms_cotta}, deduced an algebraic expression to estimate the TCC for this particular case model.
+This paper presents and discusses the problem of estimating the TCC between two solid bodies in contact, considering that the contact interface is not necessarily regular. The starting point is the work developed by Colaço and Alves\cite{reciproc_3}, who studied the specific case in which the contact interface is planar and horizontal, given that both bodies have a rectangular cross section shape. The auxiliary problems, which provide the necessary functions to be used in the RF approach, were solved using the Method of Fundamental Solutions. Padilha \textit{et al.}\cite{artigo_padilha_3}, by means of the Classic Integral Transform Technique (CITT)\cite{livro_integral_transforms_cotta}, deduced an algebraic expression to estimate the TCC for this particular case model.
 
-For the sake of generality, the contact interface will have a curvilinear format, represented by an equation of the form $y = w(x)$, and the assembly composed by the two bodies in contact will have a rectangular cross section shape. Under these conditions, the original test problem may be considered as a special case of the present work, in which the function $w(x)$ will assume a constant value. 
+For the sake of generality, the contact interface will have a curvilinear format, represented by an equation of the form $y = w(x)$, and the assembly composed by the two bodies in contact will have a rectangular cross section shape. Under these conditions, the original test problem\cite{reciproc_3} may be considered as a special case of the present work, in which the function $w(x)$ will assume a constant value. 
+\\
 
-\section{Physical problem}
+\noindent{\fontfamily{phv}\selectfont \textbf{PHYSICAL PROBLEM}}
 
-The two-dimensional, steady-state problem considered in this paper, whose physical assembly is shown in Fig. \ref{fig2}, is based on the configuration proposed by Colaço and Alves\cite{reciproc_3} and Abreu \textit{et al}\cite{artigo_abreu_3}. It consists of a specimen $\Omega$ having a rectangular shaped cross section of width $a$ and height $b$, composed by two isotropic bodies $\Omega_1$ and $\Omega_2$, having thermal conductivities $k_1$ and $k_2$ respectively. It is assumed that there is a TCC varying with the position along the contact interface $\Gamma$ between the bodies, represented by the function $h_c(x, y)$. The lateral boundary surfaces $\Gamma_1$ and $\Gamma_2$ from both layers are kept thermally insulated; the bottom surface $\Gamma_\infty$ is subject to a prescribed temperature, and the upper surface $\Gamma_0$ is subject to a prescribed heat flux $q$. The intersection between any plane parallel to the coordinate plane $xy$ and the interface $\Gamma$ generates a curve described by an equation of the form $y = w(x)$. Since the coordinates $x$ and $y$ are directly related along the interface, the TCC will depend only on $x$, that is, $h_c(x, y) \equiv h_c(x)$. The formulation of the direct steady-state heat conduction problem is given as follows:
-\begin{subequations}
-	\begin{alignat}{2}
-		& \nabla^2 T_1 = 0 \quad\quad\quad\quad && \text{ in } \Omega_1 \label{harm_T1} \\ 
-		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = q && \text{ on } \Gamma_0  \label{cc_T1_2} \\ 
-		& \frac{\partial T_1}{\partial \mathbf{n}_1} = 0 && \text{ on }  \Gamma_1 \label{cc_T1_1} \\ 
-		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = h_c(T_1-T_2) \quad\quad\quad\quad && \text{ on }  \Gamma \label{cc_grad_T1} \\ 
-		& \nabla^2 T_2 = 0 && \text{ in }  \Omega_2 \label{harm_T2} \\ 
-		& \frac{\partial T_2}{\partial \mathbf{n}_2} = 0 && \text{ on }  \Gamma_2 \label{cc_T1_3} \\
-		& T_2 = 0 && \text{ on }  \Gamma_\infty \label{cc_T1_4} \\ 
-		& k_2\frac{\partial T_2}{\partial\mathbf{n}_2} = - k_1\frac{\partial T_1}{\partial\mathbf{n}_1} && \text{ on }  \Gamma \label{cc_T1_5}
-	\end{alignat}
-\end{subequations}
-
-In the above equations, $T_1$ and $T_2$ are the temperature fields corresponding to domains $\Omega_1$ and $\Omega_2$ respectively, and the normal unitary vectors $\mathbf{n}_1$ and $\mathbf{n}_2$ point outward the corresponding domains. Particularly at the contact interface $\Gamma$, it can be observed that $\mathbf{n}_1 = -\mathbf{n}_2$.
-
+The two-dimensional, steady-state problem considered in this paper, whose physical assembly is shown in Fig. \ref{fig2}, is based on the configuration proposed by Colaço and Alves\cite{reciproc_3} and Abreu \textit{et al.}\cite{artigo_abreu_3}. It consists of a specimen $\Omega$ having a rectangular shaped cross section of width $a$ and height $b$, composed by two isotropic bodies $\Omega_1$ and $\Omega_2$, having thermal conductivities $k_1$ and $k_2$ respectively. It is assumed that there is a TCC varying with the position along the contact interface $\Gamma$ between the bodies, represented by the function $h_c(x, y)$.
 \begin{figure}[H]
 	\begin{center}
 		\begin{tikzpicture}[scale=0.5]
@@ -625,12 +612,33 @@ In the above equations, $T_1$ and $T_2$ are the temperature fields corresponding
 		\label{fig2}
 	\end{center}
 \end{figure}
+The lateral boundary surfaces $\Gamma_1$ and $\Gamma_2$ from both layers are kept thermally insulated; the bottom surface $\Gamma_\infty$ is subject to a prescribed temperature, and the upper surface $\Gamma_0$ is subject to a prescribed heat flux $q$. The intersection between any plane parallel to the coordinate plane $xy$ and the interface $\Gamma$ generates a curve described by an equation of the form $y = w(x)$. Since the coordinates $x$ and $y$ are directly related along the interface, the TCC will depend only on $x$, that is, $h_c(x, y) \equiv h_c(x)$.
 
-\section{Inverse problem}
+The formulation of the direct steady-state heat conduction problem is given as follows:
+\begin{subequations}
+	\begin{alignat}{2}
+		& \nabla^2 T_1 = 0 \quad\quad\quad\quad && \text{ in } \Omega_1 \label{harm_T1} \\ 
+		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = q && \text{ on } \Gamma_0  \label{cc_T1_2} \\ 
+		& \frac{\partial T_1}{\partial \mathbf{n}_1} = 0 && \text{ on }  \Gamma_1 \label{cc_T1_1} \\ 
+		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = h_c(T_1-T_2) \quad\quad\quad\quad && \text{ on }  \Gamma \label{cc_grad_T1} \\ 
+		& \nabla^2 T_2 = 0 && \text{ in }  \Omega_2 \label{harm_T2} \\ 
+		& \frac{\partial T_2}{\partial \mathbf{n}_2} = 0 && \text{ on }  \Gamma_2 \label{cc_T1_3} \\
+		& T_2 = 0 && \text{ on }  \Gamma_\infty \label{cc_T1_4} \\ 
+		& k_2\frac{\partial T_2}{\partial\mathbf{n}_2} = - k_1\frac{\partial T_1}{\partial\mathbf{n}_1} && \text{ on }  \Gamma \label{cc_T1_5}
+	\end{alignat}
+\end{subequations}
 
-The inverse problem is the estimation of the function $h_c(x)$ by means of the equation \eqref{definicao_3} on the contact interface $\Gamma$ between the two bodies $\Omega_1$ and $\Omega_2$, according to the physical arrangement illustrated in Fig. \ref{fig2}. The estimation will be performed by using temperature measurements $Y = T(\Gamma_0)$ taken, for example, by an infrared camera on interface $\Gamma_0$. Both surfaces $\Gamma_1$ and $\Gamma_2$ will be kept insulated, and the bottom surface $\Gamma_\infty$ will be kept subject to the same prescribed temperature as in the direct problem. The heat flux $q_c(x) = -k_1\frac{\partial T_1}{\partial \mathbf{n}_1}$ and the temperature jump $\Delta T_c(x) = T_1 - T_2$, both evaluated at the contact interface $\Gamma$, will be indirectly estimated by defining and solving two separated auxiliary problems, as proposed by Colaço and Alves\cite{reciproc_3}.
+In the above equations, $T_1$ and $T_2$ are the temperature fields corresponding to domains $\Omega_1$ and $\Omega_2$ respectively, and the normal unitary vectors $\mathbf{n}_1$ and $\mathbf{n}_2$ point outward the corresponding domains. Particularly at the contact interface $\Gamma$, it can be observed that $\mathbf{n}_1 = -\mathbf{n}_2$.
+\\
 
-\section{Application of the reciprocity functional} Based on the idea of reciprocity functional gap developed by Andrieux and Ben Abda\cite{artigo_andrieux}, Colaço and Alves\cite{reciproc_3} introduced the concept of Reciprocity Functional (RF) through the following expression:
+\noindent{\fontfamily{phv}\selectfont \textbf{INVERSE PROBLEM}}
+
+The inverse problem is the estimation of the function $h_c(x)$ by means of the equation \eqref{definicao_3} on the contact interface $\Gamma$ between the two bodies $\Omega_1$ and $\Omega_2$, according to the physical arrangement illustrated in Fig. \ref{fig2}. The estimation will be performed by using temperature measurements $Y = T(\Gamma_0)$ taken, for example, by an infrared camera on interface $\Gamma_0$. Both surfaces $\Gamma_1$ and $\Gamma_2$ will be kept thermically insulated, and the bottom surface $\Gamma_\infty$ will be subjected to the same prescribed temperature as in the direct problem. The heat flux $q_c(x) = -k_1\frac{\partial T_1}{\partial \mathbf{n}_1}$ and the temperature jump $\Delta T_c(x) = T_1 - T_2$, both evaluated at the contact interface $\Gamma$, will be indirectly estimated by defining and solving two separated auxiliary problems, as proposed by Colaço and Alves\cite{reciproc_3}.
+\\
+
+\noindent{\fontfamily{phv}\selectfont \textbf{APPLICATION OF THE RECIPROCITY FUNCTIONAL}}
+
+Based on the idea of reciprocity functional gap developed by Andrieux and Ben Abda\cite{artigo_andrieux}, Colaço and Alves\cite{reciproc_3} introduced the concept of Reciprocity Functional (RF) through the following expression:
 \begin{align}
 	\Re(F) = \int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F - Y\frac{\partial F}{\partial\mathbf{n_1}}\right]d\Gamma_0
 	\label{def_funcional_reciprocidade}
@@ -649,7 +657,7 @@ Colaço and Alves\cite{reciproc_3} formulated two diffusive problems for determi
 	\label{identidade_q}
 \end{align}
 
-Now let $k_1 \frac{\partial F}{\partial\mathbf{n_1}}$, $T_1 - T_2$, $G$ e $-k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}$ belong to a linear space of functions $L^2(\Gamma)$, and let the inner product in this linear space be defined as:
+Now let $k_1 \frac{\partial F}{\partial\mathbf{n_1}}$, $T_1 - T_2$, $G$ and $-k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}$ belong to a linear space of functions $L^2(\Gamma)$, and let the inner product in this linear space be defined as:
 \begin{align}
 	\langle f_1, f_2\rangle_{L^2(\Gamma)} = \int_\Gamma f_1(\Gamma) f_2(\Gamma) d\Gamma \label{definicao_innner_product}
 \end{align} 
@@ -677,7 +685,7 @@ Assuming that $\beta_j, j=1,2,\ldots N_1$ and $\gamma_j, j=1,2,\ldots N_2$ form 
 	& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma \approx \sum_{j=1}^{N_2} \left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j \right\rangle_{L^2(\Gamma)} \gamma_j
 \end{align}
 
-Applying identities \eqref{identidade_T_inner} and \eqref{identidade_q_inner} to the equations above, and assuming that the orthogonal projections represent the corresponding functions in a reasonable manner, the following relations can be written:
+Applying identities \eqref{identidade_T_inner} and \eqref{identidade_q_inner} to the above equations, and assuming that the orthogonal projections represent the corresponding functions in a reasonable manner, the following relations can be written:
 \begin{align}
 	& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \label{resultado_1} \\
 	& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j \label{resultado_2}
@@ -691,12 +699,14 @@ The substitution of these results into the definition of the TCC \eqref{definica
 \end{align}
 
 The expression \eqref{equacao_definicao_f_r} allows the estimation of the TCC distribution along the contact interface $\Gamma$, by knowing the distribution of temperatures $Y$ measured along the external interface $\Gamma_0$, thus eliminating the previous need of knowing internal characteristics of the composite body, confirming the non-intrusive feature of the method. The families of functions $F_{1, j}$ and $G_{1, j}$, and the integrals that provide the Reciprocity Functional values envolving these functions, need to be calculated just once for a certain geometric and thermophysical characterization of the problem, so that the method is also non-iterative.
+\\
 
-\section{Formulation and solution of the auxiliary problems}
+\noindent{\fontfamily{phv}\selectfont \textbf{FORMULATION AND SOLUTION OF THE AUXILIARY PROBLEM}}
+\\
 
-\subsubsection*{First auxiliary problem: estimation of the temperature jump at the contact interface}
+\noindent{\fontfamily{phv}\selectfont \textbf{First auxiliary problem: estimation of the temperature jump at the contact interface}}
 
-Let $F_{1,j}$ and $F_{2,j}$ be two families of harmonic functions, defined over the domains $\Omega_1$ and $\Omega_2$ respectively, and let $\psi_j(x), j=1,2,\ldots N_1$ be a family of linear independent functions. The first auxiliary problem, as proposed by Abreu \textit{et al}\cite{artigo_abreu_3}, may be defined as follows:
+Let $F_{1,j}$ and $F_{2,j}$ be two families of harmonic functions, defined over the domains $\Omega_1$ and $\Omega_2$ respectively, and let $\psi_j(x), j=1,2,\ldots N_1$ be a family of linear independent functions. The first auxiliary problem, as proposed by Abreu \textit{et al.}\cite{artigo_abreu_3}, may be defined as follows:
 \begin{subequations}
 	\begin{alignat}{2}
 		& \nabla^2 F_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ in } \Omega_1 \label{funcao_F_harm_T1} \\
@@ -709,10 +719,11 @@ Let $F_{1,j}$ and $F_{2,j}$ be two families of harmonic functions, defined over 
 		& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} && \text{ on }  \Gamma \label{funcao_F_cc_T1_5}
 	\end{alignat}
 \end{subequations}
+\\
 
-\subsubsection*{Second auxiliary problem: estimation of the heat flux at the contact interface}
+\noindent{\fontfamily{phv}\selectfont \textbf{Second auxiliary problem: estimation of the heat flux at the contact interface}}
 
-Let $G_{1,j}$ be a family of harmonic functions, defined over the domain $\Omega_1$, and let $\phi_j(x), j=1,2,\ldots N_2$ be a family of linear independent functions. The second auxiliary problem, as proposed by Abreu \textit{et al}\cite{artigo_abreu_3}, may be defined as follows:
+Let $G_{1,j}$ be a family of harmonic functions, defined over the domain $\Omega_1$, and let $\phi_j(x), j=1,2,\ldots N_2$ be a family of linear independent functions. The second auxiliary problem, as proposed by Abreu \textit{et al.}\cite{artigo_abreu_3}, may be defined as follows:
 \begin{subequations}
 	\begin{alignat}{2}
 		& \nabla^2 G_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ in } \Omega_1 \label{funcao_G_harm_T1} \\ 
@@ -721,12 +732,13 @@ Let $G_{1,j}$ be a family of harmonic functions, defined over the domain $\Omega
 		& \frac{\partial G_{1,j}}{\partial\mathbf{n}_1} = 0 \quad\quad\quad\quad\quad\quad\quad\quad && \text{ on }  \Gamma \label{funcao_G_cc_grad_T1}
 	\end{alignat}
 \end{subequations}
+\\
 
-\subsubsection*{Solution of the auxiliary problems using CITT}
+\noindent{\fontfamily{phv}\selectfont \textbf{Solution of the auxiliary problems using CITT}}
 
-The Classic Integral Transform Technique (CITT) provides a systematic and efficient approach for solving linear diffusive problems envolving nonhomogeneous terms in the differential equations or in the boundary conditions\cite{livro_integral_transforms_cotta}, and was employed by Padilha \textit{et al}\cite{artigo_padilha_3} for the solution of the auxiliary problems formulated in the previous subsections, specifically for the case of the plane horizontal contact interface. Since the current study comprises a more general configuration, still keeping the basic thermophysical and geometrical characteristics, that method was a natural choice for solving its corresponding auxiliary problems.
+The Classic Integral Transform Technique (CITT) provides a systematic and efficient approach for solving linear diffusive problems envolving nonhomogeneous terms in the differential equations or in the boundary conditions\cite{livro_integral_transforms_cotta}, and was employed by Padilha \textit{et al.}\cite{artigo_padilha_3} for the solution of the auxiliary problems formulated in the previous subsections, specifically for the case of the planar horizontal contact interface. Since the current study comprises a more general configuration, still keeping the basic thermophysical and geometrical characteristics, that method was a natural choice for solving its corresponding auxiliary problems.
 
-In order to solve equations \eqref{funcao_F_harm_T1} to \eqref{funcao_F_cc_T1_5} and \eqref{funcao_G_harm_T1} to \eqref{funcao_G_cc_grad_T1} by the CITT method, it is necessary to define thw following integral transforms and inversion formulas\cite{livro_integral_transforms_cotta} in the $x$-direction, where the boundary conditions are homogeneous:
+In order to solve equations \eqref{funcao_F_harm_T1} to \eqref{funcao_F_cc_T1_5} and \eqref{funcao_G_harm_T1} to \eqref{funcao_G_cc_grad_T1} by the CITT method, it is necessary to define the following integral transforms and inversion formulas\cite{livro_integral_transforms_cotta} in the $x$-direction, where the boundary conditions are homogeneous:
 \begin{itemize}
 	\item Functions $F_{1, j}$ and $F_{2, j}$:
 	\begin{subequations}
@@ -808,7 +820,8 @@ In order to evaluate those constants, the inverse formulas \eqref{definicao_da_t
 \begin{subequations}
 \begin{align}
 & \sum_{m = 0}^\infty \bar{a}_{n,m} \mathbb{A}_{j,m} + \sum_{m = 0}^\infty \bar{b}_{n,m} \mathbb{D}_{j,m} = \bar{c}_{n,j} \label{sistema_para_coeficientes_1}
-\\
+\end{align}
+\begin{align}
 & \sum_{m = 0}^\infty \bar{p}_{n,m} \mathbb{A}_{j,m} + \sum_{m = 0}^\infty \bar{q}_{n,m} \mathbb{D}_{j,m} = \bar{r}_{n,,j} \label{sistema_para_coeficientes_2}
 \end{align}
 \end{subequations}
@@ -835,13 +848,16 @@ The functions $\beta_j(x)$ and $\gamma_j(x)$, required for the estimation of the
 \label{serie_para_gamma}
 \end{align} 
 where $v(x) = b - w(x)$.
+\\
 
-\subsubsection*{Orthonormalization of the functions $\beta_j(x)$ and $\gamma_j(x)$}
+\noindent{\fontfamily{phv}\selectfont \textbf{Orthonormalization of the auxiliary functions}}
 
 The orthonormality of functions $\beta_j(x)$ and $\gamma_j(x)$ was a prerequisite for applying the expansions \eqref{resultado_1} and \eqref{resultado_2}, which provide the necessary estimatives for the temperature jump and heat flux at the contact interface. At first, this feature cannot be guaranteed for the functions $\beta_j(x)$ and $\gamma_j(x)$ obtained from the previous subsection. However, assuming that the sets of functions $\beta_j(x), j=1,2,\dots, N_1$ and $\gamma_j(x), j=1,2,\dots, N_2$ are linearly independent, it is possible to obtain a new set of functions $\hat{\beta}_j(x)$ and $\hat{\gamma}_j(x)$ fulfilling that condition, by means of the Gram-Schmidt orthonormalization algorithm:
 \begin{align}
 \hat{\beta}_j = & \frac{1}{\norm{\nu_j}}\beta_j - \sum_{k=0}^{j-1} \frac{\langle \beta_j, \hat{\beta}_k \rangle_{L^2(\Gamma)}}{\norm{\nu_j}} \hat{\beta}_k \label{termo_beta} , \\
-& j=1,2,\dots, N_1  \nonumber  \\ 
+& j=1,2,\dots, N_1 
+\end{align}
+\begin{align}
 \hat{\gamma}_j = & \frac{1}{\norm{\upsilon_j}}\gamma_j - \sum_{k=0}^{j-1} \frac{\langle \gamma_j, \hat{\gamma}_k \rangle_{L^2(\Gamma)}}{\norm{\upsilon_j}} \hat{\gamma}_k \label{termo_gamma},  \\
 & j=1,2,\dots, N_2 \nonumber 
 \end{align}
@@ -855,15 +871,18 @@ Due to the linearity of the auxiliary problems, the corresponding constants $\ha
 \begin{align}
 \hat{\mathbb{A}}_{j,m} = & \frac{1}{\norm{\nu_j}} \mathbb{A}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \beta_j, \hat{\beta}_k \rangle}{\norm{\nu_j}} \hat{\mathbb{A}}_{k,m}
 \label{expressao_relaciona_psi} ,\\
-& j=1,2,\dots, N_1; m=0,1,2,\ldots,M  \nonumber  \\ 
+& j=1,2,\dots, N_1; m=0,1,2,\ldots,M
+\end{align}
+\begin{align}
 \hat{\mathbb{E}}_{j,m} = & \frac{1}{\norm{\upsilon_j}} \mathbb{E}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \gamma_j, \hat{\gamma}_k \rangle}{\norm{\upsilon_j}} \hat{\mathbb{E}}_{k,m}
 \label{expressao_relaciona_zeta} , \\
 & j=1,2,\dots, N_2 ; m=0,1,2,\ldots,M  \nonumber 
 \end{align}
 
 Equations \eqref{expressao_relaciona_psi} and \eqref{expressao_relaciona_zeta} are basically recurrence relations that allow determination of coefficients $\hat{\mathbb{A}}_{j,m}$ and $\hat{\mathbb{E}}_{j,m}$ from coefficients $\mathbb{A}_{j,m}$ and $\mathbb{E}_{j,m}$, which have to be previously calculated as the solution of the linear systems \eqref{sistema_para_coeficientes_1}-\eqref{sistema_para_coeficientes_2} and \eqref{sistema_para_coeficientes_3}. These new coefficients, when substituted into \eqref{serie_para_beta} and \eqref{serie_para_gamma} at each step of the recurrency process, will provide the functions $\hat{\beta}_j$ and $\hat{\gamma}_j$ that meet the orthonormality criteria. From this point on, for the sake of simplicity, the symbol $\hat{}$ will be dropped, and the coefficients $\mathbb{A}_{j,m}$ and $\mathbb{E}_{j,m}$ will be considered as been calculated after the orthonormality procedure, as well as the functions $F_{1,j}$, $G_{1,j}$, $\beta_j$ and $\gamma_j$.
+\\
 
-\section{Analytical formulation for the thermal contact conductance}
+\noindent{\fontfamily{phv}\selectfont \textbf{ANALYTICAL FORMULATION FOR THE THERMAL CONDUCTANCE}}
 
 Once the family of functions $F_{1,j}$ and $G_{1,j}$ have been determined, they can be replaced into the definition \eqref{def_funcional_reciprocidade}, in order to obtain the following expressions for their respective Reciprocity Functionals:
 \begin{align}
@@ -871,7 +890,9 @@ Once the family of functions $F_{1,j}$ and $G_{1,j}$ have been determined, they 
 & =
 -\frac{q}{k_1}\bar{\psi}_{j,0} + \frac{\mathbb{A}_{j,0} - \bar{\psi}_{j,0}}{b} \bar{y}_0 + \nonumber \\
 &\sum_{m=1}^M \mu_m \left(\frac{\mathbb{A}_{j,m}}{\sinh\mu_m b} - \frac{\bar{\psi}_{j, m}}{\tanh\mu_m b}\right)\bar{y}_m
-\label{calculo_FR_F1_antes_b} \\ \nonumber \\
+\label{calculo_FR_F1_antes_b} 
+\end{align}
+\begin{align}
 \Re(G_{1,j})
 & =
 -\frac{q}{k_1}\bar{\phi}_{j,0} + \frac{\mathbb{E}_{j,0} - \bar{\phi}_{j,0}}{b} \bar{y}_0 + \nonumber \\
@@ -884,7 +905,7 @@ where $\bar{y}_0$ and $\bar{y}_m$ are given as:
 & \bar{y}_m = \frac{2}{a}\int_0^a Y(x) \cos\mu_m x dx, m = 1, 2, ..., M \label{coef_it_m}
 \end{align}
 
-Equations \eqref{calculo_FR_F1_antes_b} and \eqref{calculo_FR_G1_antes_b} provide the RFs given by $\Re(F_{1,j})$ and $\Re(G_{1,j})$ for a particular choice of functions $\psi_j(x)$ and $\phi_j(x)$. In the present work, these functions were the same as the ones chosen for the study conducted by Padilha \textit{et al}\cite{artigo_padilha_3} for the case of the horizontal plane contact interface:
+Equations \eqref{calculo_FR_F1_antes_b} and \eqref{calculo_FR_G1_antes_b} provide the RFs given by $\Re(F_{1,j})$ and $\Re(G_{1,j})$ for a particular choice of functions $\psi_j(x)$ and $\phi_j(x)$. In the present work, these functions were the same as the ones chosen for the study conducted by Padilha \textit{et al.}\cite{artigo_padilha_3} for the case of the horizontal planar contact interface:
 \begin{align}
 \psi_j(x), \phi_j(x) = \left\lbrace
 \begin{array}{ll}
@@ -901,21 +922,22 @@ Finally, having the values of the RFs, as well as the orthonormal base functions
 \label{equacao_definicao_f_r_rep}
 \end{align}
 
-Equations \eqref{calculo_FR_F1_antes_b} and \eqref{calculo_FR_G1_antes_b}, as well as equation \eqref{equacao_definicao_f_r_rep}, represent a generalization of the algebraic expression obtained by Padilha \textit{et al}\cite{artigo_padilha_3} for the particular case of the horizontal plane interface contact corresponding to the assembly in Fig. \ref{fig2}. It is important to highlight that the RFs given by $\Re(F_{1,j})$ and $\Re(G_{1,j})$ depend on the coefficients $\mathbb{A}_{j,m}$ and $\mathbb{E}_{j,m}$, which need to be calculated only once for a particular thermophysical and geometric configuration.
+Equations \eqref{calculo_FR_F1_antes_b} and \eqref{calculo_FR_G1_antes_b}, as well as equation \eqref{equacao_definicao_f_r_rep}, represent a generalization of the algebraic expression obtained by Padilha \textit{et al.}\cite{artigo_padilha_3} for the particular case of the horizontal planar interface contact corresponding to the assembly in Fig. \ref{fig2}. It is important to highlight that the RFs given by $\Re(F_{1,j})$ and $\Re(G_{1,j})$ depend on the coefficients $\mathbb{A}_{j,m}$ and $\mathbb{E}_{j,m}$, which need to be calculated only once for a particular thermophysical and geometric configuration.
 
-From a practical point of view, once the measured temperatures $Y$ along the boundary surface $\Gamma_0$ are evaluated at discrete points, the analytical form of the function $Y(x)$ is not known. However, as suggested by Mocerino\cite{artigo_mocerino}, it can be approximated by a Fourier series expansion of the form:
+From a practical point of view, once the measured temperatures $Y$ along the boundary surface $\Gamma_0$ are evaluated at discrete points, the analytical form of the function $Y(x)$ is not known. However, as suggested by Mocerino \textit{et al.}\cite{artigo_mocerino}, it can be approximated by a Fourier series expansion of the form:
 \begin{align}
 Y(x) \approx \bar{y}_0 + \sum_{m=1}^M \bar{y}_m \cos\mu_m x \label{aproximacao_Y}
 \end{align}
 where the coefficients $\bar{y}_0$ and $\bar{y}_m$ are exactly those expressed in \eqref{coef_it_0} and \eqref{coef_it_m}. Thus, a least-square procedure may be employed in order to numerically calculate $\bar{y}_0$ and $\bar{y}_m$ from a set of samples $(x_i, Y_i)$, each one corresponding to a position along the upper boundary $\Gamma_0$ and the measured temperature at that point.
+\\
 
-\section{Computational implementation and numerical results}
+\noindent{\fontfamily{phv}\selectfont \textbf{COMPUTATIONAL IMPLEMENTATION AND NUMERICAL RESULTS}}
 
 In this work, in order to verify the analytical results of the previous sections, the experimental apparatus of Fig. \ref{fig2} has been simulated, both for the direct problem and for the inverse problem. Table \ref{tabela_params} summarizes the numerical values of the relevant parameters which were adopted. 
 
 The following procedure has been followed:
 \begin{enumerate}
-	\item Different theoretical geometries of interface contact were proposed; for each geometry, a corresponding expression of the form $y = w(x)$ was defined. The geometries are summarized in Table \ref{tabela_interfaces};
+	\item Different theoretical geometries of contact interface were proposed; for each geometry, a corresponding expression of the form $y = w(x)$ was defined. The geometries are summarized in Table \ref{tabela_interfaces};
 	\item Different theoretical distribution profiles for the TCC were proposed; for each profile, a corresponding expression for $h_c(x)$ was defined. The profiles are summarized in Table \ref{tabela_ctc};
 	\item The direct problem defined in equations \eqref{harm_T1} to \eqref{cc_T1_5} was numerically solved for each combination of a geometry and a TCC profile, leading to a collection of possible temperature distributions over the domain as a result;
 	\item From each temperature distribution, samples were taken along the upper boundary interface $\Gamma_0$ of the experimental assembly, providing the set of temperature values $Y$ required by the inverse problem. Gaussian noises were introduced in the simulated temperatures, simulating measurement errors;
@@ -928,11 +950,11 @@ The following procedure has been followed:
 	\begin{tabular}{|l|l|}
 		\hline
 		\textbf{Parameter} & \textbf{Value}  \\ \hline
-		$a$       & 0,04 m   \\ \hline
-		$b$       & 0,02 m     \\ \hline
+		$a$       & 0.04 m   \\ \hline
+		$b$       & 0.02 m     \\ \hline
 		$k_1$     & 54 W/(m \celsius)  \\ \hline
 		$k_2$     & 14 W/(m \celsius) \\ \hline
-		$q$       & -100.000 W/$\text{m}^2$ \\ \hline
+		$q$       & -100,000 W/$\text{m}^2$ \\ \hline
 		$h_{max}$       & 1000 W/($\text{m}^2$ \celsius) \\ \hline
 	\end{tabular}		
 	\label{tabela_params}
@@ -973,57 +995,72 @@ The experimental noises in step 4 were generated according to the following equa
 \begin{align}
 \tilde{\mathbf{Y}} = \mathbf{Y} + \mathbf{\varepsilon} \sigma \label{modelagem_erro}
 \end{align}
-where $\mathbf{Y}$ is the set of exact temperatures, $\tilde{\mathbf{Y}}$ is the set of temperatures with erros, $\sigma$ is the standard deviation of the temperature measures, and $\epsilon$ is a Gaussian random variable with zero mean and unity variance. Three different values of $\sigma$ were tried: $\sigma = \text{0,0}\celsius$ (corresponding to synthetic temperatures with no measuremente errors), $\sigma = \text{0,1}\celsius$ and $\sigma = \text{0,5}\celsius$.
+where $\mathbf{Y}$ is the set of exact temperatures, $\tilde{\mathbf{Y}}$ is the set of temperatures with erros, $\sigma$ is the standard deviation of the temperature measures, and $\epsilon$ is a Gaussian random variable with zero mean and unity variance. Three different values of $\sigma$ were tried: $\sigma = \text{0.0}\celsius$ (corresponding to synthetic temperatures with no measuremente errors), $\sigma = \text{0.1}\celsius$ and $\sigma = \text{0.5}\celsius$.
 
-Due to lack of space, not all results from all interface geometries tested will be discussed in this work. Instead, the specific case of the interface geometry 2 was chosen to be discussed here. The format of the contact interface may be observed in Fig. \ref{fig3}. The results found for this case are shown in Fig. \ref{figura_ctc_interface_02}.
-
+Due to lack of space, not all results from all interface geometries tested will be discussed in this work. Instead, the specific case of the geometry 2 was chosen to be discussed here. The format of the contact interface may be observed in Fig. \ref{fig3}. The results found for this case are shown in Figs. \ref{figura_ctc_interface_02a} to \ref{figura_ctc_interface_02c}.
 \begin{figure}[H]
-\begin{center}
-\begin{tikzpicture}
-\begin{axis}[
-anchor=east,  
-ticks=none,
-width=8cm,
-height=4cm,
-%ylabel=Iterações Lineares,
-xmin = 0,
-xmax = 0.04,
-ymin = 0,
-ymax = 0.02]
-\pgfplotstableread{../data/interface_02.dat} 
-\teff
-\addplot[color=blue,mark=none,smooth] table from \teff;
-\end{axis}
-\end{tikzpicture}
-\caption{Geometry for contact interface 3}
-\label{fig3}
-\end{center}
+	\begin{center}
+		\begin{tikzpicture}
+		\begin{axis}[
+		anchor=east,  
+		ticks=none,
+		width=8cm,
+		height=4cm,
+		%ylabel=Iterações Lineares,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = 0,
+		ymax = 0.02]
+		\pgfplotstableread{../data/interface_02.dat} 
+		\teff
+		\addplot[color=blue,mark=none,smooth] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Geometry for contact interface 3}
+		\label{fig3}
+	\end{center}
 \end{figure}
+It is possible to notice that the estimated profiles for the TCC show a very good adherence to the theoretical ones. For the simulations using $\sigma = \text{0.0}\celsius$, corresponding to temperature measurements without noise, there is an excellent agreement between the estimated and expected profiles. For the other cases, in which gaussian noises were added, the general behavior of the TCC was well captured. A direct relationship between the amplitude of the noise and the exactness of the estimative was also observed: as the amplitude of the noise diminishes, the estimatives become closer to the exact values.
 
+An improvement of the calculated estimatives was also observed, as more terms were added to the expressions on the numerator and denominator of the equation \eqref{equacao_definicao_f_r_rep}, until a certain limit of the number of terms was achieved. From that point on, as more terms were included in the summations, the estimatives diverged quickly, leading to unstable results. However, when comparing to the results found by Padilha \textit{et al.}\cite{artigo_padilha_3}, the maximum number of terms in the summations ($N_1=N_2=20$) were greater than those used in that work ($N_1=N_2=14$), in which the same stability problems were present, and the sampled temperatures $Y$ were represented by a \textit{spline} instead of a Fourier expansion. Since both temperature jumps and heat flux at the contact interface were represented by summations with more terms, the estimates were more accurate as well.
+
+Due to the non-intrusive nature of the method, as well as the use of several optimizations (specially in the Gram-Schmidt orthonormalization), the computational implementation showed a very fast processing time. In the simulations executed in this work, using an Intel Core\textsuperscript{\texttrademark} i5-8250U CPU 1.60 GHz, processing times for each profile estimation ranged from 2.0 seconds to 2.4 seconds.
 \begin{figure}[H]
-	\graficoctc{02}{01}{1}{a} \vspace*{0.5cm}
-	\graficoctc{02}{02}{2}{b} \vspace*{0.5cm}
+	\graficoctc{02}{01}{1}{a}
+	\caption{Estimated TCC for contact interface geometry 2 and TCC profile 1 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_02a}
+\end{figure}
+\begin{figure}[H]
+	\graficoctc{02}{02}{2}{b}
+	\caption{Estimated TCC for contact interface geometry 2 and TCC profile 2 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_02b}
+\end{figure}
+\begin{figure}[H]
 	\graficoctc{02}{03}{3}{c}
-	\caption{Estimated TCC for contact interface geometry 2 using synthetic data and the reciprocity functional approach for $\sigma = \text{0,0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0,1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0,5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
-	\label{figura_ctc_interface_02}
+	\caption{Estimated TCC for contact interface geometry 2 and TCC profile 3 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_02c}
 \end{figure}
 
-It is possible to notice that the estimated profiles for the TCC show a very good adherence to the theoretical ones. For the simulations using $\sigma = \text{0,0}\celsius$, corresponding to temperature measurements without noise, there is an excellent agreement between the estimated and expected profiles. For the other cases, in which gaussian noises were added, the general behavior of the TCC was well captured. A direct relationship between the amplitude of the noise and the exactness of the estimative was also observed: as the amplitude of the noise diminishes, the estimatives become closer to the exact values.
-
-An improvement of the calculated estimatives was also observed, as more terms were added to the expressions on the numerator and denominator of the equation \eqref{equacao_definicao_f_r_rep}, until a certain limit of the number of terms was achieved. From that point on, as more terms were included in the summations, the estimatives diverged quickly, leading to unstable results. However, when comparing to the results found by Padilha \textit{et al}\cite{artigo_padilha_3}, the maximum number of terms in the summations were greater than those used in that work, in which the sampled temperatures $Y$ were represented by a \textit{spline} instead of a Fourier expansion as in \eqref{aproximacao_Y}. Since both temperature jumps and heat flux at the contact interface were represented by summations with more terms, the estimates were more accurate as well.
-
-Due to the non-intrusive nature of the method, coupled with the use of several optimizations (specially in the Gram-Schmidt orthonormalization), the computational implementation showed a very fast processing time. In the simulations executed in this work, using an Intel Core\textsuperscript{\texttrademark} i5-8250U CPU 1,60 GHz, processing times for each profile estimation ranged from 2,0 seconds to 2,4 seconds.
-
-\section{Conclusion}
+\noindent{\fontfamily{phv}\selectfont \textbf{CONCLUSION}}
 
 The results obtained in this work attested the enormous potential of the FR technique in recovering the distribution of the TCC quickly and effectively. Even in simulated experiments where measured data contained errors, the method presented a good performance in identifying the general, qualitative behavior of the TCC.
 
 The non-intrusive and non-iterative features of the method may be clearly inferred from the expressions deduced in the previous sections, and represent a great advantage for practical industry applications, such as identification of failures in manufacturing processes or quality assurance of thermal insulations.
 
 Further lines of research include regularization or noise filtering of experimental measurements (in order to improve estimations of temperature jumps and heat flux at the contact interface), extension to three-dimensional and/or transient problems with irregular contact interfaces, and a better treatment of interface discontinuities (which introduce mathematical difficulties, due to infinite values of $w'(x)$).
+\\
 
+\noindent{\fontfamily{phv}\selectfont \textbf{ACKNOWLEDGEMENTS}}
 
-\bibliographystyle{tfnlm}
+The authors thank the Brazilian agencies, \textit{Conselho Nacional de
+	Desenvolvimento Científico e Tecnológico} (CNPq), \textit{Coordenação de
+	Aperfeiçoamento de Pessoal de Nível Superior} (CAPES) and \textit{Fundação Carlos Chagas Filho de Amparo à Pesquisa do Estado do Rio de Janeiro}
+(FAPERJ) for fostering
+science and for financial support for this work.
+
+\renewcommand{\refname}{\noindent{\fontfamily{phv}\selectfont\normalsize \textbf{REFERENCES}}} 
+
+\bibliographystyle{IEEEtran}
 \bibliography{mestrado}
 
 \end{document}
