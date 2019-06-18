@@ -36,6 +36,11 @@
 \deftranslation[to=portuguese]{Definition}{Definição}
 \deftranslation[to=portuguese]{Corollary}{Identidades}
 
+\usepackage{pgfpages}
+\setbeameroption{show notes}
+\setbeamertemplate{note page}[plain]
+\setbeamerfont{note page}{size=\tiny}
+
 \usebackgroundtemplate
 {%
 	\begin{picture}(210,40)(-5,2)
@@ -98,7 +103,8 @@
 			\node[scale=0.8] at (4, 0.3) {Fluido};
 			\end{tikzpicture}
 		\end{center}
-	\end{figure}
+	\end{figure}	
+	\note{Descrição}	
 \end{frame}
 
 \begin{frame}
@@ -326,6 +332,7 @@
 \end{frame}
 
 \begin{frame}
+	\label{slide_fr}
 	\frametitle{Funcional de reciprocidade}
 	
 	\begin{corollary}
@@ -346,6 +353,7 @@
 	Relação entre \textit{as medidas
 		do salto de temperatura e de fluxo de calor na interface} $\Gamma$ com \textit{as medidas de temperatura} $Y$ \textit{tomadas na superfície} $\Gamma_0$
 	\end{alertblock}
+	\hyperlink{slide_produto_interno}{\beamergotobutton{}}
 \end{frame}
 
 \begin{frame}
@@ -360,14 +368,17 @@
 		\end{array}
 	\end{align*}
 	\pause
-	Funções auxiliares:
+		
+	\begin{alertblock}{Funções auxiliares}
 	\begin{align*}
-	& \beta_j \equiv k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\bigg|_\Gamma \\ \\
+	& \beta_j \equiv k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\bigg|_\Gamma \\
 	& \gamma_j \equiv G_{1,j}\big|_\Gamma
 	\end{align*}
+	\end{alertblock}{}
 \end{frame}
 
 \begin{frame}
+	\label{slide_produto_interno}
 	\frametitle{Espaço linear de funções $L^2(\Gamma)$}
 	\framesubtitle{Produto interno}
 	
@@ -378,12 +389,14 @@
 	\end{definition}
 	
 	\begin{align*}
-	& \int_\Gamma k_1 \frac{\partial F_1}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma
+	\int_\Gamma k_1 \frac{\partial F_1}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma
 	=
-	\left\langle \left[T_1 - T_2\right]_\Gamma, \beta_j\right\rangle _{L^2(\Gamma)} \\ \nonumber \\
-	&
-	\left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j\right\rangle _{L^2(\Gamma)}
+	& \left\langle \left[T_1 - T_2\right]_\Gamma, \beta_j\right\rangle _{L^2(\Gamma)} \\ \nonumber \\
+	\int_\Gamma -k_1 G_1 \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma
+	=
+	& \left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j\right\rangle _{L^2(\Gamma)}
 	\end{align*} 
+	\hyperlink{slide_fr}{\beamerreturnbutton{}}
 \end{frame}
 
 \begin{frame}
@@ -403,6 +416,8 @@
 		\label{tabela_params}
 	\end{table}
 \end{frame}
+
+\include{graficos}
 
 	
 \end{document}
