@@ -104,15 +104,15 @@
 			\end{tikzpicture}
 		\end{center}
 	\end{figure}	
-	\note{Descrição}	
+	%\note{Descrição}	
 \end{frame}
 
 \begin{frame}
 	\frametitle{Introdução}
 	\framesubtitle{Definição de condutância térmica de contato (CTC)}
-	\begin{equation}
+	\begin{equation*}
 	h_c = \frac{q_c}{\Delta T_c}
-	\end{equation}
+	\end{equation*}
 \end{frame}
 
 \begin{frame}
@@ -215,16 +215,16 @@
 	\frametitle{Problema físico}
 	\framesubtitle{Formulação}
 	\begin{subequations}
-		\begin{alignat}{2}
-		& \nabla^2 F_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ in } \Omega_1 \label{funcao_F_harm_T1} \\
-		& F_{1,j} = \psi_j && \text{ on } \Gamma_0  \label{funcao_F_cc_T1_2} \\
-		& \frac{\partial F_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ on }  \Gamma_1 \label{funcao_F_cc_T1_1} \\ 
-		& F_{1,j} = F_{2, j} \quad\quad\quad\quad\quad\quad\quad\quad && \text{ on }  \Gamma \label{funcao_F_cc_grad_T1} \\
-		& \nabla^2 F_{2,j} = 0 && \text{ in }  \Omega_2 \label{funcao_F_harm_T2} \\
-		& \frac{\partial F_{2,j}}{\partial \mathbf{n}_2} = 0 && \text{ on }  \Gamma_2 \label{funcao_F_cc_T1_3} \\
-		& F_{2,j} = 0 && \text{ on }  \Gamma_\infty \label{funcao_F_cc_T1_4} \\
-		& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} && \text{ on }  \Gamma \label{funcao_F_cc_T1_5}
-		\end{alignat}
+		\begin{alignat*}{2}
+		& \nabla^2 T_1 = 0 \quad\quad\quad\quad && \text{ em } \Omega_1  \\ 
+		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = q && \text{ em } \Gamma_0   \\ 
+		& \frac{\partial T_1}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1 \\ 
+		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = h_c(T_1-T_2) \quad\quad\quad\quad && \text{ em }  \Gamma \\ 
+		& \nabla^2 T_2 = 0 && \text{ em }  \Omega_2\\ 
+		& \frac{\partial T_2}{\partial \mathbf{n}_2} = 0 && \text{ em }  \Gamma_2 \\
+		& T_2 = 0 && \text{ em }  \Gamma_\infty  \\ 
+		& k_2\frac{\partial T_2}{\partial\mathbf{n}_2} = - k_1\frac{\partial T_1}{\partial\mathbf{n}_1} && \text{ em }  \Gamma 
+		\end{alignat*}
 	\end{subequations}
 \end{frame}
 
@@ -303,6 +303,8 @@
 	\end{figure}
 \end{frame}
 
+\section{Problema inverso}
+
 \begin{frame}
 	\frametitle{Problema inverso}
 	\framesubtitle{Formulação}
@@ -363,40 +365,168 @@
 		\begin{array}{ll}
 			-k_1 \displaystyle \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma & \in L^2(\Gamma) \\ \\		
 			T_1 - T_2|_\Gamma & \in L^2(\Gamma)\\ \\
-			k_1 \displaystyle\frac{\partial F}{\partial\mathbf{n_1}}\bigg|_\Gamma & \in L^2(\Gamma) \\ \\
-			G|_\Gamma & \in L^2(\Gamma)			
+			k_1 \displaystyle\frac{\partial F_1}{\partial\mathbf{n_1}}\bigg|_\Gamma & \in L^2(\Gamma) \\ \\
+			G_1|_\Gamma & \in L^2(\Gamma)			
 		\end{array}
 	\end{align*}
 	\pause
-		
-	\begin{alertblock}{Funções auxiliares}
-	\begin{align*}
-	& \beta_j \equiv k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\bigg|_\Gamma \\
-	& \gamma_j \equiv G_{1,j}\big|_\Gamma
-	\end{align*}
-	\end{alertblock}{}
+	
+	\begin{alertblock}{Produto interno}
+		\begin{align*}
+		\langle f_1, f_2\rangle_{L^2(\Gamma)} = \int_\Gamma f_1(\Gamma) f_2(\Gamma) d\Gamma			
+		\end{align*} 
+	\end{alertblock}
 \end{frame}
 
 \begin{frame}
-	\label{slide_produto_interno}
 	\frametitle{Espaço linear de funções $L^2(\Gamma)$}
-	\framesubtitle{Produto interno}
-	
-	\begin{definition}
-		\begin{align*}
-			\langle f_1, f_2\rangle_{L^2(\Gamma)} = \int_\Gamma f_1(\Gamma) f_2(\Gamma) d\Gamma			
-		\end{align*} 
-	\end{definition}
-	
+	\framesubtitle{Famílias de funções}
 	\begin{align*}
-	\int_\Gamma k_1 \frac{\partial F_1}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma
-	=
-	& \left\langle \left[T_1 - T_2\right]_\Gamma, \beta_j\right\rangle _{L^2(\Gamma)} \\ \nonumber \\
-	\int_\Gamma -k_1 G_1 \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma
-	=
-	& \left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j\right\rangle _{L^2(\Gamma)}
-	\end{align*} 
-	\hyperlink{slide_fr}{\beamerreturnbutton{}}
+		& F_{1,j}, j=1,2,\ldots N_1 \\ \\
+		& G_{1,j}, j=1,2,\ldots N_2
+	\end{align*}
+	
+	\begin{alertblock}{Funções auxiliares}
+		\begin{align*}
+		& \beta_j \equiv k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\bigg|_\Gamma \\
+		& \gamma_j \equiv G_{1,j}\big|_\Gamma
+		\end{align*}
+	\end{alertblock}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Espaço linear de funções $L^2(\Gamma)$}
+	\begin{alertblock}{}
+		\begin{align*}
+		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F_{1,j} - Y\frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0
+		& =\int_\Gamma k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma
+		 \\  \\
+		 %
+		 \therefore k_1 \Re(F_{1,j})
+		 & =
+		 \left\langle \left[T_1 - T_2\right]_\Gamma, \beta_j\right\rangle _{L^2(\Gamma)}
+		 \\ \\ \\
+		 %
+		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)G_{1,j} -  Y\frac{\partial G_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0
+		& = \int_\Gamma -k_1 G_{1,j} \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma \\ \\
+		\therefore k_1 \Re(G_{1,j})
+		& =
+		\left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j\right\rangle _{L^2(\Gamma)}
+		\end{align*}
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Ortonormalidade das funções auxiliares}
+	Hipóteses:
+	\begin{itemize}
+		\item $\beta_j, j=1,2,\ldots N_1$ são ortonormais
+		\begin{align*}
+		\left\langle  \beta_m, \beta_n \right\rangle = \left\lbrace
+		\begin{matrix}
+		0, & m \neq n \\
+		1, & m = n 
+		\end{matrix}
+		\right.
+		\end{align*}
+		
+		\item $\gamma_j, j=1,2,\ldots N_2$ são ortonormais
+		\begin{align*}
+		\left\langle  \gamma_m, \gamma_n \right\rangle = \left\lbrace
+		\begin{matrix}
+		0, & m \neq n \\
+		1, & m = n 
+		\end{matrix}
+		\right.
+		\end{align*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Projeção ortogonal}
+	\begin{alertblock}{}
+		\begin{align*}
+		& [T_1 - T_2]_\Gamma \approx \sum_{j=1}^{N_1} \left\langle  \left[T_1 - T_2\right]_\Gamma, \beta_j \right\rangle_{L^2(\Gamma)} \beta_j \\ \\
+		& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma \approx \sum_{j=1}^{N_2} \left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j \right\rangle_{L^2(\Gamma)} \gamma_j
+		\end{align*}
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Estimativas do salto de temperatura e do fluxo de calor na interface de contato}
+	\begin{alertblock}{}
+		\begin{align*}
+		& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \\ \\
+		& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j
+		\end{align*}
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Estimativa da condutância térmica de contato}
+	\begin{alertblock}{}
+		\begin{align*}
+		& h_c(x) % = \frac{- k_1 \displaystyle\frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma}{[T_1 - T_2]_\Gamma} 
+		= \frac{\displaystyle\sum_{j=1}^{N_2} \Re(G_{1,j}) \gamma_j(x)}{\displaystyle\sum_{j=1}^{N_1} \Re(F_{1,j}) \beta_j(x)}
+		\end{align*}
+	\end{alertblock}
+
+	\pause
+	\begin{itemize}
+		\item Determinação indireta do salto de temperatura e fluxo de calor na interface de contato $\rightarrow$ técnica não intrusiva
+		\pause
+	\item Avaliação da condutância térmica de contato num ponto por substituição direta na equação $\rightarrow$ técnica não iterativa
+	\end{itemize}
+\end{frame}
+
+\section{Formulação dos problemas auxiliares e solução via CITT}
+\begin{frame}{Formulação dos problemas auxiliares e solução via CITT}
+	\framesubtitle{Primeiro problema auxiliar}
+	\begin{subequations}
+		\begin{alignat*}{2}
+		& \nabla^2 F_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ in } \Omega_1  \\
+		& F_{1,j} = \psi_j && \text{ em } \Gamma_0   \\
+		& \frac{\partial F_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1  \\ 
+		& F_{1,j} = F_{2, j} \quad\quad\quad\quad\quad\quad\quad\quad && \text{ em }  \Gamma \\
+		& \nabla^2 F_{2,j} = 0 && \text{ em }  \Omega_2 \\
+		& \frac{\partial F_{2,j}}{\partial \mathbf{n}_2} = 0 && \text{ em }  \Gamma_2 \\
+		& F_{2,j} = 0 && \text{ em }  \Gamma_\infty \\
+		& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} && \text{ em }  \Gamma 
+		\end{alignat*}
+	\end{subequations}
+
+	\begin{center}
+		\shadowbox{ABREU (2014)}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Formulação dos problemas auxiliares e solução via CITT}
+	\framesubtitle{Segundo problema auxiliar}
+	\begin{subequations}
+		\begin{alignat*}{2}
+		& \nabla^2 G_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ em } \Omega_1  \\ 
+		& G_{1,j} = \phi_j && \text{ em } \Gamma_0  \\
+		& \frac{\partial G_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1  \\ 
+		& \frac{\partial G_{1,j}}{\partial\mathbf{n}_1} = 0 \quad\quad\quad\quad\quad\quad\quad\quad && \text{ em }  \Gamma 
+		\end{alignat*}
+	\end{subequations}
+
+	\begin{center}
+		\shadowbox{ABREU (2014)}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Formulação dos problemas auxiliares e solução via CITT}
+	\framesubtitle{Aplicação da Técnica da Transformada Integral Clássica (CITT)}
+	Problema de autovalor:
+	\begin{subequations}
+		\begin{alignat*}{2}
+		& \frac{d^2 X(\mu_m, x)}{d x^2} + \mu_m^2 X(\mu_m, x) = 0, \quad\quad  && 0 < x < a\\
+		& \frac{d X(\mu_m, x)}{d x} = 0 && x = 0  \\
+		& \frac{d X(\mu_m, x)}{d x} = 0 && x = a 
+		\end{alignat*}
+	\end{subequations}
 \end{frame}
 
 \begin{frame}
@@ -417,7 +547,7 @@
 	\end{table}
 \end{frame}
 
-\include{graficos}
+%\include{graficos}
 
 	
 \end{document}
