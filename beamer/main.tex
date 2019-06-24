@@ -13,6 +13,7 @@
 
 \pgfplotsset{compat=1.4}
 \usepgfplotslibrary{units}
+\usetikzlibrary{tikzmark}
 
 \setbeamertemplate{footline}[frame number]
 \setbeamertemplate{frametitle}[default][center]
@@ -109,25 +110,26 @@
 
 \begin{frame}
 	\frametitle{Introdução}
-	\framesubtitle{Definição de condutância térmica de contato (CTC)}
-	\begin{equation*}
-	h_c = \frac{q_c}{\Delta T_c}
-	\end{equation*}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Introdução}
-	\framesubtitle{Aplicações do conceito de condutância térmica de contato}
-	\begin{itemize}
-		\item Avaliação da qualidade do contato entre corpos materiais
+	\framesubtitle{Conceito de condutância térmica de contato (CTC)}
+	
+	\begin{definition}{}
+		\begin{equation*}
+			h_c = \frac{q_c}{\Delta T_c}
+		\end{equation*}
+	\end{definition}
+	
+	\begin{alertblock}{Aplicações}
 		\begin{itemize}
-			\item $q_c = 0 \Rightarrow h_c = 0 \Rightarrow$ isolamento perfeito
-			\item $\Delta T_c = 0 \Rightarrow h_c = \infty \Rightarrow$ contato perfeito
+			\item Avaliação da qualidade do contato entre corpos materiais
+			\begin{itemize}
+				\item $q_c = 0 \Rightarrow h_c = 0 \Rightarrow$ isolamento perfeito
+				\item $\Delta T_c = 0 \Rightarrow h_c = \infty \Rightarrow$ contato perfeito
+			\end{itemize}
+			\item Identificação de falhas ou descontinuidades em materiais homogêneos			
 		\end{itemize}
-		\item Identificação de falhas ou descontinuidades em materiais homogêneos			
-	\end{itemize}
-
+	\end{alertblock}
 \end{frame}
+
 \begin{frame}
 	\frametitle{Introdução}
 	\framesubtitle{Exemplos de áreas de aplicação}
@@ -308,19 +310,315 @@
 \begin{frame}
 	\frametitle{Problema inverso}
 	\framesubtitle{Formulação}
+	\begin{alertblock}{}
 	\begin{align*}
 	& q_c = -k_1\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\Gamma
 	=
-	h_c(T_1 - T_2)_\Gamma \\ \\
-	& \therefore h_c = \frac{-k_1\displaystyle\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\Gamma}{(T_1 - T_2)_\Gamma}
+	h_c[T_1 - T_2]_\Gamma \\ \\
+	& \therefore h_c = \frac{-k_1\displaystyle\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\Gamma}{[T_1 - T_2]_\Gamma} \\
 	\end{align*}
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Problema inverso}
+		\framesubtitle{Formulação}
+		Avaliar indiretamente o fluxo de calor e o salto de temperatura na interface de contato
+		
+		\begin{tikzpicture}[overlay]
+			%\pause
+			\draw (5, 0) node {\shadowbox{obtidos via solução de problemas auxiliares}};			
+			\draw[blue,rounded corners] (6.65, -1.3) rectangle (7.5, -1.8);
+			\draw[blue,rounded corners] (6.7, -3.35) rectangle (7.5, -3.85);
+			\draw [->, blue, very thick] (6.9, -0.35) -- (6.9, -1.3);
+			\draw [-, blue, very thick] (7.8, -0.35) -- (7.8, -3.6);
+			\draw [->, blue, very thick] (7.8, -3.6) -- (7.5, -3.6);
+			%\pause
+			\draw (5, -5) node {\shadowbox{obtidos via funcional de reciprocidade}};
+			\draw[red,rounded corners] (6.2, -1.3) rectangle (6.6, -1.8);
+			\draw[red,rounded corners] (6.3, -3.35) rectangle (6.65, -3.85);		
+			\draw [->, red, very thick] (6.5, -4.65) -- (6.5, -3.85);	
+			\draw [-, red, very thick] (2.8, -4.65) -- (2.8, -2.6);
+			\draw [-, red, very thick] (2.8, -2.6) -- (6.4, -2.6);
+			\draw [->, red, very thick] (6.4, -2.6) -- (6.4, -1.8);
+		\end{tikzpicture}
+	
+		\begin{align*}
+			& [T_1 - T_2]_\Gamma \approx \sum_{j=1}^{N_1} \alpha_j \beta_j(\Gamma) \\ \\
+			& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma \approx \sum_{j=1}^{N_2} \sigma_j \gamma_j(\Gamma)
+		\end{align*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Problema inverso}
+	\framesubtitle{Hipóteses}
+	\begin{itemize}
+		\item Definindo uma operação de \textbf{produto interno} entre $f(\Gamma)$ e $g(\Gamma)$:
+		\begin{align*}
+		 \langle f(\Gamma), g(\Gamma) \rangle = \int_{\Gamma} f(\Gamma) g(\Gamma)d\Gamma
+		\end{align*}
+		\item Assumindo que os $\beta_j(\Gamma), j=1,2,\ldots N_1$ são ortonormais, i.e:
+		\begin{align*}
+		\left\langle  \beta_m(\Gamma), \beta_n(\Gamma) \right\rangle = \left\lbrace
+		\begin{matrix}
+		0, & m \neq n \\
+		1, & m = n 
+		\end{matrix}
+		\right.
+		\end{align*}
+		
+		\item Assumindo que os $\gamma_j(\Gamma), j=1,2,\ldots N_2$ são ortonormais, i.e:
+		\begin{align*}
+		\left\langle  \gamma_m(\Gamma), \gamma_n(\Gamma) \right\rangle = \left\lbrace
+		\begin{matrix}
+		0, & m \neq n \\
+		1, & m = n 
+		\end{matrix}
+		\right.
+		\end{align*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Problema inverso}
+	\framesubtitle{Obtenção dos coeficientes}
+	\begin{alertblock}{}
+	\begin{align*}
+		& \alpha_j = \left\langle [T_1 - T_2]_\Gamma, \beta_j(\Gamma) \right\rangle \\ \\
+		& \sigma_j = \left\langle - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j(\Gamma) \right\rangle \\
+	\end{align*}
+\end{alertblock}
+	
+	Procurar uma forma de representar os produtos internos em termos de medidas obtidas nas fronteiras do corpo de prova
+\end{frame}
+
+\section{Formulação dos problemas auxiliares e solução via CITT}
+\begin{frame}{Formulação dos problemas auxiliares}
+	\framesubtitle{Primeiro problema auxiliar}
+	\begin{columns}
+	\begin{column}{.5\textwidth}
+	\begin{subequations}
+		\begin{alignat*}{2}
+		& \nabla^2 F_{1,j} = 0 \quad\quad\quad\quad && \text{ in } \Omega_1  \\
+		& F_{1,j} = \psi_j(x) && \text{ em } \Gamma_0   \\
+		& \frac{\partial F_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1  \\ 
+		& F_{1,j} = F_{2, j} \quad\quad\quad\quad\quad && \text{ em }  \Gamma \\
+		& \nabla^2 F_{2,j} = 0 && \text{ em }  \Omega_2 \\
+		& \frac{\partial F_{2,j}}{\partial \mathbf{n}_2} = 0 && \text{ em }  \Gamma_2 \\
+		& F_{2,j} = 0 && \text{ em }  \Gamma_\infty \\
+		& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} && \text{ em }  \Gamma 
+		\end{alignat*}
+	\end{subequations}
+	\end{column}
+	
+	\begin{column}{.5\textwidth}
+		\begin{align*}
+		\Rightarrow \beta_j(\Gamma) \equiv k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\bigg|_\Gamma
+		\end{align*}
+	\end{column}
+	\end{columns}
+	
+	\begin{center}
+		\shadowbox{ABREU (2014)}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Formulação dos problemas auxiliares}
+	\framesubtitle{Segundo problema auxiliar}
+	\begin{columns}
+	\begin{column}{.5\textwidth}
+	\begin{subequations}
+		\begin{alignat*}{2}
+		& \nabla^2 G_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ em } \Omega_1  \\ 
+		& G_{1,j} = \phi_j(x) && \text{ em } \Gamma_0  \\
+		& \frac{\partial G_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1  \\ 
+		& \frac{\partial G_{1,j}}{\partial\mathbf{n}_1} = 0 \quad\quad\quad\quad\quad && \text{ em }  \Gamma 
+		\end{alignat*}
+	\end{subequations}
+	\end{column}
+
+	\begin{column}{.5\textwidth}
+		\begin{align*}
+		\Rightarrow \gamma_j(\Gamma) \equiv G_{1,j}\big|_\Gamma
+	\end{align*}
+	\end{column}
+	\end{columns}
+
+	\begin{center}
+		\shadowbox{ABREU (2014)}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Solução dos problemas auxiliares}
+	\framesubtitle{Aplicação da CITT}
+	
+	Etapas:
+	
+	\begin{enumerate}[(i)]
+		\item Desenvolver o problema de autovalor associado
+		\item Desenvolver o par transformada-inversa apropriado
+		\item Aplicar a transformação integral à equação diferencial parcial do problema de valor de contorno original
+		\item Resolver o sistema de equações diferenciais ordinárias desacopladas gerado
+		\item Aplicar a fórmula de inversão para construir a solução completa
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Solução dos problemas auxiliares}
+	\framesubtitle{Solução analítica do primeiro problema auxiliar}
+	
+	\begin{alertblock}{}
+		\begin{align*}
+		F_{1, j}(x, y) = & \frac{\mathbb{A}_{j,0}(b - y) + \bar{\psi}_{j,0}y}{ab} + \nonumber \\
+		&\frac{2}{a}\sum_{m=1}^\infty\left[\mathbb{A}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \bar{\psi}_{j, m}\frac{\sinh\mu_m y}{\sinh\mu_m b}\right]\cos\mu_m x \\ \\
+		F_{2, j}(x, y) = & \mathbb{D}_{j,0}\frac{y}{ab}  + \frac{2}{a}\sum_{m=1}^\infty\mathbb{D}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \cos\mu_m x \\
+		\end{align*}
+	\end{alertblock}	
+	
+	onde
+	\begin{align*}
+	\mu_m = \frac{m \pi}{a}
+	\end{align*}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Solução dos problemas auxiliares}
+	\framesubtitle{Solução analítica do segundo problema auxiliar}
+	
+	\begin{alertblock}{}
+	\begin{align*}	
+		G_{1, j}(x, y) = & \frac{\mathbb{E}_{j,0}(b - y) + \bar{\phi}_{j,0}y}{ab} + \nonumber \\
+		&\frac{2}{a}\sum_{m=1}^\infty\left[\mathbb{E}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \bar{\phi}_{j, m}\frac{\sinh\mu_m y}{\sinh\mu_m b}\right]\cos\mu_m x \\
+		\end{align*}
+	\end{alertblock}	
+	
+	onde
+	\begin{align*}
+	\mu_m = \frac{m \pi}{a}
+	\end{align*}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Solução dos problemas auxiliares}
+	\framesubtitle{Coeficientes do primeiro problema auxiliar}
+	\begin{align*}
+	\scriptsize \begin{bmatrix}
+	\bar{a}_{0,0} & \bar{b}_{0,0} & \bar{a}_{0,1} & \bar{b}_{0,1} &  \ldots & \bar{a}_{0,M} & \bar{b}_{0,M} \\
+	\bar{p}_{0,0} & \bar{q}_{0,0} & \bar{p}_{0,1} & \bar{q}_{0,1} &  \ldots & \bar{p}_{0,M} & \bar{q}_{0,M} \\
+	\bar{a}_{1,0} & \bar{b}_{1,0} & \bar{a}_{1,1} & \bar{b}_{1,1} &  \ldots & \bar{a}_{1,M} & \bar{b}_{1,M} \\
+	\bar{p}_{1,0} & \bar{q}_{1,0} & \bar{p}_{1,1} & \bar{q}_{1,1} &  \ldots & \bar{p}_{1,M} & \bar{q}_{1,M} \\
+	\bar{a}_{2,0} & \bar{b}_{2,0} & \bar{a}_{2,1} & \bar{b}_{2,1} &  \ldots & \bar{a}_{2,M} & \bar{b}_{2,M} \\
+	\bar{p}_{2,0} & \bar{q}_{2,0} & \bar{p}_{2,1} & \bar{q}_{2,1} &  \ldots & \bar{p}_{2,M} & \bar{q}_{2,M} \\
+	\ldots & \ldots & \ldots & \ldots & \ddots & \ldots & \ldots\\
+	\bar{a}_{M,0} & \bar{b}_{M,0} & \bar{a}_{M,1} & \bar{b}_{M,1} &  \ldots & \bar{a}_{M,M} & \bar{b}_{M,M} \\
+	\bar{p}_{M,0} & \bar{q}_{M,0} & \bar{p}_{M,1} & \bar{q}_{M,1} &  \ldots & \bar{p}_{M,M} & \bar{q}_{M,M}
+	\end{bmatrix}
+	\begin{bmatrix}
+	\mathbb{A}_{0,0} & \mathbb{A}_{1,0} & \mathbb{A}_{2,0} & \ldots & \mathbb{A}_{N,0} \\
+	\mathbb{D}_{0,0} & \mathbb{D}_{1,0} & \mathbb{D}_{2,0} & \ldots & \mathbb{D}_{N,0} \\
+	\mathbb{A}_{0,1} & \mathbb{A}_{1,1} & \mathbb{D}_{2,1} & \ldots & \mathbb{A}_{N,1} \\
+	\mathbb{D}_{0,1} & \mathbb{D}_{1,1} & \mathbb{D}_{2,1} & \ldots & \mathbb{D}_{N,1} \\
+	\ldots & \ldots & \ldots & \ddots & \ldots \\
+	\mathbb{A}_{0,M} & \mathbb{A}_{1,M} & \mathbb{D}_{2,M} & \ldots & \mathbb{A}_{N,M} \\
+	\mathbb{D}_{0,M} & \mathbb{D}_{1,M} & \mathbb{D}_{2,M} & \ldots & \mathbb{D}_{N,M}
+	\end{bmatrix}
+	\end{align*}
+	
+	\begin{align*}
+	=
+	\scriptsize
+	\begin{bmatrix}
+	\bar{c}_{0, 0} & \bar{c}_{0, 1} &\bar{c}_{0, 2} & \ldots & \bar{c}_{0, N} \\
+	\bar{r}_{0, 0} & \bar{r}_{0, 1} &\bar{r}_{0, 2} & \ldots & \bar{r}_{0, N} \\
+	\bar{c}_{1, 0} & \bar{c}_{1, 1} &\bar{c}_{1, 2} & \ldots & \bar{c}_{1, N} \\
+	\bar{r}_{1, 0} & \bar{r}_{1, 1} &\bar{r}_{1, 2} & \ldots & \bar{r}_{1, N} \\
+	\bar{c}_{2, 0} & \bar{c}_{2, 1} &\bar{c}_{2, 2} & \ldots & \bar{c}_{2, N} \\
+	\bar{r}_{2, 0} & \bar{r}_{2, 1} &\bar{r}_{2, 2} & \ldots & \bar{r}_{2, N} \\
+	\ldots & \ldots & \ldots & \ddots & \ldots \\
+	\bar{c}_{M, 0} & \bar{c}_{M, 1} &\bar{c}_{M, 2} & \ldots & \bar{c}_{M, N} \\
+	\bar{r}_{M, 0} & \bar{r}_{M, 1} &\bar{r}_{M, 2} & \ldots & \bar{r}_{M, N}
+	\end{bmatrix}
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Solução dos problemas auxiliares}
+	\framesubtitle{Coeficientes do segundo problema auxiliar}
+	
+	\begin{align*}
+	\begin{bmatrix}
+	\bar{u}_{0,0} & \bar{u}_{0,1} & \bar{u}_{0,2} & \ldots & \bar{u}_{0,M} \\
+	\bar{u}_{1,0} & \bar{u}_{1,1} & \bar{u}_{1,2} & \ldots & \bar{u}_{1,M} \\
+	\bar{u}_{2,0} & \bar{u}_{2,1} & \bar{u}_{2,2} & \ldots & \bar{u}_{2,M} \\
+	\ldots & \ldots & \ddots & \ldots\\
+	\bar{u}_{M,0} & \bar{u}_{M,1} & \bar{u}_{M,2} & \ldots & \bar{u}_{M,M} \\
+	\end{bmatrix}
+	\begin{bmatrix}
+	\mathbb{E}_{0,0} & \mathbb{E}_{1,0} & \mathbb{E}_{2,0} & \ldots & \mathbb{E}_{N,0} \\
+	\mathbb{E}_{0,1} & \mathbb{E}_{1,1} & \mathbb{E}_{2,1} & \ldots & \mathbb{E}_{N,1} \\
+	\ldots & \ldots & \ldots & \ddots & \ldots \\
+	\mathbb{E}_{0,M} & \mathbb{E}_{1,M} & \mathbb{E}_{2,M} & \ldots & \mathbb{E}_{N,M}
+	\end{bmatrix}
+	\end{align*}
+	
+	\begin{align*}	
+	=
+	\begin{bmatrix}
+	\bar{v}_{0, 0} & \bar{v}_{0, 1} &\bar{v}_{0, 2} & \ldots & \bar{v}_{0, N} \\
+	\bar{v}_{1, 0} & \bar{v}_{1, 1} &\bar{v}_{1, 2} & \ldots & \bar{v}_{1, N} \\
+	\bar{v}_{2, 0} & \bar{v}_{2, 1} &\bar{v}_{2, 2} & \ldots & \bar{v}_{2, N} \\
+	\ldots & \ldots & \ldots & \ddots & \ldots \\
+	\bar{v}_{M, 0} & \bar{v}_{M, 1} &\bar{v}_{M, 2} & \ldots & \bar{v}_{M, N}
+	\end{bmatrix}
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Solução dos problemas auxiliares}
+	\framesubtitle{Ortogonalização das funções $\beta_j$ e $\gamma_j$}
+	
+	\begin{tikzpicture}[overlay]
+%		\pause
+%		\draw (5, 0) node {\shadowbox{obtidos via solução de problemas auxiliares}};			
+%		\draw[blue,rounded corners] (6.65, -1.3) rectangle (7.5, -1.8);
+%		\draw[blue,rounded corners] (6.7, -3.35) rectangle (7.5, -3.85);
+%		\draw [->, blue, very thick] (6.9, -0.35) -- (6.9, -1.3);
+%		\draw [-, blue, very thick] (7.8, -0.35) -- (7.8, -3.6);
+%		\draw [->, blue, very thick] (7.8, -3.6) -- (7.5, -3.6);
+%		\pause
+%		\draw (5, -5) node {\shadowbox{obtidos via funcional de reciprocidade}};
+%		\draw[red,rounded corners] (6.2, -1.3) rectangle (6.6, -1.8);
+%		\draw[red,rounded corners] (6.3, -3.35) rectangle (6.65, -3.85);		
+%		\draw [->, red, very thick] (6.5, -4.65) -- (6.5, -3.85);	
+%		\draw [-, red, very thick] (2.8, -4.65) -- (2.8, -2.6);
+%		\draw [-, red, very thick] (2.8, -2.6) -- (6.4, -2.6);
+%		\draw [->, red, very thick] (6.4, -2.6) -- (6.4, -1.8);
+		\draw (5.5, -2.8) node {\shadowbox{Ortogonalização de Gram-Schmidt}};
+		\draw [->, red, very thick] (5.4, -2.45) -- (5.4, -1.5);
+		\draw [->, red, very thick] (5.4, -3.16) -- (5.4, -4.3);	
+	\end{tikzpicture}
+	
+	\begin{align*}
+	F_{1, j}(x, y) \Rightarrow \beta_j(x) \Rightarrow \hat{\beta}_j(x) \Rightarrow \hat{F}_{1, j}(x, y)
+	\end{align*}
+	
+	\vspace{1.5cm}
+	
+	\begin{align*}
+	G_{1, j}(x, y) \Rightarrow \gamma_j(x) \Rightarrow \hat{\gamma}_j(x) \Rightarrow \hat{G}_{1, j}(x, y)
+	\end{align*}
+	
+	
 \end{frame}
 
 \begin{frame}
 	\frametitle{Funcional de reciprocidade}
 	\begin{definition}{}
 		\begin{align*}
-		\Re(F) = \int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F - Y\frac{\partial F}{\partial\mathbf{n_1}}\right]d\Gamma_0
+		\Re(F) = \int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F - Y\frac{\partial F}{\partial\mathbf{n_1}}\right]d\Gamma_0 \\
 		\end{align*}
 	\end{definition}
 	
@@ -336,16 +634,19 @@
 \begin{frame}
 	\label{slide_fr}
 	\frametitle{Funcional de reciprocidade}
+	\framesubtitle{Identidades}
 	
-	\begin{corollary}
+	\begin{alertblock}{}
 		\begin{align*}
-		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)\right. & \left.F_1 - Y\frac{\partial F_1}{\partial\mathbf{n_1}}\right]d\Gamma_0
-		=\int_\Gamma k_1 \frac{\partial F_1}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma
+		\int_\Gamma k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma
+		=
+		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)\right. & \left.F_{1,j} - Y\frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0
 		\label{identidade_T} \\ \nonumber \\
-		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)\right. & \left.G_1 -  Y\frac{\partial G_1}{\partial\mathbf{n_1}}\right]d\Gamma_0
-		= \int_\Gamma -k_1 G_1 \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma
+		\int_\Gamma -k_1 G_{1,j} \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma
+		=
+		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)\right. & \left.G_{1,j} -  Y\frac{\partial G_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0 \\
 		\end{align*}
-	\end{corollary}
+	\end{alertblock}
 	
 	\begin{center}
 		\shadowbox{COLAÇO e ALVES (2012)}
@@ -359,106 +660,54 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Espaço linear de funções $L^2(\Gamma)$}
-	
-	\begin{align*}
-		\begin{array}{ll}
-			-k_1 \displaystyle \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma & \in L^2(\Gamma) \\ \\		
-			T_1 - T_2|_\Gamma & \in L^2(\Gamma)\\ \\
-			k_1 \displaystyle\frac{\partial F_1}{\partial\mathbf{n_1}}\bigg|_\Gamma & \in L^2(\Gamma) \\ \\
-			G_1|_\Gamma & \in L^2(\Gamma)			
-		\end{array}
-	\end{align*}
-	\pause
-	
-	\begin{alertblock}{Produto interno}
-		\begin{align*}
-		\langle f_1, f_2\rangle_{L^2(\Gamma)} = \int_\Gamma f_1(\Gamma) f_2(\Gamma) d\Gamma			
-		\end{align*} 
-	\end{alertblock}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Espaço linear de funções $L^2(\Gamma)$}
-	\framesubtitle{Famílias de funções}
-	\begin{align*}
-		& F_{1,j}, j=1,2,\ldots N_1 \\ \\
-		& G_{1,j}, j=1,2,\ldots N_2
-	\end{align*}
-	
-	\begin{alertblock}{Funções auxiliares}
-		\begin{align*}
-		& \beta_j \equiv k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\bigg|_\Gamma \\
-		& \gamma_j \equiv G_{1,j}\big|_\Gamma
-		\end{align*}
-	\end{alertblock}
-	
-\end{frame}
-
-\begin{frame}
-	\frametitle{Espaço linear de funções $L^2(\Gamma)$}
+	\frametitle{Funcional de reciprocidade}
+	\framesubtitle{Coeficientes - salto de temperatura}
 	\begin{alertblock}{}
-		\begin{align*}
-		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F_{1,j} - Y\frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0
-		& =\int_\Gamma k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma
-		 \\  \\
-		 %
-		 \therefore k_1 \Re(F_{1,j})
-		 & =
-		 \left\langle \left[T_1 - T_2\right]_\Gamma, \beta_j\right\rangle _{L^2(\Gamma)}
-		 \\ \\ \\
-		 %
-		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)G_{1,j} -  Y\frac{\partial G_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0
-		& = \int_\Gamma -k_1 G_{1,j} \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma \\ \\
-		\therefore k_1 \Re(G_{1,j})
-		& =
-		\left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j\right\rangle _{L^2(\Gamma)}
-		\end{align*}
-	\end{alertblock}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Ortonormalidade das funções auxiliares}
-	Hipóteses:
-	\begin{itemize}
-		\item $\beta_j, j=1,2,\ldots N_1$ são ortonormais
-		\begin{align*}
-		\left\langle  \beta_m, \beta_n \right\rangle = \left\lbrace
-		\begin{matrix}
-		0, & m \neq n \\
-		1, & m = n 
-		\end{matrix}
-		\right.
-		\end{align*}
+		\begin{tikzpicture}[overlay]
+			\draw[blue,rounded corners] (0.8, -0.8) rectangle (2.1, -1.9);
+			\draw[blue,rounded corners] (3.25, -2.5) rectangle (4.13, -3.1);
+			\draw [->, blue, thick] (1.45, -1.9) -- (3.69, -2.5);
+		\end{tikzpicture}
 		
-		\item $\gamma_j, j=1,2,\ldots N_2$ são ortonormais
 		\begin{align*}
-		\left\langle  \gamma_m, \gamma_n \right\rangle = \left\lbrace
-		\begin{matrix}
-		0, & m \neq n \\
-		1, & m = n 
-		\end{matrix}
-		\right.
-		\end{align*}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Projeção ortogonal}
-	\begin{alertblock}{}
-		\begin{align*}
-		& [T_1 - T_2]_\Gamma \approx \sum_{j=1}^{N_1} \left\langle  \left[T_1 - T_2\right]_\Gamma, \beta_j \right\rangle_{L^2(\Gamma)} \beta_j \\ \\
-		& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma \approx \sum_{j=1}^{N_2} \left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j \right\rangle_{L^2(\Gamma)} \gamma_j
-		\end{align*}
+		\int_\Gamma k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma		
+		& =k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F_{1,j} - Y\frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0
+		 \\ \\
+		 %
+		 \therefore \underbrace{\left\langle [T_1 - T_2]_\Gamma, \beta_j(\Gamma)\right\rangle}_{\alpha_j}
+		 & =
+		 k_1 \Re(F_{1,j}) \\
+		\end{align*}		
 	\end{alertblock}
+\end{frame}
+	
+\begin{frame}
+	\frametitle{Funcional de reciprocidade}
+	\framesubtitle{Coeficientes - fluxo de calor}
+	\begin{alertblock}{}
+		\begin{tikzpicture}[overlay]
+		\draw[red,rounded corners] (2.35, -1.1) rectangle (3, -1.6);
+		\draw[red,rounded corners] (3, -2.8) rectangle (3.9, -3.4);
+		\draw [->, red, thick] (2.675, -1.6) -- (3.45, -2.8);
+		\end{tikzpicture}
+		
+		\begin{align*}
+		\int_\Gamma -k_1 G_{1,j} \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma		
+		& = k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)G_{1,j} -  Y\frac{\partial G_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0 \\ \\
+		\therefore \underbrace{\left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j(\Gamma)\right\rangle}_{\sigma_j}
+		& = k_1 \Re(G_{1,j})
+		\\
+		\end{align*}		
+	\end{alertblock}
+	
 \end{frame}
 
 \begin{frame}
 	\frametitle{Estimativas do salto de temperatura e do fluxo de calor na interface de contato}
 	\begin{alertblock}{}
 		\begin{align*}
-		& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \\ \\
-		& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j
+		& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j(\Gamma) \\ \\
+		& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j(\Gamma) \\
 		\end{align*}
 	\end{alertblock}
 \end{frame}
@@ -468,66 +717,18 @@
 	\begin{alertblock}{}
 		\begin{align*}
 		& h_c(x) % = \frac{- k_1 \displaystyle\frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma}{[T_1 - T_2]_\Gamma} 
-		= \frac{\displaystyle\sum_{j=1}^{N_2} \Re(G_{1,j}) \gamma_j(x)}{\displaystyle\sum_{j=1}^{N_1} \Re(F_{1,j}) \beta_j(x)}
+		= \frac{\displaystyle\sum_{j=1}^{N_2} \Re(G_{1,j}) \gamma_j(x)}{\displaystyle\sum_{j=1}^{N_1} \Re(F_{1,j}) \beta_j(x)} \\
 		\end{align*}
 	\end{alertblock}
 
-	\pause
+	%\pause
 	\begin{itemize}
 		\item Determinação indireta do salto de temperatura e fluxo de calor na interface de contato $\rightarrow$ técnica não intrusiva
-		\pause
+		%\pause
 	\item Avaliação da condutância térmica de contato num ponto por substituição direta na equação $\rightarrow$ técnica não iterativa
 	\end{itemize}
 \end{frame}
 
-\section{Formulação dos problemas auxiliares e solução via CITT}
-\begin{frame}{Formulação dos problemas auxiliares e solução via CITT}
-	\framesubtitle{Primeiro problema auxiliar}
-	\begin{subequations}
-		\begin{alignat*}{2}
-		& \nabla^2 F_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ in } \Omega_1  \\
-		& F_{1,j} = \psi_j && \text{ em } \Gamma_0   \\
-		& \frac{\partial F_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1  \\ 
-		& F_{1,j} = F_{2, j} \quad\quad\quad\quad\quad\quad\quad\quad && \text{ em }  \Gamma \\
-		& \nabla^2 F_{2,j} = 0 && \text{ em }  \Omega_2 \\
-		& \frac{\partial F_{2,j}}{\partial \mathbf{n}_2} = 0 && \text{ em }  \Gamma_2 \\
-		& F_{2,j} = 0 && \text{ em }  \Gamma_\infty \\
-		& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} && \text{ em }  \Gamma 
-		\end{alignat*}
-	\end{subequations}
-
-	\begin{center}
-		\shadowbox{ABREU (2014)}
-	\end{center}
-\end{frame}
-
-\begin{frame}{Formulação dos problemas auxiliares e solução via CITT}
-	\framesubtitle{Segundo problema auxiliar}
-	\begin{subequations}
-		\begin{alignat*}{2}
-		& \nabla^2 G_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ em } \Omega_1  \\ 
-		& G_{1,j} = \phi_j && \text{ em } \Gamma_0  \\
-		& \frac{\partial G_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1  \\ 
-		& \frac{\partial G_{1,j}}{\partial\mathbf{n}_1} = 0 \quad\quad\quad\quad\quad\quad\quad\quad && \text{ em }  \Gamma 
-		\end{alignat*}
-	\end{subequations}
-
-	\begin{center}
-		\shadowbox{ABREU (2014)}
-	\end{center}
-\end{frame}
-
-\begin{frame}{Formulação dos problemas auxiliares e solução via CITT}
-	\framesubtitle{Aplicação da Técnica da Transformada Integral Clássica (CITT)}
-	Problema de autovalor:
-	\begin{subequations}
-		\begin{alignat*}{2}
-		& \frac{d^2 X(\mu_m, x)}{d x^2} + \mu_m^2 X(\mu_m, x) = 0, \quad\quad  && 0 < x < a\\
-		& \frac{d X(\mu_m, x)}{d x} = 0 && x = 0  \\
-		& \frac{d X(\mu_m, x)}{d x} = 0 && x = a 
-		\end{alignat*}
-	\end{subequations}
-\end{frame}
 
 \begin{frame}
 	\begin{table}[H]
