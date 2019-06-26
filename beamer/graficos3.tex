@@ -1,0 +1,60 @@
+\begin{frame}
+	\frametitle{Critério de parada nos somatórios}
+\begin{columns}
+\begin{column}{.5\textwidth}
+	\centering		
+	\begin{tikzpicture}[scale=0.8]
+	\begin{axis}[
+	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	axis lines=left,
+	ymode = log,
+	scaled x ticks = false,
+	scaled y ticks = false,
+	x tick label style={/pgf/number format/fixed},
+	y tick label style={/pgf/number format/fixed},
+	anchor=east,  
+	width=7cm,
+	height=5cm,
+	label style={font=\footnotesize},
+	xlabel = $N_1$,
+	ylabel= $\delta_{[T_1 - T_2]}$,
+	ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+	\addplot[only marks,color=blue,mark=o,mark options={mark size=3.0pt}] table[x index=0,y index=1] {../data/erro_rms_interface_02_conductance_01_stdev_00.dat};
+	\addplot[only marks,color=red,mark=square,mark options={mark size=3.0pt}] table[x index=0,y index=1] {../data/erro_rms_interface_02_conductance_01_stdev_01.dat};
+	\addplot[only marks,color=gray,mark=triangle,mark options={mark size=3.0pt}] table[x index=0,y index=1] {../data/erro_rms_interface_02_conductance_01_stdev_05.dat};			
+	\end{axis}
+	\end{tikzpicture}
+\end{column}
+
+\begin{column}{.5\textwidth}
+	\centering		
+	\begin{tikzpicture}[scale=0.8]
+	\begin{axis}[
+	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	axis lines=left,
+	ymode = log,
+	scaled x ticks = false,
+	scaled y ticks = false,
+	x tick label style={/pgf/number format/fixed},
+	y tick label style={/pgf/number format/fixed},
+	anchor=east,  
+	width=7cm,
+	height=5cm,
+	label style={font=\footnotesize},
+	xlabel = $N_2$,
+	ylabel= $\delta_{\left[-k_1 \frac{\partial T_1}{\partial \mathbf{n}}\right]}$,
+	ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+	\addplot[only marks,color=blue,mark=o,mark options={mark size=3.0pt}] table[x index=0,y index=2] {../data/erro_rms_interface_02_conductance_01_stdev_00.dat};
+	\addplot[only marks,color=red,mark=square,mark options={mark size=3.0pt}] table[x index=0,y index=2] {../data/erro_rms_interface_02_conductance_01_stdev_01.dat};
+	\addplot[only marks,color=gray,mark=triangle,mark options={mark size=3.0pt}] table[x index=0,y index=2] {../data/erro_rms_interface_02_conductance_01_stdev_05.dat};			
+	\end{axis}
+	\end{tikzpicture}
+\end{column}
+\end{columns}
+$\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0\celsius$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5 \celsius$
+
+\begin{center}
+PADILHA (2006): $N_1 \le 14; N_2 \le 14$
+\end{center}
+
+\end{frame}
