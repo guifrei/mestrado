@@ -11,6 +11,11 @@
 \usepackage{wasysym}
 \usepackage{fancybox}
 
+%HANDOUT
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+%\setbeameroption{show notes on second screen=bottom}
+
 \pgfplotsset{compat=1.4}
 \usepgfplotslibrary{units}
 \usetikzlibrary{tikzmark}
@@ -164,12 +169,70 @@
 		de dois corpos materiais colocados em contato, considerando o fato de que tais superfícies não são necessariamente regulares
 	\end{alertblock}
 	\begin{center}
-		\shadowbox{COLAÇO \textit{et al.}, (2013, 2014)}
+		%\shadowbox{COLAÇO \textit{et al.}, (2013, 2014)}
 		
-		\shadowbox{COLAÇO E ALVES (2014, 2015)}
+		%\shadowbox{COLAÇO E ALVES (2014, 2015)}
 		
 		\shadowbox{PADILHA \textit{et al.}, (2016)}
 	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Introdução}
+	\framesubtitle{Interfaces irregulares}
+	\begin{figure}[h!b]
+		\begin{center}
+			\begin{tikzpicture}[scale=0.5]
+			\begin{axis}[
+			anchor=east,  
+			ticks=none,
+			width=8cm,
+			height=4cm,
+			%ylabel=Iterações Lineares,
+			xmin = 0,
+			xmax = 0.04,
+			ymin = 0,
+			ymax = 0.02]
+			\pgfplotstableread{../data/interface_01.dat} 
+			\teff
+			\addplot[color=blue,mark=none,smooth] table from \teff;
+			\end{axis}	
+			\draw [very thin] (-6.4, 1.2) -- (-4.4, 2.2);
+			\draw [very thin] (0.0, 1.2) -- (2.0, 2.2);
+			\draw [very thin] (0.0, -1.2) -- (2.0, -0.2);
+			\draw [very thin] (2.0, 2.2) -- (2.0, -0.2);
+			\draw [very thin] (-4.4, 2.2) -- (2.0, 2.2);	
+			\draw [very thin, blue] (0.0, 0.0) -- (2.0, 1.0);		
+			\end{tikzpicture}
+		\end{center}
+	\end{figure}	
+	
+	\begin{figure}[h!b]
+		\begin{center}
+			\begin{tikzpicture}[scale=0.5]
+			\begin{axis}[
+			anchor=east,  
+			ticks=none,
+			width=8cm,
+			height=4cm,
+			%ylabel=Iterações Lineares,
+			xmin = 0,
+			xmax = 0.04,
+			ymin = 0,
+			ymax = 0.02]
+			\pgfplotstableread{../data/interface_02.dat} 
+			\teff
+			\addplot[color=blue,mark=none,smooth] table from \teff;
+			\end{axis}			
+			\draw [very thin] (-6.4, 1.2) -- (-4.4, 2.2);
+			\draw [very thin] (0.0, 1.2) -- (2.0, 2.2);
+			\draw [very thin] (0.0, -1.2) -- (2.0, -0.2);
+			\draw [very thin] (2.0, 2.2) -- (2.0, -0.2);
+			\draw [very thin] (-4.4, 2.2) -- (2.0, 2.2);
+			\draw [very thin, blue] (0.0, 0.0) -- (2.0, 1.0);		
+			\end{tikzpicture}
+		\end{center}
+	\end{figure}	
 \end{frame}
 
 %TODO slides de bibliografia apresentando CTC como problema inverso
