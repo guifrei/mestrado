@@ -4,7 +4,6 @@ program main
     use temperature_functions_module
     use reciprocity_functions_module
     use netlib_module
-    use algebraic_reconstruction_technique_module
     use estimated_h_module
     implicit none
 
@@ -15,7 +14,7 @@ program main
     double precision :: c_fluxo_calor, c_delta_temperatura
     double precision, dimension(tnmax, 0: (N + 1)**2 - 1) :: m_condutancia_contato
     double precision, dimension(tnmax) :: vx, vy, tcalc
-    double precision :: norm
+    double precision :: norm, ymax
     character(len = 2) :: str_idx, str_cdx, str_stdev, str_N, str_n_fluxo_calor, str_n_delta_temperatura
     integer :: interface_idx, condutance_idx, nmax, stdev_idx, k, nmax1, nmax2, m, j, n_fluxo_calor, n_delta_temperatura
     double precision :: desv, x, y, y1, y2, dx, stdev, arg, norm_acc, y1prev, y2prev
@@ -90,7 +89,6 @@ program main
     hlist(7) = c_funloc(h7)
     hlist(8) = c_funloc(h8)
     hlist(9) = c_funloc(h9)
-
 
     dx = a/dble(tmax - 1)
 
@@ -195,19 +193,25 @@ program main
                     stdev = 0.0
                 else if (stdev_idx == 1) then
                     str_stdev = '01'
-                    stdev = 0.1
+                    stdev = ymax * 0.1/100.0!0.1
                 else
                     str_stdev = '05'
-                    stdev = 0.5
+                    stdev = ymax * 0.5/100.0!0.5
                 end if
                 !                write(*, *)'        Stdev = ', stdev
                 write(*, *)'Interface = ', interface_idx, ', conductance = ', condutance_idx, ', stdev = ', stdev
 
                 ! Recuperando as temperaturas do COMSOL
+                ! e obtendo o valor absoluto maximo
                 open(unit = 1, file = '/home/cx3d/mestrado/' // &
                     'data/fortran/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
                 do k = 1, tnmax
                     read(1, *)vx(k), vy(k)
+                    if (k == 1) then
+                        ymax = dabs(vy(1))
+                    else if (dabs(vy(k)) > ymax) then
+                        ymax = dabs(vy(k))
+                    end if
                 end do
                 close(1)
 
