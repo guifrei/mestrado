@@ -5,7 +5,7 @@ module reciprocity_functions_module
     use netlib_module
     use iso_fortran_env
     use integration_module
-    use algebraic_reconstruction_technique_module
+    use auxiliary_functions_module
     implicit none
 
     double precision, dimension(0: 2*mmax_F + 1, 0: N), target :: coeffsF
@@ -15,28 +15,60 @@ module reciprocity_functions_module
     double precision, dimension(0: N) :: reciprocity_f, reciprocity_g
 
 contains
-    function fpsi(j, x) result(r)
+    function fpsi(j, x, interface_idx) result(r)
         double precision, intent(in) :: x
-        integer, intent(in) :: j
+        integer, intent(in) :: j, interface_idx
         double precision :: r
         integer :: m
 
-        r = vpsi(j, 0)/a
-        do m = 1, mmax_phi
-            r = r + (2.0/a)*vpsi(j, m)*cos(mu(m)*x)
-        end do
+        !        r = vpsi(j, 0)/a
+        !        do m = 1, mmax_phi
+        !            r = r + (2.0/a)*vpsi(j, m)*cos(mu(m)*x)
+        !        end do
+
+        !        if (j == 0) then
+        !            r = sqrt(1.0/a)
+        !        else if (mod(j, 2) == 0) then
+        !            r = sqrt(1.0/a)*sin(x*dble(j)*pi/a)
+        !        else
+        !            r = sqrt(1.0/a)*cos(x*dble(j + 1)*pi/a)
+        !        end if
+
+        if (j == 0) then
+            r = 1.0
+        else
+            r = cos(x*dble(j)*pi/a)
+        end if
+
+    !        r = phi_eval(j, x)
     end function
 
-    function fphi(j, x) result(r)
+    function fphi(j, x, interface_idx) result(r)
         double precision, intent(in) :: x
-        integer, intent(in) :: j
+        integer, intent(in) :: j, interface_idx
         double precision :: r
         integer :: m
 
-        r = vphi(j, 0)/a
-        do m = 1, mmax_phi
-            r = r + (2.0/a)*vphi(j, m)*cos(mu(m)*x)
-        end do
+        !        r = vphi(j, 0)/a
+        !        do m = 1, mmax_phi
+        !            r = r + (2.0/a)*vphi(j, m)*cos(mu(m)*x)
+        !        end do
+
+        !                if (j == 0) then
+        !                    r = sqrt(1.0/a)
+        !                else if (mod(j, 2) == 0) then
+        !                    r = sqrt(1.0/a)*sin(x*dble(j)*pi/a)
+        !                else
+        !                    r = sqrt(1.0/a)*cos(x*dble(j + 1)*pi/a)
+        !    end if
+
+        if (j == 0) then
+            r = 1.0
+        else
+            r = cos(x*dble(j)*pi/a)
+        end if
+
+    !        r = phi_eval(j, x)
     end function
 
     subroutine add_error(sample_y, stdev)
@@ -423,17 +455,27 @@ contains
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
 
+        ! Determinacao das autofuncoes
+!        call generate_eigenfunctions(interface_idx)
+
         vpsi = 0.0
         vphi = 0.0
 
-        do j = 0, N
-            if (j == 0) then
-                vpsi(j, j) = sqrt(a)
-                vphi(j, j) = sqrt(a)
-            else
-                vpsi(j, j) = sqrt(a/2.0)
-                vphi(j, j) = sqrt(a/2.0)
-            end if
+        !        do j = 0, N
+        !            if (j == 0) then
+        !                vpsi(j, j) = sqrt(a)
+        !                vphi(j, j) = sqrt(a)
+        !            else
+        !                vpsi(j, j) = sqrt(a/2.0)
+        !                vphi(j, j) = sqrt(a/2.0)
+        !            end if
+        !        end do
+
+        do m = 0, N
+            do j = 0, mmax_phi
+                vpsi(m, j) = ftransform(fpsi, m, j, interface_idx)
+                vphi(m, j) = ftransform(fphi, m, j, interface_idx)
+            end do
         end do
 
         !write(*, *)'Generating matrices for F'
