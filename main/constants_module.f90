@@ -6,8 +6,8 @@ module constants_module
     double precision, parameter :: b = 0.02
     double precision, parameter :: k1 = 54.0
     double precision, parameter :: k2 = 14.0
-    double precision, parameter :: q = -10.0
-    double precision, parameter :: hmax = 1000.0
+    double precision, parameter :: q = -5000.0
+    double precision, parameter :: hmax = 400.0
     double precision, parameter :: gamma = 5000.0
     integer, parameter :: mmax_T = 35 !numero total de autofuncoes a serem calculadas para T1 e T2
     integer, parameter :: mmax_F = 20 !numero total de autofuncoes a serem calculadas para F1 e F2

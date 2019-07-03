@@ -132,7 +132,7 @@ program main
     end do
     close(1)
 
-    do interface_idx = 1, 3
+    do interface_idx = 2, 2
         write(*, *)'Interface = ', interface_idx
         write(str_idx, '(I2.2)') interface_idx
         call c_f_procpointer(wlist(interface_idx), w)
@@ -154,7 +154,7 @@ program main
         end do
         close(1)
 
-        do condutance_idx = 1, 3
+        do condutance_idx = 3, 3
             write(*, *)'    Condutance = ', interface_idx
             write(str_cdx, '(I2.2)') condutance_idx
             call c_f_procpointer(hlist(condutance_idx), h)
@@ -187,16 +187,16 @@ program main
             close(2)
             close(3)
 
-            do stdev_idx = 0, 2
+            do stdev_idx = 0, 0
                 if (stdev_idx == 0) then
                     str_stdev = '00'
                     stdev = 0.0
                 else if (stdev_idx == 1) then
                     str_stdev = '01'
-                    stdev = ymax * 0.1/100.0!0.1
+                    stdev = 0.1!ymax * 0.1/100.0
                 else
                     str_stdev = '05'
-                    stdev = ymax * 0.5/100.0!0.5
+                    stdev = 0.5!ymax * 0.5/100.0
                 end if
                 !                write(*, *)'        Stdev = ', stdev
                 write(*, *)'Interface = ', interface_idx, ', conductance = ', condutance_idx, ', stdev = ', stdev
@@ -204,7 +204,7 @@ program main
                 ! Recuperando as temperaturas do COMSOL
                 ! e obtendo o valor absoluto maximo
                 open(unit = 1, file = '/home/cx3d/mestrado/' // &
-                    'data/fortran/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
+                    'data/comsol/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
                 do k = 1, tnmax
                     read(1, *)vx(k), vy(k)
                     if (k == 1) then

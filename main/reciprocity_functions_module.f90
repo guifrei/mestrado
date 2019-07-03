@@ -245,13 +245,8 @@ contains
         vvY = vb(1:nn, 1)
 
         open(unit = 5, file = '/home/cx3d/a.txt')
-        do i = 1, mm
-            x = vx(i)
-            y = 0.0
-            do j = 1, nn
-                y = y + vb(j, 1)*cos(mu(j - 1)*x)
-            end do
-            write(5, *)x, vy(i), y
+        do i = 0, nn - 1
+            write(5, *)vvY(i)
         end do
         close(5)
     end subroutine
