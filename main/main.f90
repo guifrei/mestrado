@@ -1,3 +1,11 @@
+!data00 = Import[
+!   "/home/cx3d/mestrado/data/temperaturas_sinteticas_interface_03_\
+!conductance_01_stdev_00.dat", {"Data", All, 2}];
+!
+!gaussData01 = GaussianFilter[data01, 20.0, Method -> "Gaussian"];
+!ListLinePlot[{data00, gaussData01}]
+
+
 program main
     use interfaces_module
     use conductances_module
