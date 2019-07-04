@@ -215,9 +215,13 @@ contains
         vvY(1:nn - 1) = integrals_Y(1:nn - 1)*2.0/a
     end subroutine
 
-    subroutine least_squares_for_Y(vx, vy)
+    subroutine least_squares_for_Y(vx, vy, interface_idx, condutance_idx, stdev_idx)
+        use tikhonov_module
         double precision, dimension(tnmax), intent(in) :: vx
         double precision, dimension(tnmax), intent(in) :: vy
+        integer, intent(in) :: interface_idx
+        integer, intent(in) :: condutance_idx
+        integer, intent(in) :: stdev_idx
         integer, parameter :: mm = tnmax
         integer, parameter :: nn = mmax_phi + 1
         double precision, dimension(mm, nn) :: mxa
@@ -227,104 +231,19 @@ contains
         double precision, dimension(lwork) :: work
         double precision :: x, y
         double precision, dimension(0: mmax_phi) :: integrals_Y
+        character(len = 2) :: str_idx, str_cdx, str_stdev
+        double precision, dimension(nn) :: sings
+        double precision, dimension(mm) :: uu
+        double precision, dimension(mm, nn) :: vt
 
-        mxa = 0.0
-        vb = 0.0
-        do i = 1, mm
-            x = vx(i)
-            do j = 1, nn
-                mxa(i, j) = cos(mu(j - 1)*x)
-            end do
-        end do
-
-        vb(1:mm, 1) = vy
-
-        call dgels('N', mm, nn, 1, mxa, mm, vb, mm, work, lwork, info)
-        integrals_Y(0) = vb(1, 1)*a
-        integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
-        vvY = vb(1:nn, 1)
-
-        open(unit = 5, file = '/home/cx3d/a.txt')
-        do i = 0, nn - 1
-            write(5, *)vvY(i)
-        end do
-        close(5)
-    end subroutine
-
-    subroutine morozov(sigma, vx, vy)
-        double precision, intent(in) :: sigma
-        double precision, dimension(tnmax), intent(in) :: vx
-        double precision, dimension(tnmax), intent(in) :: vy
-        double precision, dimension(tnmax) :: tmpy
-        integer :: nnmax, kk
-        logical :: keep
-
-        keep = .true.
-        nnmax = 1
-
-        do while (keep .and. (nnmax <= mmax_phi))
-            tmpy = approximation_Y(vx)
-            nnmax = nnmax + 1
-            open(unit = 1, file = '/home/cx3d/test.txt')
-            do kk = 1, tnmax
-                write(1, *)vx(kk), vy(kk), tmpy(kk)
-            end do
-            close(1)
-            write(*, *)norm2(tmpy - vy)/tnmax
-        end do
-
-
-    contains
-        elemental function approximation_Y(x) result(r)
-            double precision, intent(in) :: x
-            double precision :: r
-            integer :: i
-
-            r = vvY(0)
-            do i = 1, nnmax
-                r = r + vvY(i)*cos(mu(i)*x)
-            end do
-        end function
-
-
-    end subroutine
-
-    subroutine tikhonov(lambda, vx, vy)
-        !http://www2.compute.dtu.dk/~pcha/DIP/chap4.pdf, chap8
-        integer, parameter :: deriv_ord = 0
-        double precision, intent(in) :: lambda
-        double precision, dimension(tnmax), intent(in) :: vx
-        double precision, dimension(tnmax), intent(in) :: vy
-        integer, parameter :: mm = tnmax
-        integer, parameter :: nn = mmax_phi + 1
-        double precision, dimension(mm + nn - deriv_ord, nn) :: mxa
-        double precision, dimension(mm + nn - deriv_ord, 1) :: vb
-        integer :: info, i, j
-        integer, parameter :: lwork = 64*nn
-        double precision, dimension(lwork) :: work
-        double precision :: x, y
-        double precision, dimension(0: mmax_phi) :: integrals_Y
-        double precision, dimension(nn - deriv_ord, nn) :: mL !operador derivativo
-
-                    !            lambda = 0.0001
-
-        mL = 0.0
-
-        if (deriv_ord == 0) then
-            do i = 1, nn - deriv_ord
-                mL(i, i) = sqrt(lambda)
-            end do
-        else if (deriv_ord == 1) then
-            do i = 1, nn - deriv_ord
-                mL(i, i) = -sqrt(lambda)
-                mL(i, i + 1) = sqrt(lambda)
-            end do
-        else if (deriv_ord == 2) then
-            do i = 1, nn - deriv_ord
-                mL(i, i) = sqrt(lambda)
-                mL(i, i + 1) = -2.0*sqrt(lambda)
-                mL(i, i + 2) = sqrt(lambda)
-            end do
+        write(str_idx, '(I2.2)') interface_idx
+        write(str_cdx, '(I2.2)') condutance_idx
+        if (stdev_idx == 0) then
+            str_stdev = '00'
+        else if (stdev_idx == 1) then
+            str_stdev = '01'
+        else
+            str_stdev = '05'
         end if
 
         mxa = 0.0
@@ -336,24 +255,19 @@ contains
             end do
         end do
 
-        mxa(mm + 1: mm + nn - deriv_ord, :) = mL
-
         vb(1:mm, 1) = vy
-        vb(mm + 1:mm + nn - deriv_ord, 1) = matmul(mL, vvY)
 
-        call dgels('N', mm + nn - deriv_ord, nn, 1, mxa, mm + nn - deriv_ord, vb, mm + nn - deriv_ord, work, lwork, info)
+!        call dgesvd('A', 'A', mm, nn, mxa, mm, sings, uu, mm, vt, nn, work, lwork, info)
+
+        call dgels('N', mm, nn, 1, mxa, mm, vb, mm, work, lwork, info)
         integrals_Y(0) = vb(1, 1)*a
         integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
         vvY = vb(1:nn, 1)
 
-        open(unit = 5, file = '/home/cx3d/a.txt')
-        do i = 1, mm
-            x = vx(i)
-            y = 0.0
-            do j = 1, nn
-                y = y + vb(j, 1)*cos(mu(j - 1)*x)
-            end do
-            write(5, *)x, vy(i), y
+        open(unit = 5, file = '/home/cx3d/mestrado/data/coeficientes_interface_'//str_idx//'_conductance_'//str_cdx// &
+            '_stdev_' // str_stdev // '.dat')
+        do i = 0, nn - 1
+            write(5, *)vvY(i)
         end do
         close(5)
     end subroutine
@@ -367,7 +281,7 @@ contains
 
         vA(0:) => coeffsF(0::2, j)
         r = -q * vpsi(j, 0) / k1 + (vA(0) - vpsi(j, 0)) * vvY(0) / b
-        do m = 1, 4!mmax_F
+        do m = 1, mmax_F
             arg = mu(m) * b
             r = r + mu(m) * (vA(m) / sinh(arg) - vpsi(j, m) / tanh(arg)) * vvY(m)
         end do
@@ -382,7 +296,7 @@ contains
 
         vE(0:) => coeffsG(0:, j)
         r = -q * vphi(j, 0) / k1 + (vE(0) - vphi(j, 0)) * vvY(0) / b
-        do m = 1, 4!mmax_G
+        do m = 1, mmax_G
             arg = mu(m) * b
             r = r + mu(m) * (vE(m) / sinh(arg) - vphi(j, m) / tanh(arg)) * vvY(m)
         end do
@@ -488,28 +402,26 @@ contains
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
 
-        ! Determinacao das autofuncoes
-        !        call generate_eigenfunctions(interface_idx)
 
         vpsi = 0.0
         vphi = 0.0
 
-        !        do j = 0, N
-        !            if (j == 0) then
-        !                vpsi(j, j) = sqrt(a)
-        !                vphi(j, j) = sqrt(a)
-        !            else
-        !                vpsi(j, j) = sqrt(a/2.0)
-        !                vphi(j, j) = sqrt(a/2.0)
-        !            end if
-        !        end do
-
-        do m = 0, N
-            do j = 0, mmax_phi
-                vpsi(m, j) = ftransform(fpsi, m, j, interface_idx)
-                vphi(m, j) = ftransform(fphi, m, j, interface_idx)
-            end do
+        do j = 0, N
+            if (j == 0) then
+                vpsi(j, j) = sqrt(a)
+                vphi(j, j) = sqrt(a)
+            else
+                vpsi(j, j) = sqrt(a/2.0)
+                vphi(j, j) = sqrt(a/2.0)
+            end if
         end do
+
+        !        do m = 0, N
+        !            do j = 0, mmax_phi
+        !                vpsi(m, j) = ftransform(fpsi, m, j, interface_idx)
+        !                vphi(m, j) = ftransform(fphi, m, j, interface_idx)
+        !            end do
+        !        end do
 
         !write(*, *)'Generating matrices for F'
 

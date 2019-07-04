@@ -31,31 +31,6 @@ program main
     integer :: nmax_delta_temperatura, nmax_fluxo_calor
     double precision :: start, finish
 
-
-    !    block
-    !        integer, parameter :: nn = 2
-    !        integer, parameter :: mm = 3
-    !        integer, parameter :: sz = max(nn, mm)
-    !        integer, parameter :: minnm = min(nn, mm)
-    !        double precision :: aa(sz, mm)
-    !        double precision :: ainv(sz, nn)
-    !        double precision, dimension(minnm) :: ss, ee
-    !        double precision, dimension(sz, nn) :: uu
-    !        double precision, dimension(sz, mm) :: vv
-    !        double precision, dimension(nn) :: wwork
-    !        integer :: irank, ierr
-    !
-    !        aa(1:2, 1) = [5.0, 3.0]
-    !        aa(1:2, 2) = [-2.0, 4.0]
-    !        aa(1:2, 3) = [1.0, -1.0]
-    !
-    !        call mpinv(sz, nn, mm, minnm, aa, ainv, ss, ee, uu, vv, wwork, irank, ierr)
-    !        write(*, *)ainv(1, :)
-    !        write(*, *)ainv(2, :)
-    !        write(*, *)ainv(3, :)
-    !        stop0.38
-    !    end block
-
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
     wlist(3) = c_funloc(w3)
@@ -212,7 +187,7 @@ program main
                 ! Recuperando as temperaturas do COMSOL
                 ! e obtendo o valor absoluto maximo
                 open(unit = 1, file = '/home/cx3d/mestrado/' // &
-                    'data/fortran/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
+                    'data/comsol/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
                 do k = 1, tnmax
                     read(1, *)vx(k), vy(k)
                     if (k == 1) then
@@ -230,10 +205,10 @@ program main
 
 
                 !call integrate_synthetic_temperatures(vx, vy, tnmax)
-                call least_squares_for_Y(vx, vy)
-!                if (stdev_idx /= 0) then
-!                    call morozov(stdev, vx, vy)
-!                end if
+                call least_squares_for_Y(vx, vy, interface_idx, condutance_idx, stdev_idx)
+                !                if (stdev_idx /= 0) then
+                !                    call morozov(stdev, vx, vy)
+                !                end if
 
                 open(unit = 1, file = '/home/cx3d/mestrado/' // &
                     'data/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx // &

@@ -56,6 +56,24 @@ module netlib_module
             double precision, dimension(ldb, nrhs), intent(inout) :: b
             double precision, dimension(lwork), intent(out) :: work
         end subroutine
+
+        subroutine dgesvd(jobu, jobvt, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, info)
+            character(len = 1), intent(in) :: jobu
+            character(len = 1), intent(in) :: jobvt
+            integer, intent(in) :: m
+            integer, intent(in) :: n
+            integer, intent(in) :: lda
+            integer, intent(in) :: ldu
+            integer, intent(in) :: ldvt
+            integer, intent(in) :: lwork
+            integer, intent(out) :: info
+            double precision, dimension(lda, n), intent(inout) :: a
+            double precision, dimension(*), intent(out) :: s
+            double precision, dimension(ldu, *), intent(out) :: u
+            double precision, dimension(ldvt, n), intent(out) :: vt
+            double precision, dimension(lwork), intent(out) :: work
+
+        end subroutine
     end interface
 
     interface
