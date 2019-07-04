@@ -251,6 +251,44 @@ contains
         close(5)
     end subroutine
 
+    subroutine morozov(sigma, vx, vy)
+        double precision, intent(in) :: sigma
+        double precision, dimension(tnmax), intent(in) :: vx
+        double precision, dimension(tnmax), intent(in) :: vy
+        double precision, dimension(tnmax) :: tmpy
+        integer :: nnmax, kk
+        logical :: keep
+
+        keep = .true.
+        nnmax = 1
+
+        do while (keep .and. (nnmax <= mmax_phi))
+            tmpy = approximation_Y(vx)
+            nnmax = nnmax + 1
+            open(unit = 1, file = '/home/cx3d/test.txt')
+            do kk = 1, tnmax
+                write(1, *)vx(kk), vy(kk), tmpy(kk)
+            end do
+            close(1)
+            write(*, *)norm2(tmpy - vy)/tnmax
+        end do
+
+
+    contains
+        elemental function approximation_Y(x) result(r)
+            double precision, intent(in) :: x
+            double precision :: r
+            integer :: i
+
+            r = vvY(0)
+            do i = 1, nnmax
+                r = r + vvY(i)*cos(mu(i)*x)
+            end do
+        end function
+
+
+    end subroutine
+
     subroutine tikhonov(lambda, vx, vy)
         !http://www2.compute.dtu.dk/~pcha/DIP/chap4.pdf, chap8
         integer, parameter :: deriv_ord = 0
@@ -329,7 +367,7 @@ contains
 
         vA(0:) => coeffsF(0::2, j)
         r = -q * vpsi(j, 0) / k1 + (vA(0) - vpsi(j, 0)) * vvY(0) / b
-        do m = 1, mmax_F
+        do m = 1, 4!mmax_F
             arg = mu(m) * b
             r = r + mu(m) * (vA(m) / sinh(arg) - vpsi(j, m) / tanh(arg)) * vvY(m)
         end do
@@ -344,7 +382,7 @@ contains
 
         vE(0:) => coeffsG(0:, j)
         r = -q * vphi(j, 0) / k1 + (vE(0) - vphi(j, 0)) * vvY(0) / b
-        do m = 1, mmax_G
+        do m = 1, 4!mmax_G
             arg = mu(m) * b
             r = r + mu(m) * (vE(m) / sinh(arg) - vphi(j, m) / tanh(arg)) * vvY(m)
         end do
@@ -451,7 +489,7 @@ contains
         call c_f_procpointer(dwlist(interface_idx), dw)
 
         ! Determinacao das autofuncoes
-!        call generate_eigenfunctions(interface_idx)
+        !        call generate_eigenfunctions(interface_idx)
 
         vpsi = 0.0
         vphi = 0.0

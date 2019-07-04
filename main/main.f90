@@ -140,7 +140,7 @@ program main
     end do
     close(1)
 
-    do interface_idx = 2, 2
+    do interface_idx = 1, 3
         write(*, *)'Interface = ', interface_idx
         write(str_idx, '(I2.2)') interface_idx
         call c_f_procpointer(wlist(interface_idx), w)
@@ -162,7 +162,7 @@ program main
         end do
         close(1)
 
-        do condutance_idx = 3, 3
+        do condutance_idx = 1, 3
             write(*, *)'    Condutance = ', interface_idx
             write(str_cdx, '(I2.2)') condutance_idx
             call c_f_procpointer(hlist(condutance_idx), h)
@@ -195,7 +195,7 @@ program main
             close(2)
             close(3)
 
-            do stdev_idx = 0, 0
+            do stdev_idx = 0, 2
                 if (stdev_idx == 0) then
                     str_stdev = '00'
                     stdev = 0.0
@@ -212,7 +212,7 @@ program main
                 ! Recuperando as temperaturas do COMSOL
                 ! e obtendo o valor absoluto maximo
                 open(unit = 1, file = '/home/cx3d/mestrado/' // &
-                    'data/comsol/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
+                    'data/fortran/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
                 do k = 1, tnmax
                     read(1, *)vx(k), vy(k)
                     if (k == 1) then
@@ -231,6 +231,9 @@ program main
 
                 !call integrate_synthetic_temperatures(vx, vy, tnmax)
                 call least_squares_for_Y(vx, vy)
+!                if (stdev_idx /= 0) then
+!                    call morozov(stdev, vx, vy)
+!                end if
 
                 open(unit = 1, file = '/home/cx3d/mestrado/' // &
                     'data/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx // &
