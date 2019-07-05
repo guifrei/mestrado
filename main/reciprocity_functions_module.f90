@@ -329,7 +329,9 @@ contains
         integer, intent(in) :: interface_idx
         double precision :: r
 
-        r = k1*reciprocity_g(j)*fgamma(j, x, interface_idx)
+        r = k1
+        r = r*reciprocity_g(j)
+        r = r*fgamma(j, x, interface_idx)
     end function
 
     function fluxo_calor(x, interface_idx, kmax) result(r)

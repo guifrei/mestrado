@@ -78,23 +78,27 @@ contains
         double precision, intent(in) :: sigma
         double precision, dimension(tnmax), intent(in) :: vx
         double precision, dimension(tnmax), intent(in) :: vy
-        double precision, dimension(0: mmax_phi), intent(in) :: vvY
+        double precision, dimension(0: mmax_phi), intent(inout) :: vvY
         double precision, dimension(tnmax) :: tmpy
+        double precision :: sqrt_rms
         integer :: nnmax, kk
         logical :: keep
 
         keep = .true.
-        nnmax = 1
+        nnmax = 0
 
-        do while (keep .and. (nnmax <= mmax_phi))
+        do while (keep .and. (nnmax <= 4))!mmax_phi
             tmpy = approximation_Y(vx)
-            nnmax = nnmax + 1
-            open(unit = 1, file = '/home/cx3d/test.txt')
-            do kk = 1, tnmax
-                write(1, *)vx(kk), vy(kk), tmpy(kk)
-            end do
-            close(1)
-            write(*, *)norm2(tmpy - vy)/tnmax
+            sqrt_rms = norm2(tmpy - vy)/sqrt(dble(tnmax))
+
+            if (sqrt_rms <= sigma) then
+                keep = .false.
+                write(*, *)nnmax, sqrt_rms
+                !zerar os coeficientes deste ponto em diante ("filtrar as frequencias superiores")
+                vvY(nnmax + 1:mmax_phi) = 0.0
+            else
+                nnmax = nnmax + 1
+            end if
         end do
 
 
@@ -104,8 +108,8 @@ contains
             double precision :: r
             integer :: i
 
-            r = vvY(0)
-            do i = 1, nnmax
+            r = 0.0
+            do i = 0, nnmax
                 r = r + vvY(i)*cos(mu(i)*x)
             end do
         end function
