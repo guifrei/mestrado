@@ -5,6 +5,31 @@
 !gaussData01 = GaussianFilter[data01, 20.0, Method -> "Gaussian"];
 !ListLinePlot[{data00, gaussData01}]
 
+!plot 'conductance_01.dat', 'estimativa_ctc_interface_01_conductance_01_stdev_00.dat' with lines, 'estimativa_ctc_interface_01_conductance_01_stdev_01.dat', 'estimativa_ctc_interface_01_conductance_01_stdev_05.dat'
+!
+!plot 'conductance_02.dat', 'estimativa_ctc_interface_01_conductance_02_stdev_00.dat' with lines, 'estimativa_ctc_interface_01_conductance_02_stdev_01.dat', 'estimativa_ctc_interface_01_conductance_02_stdev_05.dat'
+!
+!plot 'conductance_03.dat', 'estimativa_ctc_interface_01_conductance_03_stdev_00.dat' with lines, 'estimativa_ctc_interface_01_conductance_03_stdev_01.dat', 'estimativa_ctc_interface_01_conductance_03_stdev_05.dat'
+!
+!
+!===============
+!
+!
+!plot 'conductance_01.dat', 'estimativa_ctc_interface_02_conductance_01_stdev_00.dat' with lines, 'estimativa_ctc_interface_02_conductance_01_stdev_01.dat', 'estimativa_ctc_interface_02_conductance_01_stdev_05.dat'
+!
+!plot 'conductance_02.dat', 'estimativa_ctc_interface_02_conductance_02_stdev_00.dat' with lines, 'estimativa_ctc_interface_02_conductance_02_stdev_01.dat', 'estimativa_ctc_interface_02_conductance_02_stdev_05.dat'
+!
+!plot 'conductance_03.dat', 'estimativa_ctc_interface_02_conductance_03_stdev_00.dat' with lines, 'estimativa_ctc_interface_02_conductance_03_stdev_01.dat', 'estimativa_ctc_interface_02_conductance_03_stdev_05.dat'
+!
+!===============
+!
+!
+!plot 'conductance_01.dat', 'estimativa_ctc_interface_03_conductance_01_stdev_00.dat' with lines, 'estimativa_ctc_interface_03_conductance_01_stdev_01.dat', 'estimativa_ctc_interface_03_conductance_01_stdev_05.dat'
+!
+!plot 'conductance_02.dat', 'estimativa_ctc_interface_03_conductance_02_stdev_00.dat' with lines, 'estimativa_ctc_interface_03_conductance_02_stdev_01.dat', 'estimativa_ctc_interface_03_conductance_02_stdev_05.dat'
+!
+!plot 'conductance_03.dat', 'estimativa_ctc_interface_03_conductance_03_stdev_00.dat' with lines, 'estimativa_ctc_interface_03_conductance_03_stdev_01.dat', 'estimativa_ctc_interface_03_conductance_03_stdev_05.dat'
+
 
 program main
     use interfaces_module
@@ -179,7 +204,7 @@ program main
                     stdev = 0.1!ymax * 0.1/100.0
                 else
                     str_stdev = '05'
-                    stdev = 0.2!ymax * 0.5/100.0
+                    stdev = 0.5!ymax * 0.5/100.0
                 end if
                 !                write(*, *)'        Stdev = ', stdev
                 write(*, *)'Interface = ', interface_idx, ', conductance = ', condutance_idx, ', stdev = ', stdev

@@ -79,32 +79,41 @@ contains
         double precision, dimension(tnmax), intent(in) :: vx
         double precision, dimension(tnmax), intent(in) :: vy
         double precision, dimension(0: mmax_phi), intent(inout) :: vvY
-        double precision, dimension(tnmax) :: tmpy
-        double precision :: sqrt_rms
+        double precision, dimension(tnmax) :: tmpya, tmpyb
+        double precision :: sqrt_rms_a, sqrt_rms_b, diff_a, diff_b
         integer :: nnmax, kk
         logical :: keep
 
         keep = .true.
         nnmax = 0
+        tmpya = approximation_Y(vx, nnmax)
+        sqrt_rms_a = norm2(tmpya - vy)/sqrt(dble(tnmax))
+        diff_a = dabs(sqrt_rms_a - sigma)
+        nnmax = 1
 
-        do while (keep .and. (nnmax <= 4))!mmax_phi
-            tmpy = approximation_Y(vx)
-            sqrt_rms = norm2(tmpy - vy)/sqrt(dble(tnmax))
+        do while (keep .and. (nnmax <= mmax_phi))
+            tmpyb = approximation_Y(vx, nnmax)
+            sqrt_rms_b = norm2(tmpyb - vy)/sqrt(dble(tnmax))
+            diff_b = dabs(sqrt_rms_b - sigma)
 
-            if (sqrt_rms <= sigma) then
+            if (sqrt_rms_b <= sigma) then
                 keep = .false.
-                write(*, *)nnmax, sqrt_rms
+                write(*, *)nnmax, sqrt_rms_b
                 !zerar os coeficientes deste ponto em diante ("filtrar as frequencias superiores")
                 vvY(nnmax + 1:mmax_phi) = 0.0
             else
+                tmpya = tmpyb
+                sqrt_rms_a = sqrt_rms_b
+                diff_a = diff_b
                 nnmax = nnmax + 1
             end if
         end do
 
 
     contains
-        elemental function approximation_Y(x) result(r)
+        elemental function approximation_Y(x, nnmax) result(r)
             double precision, intent(in) :: x
+            integer, intent(in) :: nnmax
             double precision :: r
             integer :: i
 
