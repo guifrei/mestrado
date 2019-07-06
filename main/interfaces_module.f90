@@ -20,6 +20,8 @@ module interfaces_module
 
     integer, parameter :: wmax = 15
 
+    double precision, parameter :: alpha = 20.0
+
     type(c_funptr), dimension(wmax) :: wlist
     type(c_funptr), dimension(wmax) :: dwlist
 
@@ -68,14 +70,14 @@ contains
         double precision, intent(in) :: x
         double precision :: r
 
-        r = b/2.0+(b/20.0)*cos(mp*pi*x/a)
+        r = b/2.0+(b/20.0)*cos(mp*pi*x/a + alpha*pi/180.0)
     end function
 
     function dw3(x) result(r)
         double precision, intent(in) :: x
         double precision :: r
 
-        r = -(b/20.0)*(mp*pi/a)*sin(mp*pi*x/a)
+        r = -(b/20.0)*(mp*pi/a)*sin(mp*pi*x/a + alpha*pi/180.0)
     end function
 
     function w4(x) result(r)
