@@ -3,10 +3,10 @@ module constants_module
 
     double precision, parameter :: pi = 4.0*atan(1.0)
     double precision, parameter :: a = 0.04
-    double precision, parameter :: b = 0.02
+    double precision, parameter :: b = 0.01
     double precision, parameter :: k1 = 54.0
     double precision, parameter :: k2 = 14.0
-    double precision, parameter :: q = -5000.0
+    double precision, parameter :: q = -7500.0
     double precision, parameter :: hmax = 400.0
     double precision, parameter :: gamma = 5000.0
     integer, parameter :: mmax_T = 35 !numero total de autofuncoes a serem calculadas para T1 e T2

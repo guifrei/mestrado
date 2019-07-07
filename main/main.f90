@@ -38,6 +38,7 @@ program main
     use reciprocity_functions_module
     use netlib_module
     use estimated_h_module
+    use tikhonov_module
     implicit none
 
     procedure(h_proc_t), pointer :: h
@@ -256,6 +257,7 @@ program main
 
                 !call integrate_synthetic_temperatures(vx, vy, tnmax)
                 call least_squares_for_Y(vx, vy, interface_idx, condutance_idx, stdev_idx)
+                if (stdev_idx /= 0) call morozov(stdev, vx, vy, vvY)
 
                 open(unit = 1, file = '/home/cx3d/mestrado/' // &
                     'data/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx // &
