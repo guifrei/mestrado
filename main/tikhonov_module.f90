@@ -74,38 +74,40 @@ contains
         close(5)
     end subroutine
 
-    subroutine morozov(sigma, vx, vy, vvY)
+    subroutine morozov(sigma, vx, vy, vvY, kmax)
         double precision, intent(in) :: sigma
         double precision, dimension(tnmax), intent(in) :: vx
         double precision, dimension(tnmax), intent(in) :: vy
         double precision, dimension(0: mmax_phi), intent(inout) :: vvY
+        integer, intent(out) :: kmax
         double precision, dimension(tnmax) :: tmpya, tmpyb
         double precision :: sqrt_rms_a, sqrt_rms_b, diff_a, diff_b
-        integer :: nnmax, kk
         logical :: keep
 
         keep = .true.
-        nnmax = 0
-        tmpya = approximation_Y(vx, nnmax)
+        kmax = 0
+        tmpya = approximation_Y(vx, kmax)
         sqrt_rms_a = norm2(tmpya - vy)/sqrt(dble(tnmax))
         diff_a = dabs(sqrt_rms_a - sigma)
-        nnmax = 1
+        kmax = 1
 
-        do while (keep .and. (nnmax <= mmax_phi))
-            tmpyb = approximation_Y(vx, nnmax)
+        do while (keep .and. (kmax <= mmax_phi))
+            tmpyb = approximation_Y(vx, kmax)
             sqrt_rms_b = norm2(tmpyb - vy)/sqrt(dble(tnmax))
             diff_b = dabs(sqrt_rms_b - sigma)
 
             if (sqrt_rms_b <= sigma) then
                 keep = .false.
-                write(*, *)nnmax, sqrt_rms_b
+                write(*, *)kmax, sqrt_rms_b
                 !zerar os coeficientes deste ponto em diante ("filtrar as frequencias superiores")
-                vvY(nnmax + 1:mmax_phi) = 0.0
-            else
+                !vvY(kmax + 1:mmax_phi) = 0.0
+            end if
+
+            if (keep) then
                 tmpya = tmpyb
                 sqrt_rms_a = sqrt_rms_b
                 diff_a = diff_b
-                nnmax = nnmax + 1
+                kmax = kmax + 1
             end if
         end do
 

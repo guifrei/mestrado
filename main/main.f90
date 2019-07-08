@@ -54,7 +54,7 @@ program main
     double precision :: desv, x, y, y1, y2, dx, stdev, arg, norm_acc, y1prev, y2prev
     double precision :: fluxo_calor_teorico, delta_temperatura_teorico, norm_f, norm_t
     integer, target, dimension(2) :: f_args
-    integer :: nmax_delta_temperatura, nmax_fluxo_calor
+    integer :: nmax_delta_temperatura, nmax_fluxo_calor, kmax
     double precision :: start, finish
 
 
@@ -257,7 +257,6 @@ program main
 
                 !call integrate_synthetic_temperatures(vx, vy, tnmax)
                 call least_squares_for_Y(vx, vy, interface_idx, condutance_idx, stdev_idx)
-                if (stdev_idx /= 0) call morozov(stdev, vx, vy, vvY)
 
                 open(unit = 1, file = '/home/cx3d/mestrado/' // &
                     'data/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx // &
@@ -324,19 +323,51 @@ program main
                 end do
                 close(10)
 
-                y1 = dabs(reciprocity_f(0))
-                y2 = dabs(reciprocity_g(0))
-                open(unit=1, file='/home/cx3d/mestrado/' // &
-                    'data/metricas_interface_'//str_idx // &
-                    '_stdev_' // str_stdev // '.dat')
-                do j = 1, N
-                    y1prev = y1
-                    y2prev = y2
-                    y1 = y1 + dabs(reciprocity_f(j))
-                    y2 = y2 + dabs(reciprocity_g(j))
-                    write(1, *)j, y1/y1prev, y2/y2prev
+                !Principio da discrepancia de Morozov
+                kmax = N
+                if (stdev_idx /= 0) call morozov(stdev, vx, vy, vvY, kmax)
+
+                open(unit = 10, file = '/home/cx3d/mestrado/' // &
+                    'data/erro_rms_interface_'//str_idx//'_conductance_'//str_cdx // &
+                    '_stdev_'// str_stdev // '_morozov.dat')
+                open(unit = 4, file = '/home/cx3d/mestrado/' // &
+                    'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_'//str_cdx// &
+                    '_stdev_' // str_stdev // '_morozov.dat')
+                open(unit = 5, file = '/home/cx3d/mestrado/' // &
+                    'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_'//str_cdx// &
+                    '_stdev_' // str_stdev // '_morozov.dat')
+                open(unit = 14, file = '/home/cx3d/mestrado/' // &
+                    'data/comsol/delta_temperatura_interface_'//str_idx//'_conductance_'//str_cdx// '.dat')
+                open(unit = 15, file = '/home/cx3d/mestrado/' // &
+                    'data/comsol/fluxo_calor_interface_'//str_idx//'_conductance_'//str_cdx// '.dat')
+                open(unit = 7, file = '/home/cx3d/mestrado/' // &
+                    'data/estimativa_ctc_interface_'//str_idx//'_conductance_'//str_cdx// &
+                    '_stdev_' // str_stdev // '_morozov.dat')
+
+                norm_f = 0.0
+                norm_t = 0.0
+                do j = 1, tnmax
+                    x = vx(j)
+                    c_fluxo_calor = fluxo_calor(x, interface_idx, kmax)
+                    c_delta_temperatura = delta_temperatura(x, interface_idx, kmax)
+                    write(4, *)x, c_delta_temperatura
+                    write(5, *)x, c_fluxo_calor
+                    write(7, *)x, c_fluxo_calor/c_delta_temperatura
+
+                    read(14, *)x, delta_temperatura_teorico
+                    read(15, *)x, fluxo_calor_teorico
+                    norm_t = norm_t + (delta_temperatura_teorico - c_delta_temperatura)**2
+                    norm_f = norm_f + (fluxo_calor_teorico - c_fluxo_calor)**2
                 end do
-                close(1)
+                norm_t = sqrt(norm_t/tnmax)
+                norm_f = sqrt(norm_f/tnmax)
+                write(10, *)nmax, norm_t, norm_f
+                close(15)
+                close(14)
+                close(5)
+                close(4)
+                close(7)
+                close(10)
             end do
         end do
     end do
