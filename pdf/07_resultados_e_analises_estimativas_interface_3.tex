@@ -1,0 +1,99 @@
+\subsubsection{Estimativas para a geometria de interface de contato 3}
+
+A última geometria de interface de contato a ser analisada corresponde à de índice 3 na tabela \ref{tabela_interfaces}, e consiste numa curva cossenoidal (cf. Figura \ref{figura_interfaces}).  Os perfis estimados de salto de temperatura na interface de contato, correspondentes aos três perfis teóricos de CTC, podem ser visualizados na Figura \ref{figura_delta_temperaturas_interface_03}.
+
+\begin{figure}[H]
+	\graficoestimativa{delta_temperatura}{3}{1}{20}{08}{04}{a}{\Delta T\big|_{\Gamma}}{\celsius}
+	\graficoestimativa{delta_temperatura}{3}{2}{20}{05}{04}{b}{\Delta T\big|_{\Gamma}}{\celsius}
+	\graficoestimativa{delta_temperatura}{3}{3}{20}{07}{04}{c}{\Delta T\big|_{\Gamma}}{\celsius}
+	\caption{Comparação entre as estimativas de $[T_1 - T_2]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 3: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+	\label{figura_delta_temperaturas_interface_03}
+\end{figure}
+
+A Tabela \ref{tabela_rms_delta_temperaturas_interface_3} mostra os valores de desvio quadrático médio entre as medidas estimadas e as teóricas de salto de temperatura para cada perfil teórico de condutância térmica de contato.
+\begin{table}[H]
+	\centering
+	\caption{Desvio quadrático médio das estimativas de salto de temperatura para a interface de contato 3}
+	\begin{tabular}{c|c|c|c|}
+		\cline{2-4}
+		& \multicolumn{3}{c|}{$\text{RMS}_{\Delta T} (\celsius)$} \\ \hline
+		\multicolumn{1}{|c|}{Perfil} & $\sigma = \text{0,0}\celsius$   & $\sigma = \text{0,1}\celsius$    & $\sigma = \text{0,5}\celsius$  \\ \hline
+		\multicolumn{1}{|c|}{1}      & 0,1630       & 0,7514       & 1,2657      \\ \hline
+		\multicolumn{1}{|c|}{2}      & 0,1296       & 0,5496       & 0,9313      \\ \hline
+		\multicolumn{1}{|c|}{3}      & 0,1091       & 0,7010       & 1,2480      \\ \hline
+	\end{tabular}
+	\label{tabela_rms_delta_temperaturas_interface_3}
+\end{table}
+
+Os perfis estimados para $\sigma = 0,0\celsius$ novamente exibiram notável concordância com os valores teóricos, inclusive sem as dificuldades de convergência nas extremidades, diferentemente do que foi observado no caso anterior. Uma possível explicação é o fato de que esta interface, bem como a primeira (plana horizontal), é normal às superfícies laterais isoladas do corpo de prova, onde as condições de contorno são do segundo tipo. Porém, as estimativas de salto de temperatura correspondentes aos outros valores de desvio-padrão exibiram um comportamento oscilatório, provavelmente influenciado pelo formato geométrico da interface e acentuado pela presença dos erros de medição.
+%
+%\begin{figure}[h!b]
+%	\graficoerrorms{erro_rms}{delta_temperatura}{3}{1}{[T_1 - T_2]_\Gamma}{a}
+%	\graficoerrorms{erro_rms}{delta_temperatura}{3}{2}{[T_1 - T_2]_\Gamma}{b}
+%	\graficoerrorms{erro_rms}{delta_temperatura}{3}{3}{[T_1 - T_2]_\Gamma}{c}
+%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[T_1 - T_2]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 3: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+%\end{figure}
+%
+
+A Figura \ref{figura_fluxo_calor_interface_03} mostra as estimativas para o fluxo de calor ao longo da interface de contato, correspondentes aos três perfis teóricos de CTC.
+
+\begin{figure}[H]
+	\graficoestimativa{fluxo_calor}{3}{1}{20}{06}{02}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+	\graficoestimativa{fluxo_calor}{3}{2}{20}{04}{02}{b}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+	\graficoestimativa{fluxo_calor}{3}{3}{20}{06}{03}{c}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
+	\caption{Comparação entre as estimativas de $\left[-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\right]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 3: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+	\label{figura_fluxo_calor_interface_03}
+\end{figure}
+
+A Tabela \ref{tabela_rms_fluxo_calor_interface_3} mostra os valores de desvio quadrático médio entre as medidas estimadas e as teóricas de fluxo de calor para cada perfil teórico de condutância térmica de contato.
+\begin{table}[H]
+	\centering
+	\caption{Desvio quadrático médio das estimativas de fluxo de calor para a interface de contato 3}
+	\begin{tabular}{c|c|c|c|}
+		\cline{2-4}
+		& \multicolumn{3}{c|}{$\text{RMS}_{q}(\text{W/m}^2)$} \\ \hline
+		\multicolumn{1}{|c|}{Perfil} & $\sigma = \text{0,0}\celsius$   & $\sigma = \text{0,1}\celsius$    & $\sigma = \text{0,5}\celsius$  \\ \hline
+		\multicolumn{1}{|c|}{1}      & 1353,98       & 2791,90       & 3506,35     \\ \hline
+		\multicolumn{1}{|c|}{2}      & 219,44       & 422,65       & 1092,80      \\ \hline
+		\multicolumn{1}{|c|}{3}      & 961,75       & 2014,34       & 2770,32      \\ \hline
+	\end{tabular}
+	\label{tabela_rms_fluxo_calor_interface_3}
+\end{table}
+
+Como esperado, a solução para $\sigma = 0,0\celsius$ apresentou maior coerência com o comportamento teórico esperado. O efeito Gibbs referentes aos perfis teóricos 1 e 3 novamente pôde ser verificado.
+
+%
+%\begin{figure}[h!b]
+%	\graficoerrorms{erro_rms}{fluxo_calor}{3}{1}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{a}
+%	\graficoerrorms{erro_rms}{fluxo_calor}{3}{2}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{b}
+%	\graficoerrorms{erro_rms}{fluxo_calor}{3}{3}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{c}
+%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma$ versus o número de funções ortonormais ($N_j$figura_ctc_interface_03), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+%\end{figure}
+%
+
+Os perfis estimados de CTC, obtidos pela razão entre os fluxos de calor e os saltos de temperatura na interface de contato, podem ser visualizados na Figura \ref{figura_ctc_interface_03}.
+
+\begin{figure}[H]
+	\graficoctc{03}{01}{1}{a}
+	\graficoctc{03}{02}{2}{b}
+	\graficoctc{03}{03}{3}{c}
+	\caption{Comparação entre as estimativas de $h_c$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 3: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+	\label{figura_ctc_interface_03}
+\end{figure}
+
+A Tabela \ref{tabela_rms_ctc_interface_3} mostra os valores de desvio quadrático médio entre as medidas estimadas e as teóricas de condutância térmica de contato, para os três perfis analisados. A razão entre cada desvio quadrático médio e o valor máximo da condutância térmica de contato teórica ($h_{max} = 400 \text{ W/m}^2$ \celsius) varia de 0,018525 a 0,241575.
+\begin{table}[H]
+	\centering
+	\caption{Desvio quadrático médio das estimativas de condutância térmica de contato para a interface de contato 3}
+	\begin{tabular}{c|c|c|c|}
+		\cline{2-4}
+		& \multicolumn{3}{c|}{$\text{RMS}_{h_c}(\text{W/m}^{2}$$\celsius)$} \\ \hline
+		\multicolumn{1}{|c|}{Perfil} & $\sigma = \text{0,0}\celsius$   & $\sigma = \text{0,1}\celsius$    & $\sigma = \text{0,5}\celsius$  \\ \hline
+		\multicolumn{1}{|c|}{1}      & 44,40       & 78,50       & 93,82      \\ \hline
+		\multicolumn{1}{|c|}{2}      & 7,41       & 15,00       & 34,28      \\ \hline
+		\multicolumn{1}{|c|}{3}      & 39,18       & 69,77       &  96,63   \\ \hline
+	\end{tabular}
+	\label{tabela_rms_ctc_interface_3}
+\end{table}
+
+Mesmo com uma geometria de interface de contato oscilatória, o perfil estimado para o caso ideal $\sigma = 0,0\celsius$ apresentou muito boa qualidade. Os casos $\sigma = 0,1\celsius$ e $\sigma = 0,5\celsius$  mantiveram o padrão de comportamento semelhante ao observado nas análises anteriores.

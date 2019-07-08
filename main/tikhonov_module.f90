@@ -110,8 +110,6 @@ contains
                 kmax = kmax + 1
             end if
         end do
-
-
     contains
         elemental function approximation_Y(x, nnmax) result(r)
             double precision, intent(in) :: x

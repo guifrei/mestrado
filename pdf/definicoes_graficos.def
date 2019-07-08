@@ -197,3 +197,89 @@
 	%\caption*{(#3) Perfil #2}
 	\end{minipage}
 }%
+
+%Parametros
+% delta_temperatura ou fluxo_calor
+% interface_idx : 1, 2, ou 3
+% condutance_idx : 1, 2, ou 3
+\newcommand{\graficoestimativamorozov}[6]{%
+\begin{minipage}[t][6cm][c]{4.5cm}
+\centering		
+\begin{tikzpicture}[scale=0.65]
+\begin{axis}[
+axis lines=left,
+/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = 310,
+%		ymax = 340,
+%		restrict y to domain=-500:2000,
+scaled x ticks = false,
+scaled y ticks = false,
+x tick label style={/pgf/number format/fixed},
+y tick label style={/pgf/number format/fixed},
+anchor=east,  
+width=7cm,
+height=6cm,
+label style={font=\footnotesize},
+xlabel = $x$(m),
+ylabel= $#5$ (#6),
+ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
+\pgfplotstableread{../data/comsol/#1_interface_0#2_conductance_0#3.dat} 
+\teff
+\addplot[color=black, line width=1.5pt] table from \teff;
+\pgfplotstableread{../data/fortran/#1_interface_0#2_conductance_0#3_stdev_00_morozov.dat} 
+\teff
+\addplot[only marks, color=blue,mark=o,mark options={mark size=1.5pt}] table from \teff;
+\pgfplotstableread{../data/fortran/#1_interface_0#2_conductance_0#3_stdev_01_morozov.dat} 
+\teff
+\addplot[only marks,color=red,mark=square,mark options={mark size=1.5pt}] table from \teff;
+\pgfplotstableread{../data/fortran/#1_interface_0#2_conductance_0#3_stdev_05_morozov.dat} 
+\teff
+\addplot[only marks,color=gray,mark=triangle,mark options={mark size=1.5pt}] table from \teff;
+\end{axis}
+\end{tikzpicture}
+\caption*{(#4) Perfil #3}
+\end{minipage}
+}%
+
+\newcommand{\graficoctcmorozov}[4]{%
+\begin{minipage}[t][6cm][c]{4.5cm}
+\centering		
+\begin{tikzpicture}[scale=0.7]
+\begin{axis}[
+axis lines=left,
+/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		xmin = 0,
+%		xmax = 0.04,
+%		ymin = 310,
+%		ymax = 340,
+%		restrict y to domain=-500:2000,
+scaled x ticks = false,
+scaled y ticks = false,
+x tick label style={/pgf/number format/fixed},
+y tick label style={/pgf/number format/fixed},
+anchor=east,  
+width=7cm,
+height=6cm,
+label style={font=\footnotesize},
+xlabel = $x$(m),
+ylabel= $h_c$ (W/$\text{m}^2$\celsius),
+ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
+\pgfplotstableread{../data/conductance_#2.dat} 
+\teff
+\addplot[color=black, line width=1.5pt] table from \teff;
+\pgfplotstableread{../data/estimativa_ctc_interface_#1_conductance_#2_stdev_00_morozov.dat} 
+\teff
+\addplot[only marks, color=blue,mark=o,mark options={mark size=1.5pt}] table from \teff;
+\pgfplotstableread{../data/estimativa_ctc_interface_#1_conductance_#2_stdev_01_morozov.dat} 
+\teff
+\addplot[only marks,color=red,mark=square,mark options={mark size=1.5pt}] table from \teff;
+\pgfplotstableread{../data/estimativa_ctc_interface_#1_conductance_#2_stdev_05_morozov.dat} 
+\teff
+\addplot[only marks,color=gray,mark=triangle,mark options={mark size=1.5pt}] table from \teff;
+\end{axis}
+\end{tikzpicture}
+\caption*{(#4) Perfil #3}
+\end{minipage}
+}%

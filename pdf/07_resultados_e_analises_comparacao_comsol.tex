@@ -1,0 +1,63 @@
+\begin{figure}[H]
+	\begin{minipage}[t][8cm][c]{\textwidth}
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		axis lines=left,
+		%		xmin = 0,
+		%		xmax = 0.04,
+		%		ymin = 310,
+		%		ymax = 340,
+		%		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=7cm,
+		height=5cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $T_1\big|_{\Gamma_0}$ (\celsius)]
+		\pgfplotstableread{../data/fortran/temperaturas_sinteticas_interface_03_conductance_03.dat} 
+		\teff
+		\addplot[color=blue,mark=o,mark options={mark size=1.0pt}] table from \teff;
+		\pgfplotstableread{../data/comsol/temperaturas_sinteticas_interface_03_conductance_03.dat} 
+		\teff
+		\addplot[only marks,color=red,mark=square,mark options={mark size=1.0pt}] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Temperatura na superfície superior $\Gamma_0$ para a configuração referente à interface 3 e condutância de contato 3: $\textcolor{blue}{\ocircle} \rightarrow$ CITT; $\textcolor{red}{\square} \rightarrow$ Elementos finitos (COMSOL)}
+		\label{fig_comparativo_1}
+	\end{minipage}
+	\begin{minipage}[t][8cm][c]{\textwidth}
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		axis lines=left,
+		%		xmin = 0,
+		%		xmax = 0.04,
+		%		ymin = 0.085,
+		%		ymax = 0.105,
+		%		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed, /pgf/number format/precision=5},
+		anchor=east,  
+		width=7cm,
+		height=5cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $\epsilon$ (\%)]
+		\pgfplotstableread{../data/desvio_relativo_interface_03_conductance_03.dat} 
+		\teff
+		\addplot[mark=o,mark options={mark size=1.0pt}] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Desvio percentual entre as temperaturas obtidas via CITT e método dos elementos finitos (COMSOL), na superfície superior $\Gamma_0$ para a configuração referente à interface 3 e condutância de contato 3}
+		\label{fig_comparativo_2}
+	\end{minipage}
+\end{figure}

@@ -46,13 +46,12 @@ program main
     procedure(dw_proc_t), pointer :: dw
     double precision, dimension(tnmax, 0: N), target :: m_fluxo_calor, m_delta_temperatura
     double precision :: c_fluxo_calor, c_delta_temperatura
-    double precision, dimension(tnmax, 0: (N + 1)**2 - 1) :: m_condutancia_contato
-    double precision, dimension(tnmax) :: vx, vy, tcalc
-    double precision :: norm, ymax
+    double precision, dimension(tnmax) :: vx, vy
+    double precision :: ymax
     character(len = 2) :: str_idx, str_cdx, str_stdev, str_N, str_n_fluxo_calor, str_n_delta_temperatura
-    integer :: interface_idx, condutance_idx, nmax, stdev_idx, k, nmax1, nmax2, m, j, n_fluxo_calor, n_delta_temperatura
-    double precision :: desv, x, y, y1, y2, dx, stdev, arg, norm_acc, y1prev, y2prev
-    double precision :: fluxo_calor_teorico, delta_temperatura_teorico, norm_f, norm_t
+    integer :: interface_idx, condutance_idx, nmax, stdev_idx, k, j
+    double precision :: desv, x, y, y1, y2, dx, stdev
+    double precision :: fluxo_calor_teorico, delta_temperatura_teorico, norm_f, norm_t, norm_h, h_est
     integer, target, dimension(2) :: f_args
     integer :: nmax_delta_temperatura, nmax_fluxo_calor, kmax
     double precision :: start, finish
@@ -189,7 +188,7 @@ program main
         close(1)
 
         do condutance_idx = 1, 3
-            write(*, *)'    Condutance = ', interface_idx
+            write(*, *)'    Condutance = ', condutance_idx
             write(str_cdx, '(I2.2)') condutance_idx
             call c_f_procpointer(hlist(condutance_idx), h)
             call calculate_temperature_coefficients(interface_idx, condutance_idx, h)
@@ -377,6 +376,7 @@ program main
     do interface_idx = 1, 3
         write(str_idx, '(I2.2)') interface_idx
         do condutance_idx = 1, 3
+            call c_f_procpointer(hlist(condutance_idx), h)
             write(str_cdx, '(I2.2)') condutance_idx
             do stdev_idx = 0, 2
                 if (stdev_idx == 0) then
@@ -408,8 +408,6 @@ program main
                     end if
                 end do
                 close(10)
-                write(*, *)'DT: ', str_idx, ' ', str_cdx, ' ', str_stdev, ' ',nmax_delta_temperatura
-                write(*, *)'DQ: ', str_idx, ' ', str_cdx, ' ', str_stdev, ' ',nmax_fluxo_calor
 
                 write(str_n_delta_temperatura, '(I2.2)') nmax_delta_temperatura
                 write(str_n_fluxo_calor, '(I2.2)') nmax_fluxo_calor
@@ -425,11 +423,19 @@ program main
                     'data/estimativa_ctc_interface_'//str_idx//'_conductance_'//str_cdx// &
                     '_stdev_' // str_stdev // '.dat')
 
+                norm_h = 0.0
                 do j = 1, tnmax
                     read(4, *)x, c_delta_temperatura
                     read(5, *)x, c_fluxo_calor
-                    write(7, *)x, c_fluxo_calor/c_delta_temperatura
+                    h_est = c_fluxo_calor/c_delta_temperatura
+                    write(7, *)x, h_est
+                    norm_h = norm_h + (h_est - h(x))**2
                 end do
+                norm_h = sqrt(norm_h/tnmax)
+
+                write(*, *)'DT: ', str_idx, ' ', str_cdx, ' ', str_stdev, ' ',nmax_delta_temperatura, ' ', y1
+                write(*, *)'DQ: ', str_idx, ' ', str_cdx, ' ', str_stdev, ' ',nmax_fluxo_calor, ' ', y2
+                write(*, *)'DH: ', str_idx, ' ', str_cdx, '                  ', norm_h
 
                 close(7)
                 close(4)

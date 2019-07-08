@@ -1,0 +1,80 @@
+\subsection{Critério de parada para os somatórios correspondentes às estimativas de salto de temperatura e fluxo de calor na interface de contato}
+
+Todas as estimativas de salto de temperatura e fluxo de calor na interface de contato levantadas na seção anterior foram calculadas através da aplicação das equações \eqref{resultado_1} e \eqref{resultado_2}, repetidas abaixo:
+\begin{align}
+& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j(x)\label{resultado_1aa}  \\
+& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j(x)\label{resultado_2aa}
+\end{align}
+
+Foi verificado neste trabalho que estas expansões das estimativas de salto de temperatura e fluxo de calor na interface em termos dos funcionais de reciprocidade, necessárias para o cálculo da estimativa de CTC, não tinham um comportamento convergente à medida em que se aumentava a quantidade de termos a serem somados, respectivamente $N_1$ e $N_2$ nas equações acima. De fato, para cada combinação de condutividade de contato teórica e desvio-padrão de ruído, havia um número ótimo de termos a serem somados tanto para a estimativa do salto de temperatura quanto para o fluxo de calor; somando-se mais termos além dessa quantidade ótima, as estimativas divergiam rapidamente, levando a resultados numericamente instáveis. Também foi observado que, quanto maior o nível de ruído nas medidas experimentais de temperatura, menor era a quantidade ótima de termos a serem somados nas expansões. Na determinação dessas quantidades, foi empregado como parâmetro de avaliação o desvio quadrático médio entre os perfis teóricos e os estimados de salto de temperatura e fluxo de calor, definido por:
+\begin{align}
+\delta_i = \sqrt{\frac{\sum_{n=1}^{N_x} \left(f^{\text{FR}+\text{CITT}}_{i,n} - f_{i,n}^{\text{exato}}\right)^2 }{N_x}}
+\end{align}
+onde $n$ corresponde a cada posição ao longo da interface $\Gamma$ na qual foram obtidas as estimativas, $N_x$ é o número total de posições, $f^{\text{FR}+\text{CITT}}_{i,n}$ são os valores obtidos com o emprego do método dos Funcionais de Reciprocidade com Transformação Integral Clássica, $f_{i,n}^{\text{exato}}$ são os valores exatos obtidos através da solução do problema direto e o índice $i$ representa a função estimada na interface: o salto de temperatura ($i = [T_1 - T_2]$) ou o fluxo de calor ($i = -k_1 \frac{\partial T_1}{\partial \mathbf{n}}$). Desse modo, o número ideal de termos nos somatórios que determinam as estimativas em \eqref{resultado_1aa} e \eqref{resultado_2aa} são os que minimizam os respectivos desvios quadráticos médios.
+
+Esse comportamento instável das estimativas em função do nível de ruído e do número de parcelas a serem somadas foi originalmente observado por \cite{tese_padilha} no caso específico da interface de contato plana horizontal. Como foi dito anteriormente, naquele trabalho foi empregada uma aproximação via \textit{splines} da função $Y(x)$ que representa as medidas experimentais de temperatura na interface superior do corpo, e que entra na formulação dos funcionais de reciprocidade (cf. equações \eqref{calculo_FR_F1_antes_a} e \eqref{calculo_FR_G1_antes_a}). No presente trabalho, adotou-se a aproximação em somatório de autofunções para $Y(x)$, numa tentativa de reduzir o efeito dos erros de medição, como se fosse um filtro, permitindo em tese somar mais termos às expansões das estimativas (cf. Seção \ref{secao_interpolacao}). Entretanto, o mesmo comportamento associado à limitação do número de termos nas expansões foi observado para as estimativas com níveis de ruído não-nulos, de modo que a abordagem sugerida não foi eficaz na filtragem dos erros de medição. As Figuras \ref{erro_rms_1} e \ref{erro_rms_2} ilustram esse fenômeno, respectivamente para o salto de temperatura e o fluxo na interface de contato $\Gamma$, para o problema-teste referente à interface de contato de índice 2 e condutância térmica de contato teórica de índice 2.
+
+\begin{figure}[H]
+	\begin{minipage}[t][8cm][c]{\textwidth}
+		\centering		
+		\begin{tikzpicture}
+		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		axis lines=left,
+		ymode = log,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=7cm,
+		height=5cm,
+		label style={font=\footnotesize},
+		xlabel = $N_1$,
+		ylabel= $\delta_{[T_1 - T_2]}$,
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+		\addplot[only marks,color=blue,mark=o,mark options={mark size=3.0pt}] table[x index=0,y index=1] {../data/erro_rms_interface_02_conductance_02_stdev_00.dat};
+		\addplot[only marks,color=red,mark=square,mark options={mark size=3.0pt}] table[x index=0,y index=1] {../data/erro_rms_interface_02_conductance_02_stdev_01.dat};
+		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=3.0pt}] table[x index=0,y index=1] {../data/erro_rms_interface_02_conductance_02_stdev_05.dat};			
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Desvio quadrático médio das estimativas de $[T_1 - T_2]_\Gamma$ \textit{versus} o número de parcelas na expansão em série correspondente, para o problema-teste referente à interface de índice 2 e condutância térmica de contato teórica de índice 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+		\label{erro_rms_1}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{minipage}[t][8cm][c]{\textwidth}
+		\centering		
+		\begin{tikzpicture}
+		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		axis lines=left,
+		ymode = log,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=7cm,
+		height=5cm,
+		label style={font=\footnotesize},
+		xlabel = $N_2$,
+		ylabel= $\delta_{\left[-k_1 \frac{\partial T_1}{\partial \mathbf{n}}\right]}$,
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+		\addplot[only marks,color=blue,mark=o,mark options={mark size=3.0pt}] table[x index=0,y index=2] {../data/erro_rms_interface_02_conductance_02_stdev_00.dat};
+		\addplot[only marks,color=red,mark=square,mark options={mark size=3.0pt}] table[x index=0,y index=2] {../data/erro_rms_interface_02_conductance_02_stdev_01.dat};
+		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=3.0pt}] table[x index=0,y index=2] {../data/erro_rms_interface_02_conductance_02_stdev_05.dat};			
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Desvio quadrático médio das estimativas de $\left[-k_1 \frac{\partial T_1}{\partial \mathbf{n}}\right]_\Gamma$ \textit{versus} o número de parcelas na expansão em série correspondente, para o problema-teste referente à interface de índice 2 e condutância térmica de contato teórica de índice 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+		\label{erro_rms_2}
+	\end{minipage}
+\end{figure}
+
+
+Em situações práticas, nas quais os perfis teóricos não são conhecidos, o critério de determinação do número ótimo de termos nos somatórios \eqref{resultado_1aa} e \eqref{resultado_2aa} baseado no desvio quadrático médio não poderia ser aplicado. \cite{tese_padilha}, a fim de contornar essa dificuldade, sugeriu duas métricas baseadas em normas calculadas a partir de sucessivas estimativas de perfis; porém, o autor teve dificuldade em estabelecer critérios objetivos e determinísticos baseados nestas normas.
+
+Ainda assim, a abordagem sugerida para representação de $Y(x)$ via somatório de autofunções trouxe um resultado inesperado e surpreendente: para o caso $\sigma = 0,0\celsius$, verificou-se que as expansões das estimativas de salto de temperatura e fluxo de calor na interface de contato \textit{permitiram empregar um maior número de funções ortogonais} do que no caso de \cite{tese_padilha}. Naquele trabalho, em que a interface de contato era horizontal, a quantidade de termos nas expansões das estivativas adotando-se $\sigma = 0,0\celsius$ era no máximo $N_1 = N_2 = 14$, tanto para o fluxo de calor quanto para o salto de temperatura. Já para este trabalho, em todas as combinações de geometrias de interface de contato e de condutâncias térmicas de contato analisadas, foi possível utilizar todos os termos calculados nos somatórios, no caso $N_1 = N_2 = 20$ (cf. Figuras \ref{erro_rms_1} e \ref{erro_rms_2}), sem prejuízo da estabilidade numérica dos resultados. Uma vez que foi possível o acréscimo de mais parcelas, os resultados encontrados no trabalho presente para este tipo de interface mostraram-se melhores do que os obtidos naquele trabalho.
+
+Pode-se então conjecturar que, numa situação ideal em que não houvesse erros de medição, tanto o salto de temperatura quanto o fluxo de calor na interface -- e portanto a condutância térmica de contato -- seriam mais precisamente estimados desde que fosse feita uma representação analítica das temperaturas sintéticas na interface superior através de uma aproximação em somatório das mesmas autofunções do problema inverso. Entretanto, no desenvolvimento numérico deste trabalho, observou-se que esse comportamento era diretamente influenciado pelas ordens das matrizes $\mathbf{M}$ e $\mathbf{b}$, referentes aos sistemas lineares \eqref{sistema_para_coeficientes_3} e \eqref{sistema_para_coeficientes_21}, e provavelmente relacionado à tendência de mal condicionamento daqueles problemas. De fato, adotando-se limites de somatórios maiores do que os utilizados neste trabalho na realização dos cálculos, os mesmos problemas de instabilidade no cálculo dos funcionais de reciprocidade foram observados.
