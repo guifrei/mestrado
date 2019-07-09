@@ -507,11 +507,9 @@ As soluções particulares das equações diferenciais \eqref{eq_dif_ord_F1} e \
 
 No caso mais simples, em que $w(x)$ é constante, aqueles mesmos intervalos seriam da forma $b_2 \le y \le b$ e $0 \le y \le b_2$, onde $b_2 = w^\star = w(x^\star)$ é o comprimento vertical da região $\Omega_2$, e as soluções obtidas teriam formas totalmente analíticas e abrangentes para todo o intervalo $0 \le x \le a$ \citep{tese_padilha}.
 
-A fim de eliminar a dependência da solução das equações \eqref{eq_dif_ord_F1} e \eqref{eq_dif_ord_F2} com o domínio variável em $y$, será feita uma \textit{extensão} dos subdomínios $\Omega_1$ e $\Omega_2$, gerando dois novos domínios retangulares,
-que envolverão respectivamente os subdomínios originais e que efetivamente coincidirão com o domínio maior $\Omega$, delimitado pela região $0 \le x \le a, 0 \le y \le b$. Os problemas auxiliares originais serão válidos para esses novos domínios, de forma a ainda
-satisfazerem as condições de contorno dos subdomínios originais.
-Desse modo, as soluções analíticas das funções $F_{1, j}$ serão obtidas a partir do domínio estendido representado na figura \ref{fig5}, enquanto que
-as soluções analíticas das funções $F_{2, j}$ serão obtidas a partir do domínio estendido representado na figura \ref{fig6}.
+A fim de eliminar a dependência da solução das equações \eqref{eq_dif_ord_F1} e \eqref{eq_dif_ord_F2} com o domínio variável em $y$, será feita uma \textit{extensão} dos subdomínios $\Omega_1$ e $\Omega_2$, fazendo-os coincidirem com o domínio maior $\Omega$, delimitado pela região $0 \le x \le a, 0 \le y \le b$. Os problemas auxiliares originais serão válidos em todo o domínio $\Omega$, de forma a ainda
+satisfazerem as condições de contorno dos subdomínios originais, inclusive os definidos sobre a fronteira comum $\Gamma$, onde os problemas auxiliares são acoplados.
+Desse modo, as soluções analíticas das funções $F_{1, j}$ e $F_{2, j}$ serão obtidas a partir do domínio estendido representado na figura \ref{fig5}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -529,6 +527,7 @@ as soluções analíticas das funções $F_{2, j}$ serão obtidas a partir do do
 		\draw [ultra thick] (10, 2) -- (10, 5);
 		
 		\draw (2.5, 3.5) node {$\Omega_1$};
+		\draw (7.5, 1) node {$\Omega_2$};
 		\draw (3.3, 2.2) node {$\Gamma$};
 		\draw (-0.5, 3.5) node {$\Gamma_1$};
 		\draw (-0.5, 1) node {$\Gamma_2$};
@@ -570,70 +569,8 @@ as soluções analíticas das funções $F_{2, j}$ serão obtidas a partir do do
 		\draw [<->] (-2.0, 0) -- (-2.0, 2);
 		
 		\end{tikzpicture}
-		\caption{Extensão do subdomínio $\Omega_1$ para as funções $F_{1, j}$ e $G_{1, j}$}
+		\caption{Extensão do subdomínios $\Omega_1$ e $\Omega_2$ para as funções $F_{1, j}$ e $F_{2, j}$}
 		\label{fig5}
-	\end{center}
-\end{figure}
-
-\begin{figure}[H]
-	\begin{center}
-		\begin{tikzpicture}[scale=0.7]
-		
-		\draw [ultra thick] (0, 0) -- (10, 0);
-		%\draw [ultra thick] (0, 2) -- (7, 2);
-		%\draw [ultra thick] (8, 2) -- (10, 2);
-		\draw [ultra thick, dashed] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
-		\draw [ultra thick, dashed] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};
-		\draw [ultra thick] (0, 5) -- (10, 5);
-		\draw [ultra thick] (0, 0) -- (0, 2);	
-		\draw [ultra thick] (0, 2) -- (0, 5);	
-		\draw [ultra thick] (10, 0) -- (10, 2);
-		\draw [ultra thick] (10, 2) -- (10, 5);
-		
-		\draw (7.5, 1) node {$\Omega_2$};	
-		\draw (3.3, 2.2) node {$\Gamma$};
-		\draw (-0.5, 3.5) node {$\Gamma_1$};
-		\draw (-0.5, 1) node {$\Gamma_2$};
-		\draw (10.5, 3.5) node {$\Gamma_1$};
-		\draw (10.5, 1) node {$\Gamma_2$};
-		\draw (5, -0.4) node {$\Gamma_\infty$};
-		\draw (2.5, 5.3) node {$\Gamma_0$};
-		\draw [blue](5, 6.5) node {$q$};
-		\draw (5, -1.3) node {$a$};
-		\draw (-3.9, 2.5) node {$b$};
-		\draw (-2.7, 1) node {$w(x)$};
-		
-		\node [above right] at (12, 0) {$x$};
-		\node [right] at (0, 8) {$y$};
-		
-		\draw [->, blue] (0, 6.2) -- (0, 5.2);
-		\draw [->, blue] (1, 6.2) -- (1, 5.2);
-		\draw [->, blue] (2, 6.2) -- (2, 5.2);
-		\draw [->, blue] (3, 6.2) -- (3, 5.2);
-		\draw [->, blue] (4, 6.2) -- (4, 5.2);
-		\draw [->, blue] (5, 6.2) -- (5, 5.2);
-		\draw [->, blue] (6, 6.2) -- (6, 5.2);
-		\draw [->, blue] (7, 6.2) -- (7, 5.2);
-		\draw [->, blue] (8, 6.2) -- (8, 5.2);
-		\draw [->, blue] (9, 6.2) -- (9, 5.2);
-		\draw [->, blue] (10, 6.2) -- (10, 5.2);
-		
-		\draw [->, very thick] (10.2,0) -- (12,0);
-		\draw [->, very thick] (0, 6.5) -- (0,8);
-		
-		\draw [-] (0, -0.2) -- (0, -1.2);
-		\draw [-] (10, -0.2) -- (10, -1.2);
-		\draw [<->] (0, -1) -- (10, -1);
-		
-		\draw [-] (-0.2, 0) -- (-3.8, 0);
-		\draw [-] (-0.2, 5) -- (-3.8, 5);
-		\draw [-] (-0.2, 2) -- (-2.2, 2);
-		\draw [<->] (-3.6, 0) -- (-3.6, 5);
-		\draw [<->] (-2.0, 0) -- (-2.0, 2);
-		
-		\end{tikzpicture}
-		\caption{Extensão do subdomínio $\Omega_2$ para as funções $F_{2, j}$}
-		\label{fig6}
 	\end{center}
 \end{figure}
 
@@ -648,7 +585,8 @@ As soluções gerais das equações \eqref{eq_dif_ord_F1} e \eqref{eq_dif_ord_F2
 & \bar{F}_{1,j,m}(y) = \mathbb{A}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \mathbb{B}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \label{solucao_temporaria_F1}\\ \nonumber \\
 & \bar{F}_{2,j,m}(y) = \mathbb{C}_{j,m}\frac{\sinh\mu_m (b - y)}{\sinh\mu_m b} + \mathbb{D}_{j,m}\frac{\sinh\mu_m y}{\sinh\mu_m b} \label{solucao_temporaria_F2}
 \end{align} 
-onde $\mathbb{A}_{j,m}, \mathbb{B}_{j,m}, \mathbb{C}_{j,m}$ e $\mathbb{D}_{j,m}$ são constantes a serem determinadas através das condições de contorno sobre as fronteiras $\Gamma_0$ e $\Gamma_\infty$, e sobre a superfície de contato $\Gamma$\footnote{A expressão \eqref{solucao_temporaria_F1}, através da expansão dos argumentos das funções hiberbólicas, pode ser reescrita como:
+
+Estas soluções são válidas para todo o domínio $0 \le y \le b$; as contantes $\mathbb{A}_{j,m}, \mathbb{B}_{j,m}, \mathbb{C}_{j,m}$ e $\mathbb{D}_{j,m}$, que particularizam estas soluções, serão determinadas através das condições de contorno sobre as fronteiras $\Gamma_0$ e $\Gamma_\infty$, e sobre a superfície de contato $\Gamma$\footnote{A expressão \eqref{solucao_temporaria_F1}, através da expansão dos argumentos das funções hiberbólicas, pode ser reescrita como:
 	
 	\begin{align*}
 	& \bar{F}_{1,j,m}(y) = \left( \frac{\mathbb{B}_{j,m} - \mathbb{A}_{j,m} \cosh\mu_m b}{\sinh\mu_m b}\right)\sinh\mu_m y + \frac{\mathbb{A}_{j,m}\sinh\mu_m b}{\sinh\mu_m b}\cosh\mu_m y
