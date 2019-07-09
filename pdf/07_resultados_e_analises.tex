@@ -232,7 +232,11 @@ Os limites superiores $N_1$ e $N_2$, dos somatórios que fornecem o cálculo do 
 
 Posteriormente serão tecidos comentários quanto ao caráter instável dos somatórios referentes aos cálculos do salto de temperatura e do fluxo de calor, bem quanto às dificuldades de estabelecimento de critérios de parada destes somatórios.
 
-Os gráficos utilizados na análise estão agrupados por geometria de interface; em cada grupo, estão plotadas as estimativas de salto de temperatura e fluxo de calor na interface de contato. A estimativa da condutância térmica de contato é representada no último subgrupo de gráficos para cada interface. A fim de auxiliar na verificação da qualidade das estimativas, também é apresentada uma tabela correspondente para cada subgrupo de gráficos, contendo os valores de desvio quadrático médio das estimativas em relação ao resultado teórico esperado para a variável associada.
+Os gráficos utilizados na análise estão agrupados por geometria de interface; em cada grupo, estão plotadas as estimativas de salto de temperatura e fluxo de calor na interface de contato. A estimativa da condutância térmica de contato é representada no último subgrupo de gráficos para cada interface. A fim de auxiliar na verificação da qualidade das estimativas, também é apresentada uma tabela correspondente para cada subgrupo de gráficos, contendo os valores de desvio quadrático médio\footnote{O desvio quadrático médio é definido por:
+	\begin{align}
+	\delta_i = \sqrt{\frac{\sum_{n=1}^{N_x} \left(f^{\text{FR}+\text{CITT}}_{i,n} - f_{i,n}^{\text{exato}}\right)^2 }{N_x}}
+	\end{align}
+	onde $n$ corresponde a cada posição ao longo da interface $\Gamma$ na qual foram obtidas as estimativas, $N_x$ é o número total de posições, $f^{\text{FR}+\text{CITT}}_{i,n}$ são os valores obtidos com o emprego do método dos Funcionais de Reciprocidade com Transformação Integral Clássica, $f_{i,n}^{\text{exato}}$ são os valores exatos obtidos através da solução do problema direto e o índice $i$ representa a função estimada na interface: o salto de temperatura ($i = [T_1 - T_2]$), fluxo de calor ($i = -k_1 \frac{\partial T_1}{\partial \mathbf{n}}$) ou a condutância térmica de contato ($i = h_c$).} das estimativas em relação ao resultado teórico esperado para a variável associada.
 
 \input{07_resultados_e_analises_estimativas_interface_1}
 \input{07_resultados_e_analises_estimativas_interface_2}
@@ -316,16 +320,4 @@ Os gráficos utilizados na análise estão agrupados por geometria de interface;
 %	\caption{Comparação entre as estimativas de $h_c$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
 %	\label{figura_ctc_interface_03_morozov}
 %\end{figure}
-
-%%%%% Interface 1
-
-
-
-\newpage
-%%%%% Interface 2
-
-
-\newpage
-
-%%%%% Interface 3
 
