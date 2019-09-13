@@ -5,7 +5,7 @@ A próxima geometria de interface de contato a ser analisada corresponde à de �
 	\graficoestimativa{delta_temperatura}{2}{1}{20}{10}{06}{a}{\Delta T\big|_{\Gamma}}{\celsius}
 	\graficoestimativa{delta_temperatura}{2}{2}{20}{09}{02}{b}{\Delta T\big|_{\Gamma}}{\celsius}
 	\graficoestimativa{delta_temperatura}{2}{3}{20}{09}{05}{c}{\Delta T\big|_{\Gamma}}{\celsius}
-	\caption{Comparação entre as estimativas de $[T_1 - T_2]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+	\caption{Comparação entre as estimativas de $[T_1 - T_2]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
 	\label{figura_delta_temperaturas_interface_02}
 \end{figure}
 
@@ -24,7 +24,7 @@ A Tabela \ref{tabela_rms_delta_temperaturas_interface_2} mostra os valores de de
 	\label{tabela_rms_delta_temperaturas_interface_2}
 \end{table}
 
-Novamente é possível observar uma boa aderência aos perfis teóricos calculados via simulação do problema direto correspondente. Os perfis estimados para $\sigma = 0,0\celsius$ são os que melhor se aproximam dos perfis esperados, ainda que apresentem alguma dificuldade de convergência nas extremidades do domínio.
+Novamente é possível observar uma boa aderência aos perfis teóricos calculados via simulação do problema direto correspondente. Os perfis estimados para $\sigma = 0.0\celsius$ são os que melhor se aproximam dos perfis esperados, ainda que apresentem alguma dificuldade de convergência nas extremidades do domínio.
 
 Os gráficos da Figura \ref{figura_fluxo_calor_interface_02} mostram as estimativas para o fluxo de calor ao longo da interface de contato, correspondentes aos três perfis teóricos de CTC.
 
@@ -33,14 +33,14 @@ Os gráficos da Figura \ref{figura_fluxo_calor_interface_02} mostram as estimati
 %	\graficoerrorms{norma}{delta_temperatura}{2}{1}{[T_1 - T_2]_\Gamma}{a}
 %	\graficoerrorms{norma}{delta_temperatura}{2}{2}{[T_1 - T_2]_\Gamma}{b}
 %	\graficoerrorms{norma}{delta_temperatura}{2}{3}{[T_1 - T_2]_\Gamma}{c}
-%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[T_1 - T_2]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[T_1 - T_2]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
 %\end{figure}
 %
 \begin{figure}[H]
 	\graficoestimativa{fluxo_calor}{2}{1}{20}{06}{02}{a}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
 	\graficoestimativa{fluxo_calor}{2}{2}{20}{04}{04}{b}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
 	\graficoestimativa{fluxo_calor}{2}{3}{20}{06}{03}{c}{-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\big|_{\Gamma}}{W/$\text{m}^2$}
-	\caption{Comparação entre as estimativas de $\left[-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\right]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+	\caption{Comparação entre as estimativas de $\left[-k_1 \frac{\partial T_1}{\partial\mathbf{n}_1}\right]_\Gamma$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
 	\label{figura_fluxo_calor_interface_02}
 \end{figure}
 
@@ -59,14 +59,14 @@ A Tabela \ref{tabela_rms_fluxo_calor_interface_2} mostra os valores de desvio qu
 	\label{tabela_rms_fluxo_calor_interface_2}
 \end{table}
 
-Novamente a solução para $\sigma = 0,0\celsius$ é a que apresenta melhor concordância com o comportamento teórico esperado, enquanto as soluções encontradas para os outros valores de desvio-padrão possuam características qualitativas compatíveis com o esperado. O efeito Gibbs também pode ser observado nas estimativas de fluxo de calor referentes aos perfis teóricos descontínuos de CTC.
+Novamente a solução para $\sigma = 0.0\celsius$ é a que apresenta melhor concordância com o comportamento teórico esperado, enquanto as soluções encontradas para os outros valores de desvio-padrão possuam características qualitativas compatíveis com o esperado. O efeito Gibbs também pode ser observado nas estimativas de fluxo de calor referentes aos perfis teóricos descontínuos de CTC.
 
 %
 %\begin{figure}[h!b]
 %	\graficoerrorms{erro_rms}{fluxo_calor}{2}{1}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{a}
 %	\graficoerrorms{erro_rms}{fluxo_calor}{2}{2}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{b}
 %	\graficoerrorms{erro_rms}{fluxo_calor}{2}{3}{[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma}{c}
-%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+%	\caption{Erro $\log[\text{RMS}(\delta)]$ das estimativas de $[-k_1 \partial T_1/\partial\mathbf{n}]_\Gamma$ versus o número de funções ortonormais ($N_j$), para o perfis de CTC de 1 a 3, referentes à interface de contato 2: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
 %\end{figure}
 %
 
@@ -75,7 +75,7 @@ Calculando-se a razão entre o fluxo de calor e o salto de temperatura em cada p
 	\graficoctc{02}{01}{1}{a}
 	\graficoctc{02}{02}{2}{b}
 	\graficoctc{02}{03}{3}{c}
-	\caption{Comparação entre as estimativas de $h_c$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5$}
+	\caption{Comparação entre as estimativas de $h_c$ e os valores exatos para os perfis de CTC de 1 a 3, referentes à interface de contato 2: $\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
 	\label{figura_ctc_interface_02}
 \end{figure}
 
@@ -94,4 +94,4 @@ A Tabela \ref{tabela_rms_ctc_interface_2} mostra os valores de desvio quadrátic
 	\label{tabela_rms_ctc_interface_2}
 \end{table}
 
-De forma semelhante ao caso anterior, a estimativa de CTC calculada para $\sigma = 0,0\celsius$ foi a que melhor se aproximou do perfil teórico de CTC, apresentando inclusive resultados muito parecidos com os daquele caso. Os perfis de CTC estimados para os outros níveis de ruído mantiveram o padrão qualitativo de comportamento observado nos perfis estimados na subseção anterior.
+De forma semelhante ao caso anterior, a estimativa de CTC calculada para $\sigma = 0.0\celsius$ foi a que melhor se aproximou do perfil teórico de CTC, apresentando inclusive resultados muito parecidos com os daquele caso. Os perfis de CTC estimados para os outros níveis de ruído mantiveram o padrão qualitativo de comportamento observado nos perfis estimados na subseção anterior.

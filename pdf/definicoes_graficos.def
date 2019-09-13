@@ -137,7 +137,7 @@
 		\begin{tikzpicture}[scale=0.7]
 		\begin{axis}[
 		axis lines=left,
-		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		%		xmin = 0,
 		%		xmax = 0.04,
 		%		ymin = 310,

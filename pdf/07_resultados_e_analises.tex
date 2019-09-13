@@ -8,7 +8,7 @@ Ainda seguindo a metodologia de trabalho conduzida por \cite{tese_padilha}, fora
 
 \subsection{Configuração física e geométrica dos problemas-teste}\label{config_fis_geom}
 
-Em todas as simulações, considerou-se que o corpo de prova representado na figura \ref{fig2} era composto de dois compósitos de materiais diferentes. Para o material superior $\Omega_1$ adotou-se o valor de condutividade térmica do aço AISI 1050, de 54 W/(m \celsius); para o material inferior $\Omega_2$, foi usado o valor de condutividade térmica do Incomel, de 14 W/(m \celsius). As dimensões do corpo de prova, ou seja, o comprimento e a altura da sua seção reta, foram respectivamente de 0,04 m e de 0,01 m. A superfície superior $\Gamma_0$ do corpo de prova foi submetida a um fluxo de calor por unidade de área de 7.500 W/$\text{m}^2$.
+Em todas as simulações, considerou-se que o corpo de prova representado na figura \ref{fig2} era composto de dois compósitos de materiais diferentes. Para o material superior $\Omega_1$ adotou-se o valor de condutividade térmica do aço AISI 1050, de 54 W/(m \celsius); para o material inferior $\Omega_2$, foi usado o valor de condutividade térmica do Incomel, de 14 W/(m \celsius). As dimensões do corpo de prova, ou seja, o comprimento e a altura da sua seção reta, foram respectivamente de 0,04 m e de 0,02 m. A superfície superior $\Gamma_0$ do corpo de prova foi submetida a um fluxo de calor por unidade de área de 100.000 W/$\text{m}^2$.
 
 A Tabela \ref{tabela_params} sumariza os parâmetros físicos e geométricos usados no trabalho:
 \vspace{10mm}
@@ -19,10 +19,10 @@ A Tabela \ref{tabela_params} sumariza os parâmetros físicos e geométricos usa
 		\toprule
 		\textbf{Parâmetro} & \textbf{Valor}    \\ \midrule
 		$a$       & 0,04 m   \\ \\
-		$b$       & 0,01 m     \\ \\
+		$b$       & 0,02 m     \\ \\
 		$k_1$     & 54 W/(m \celsius)  \\ \\ 
 		$k_2$     & 14 W/(m \celsius) \\ \\
-		$q$       & -7.500 W/$\text{m}^2$ \\ \bottomrule
+		$q$       & -100.000 W/$\text{m}^2$ \\ \bottomrule
 	\end{tabular}		
 \label{tabela_params}
 \end{table}
@@ -51,7 +51,7 @@ De forma a melhor ilustrar e visualizar as diferentes geometrias de interface de
 
 \subsection{Perfis teóricos de condutância térmica de contato}\label{config_ctc}
 
-Foram adotados três diferentes perfis de distribuição de CTC, extraídos do trabalho de \cite{tese_padilha} e trabalhos anteriores. Estes perfis estão listados na Tabela \ref{tabela_ctc}, onde $h_{max}$ corresponde ao valor máximo que a CTC pode assumir, fixado em 400 W/($\text{m}^2$ \celsius), e $a$ é o comprimento do corpo de prova.
+Foram adotados três diferentes perfis de distribuição de CTC, extraídos do trabalho de \cite{tese_padilha} e trabalhos anteriores. Estes perfis estão listados na Tabela \ref{tabela_ctc}, onde $h_{max}$ corresponde ao valor máximo que a CTC pode assumir, fixado em 1000 W/($\text{m}^2$ \celsius), e $a$ é o comprimento do corpo de prova.
 \begin{table}[H]
 	\centering
 	\caption{Perfis teóricos de condutância térmica de contato}
