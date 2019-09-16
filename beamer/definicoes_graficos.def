@@ -3,7 +3,7 @@
 		\centering		
 		\begin{tikzpicture}[scale=0.75]
 		\begin{axis}[
-		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		axis lines=left,
 		%		xmin = 0,
 		%		xmax = 0.04,
@@ -49,7 +49,7 @@
 		\begin{tikzpicture}[scale=0.75]
 		\begin{axis}[
 		axis lines=left,
-		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		%ymode = log,
 		grid=major,
 		legend style={legend pos=north west}
@@ -96,7 +96,7 @@
 		\begin{tikzpicture}[scale=0.65]
 		\begin{axis}[
 		axis lines=left,
-		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		%		xmin = 0,
 		%		xmax = 0.04,
 		%		ymin = 310,
@@ -137,7 +137,7 @@
 		\begin{tikzpicture}[scale=0.65]
 		\begin{axis}[
 		axis lines=left,
-		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 		%		xmin = 0,
 		%		xmax = 0.04,
 		%		ymin = 310,
@@ -177,7 +177,7 @@
 	\centering		
 	\begin{tikzpicture}[scale=0.75]
 	\begin{axis}[
-	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 	axis lines=left,
 	ymode = log,
 	scaled x ticks = false,
@@ -224,7 +224,7 @@
 	\begin{minipage}[c][2cm][c]{0.3\textwidth}
 	\begin{tikzpicture}[scale=0.5]
 	\begin{axis}[
-	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 	axis lines=left,
 	xmin = 0,
 	xmax = 0.04,
@@ -250,7 +250,7 @@
 	\begin{minipage}[c][2cm][c]{0.3\textwidth}
 	\begin{tikzpicture}[scale=0.5]
 	\begin{axis}[
-	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 	axis lines=left,
 	xmin = 0,
 	xmax = 0.04,
@@ -276,7 +276,7 @@
 	\begin{minipage}[c][2cm][c]{0.3\textwidth}
 	\begin{tikzpicture}[scale=0.5]
 	\begin{axis}[
-	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
 	axis lines=left,
 	xmin = 0,
 	xmax = 0.04,
@@ -303,5 +303,5 @@
 }%
 
 \newcommand{\legendagraficos}{%
-	\caption{$\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0\celsius$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5 \celsius$}	
+	\caption{$\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0\celsius$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5 \celsius$}	
 }%
