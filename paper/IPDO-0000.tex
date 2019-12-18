@@ -662,7 +662,7 @@ Now let $k_1 \frac{\partial F}{\partial\mathbf{n_1}}$, $T_1 - T_2$, $G$ and $-k_
 	\langle f_1, f_2\rangle_{L^2(\Gamma)} = \int_\Gamma f_1(\Gamma) f_2(\Gamma) d\Gamma \label{definicao_innner_product}
 \end{align} 
 
-By rasing two families of auxiliary functions $F_{1,j}, j=1,2,\ldots N_1$ and $G_{1,j}, j=1,2,\ldots N_2$ from the corresponding auxiliary problems, and using the definition of inner product in \eqref{definicao_innner_product}, as well as the definition of the RF in \eqref{def_funcional_reciprocidade}, expressions \eqref{identidade_T} and \eqref{identidade_q} may be rewritten as:
+By raising two families of auxiliary functions $F_{1,j}, j=1,2,\ldots N_1$ and $G_{1,j}, j=1,2,\ldots N_2$ from the corresponding auxiliary problems, and using the definition of inner product in \eqref{definicao_innner_product}, as well as the definition of the RF in \eqref{def_funcional_reciprocidade}, expressions \eqref{identidade_T} and \eqref{identidade_q} may be rewritten as:
 \begin{align}
 	& k_1 \Re(F_{1,j})
 	=
@@ -931,19 +931,9 @@ Y(x) \approx \bar{y}_0 + \sum_{m=1}^M \bar{y}_m \cos\mu_m x \label{aproximacao_Y
 where the coefficients $\bar{y}_0$ and $\bar{y}_m$ are exactly those expressed in \eqref{coef_it_0} and \eqref{coef_it_m}. Thus, a least-square procedure may be employed in order to numerically calculate $\bar{y}_0$ and $\bar{y}_m$ from a set of samples $(x_i, Y_i)$, each one corresponding to a position along the upper boundary $\Gamma_0$ and the measured temperature at that point.
 \\
 
-\noindent{\fontfamily{phv}\selectfont \textbf{COMPUTATIONAL IMPLEMENTATION AND NUMERICAL RESULTS}}
+\noindent{\fontfamily{phv}\selectfont \textbf{COMPUTATIONAL IMPLEMENTATION}}
 
-In this work, in order to verify the analytical results of the previous sections, the experimental apparatus of Fig. \ref{fig2} has been simulated, both for the direct problem and for the inverse problem. Table \ref{tabela_params} summarizes the numerical values of the relevant parameters which were adopted. 
-
-The following procedure has been followed:
-\begin{enumerate}
-	\item Different theoretical geometries of contact interface were proposed; for each geometry, a corresponding expression of the form $y = w(x)$ was defined. The geometries are summarized in Table \ref{tabela_interfaces};
-	\item Different theoretical distribution profiles for the TCC were proposed; for each profile, a corresponding expression for $h_c(x)$ was defined. The profiles are summarized in Table \ref{tabela_ctc};
-	\item The direct problem defined in equations \eqref{harm_T1} to \eqref{cc_T1_5} was numerically solved for each combination of a geometry and a TCC profile, leading to a collection of possible temperature distributions over the domain as a result;
-	\item From each temperature distribution, samples were taken along the upper boundary interface $\Gamma_0$ of the experimental assembly, providing the set of temperature values $Y$ required by the inverse problem. Gaussian noises were introduced in the simulated temperatures, simulating measurement errors;
-	\item Equation \eqref{equacao_definicao_f_r_rep} was used to estimate the TCC along the interface contact and compared to the expected profile. This comparison was made for each combination of interface contact geometry and theoretical TCC profile. The equation for the interface contact $w(x)$ was used to calculate the coefficients $\mathbb{A}_{j,m}$ and $\mathbb{E}_{j,m}$ from the linear systems \eqref{sistema_para_coeficientes_1}, \eqref{sistema_para_coeficientes_2} and \eqref{sistema_para_coeficientes_3}. The synthetic temperature measuremens $Y$ were used in expression \eqref{aproximacao_Y}, which yields the values for $\bar{y}_0$ and $\bar{y}_m$ to be used in the RF expressions \eqref{calculo_FR_F1_antes_b} and \eqref{calculo_FR_G1_antes_b}.
-\end{enumerate}
-
+In this work, in order to verify the analytical results of the previous sections, the experimental apparatus of Fig. \ref{fig2} has been numerically simulated, both for the direct problem and for the inverse problem. Table \ref{tabela_params} summarizes the numerical values of the relevant parameters which were adopted. 
 \begin{table}[H]
 	\centering
 	\caption{Parameters used in the test problems}
@@ -951,53 +941,64 @@ The following procedure has been followed:
 		\hline
 		\textbf{Parameter} & \textbf{Value}  \\ \hline
 		$a$       & 0.04 m   \\ \hline
-		$b$       & 0.02 m     \\ \hline
+		$b$       & 0.01 m     \\ \hline
 		$k_1$     & 54 W/(m \celsius)  \\ \hline
 		$k_2$     & 14 W/(m \celsius) \\ \hline
-		$q$       & -100,000 W/$\text{m}^2$ \\ \hline
-		$h_{max}$       & 1000 W/($\text{m}^2$ \celsius) \\ \hline
+		$q$       & -7,500 W/$\text{m}^2$ \\ \hline
+		$h_{max}$       & 400 W/($\text{m}^2$ \celsius) \\ \hline
 	\end{tabular}		
 	\label{tabela_params}
 \end{table}
+%TODO melhorar a redação desta frase
+The simulation procedure consisted of the following steps:
+\begin{enumerate}
+	\item Different theoretical geometries of contact interface were proposed; for each geometry, a corresponding expression of the form $y = w(x)$ was defined. The geometries are summarized in Table \ref{tabela_interfaces} and depicted in Figures \ref{fig-interface1}, \ref{fig-interface2} and \ref{fig-interface3};
+	
+	\begin{table}[H]
+		\centering
+		\caption{Contact interface geometries}
+		\begin{tabular}{|l|l|}
+			\hline 
+			\textbf{Geometry} & \textbf{Expression for} $w(x)$    \\ \hline
+			1       & $\frac{b}{2}$   \\ \hline
+			2       & $\begin{array}{ll}
+			\frac{19bx^2}{8a^2}-\frac{7bx}{24a}+\frac{b}{2}, &  0 \le x < \frac{a}{3} \\
+			-\frac{25bx^2}{8a^2}+\frac{27bx}{8a}-\frac{b}{9}, &  \frac{a}{3} \le x < \frac{2a}{3} \\ 
+			\frac{bx^2}{8a^2}-\frac{23bx}{24a}+\frac{4b}{3}, &  \frac{2a}{3} \le x \le a
+			\end{array}$     \\ \hline
+			3       & $ \frac{b}{2} + \frac{1}{20} \cos\frac{4 \pi  x}{a}$ \\ \hline
+		\end{tabular}			
+		\label{tabela_interfaces}
+	\end{table}
 
-\begin{table}[H]
-	\centering
-	\caption{Contact interface geometries}
-	\begin{tabular}{|l|l|}
-		\hline 
-		\textbf{Geometry} & \textbf{Expression for} $w(x)$    \\ \hline
-		1       & $\frac{b}{2}$   \\ \hline
-		2       & $\begin{array}{ll}
-		\frac{19bx^2}{8a^2}-\frac{7bx}{24a}+\frac{b}{2}, &  0 \le x < \frac{a}{3} \\
-		 -\frac{25bx^2}{8a^2}+\frac{27bx}{8a}-\frac{b}{9}, &  \frac{a}{3} \le x < \frac{2a}{3} \\ 
-		 \frac{bx^2}{8a^2}-\frac{23bx}{24a}+\frac{4b}{3}, &  \frac{2a}{3} \le x \le a
-		\end{array}$     \\ \hline
-		3       & $ \frac{b}{2} + \frac{1}{20} \cos\frac{4 \pi  x}{a}$ \\ \hline
-	\end{tabular}			
-	\label{tabela_interfaces}
-\end{table}
+	\item Different theoretical distribution profiles for the TCC were proposed; for each profile, a corresponding expression for $h_c(x)$ was defined. The profiles are summarized in Table \ref{tabela_ctc} and their graphs can be seen in Figures \ref{fig-conductance1}, \ref{fig-conductance2} and \ref{fig-conductance3};
+	
+	\begin{table}[H]
+		\centering
+		\caption{Theoretical thermal contact conductance profiles}
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{Profile} & $h_c(x)$[W/($\text{m}^2$ \celsius)]  \\ \hline
+			\multirow{2}{*}{1} & $h_{max}$, $x < a/4$ e $x > 3a/4$ \\ & 0, $a/4 < x < 3a/4$ \\ \hline
+			2 & $h_{max}\sin\frac{\pi x}{a}$ \\ \hline
+			\multirow{3}{*}{3} & $h_{max}/2$, $x < a/4$ and $a/2 < x < 3a/4$ \\ & $h_{max}$, $a/4 < x < a/2$ \\ & 0, $ x > 3a/4$
+			\\ \hline
+		\end{tabular}			
+		\label{tabela_ctc}
+	\end{table}
 
-\begin{table}[H]
-	\centering
-	\caption{Theoretical thermal contact conductance profiles}
-	\begin{tabular}{|l|l|}
-		\hline
-		\textbf{Profile} & $h_c(x)$[W/($\text{m}^2$ \celsius)]  \\ \hline
-		\multirow{2}{*}{1} & $h_{max}$, $x < a/4$ e $x > 3a/4$ \\ & 0, $a/4 < x < 3a/4$ \\ \hline
-		2 & $h_{max}\sin\frac{\pi x}{a}$ \\ \hline
-		\multirow{3}{*}{3} & $h_{max}/2$, $x < a/4$ and $a/2 < x < 3a/4$ \\ & $h_{max}$, $a/4 < x < a/2$ \\ & 0, $ x > 3a/4$
-		\\ \hline
-	\end{tabular}			
-	\label{tabela_ctc}
-\end{table}
+	\item The direct problem defined in equations \eqref{harm_T1} to \eqref{cc_T1_5} was numerically solved for each combination of a geometry and a TCC profile, leading to a collection of possible temperature distributions (referred as \textit{synthetic measures}) over the domain as a result;
+	\item From each synthetic temperature distribution, samples were taken along the upper boundary interface $\Gamma_0$ of the experimental assembly, providing the set of temperature values $Y$ required by the inverse problem. Gaussian noises were introduced in the simulated temperatures, representing measurement errors;
+	\item Equation \eqref{equacao_definicao_f_r_rep} was used to estimate the TCC along the interface contact and compared to the expected profile. This comparison was made for each combination of interface contact geometry and theoretical TCC profile. The equation for the interface contact $w(x)$ was used to calculate the coefficients $\mathbb{A}_{j,m}$ and $\mathbb{E}_{j,m}$ from the linear systems \eqref{sistema_para_coeficientes_1}, \eqref{sistema_para_coeficientes_2} and \eqref{sistema_para_coeficientes_3}. The synthetic temperature measuremens $Y$ were used in expression \eqref{aproximacao_Y}, which yields the values for $\bar{y}_0$ and $\bar{y}_m$ to be used in the RF expressions \eqref{calculo_FR_F1_antes_b} and \eqref{calculo_FR_G1_antes_b}.
+\end{enumerate}
 
 The experimental noises in step 4 were generated according to the following equation:
 \begin{align}
 \tilde{\mathbf{Y}} = \mathbf{Y} + \mathbf{\varepsilon} \sigma \label{modelagem_erro}
 \end{align}
-where $\mathbf{Y}$ is the set of exact temperatures, $\tilde{\mathbf{Y}}$ is the set of temperatures with erros, $\sigma$ is the standard deviation of the temperature measures, and $\epsilon$ is a Gaussian random variable with zero mean and unity variance. Three different values of $\sigma$ were tried: $\sigma = \text{0.0}\celsius$ (corresponding to synthetic temperatures with no measuremente errors), $\sigma = \text{0.1}\celsius$ and $\sigma = \text{0.5}\celsius$.
 
-Due to lack of space, not all results from all interface geometries tested will be discussed in this work. Instead, the specific case of the geometry 2 was chosen to be discussed here. The format of the contact interface may be observed in Fig. \ref{fig3}. The results found for this case are shown in Figs. \ref{figura_ctc_interface_02a} to \ref{figura_ctc_interface_02c}.
+where $\mathbf{Y}$ is the set of exact (synthetic) temperatures, $\tilde{\mathbf{Y}}$ is the set of temperatures with erros, $\sigma$ is the standard deviation of the temperature measures, and $\epsilon$ is a Gaussian random variable with zero mean and unity variance. Three different values of $\sigma$ were tried: $\sigma = \text{0.0}\celsius$ (corresponding to synthetic temperatures with no measuremente errors), $\sigma = \text{0.1}\celsius$ and $\sigma = \text{0.5}\celsius$.
+
 \begin{figure}[H]
 	\begin{center}
 		\begin{tikzpicture}
@@ -1005,26 +1006,196 @@ Due to lack of space, not all results from all interface geometries tested will 
 		anchor=east,  
 		ticks=none,
 		width=8cm,
-		height=4cm,
+		height=3cm,
 		%ylabel=Iterações Lineares,
 		xmin = 0,
 		xmax = 0.04,
 		ymin = 0,
-		ymax = 0.02]
+		ymax = 0.01]
+		\pgfplotstableread{../data/interface_01.dat} 
+		\teff
+		\addplot[color=blue,mark=none,smooth] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Geometry for contact interface 1}
+		\label{fig-interface1}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{tikzpicture}
+		\begin{axis}[
+		anchor=east,  
+		ticks=none,
+		width=8cm,
+		height=3cm,
+		%ylabel=Iterações Lineares,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = 0,
+		ymax = 0.01]
 		\pgfplotstableread{../data/interface_02.dat} 
 		\teff
 		\addplot[color=blue,mark=none,smooth] table from \teff;
 		\end{axis}
 		\end{tikzpicture}
-		\caption{Geometry for contact interface 3}
-		\label{fig3}
+		\caption{Geometry for contact interface 2}
+		\label{fig-interface2}
 	\end{center}
 \end{figure}
-It is possible to notice that the estimated profiles for the TCC show a very good adherence to the theoretical ones. For the simulations using $\sigma = \text{0.0}\celsius$, corresponding to temperature measurements without noise, there is an excellent agreement between the estimated and expected profiles. For the other cases, in which gaussian noises were added, the general behavior of the TCC was well captured. A direct relationship between the amplitude of the noise and the exactness of the estimative was also observed: as the amplitude of the noise diminishes, the estimatives become closer to the exact values.
 
-An improvement of the calculated estimatives was also observed, as more terms were added to the expressions on the numerator and denominator of the equation \eqref{equacao_definicao_f_r_rep}, until a certain limit of the number of terms was achieved. From that point on, as more terms were included in the summations, the estimatives diverged quickly, leading to unstable results. However, when comparing to the results found by Padilha \textit{et al.}\cite{artigo_padilha_3}, the maximum number of terms in the summations ($N_1=N_2=20$) were greater than those used in that work ($N_1=N_2=14$), in which the same stability problems were present, and the sampled temperatures $Y$ were represented by a \textit{spline} instead of a Fourier expansion. Since both temperature jumps and heat flux at the contact interface were represented by summations with more terms, the estimates were more accurate as well.
+\begin{figure}[H]
+	\begin{center}
+		\begin{tikzpicture}
+		\begin{axis}[
+		anchor=east,  
+		ticks=none,
+		width=8cm,
+		height=3cm,
+		%ylabel=Iterações Lineares,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = 0,
+		ymax = 0.01]
+		\pgfplotstableread{../data/interface_03.dat} 
+		\teff
+		\addplot[color=blue,mark=none,smooth] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Geometry for contact interface 3}
+		\label{fig-interface3}
+	\end{center}
+\end{figure}
 
-Due to the non-intrusive nature of the method, as well as the use of several optimizations (specially in the Gram-Schmidt orthonormalization), the computational implementation showed a very fast processing time. In the simulations executed in this work, using an Intel Core\textsuperscript{\texttrademark} i5-8250U CPU 1.60 GHz, processing times for each profile estimation ranged from 2.0 seconds to 2.4 seconds.
+%%%%%Graficos dos Hs
+
+\begin{figure}[H]
+	\begin{center}	
+		\begin{tikzpicture}
+		\begin{axis}[
+		/pgf/number format/1000 sep={.},
+		axis lines=left,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = -100,
+		ymax = 450,
+		restrict y to domain=-500:1500,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=6cm,
+		height=3cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $h_c(x)[$W/($\text{m}^2$ \celsius)]]
+		\addplot[color=blue,mark=none,smooth, domain=0:0.01] {400};
+		\addplot[color=blue,mark=none,smooth, domain=0.01:0.03] {0};
+		\addplot[color=blue,mark=none,smooth, domain=0.03:0.04] {400};
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Thermal contact conductance for profile 1}
+		\label{fig-conductance1}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{tikzpicture}
+		\begin{axis}[
+		/pgf/number format/1000 sep={.},
+		axis lines=left,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = -100,
+		ymax = 450,
+		restrict y to domain=-500:1500,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=6cm,
+		height=3cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
+		\pgfplotstableread{../data/conductance_02.dat} 
+		\teff
+		\addplot[color=blue,mark=none,smooth] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Thermal contact conductance for profile 2}
+		\label{fig-conductance2}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}	
+		\begin{tikzpicture}
+		\begin{axis}[
+		/pgf/number format/1000 sep={.},
+		axis lines=left,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = -100,
+		ymax = 450,
+		restrict y to domain=-500:1500,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=6cm,
+		height=3cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $h_c(x)[$W/($\text{m}^2$ \celsius)]]
+		\addplot[color=blue,mark=none,smooth, domain=0:0.01] {400};
+		\addplot[color=blue,mark=none,smooth, domain=0.01:0.02] {200};
+		\addplot[color=blue,mark=none,smooth, domain=0.02:0.03] {400};
+		\addplot[color=blue,mark=none,smooth, domain=0.03:0.04] {0};
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Thermal contact conductance for profile 3}
+		\label{fig-conductance3}
+	\end{center}
+\end{figure}
+
+The source code for the simulation program was implemented on the Fortran 2003 programming language. Compilation and execution of the computational code were done in a Linux environment, using the \textit{gfortran} compiler, which is part of the GCC suite of programming tools, and is a free software project. The numerical routines for integration, linear system solving and least-squares minimization were taken from the Netlib project, which is a freely available online repository of scientific computation software mantained by several institutions and universities.
+
+
+
+%%%%%
+
+\noindent{\fontfamily{phv}\selectfont \textbf{NUMERICAL RESULTS}}
+
+The first contact interface analysed refers to index 1 in Table \ref{tabela_interfaces} and represents a planar horizontal surface parallel to upper and bottom faces of the composite body. In fact, this was the configuration initially studied by Colaço and Alves \cite{reciproc_3} and had and algebraic solution developed by Padilha \textit{et al.}\cite{artigo_padilha_3}. Thus, this test problem could be used as a benchmark reference to verify the methodology proposed in this work. The results obtained for the predicted thermal contact conductivities can be seen in Figures \ref{figura_ctc_interface_01a}, \ref{figura_ctc_interface_01b} and \ref{figura_ctc_interface_01c}. These graphs exhibit an excellent level of similarity to the solutions found in \cite{artigo_padilha_3}, which reinforces the correctness of the analytical development implemented in this work. 
+%TODO escrever mais sobre o caso sigma = 0
+
+\begin{figure}[H]
+	\graficoctc{01}{01}{1}{a}
+	\caption{Estimated TCC for contact interface geometry 1 and TCC profile 1 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_01a}
+\end{figure}
+\begin{figure}[H]
+	\graficoctc{01}{02}{2}{b}
+	\caption{Estimated TCC for contact interface geometry 1 and TCC profile 2 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_01b}
+\end{figure}
+\begin{figure}[H]
+	\graficoctc{01}{03}{3}{c}
+	\caption{Estimated TCC for contact interface geometry 1 and TCC profile 3 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_01c}
+\end{figure}
+
+The second contact interface analysed refers to index 2 in Table \ref{tabela_interfaces} and represents a polynomial curve defined by parts, in such a way that both the curve and its first derivative are continuous along the domain $0 \le x \le a$, where $a$ is the horizontal dimension of the composite body. As seen before, among the calculated predictions of the CTC, the one corresponding to $\sigma = \text{0.0}\celsius$ was the nearest to the theoretical profile, while the other predictions kept a qualitative pattern similar to the ones estimated for the contact interface 1.
+
+
+
+%%%%%Interface 2
 \begin{figure}[H]
 	\graficoctc{02}{01}{1}{a}
 	\caption{Estimated TCC for contact interface geometry 2 and TCC profile 1 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
@@ -1040,6 +1211,29 @@ Due to the non-intrusive nature of the method, as well as the use of several opt
 	\caption{Estimated TCC for contact interface geometry 2 and TCC profile 3 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
 	\label{figura_ctc_interface_02c}
 \end{figure}
+
+%%%%%%%%%INterface 3
+\begin{figure}[H]
+	\graficoctc{03}{01}{1}{a}
+	\caption{Estimated TCC for contact interface geometry 3 and TCC profile 1 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_03a}
+\end{figure}
+\begin{figure}[H]
+	\graficoctc{03}{02}{2}{b}
+	\caption{Estimated TCC for contact interface geometry 3 and TCC profile 2 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_03b}
+\end{figure}
+\begin{figure}[H]
+	\graficoctc{03}{03}{3}{c}
+	\caption{Estimated TCC for contact interface geometry 3 and TCC profile 3 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_03c}
+\end{figure}
+
+In all cases, it was possible to notice that the estimated profiles for the TCC showed a very good adherence to the theoretical ones. For the simulations using $\sigma = \text{0.0}\celsius$, corresponding to temperature measurements without noise, there is an excellent agreement between the estimated and expected profiles. For the other cases, in which gaussian noises were added, the general behavior of the TCC was well captured. A direct relationship between the amplitude of the noise and the exactness of the estimative was also observed: as the amplitude of the noise diminishes, the estimatives become closer to the exact values.
+
+An improvement of the calculated estimatives was also observed, as more terms were added to the expressions on the numerator and denominator of the equation \eqref{equacao_definicao_f_r_rep}, until a certain limit of the number of terms was achieved. From that point on, as more terms were included in the summations, the estimatives diverged quickly, leading to unstable results. However, when comparing to the results found by Padilha \textit{et al.}\cite{artigo_padilha_3}, the maximum number of terms in the summations ($N_1=N_2=20$) were greater than those used in that work ($N_1=N_2=14$), in which the same stability problems were present, and the sampled temperatures $Y$ were represented by a \textit{spline} instead of a Fourier expansion. Since both temperature jumps and heat flux at the contact interface were represented by summations with more terms, the estimates were more accurate as well.
+
+Due to the non-intrusive nature of the method, as well as the use of several optimizations (specially in the Gram-Schmidt orthonormalization), the computational implementation showed a very fast processing time. In the simulations executed in this work, using an Intel Core\textsuperscript{\texttrademark} i5-8250U CPU 1.60 GHz, processing times for each profile estimation ranged from 2.0 seconds to 2.4 seconds.
 
 \noindent{\fontfamily{phv}\selectfont \textbf{CONCLUSION}}
 
