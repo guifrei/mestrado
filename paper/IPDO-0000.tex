@@ -1166,14 +1166,15 @@ where $\mathbf{Y}$ is the set of exact (synthetic) temperatures, $\tilde{\mathbf
 
 The source code for the simulation program was implemented on the Fortran 2003 programming language. Compilation and execution of the computational code were done in a Linux environment, using the \textit{gfortran} compiler, which is part of the GCC suite of programming tools, and is a free software project. The numerical routines for integration, linear system solving and least-squares minimization were taken from the Netlib project, which is a freely available online repository of scientific computation software mantained by several institutions and universities.
 
-
+Due to the non-intrusive nature of the method, as well as the use of several optimizations (specially in the Gram-Schmidt orthonormalization), the computational implementation showed a very fast processing time. In the simulations executed in this work, using an Intel Core\textsuperscript{\texttrademark} i5-8250U CPU 1.60 GHz, processing times for each profile estimation ranged from 2.0 seconds to 2.4 seconds.
 
 %%%%%
 
 \noindent{\fontfamily{phv}\selectfont \textbf{NUMERICAL RESULTS}}
 
-The first contact interface analysed refers to index 1 in Table \ref{tabela_interfaces} and represents a planar horizontal surface parallel to upper and bottom faces of the composite body. In fact, this was the configuration initially studied by Colaço and Alves \cite{reciproc_3} and had and algebraic solution developed by Padilha \textit{et al.}\cite{artigo_padilha_3}. Thus, this test problem could be used as a benchmark reference to verify the methodology proposed in this work. The results obtained for the predicted thermal contact conductivities can be seen in Figures \ref{figura_ctc_interface_01a}, \ref{figura_ctc_interface_01b} and \ref{figura_ctc_interface_01c}. These graphs exhibit an excellent level of similarity to the solutions found in \cite{artigo_padilha_3}, which reinforces the correctness of the analytical development implemented in this work. 
-%TODO escrever mais sobre o caso sigma = 0
+\noindent{\fontfamily{phv}\selectfont \textbf{Thermal contact conductance prediction}}
+
+The first contact interface analysed refers to index 1 in Table \ref{tabela_interfaces} and represents a planar horizontal surface parallel to upper and bottom faces of the composite body. In fact, this was the configuration initially studied by Colaço and Alves \cite{reciproc_3} and had and algebraic solution developed by Padilha \textit{et al.}\cite{artigo_padilha_3}. This test problem could then be used as a benchmark reference to verify the methodology proposed in this work. The results obtained for the predicted thermal contact conductivities can be seen in Figures \ref{figura_ctc_interface_01a}, \ref{figura_ctc_interface_01b} and \ref{figura_ctc_interface_01c}. These graphs exhibit an excellent level of similarity to the solutions found in \cite{artigo_padilha_3}, especially for the case $\sigma = \text{0.0}\celsius$. These results reinforce the correctness of the analytical development implemented in this work. 
 
 \begin{figure}[H]
 	\graficoctc{01}{01}{1}{a}
@@ -1191,9 +1192,7 @@ The first contact interface analysed refers to index 1 in Table \ref{tabela_inte
 	\label{figura_ctc_interface_01c}
 \end{figure}
 
-The second contact interface analysed refers to index 2 in Table \ref{tabela_interfaces} and represents a polynomial curve defined by parts, in such a way that both the curve and its first derivative are continuous along the domain $0 \le x \le a$, where $a$ is the horizontal dimension of the composite body. As seen before, among the calculated predictions of the CTC, the one corresponding to $\sigma = \text{0.0}\celsius$ was the nearest to the theoretical profile, while the other predictions kept a qualitative pattern similar to the ones estimated for the contact interface 1.
-
-
+The second contact interface analysed refers to index 2 in Table \ref{tabela_interfaces} and represents a polynomial curve defined by parts, in such a way that both the curve and its first derivative are continuous along the domain $0 \le x \le a$, where $a$ is the horizontal dimension of the composite body. The results obtained for the predicted thermal contact conductivities can be seen in Figures \ref{figura_ctc_interface_02a}, \ref{figura_ctc_interface_02b} and \ref{figura_ctc_interface_02c}. As seen before, among the calculated predictions of the CTC, the one corresponding to $\sigma = \text{0.0}\celsius$ was the nearest to the theoretical profile, while the other predictions, using different levels of noise, kept a qualitative pattern similar to the ones estimated for the contact interface 1.
 
 %%%%%Interface 2
 \begin{figure}[H]
@@ -1211,6 +1210,9 @@ The second contact interface analysed refers to index 2 in Table \ref{tabela_int
 	\caption{Estimated TCC for contact interface geometry 2 and TCC profile 3 using synthetic data and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
 	\label{figura_ctc_interface_02c}
 \end{figure}
+
+The third contact interface analysed refers to index 3 in Table \ref{tabela_interfaces} and represents a sinusoidal curve. The results obtained for the predicted thermal contact conductivities can be seen in Figures \ref{figura_ctc_interface_03a}, \ref{figura_ctc_interface_03b} and \ref{figura_ctc_interface_03c}. Again, even with a spatially oscillatory contact interface profile, the predicted thermal contact conductivity for $\sigma = \text{0.0}\celsius$ presented a very good quality, while the predictions for $\sigma = \text{0.1}\celsius$ and $\sigma = \text{0.5}\celsius$ kept qualitative behaviors similar to the ones estimated in the previous analysis.
+
 
 %%%%%%%%%INterface 3
 \begin{figure}[H]
@@ -1231,9 +1233,16 @@ The second contact interface analysed refers to index 2 in Table \ref{tabela_int
 
 In all cases, it was possible to notice that the estimated profiles for the TCC showed a very good adherence to the theoretical ones. For the simulations using $\sigma = \text{0.0}\celsius$, corresponding to temperature measurements without noise, there is an excellent agreement between the estimated and expected profiles. For the other cases, in which gaussian noises were added, the general behavior of the TCC was well captured. A direct relationship between the amplitude of the noise and the exactness of the estimative was also observed: as the amplitude of the noise diminishes, the estimatives become closer to the exact values.
 
-An improvement of the calculated estimatives was also observed, as more terms were added to the expressions on the numerator and denominator of the equation \eqref{equacao_definicao_f_r_rep}, until a certain limit of the number of terms was achieved. From that point on, as more terms were included in the summations, the estimatives diverged quickly, leading to unstable results. However, when comparing to the results found by Padilha \textit{et al.}\cite{artigo_padilha_3}, the maximum number of terms in the summations ($N_1=N_2=20$) were greater than those used in that work ($N_1=N_2=14$), in which the same stability problems were present, and the sampled temperatures $Y$ were represented by a \textit{spline} instead of a Fourier expansion. Since both temperature jumps and heat flux at the contact interface were represented by summations with more terms, the estimates were more accurate as well.
 
-Due to the non-intrusive nature of the method, as well as the use of several optimizations (specially in the Gram-Schmidt orthonormalization), the computational implementation showed a very fast processing time. In the simulations executed in this work, using an Intel Core\textsuperscript{\texttrademark} i5-8250U CPU 1.60 GHz, processing times for each profile estimation ranged from 2.0 seconds to 2.4 seconds.
+\noindent{\fontfamily{phv}\selectfont \textbf{Instability of estimatives and stop criteria for summations}}
+
+It could be seen in this work that the expressions for estimation of temperature jump and heat flux across the contact interface in terms of the Reciprocity Functionals (equations \eqref{resultado_1} and \eqref{resultado_2}) did not have a monotonic convergent behavior as the number of summing elements increased indefinitely. In fact, each simulated configuration of contact interface and expected thermal contact conductance had its own optimal number of terms, so that adding more elements to either of the summations up to that limit led to a progressive improvement of the calculated estimatives through equation \eqref{equacao_definicao_f_r_rep}; from that point on, as more terms were included in the summations, the estimatives diverged quickly, leading to unstable results. On the other hand, when lower noise levels were added to the synthetic temperatures, those optimal number of terms could be increased. 
+
+Padilha \textit{et al.}\cite{artigo_padilha_3} noticed that unstable behavior of estimatives when studying the specific case of a planar horizontal contact interface. However, when comparing their results to the ones found in this work, the maximum number of terms in the summations ($N_1=N_2=20$) before reaching unstability were greater than those used in their work ($N_1=N_2=14$), in which the same stability problems were present. Since both temperature jumps and heat flux at the contact interface were represented by summations with more terms, the estimates were more accurate as well.
+
+A possible explanation for the improvement in the number of summing elements lies on the analytical representation $Y(x)$ of the sampled temperatures. In the work of Padilha \textit{et al.}\cite{artigo_padilha_3}, the sampled temperatures were represented by a \textit{spline}, while in this work they were represented through a Fourier expansion, as suggested by Mocerino \cite{artigo_mocerino}.
+
+
 
 \noindent{\fontfamily{phv}\selectfont \textbf{CONCLUSION}}
 
