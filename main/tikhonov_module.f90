@@ -74,53 +74,43 @@ contains
         close(5)
     end subroutine
 
-    subroutine morozov(sigma, vx, vy, vvY, kmax)
+    subroutine morozov(sigma, vx, vy, vvY, i)
         double precision, intent(in) :: sigma
         double precision, dimension(tnmax), intent(in) :: vx
-        double precision, dimension(tnmax), intent(in) :: vy
+        double precision, dimension(tnmax), intent(inout) :: vy
         double precision, dimension(0: mmax_phi), intent(inout) :: vvY
-        integer, intent(out) :: kmax
+        integer, intent(out) :: i
         double precision, dimension(tnmax) :: tmpya, tmpyb
         double precision :: sqrt_rms_a, sqrt_rms_b, diff_a, diff_b
         logical :: keep
 
-        keep = .true.
-        kmax = 0
-        tmpya = approximation_Y(vx, kmax)
-        sqrt_rms_a = norm2(tmpya - vy)/sqrt(dble(tnmax))
-        diff_a = dabs(sqrt_rms_a - sigma)
-        kmax = 1
+        if (sigma.ne.0) then
+            keep = .true.
+            tmpya = vvY(0)
+            sqrt_rms_a = norm2(tmpya - vy)/sqrt(dble(tnmax))
+            diff_a = dabs(sqrt_rms_a - sigma)
+            i = 1
 
-        do while (keep .and. (kmax <= mmax_phi))
-            tmpyb = approximation_Y(vx, kmax)
-            sqrt_rms_b = norm2(tmpyb - vy)/sqrt(dble(tnmax))
-            diff_b = dabs(sqrt_rms_b - sigma)
+            tmpyb = tmpya
+            do while (keep .and. (i <= mmax_phi))
+                tmpyb = tmpyb + vvY(i)*cos(mu(i)*vx)
+                sqrt_rms_b = norm2(tmpyb - vy)/sqrt(dble(tnmax))
+                diff_b = dabs(sqrt_rms_b - sigma)
 
-            if (sqrt_rms_b <= sigma) then
-                keep = .false.
-                write(*, *)kmax, sqrt_rms_b
-                !zerar os coeficientes deste ponto em diante ("filtrar as frequencias superiores")
-                !vvY(kmax + 1:mmax_phi) = 0.0
-            end if
+                if (sqrt_rms_b <= sigma) then
+                    keep = .false.
+                    vy = tmpyb
+                    !i = i + 1 !TODO
+                    write(*, *)i, sqrt_rms_b
+                end if
 
-            if (keep) then
-                tmpya = tmpyb
-                sqrt_rms_a = sqrt_rms_b
-                diff_a = diff_b
-                kmax = kmax + 1
-            end if
-        end do
-    contains
-        elemental function approximation_Y(x, nnmax) result(r)
-            double precision, intent(in) :: x
-            integer, intent(in) :: nnmax
-            double precision :: r
-            integer :: i
-
-            r = 0.0
-            do i = 0, nnmax
-                r = r + vvY(i)*cos(mu(i)*x)
+                if (keep) then
+                    tmpya = tmpyb
+                    sqrt_rms_a = sqrt_rms_b
+                    diff_a = diff_b
+                    i = i + 1
+                end if
             end do
-        end function
+        end if
     end subroutine
 end module tikhonov_module

@@ -75,8 +75,53 @@ contains
         double precision, dimension(tnmax), intent(inout) :: sample_y
         double precision, intent(in) :: stdev
         double precision, dimension(tnmax) :: rand_u, rand_v, rand_epsilon
+        integer :: sz, i
+        integer, allocatable :: seed(:)
 
         if (stdev > 0) then
+            call random_seed(size = sz)
+            allocate(seed(sz))
+            !            call random_seed(get = seed)
+            !            do i = 1, sz
+            !                write (*, '(A5, I2, A4, I20)') 'seed(', i, ') = ', seed(i)
+            !            end do
+
+            !            seed( 1) =           1555932099
+            !            seed( 2) =           -752501903
+            !            seed( 3) =           1675126062
+            !            seed( 4) =          -1181634650
+            !            seed( 5) =           1565135443
+            !            seed( 6) =          -1527497895
+            !            seed( 7) =          -1955269772
+            !            seed( 8) =           -552173986
+            !            seed( 9) =           -668516462
+            !            seed(10) =           -867187379
+            !            seed(11) =          -1589001808
+            !            seed(12) =            710259002
+            !            seed(13) =          -1527334238
+            !            seed(14) =           1399076095
+            !            seed(15) =          -2132840014
+            !            seed(16) =           -353316740
+            !            seed(17) =          -1630455937
+            !            seed(18) =           1946293829
+            !            seed(19) =            -20758700
+            !            seed(20) =          -1730520010
+            !            seed(21) =          -1355065013
+            !            seed(22) =          -1846473654
+            !            seed(23) =           1401675499
+            !            seed(24) =           1873602779
+            !            seed(25) =           1297836027
+            !            seed(26) =           -951625613
+            !            seed(27) =              4247675
+            !            seed(28) =           -176231794
+            !            seed(29) =          -2139165451
+            !            seed(30) =          -1641484855
+            !            seed(31) =           1060974349
+            !            seed(32) =           1746738201
+            !            seed(33) =                    0
+            !            call random_seed(put = seed)
+            !            deallocate(seed)
+
             call random_seed
             call random_number(rand_u)
             call random_number(rand_v)
@@ -219,9 +264,9 @@ contains
         use tikhonov_module
         double precision, dimension(tnmax), intent(in) :: vx
         double precision, dimension(tnmax), intent(in) :: vy
-        integer, intent(in) :: interface_idx
-        integer, intent(in) :: condutance_idx
-        integer, intent(in) :: stdev_idx
+        integer, intent(in), optional :: interface_idx
+        integer, intent(in), optional :: condutance_idx
+        integer, intent(in), optional :: stdev_idx
         integer, parameter :: mm = tnmax
         integer, parameter :: nn = mmax_phi + 1
         double precision, dimension(mm, nn) :: mxa
@@ -236,16 +281,6 @@ contains
         double precision, dimension(mm) :: uu
         double precision, dimension(mm, nn) :: vt
 
-        write(str_idx, '(I2.2)') interface_idx
-        write(str_cdx, '(I2.2)') condutance_idx
-        if (stdev_idx == 0) then
-            str_stdev = '00'
-        else if (stdev_idx == 1) then
-            str_stdev = '01'
-        else
-            str_stdev = '05'
-        end if
-
         mxa = 0.0
         vb = 0.0
         do i = 1, mm
@@ -257,19 +292,33 @@ contains
 
         vb(1:mm, 1) = vy
 
-!        call dgesvd('A', 'A', mm, nn, mxa, mm, sings, uu, mm, vt, nn, work, lwork, info)
+        !        call dgesvd('A', 'A', mm, nn, mxa, mm, sings, uu, mm, vt, nn, work, lwork, info)
 
         call dgels('N', mm, nn, 1, mxa, mm, vb, mm, work, lwork, info)
         integrals_Y(0) = vb(1, 1)*a
         integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
         vvY = vb(1:nn, 1)
 
-        open(unit = 5, file = '/home/cx3d/mestrado/data/coeficientes_interface_'//str_idx//'_conductance_'//str_cdx// &
-            '_stdev_' // str_stdev // '.dat')
-        do i = 0, nn - 1
-            write(5, *)vvY(i)
-        end do
-        close(5)
+        if (present(interface_idx)) write(str_idx, '(I2.2)') interface_idx
+        if (present(condutance_idx)) write(str_cdx, '(I2.2)') condutance_idx
+        if (present(stdev_idx)) then
+            if (stdev_idx == 0) then
+                str_stdev = '00'
+            else if (stdev_idx == 1) then
+                str_stdev = '01'
+            else
+                str_stdev = '05'
+            end if
+        end if
+
+        if (present(interface_idx).and.present(condutance_idx).and.present(stdev_idx)) then
+            open(unit = 5, file = '/home/cx3d/mestrado/data/coeficientes_interface_'//str_idx//'_conductance_'//str_cdx// &
+                '_stdev_' // str_stdev // '.dat')
+            do i = 0, nn - 1
+                write(5, *)vvY(i)
+            end do
+            close(5)
+        end if
     end subroutine
 
     function calc_reciprocity_f(j) result(r)
