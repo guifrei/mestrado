@@ -81,48 +81,49 @@ contains
         if (stdev > 0) then
             call random_seed(size = sz)
             allocate(seed(sz))
-            !            call random_seed(get = seed)
-            !            do i = 1, sz
-            !                write (*, '(A5, I2, A4, I20)') 'seed(', i, ') = ', seed(i)
-            !            end do
+            !                        call random_seed(get = seed)
+            !                        do i = 1, sz
+            !                            write (*, '(A5, I2, A4, I20)') 'seed(', i, ') = ', seed(i)
+            !                        end do
 
-            !            seed( 1) =           1555932099
-            !            seed( 2) =           -752501903
-            !            seed( 3) =           1675126062
-            !            seed( 4) =          -1181634650
-            !            seed( 5) =           1565135443
-            !            seed( 6) =          -1527497895
-            !            seed( 7) =          -1955269772
-            !            seed( 8) =           -552173986
-            !            seed( 9) =           -668516462
-            !            seed(10) =           -867187379
-            !            seed(11) =          -1589001808
-            !            seed(12) =            710259002
-            !            seed(13) =          -1527334238
-            !            seed(14) =           1399076095
-            !            seed(15) =          -2132840014
-            !            seed(16) =           -353316740
-            !            seed(17) =          -1630455937
-            !            seed(18) =           1946293829
-            !            seed(19) =            -20758700
-            !            seed(20) =          -1730520010
-            !            seed(21) =          -1355065013
-            !            seed(22) =          -1846473654
-            !            seed(23) =           1401675499
-            !            seed(24) =           1873602779
-            !            seed(25) =           1297836027
-            !            seed(26) =           -951625613
-            !            seed(27) =              4247675
-            !            seed(28) =           -176231794
-            !            seed(29) =          -2139165451
-            !            seed(30) =          -1641484855
-            !            seed(31) =           1060974349
-            !            seed(32) =           1746738201
-            !            seed(33) =                    0
-            !            call random_seed(put = seed)
-            !            deallocate(seed)
+            seed( 1) =           -958061469
+            seed( 2) =          -1771584774
+            seed( 3) =          -1442943105
+            seed( 4) =           1772560231
+            seed( 5) =           1383818085
+            seed( 6) =            735970811
+            seed( 7) =          -1478794335
+            seed( 8) =           -556286740
+            seed( 9) =          -1568032765
+            seed(10) =             75387879
+            seed(11) =          -1776664065
+            seed(12) =           -787746154
+            seed(13) =           1564600451
+            seed(14) =           -281070179
+            seed(15) =          -1728515462
+            seed(16) =           -753690087
+            seed(17) =          -1938055380
+            seed(18) =            734272983
+            seed(19) =          -1173422824
+            seed(20) =           -681217994
+            seed(21) =           -536357201
+            seed(22) =            237615303
+            seed(23) =           -983278272
+            seed(24) =           1143442660
+            seed(25) =           1402428719
+            seed(26) =           1459836958
+            seed(27) =          -1883717417
+            seed(28) =            766805053
+            seed(29) =          -1116004941
+            seed(30) =            825875804
+            seed(31) =           -328030294
+            seed(32) =           1070325082
+            seed(33) =                    0
 
-            call random_seed
+            call random_seed(put = seed)
+            deallocate(seed)
+
+            !call random_seed
             call random_number(rand_u)
             call random_number(rand_v)
             rand_epsilon = cos(2.0*pi*rand_v)*sqrt(-2.0*log(rand_u))

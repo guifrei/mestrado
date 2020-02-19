@@ -9,9 +9,9 @@ module constants_module
     double precision, parameter :: q = -7500.0
     double precision, parameter :: hmax = 400.0
     double precision, parameter :: gamma = 5000.0
-    integer, parameter :: mmax_T = 30 !numero total de autofuncoes a serem calculadas para T1 e T2
-    integer, parameter :: mmax_F = 30 !numero total de autofuncoes a serem calculadas para F1 e F2
-    integer, parameter :: mmax_G = 30 !numero total de autofuncoes a serem calculadas para G1
+    integer, parameter :: mmax_T = 35 !numero total de autofuncoes a serem calculadas para T1 e T2
+    integer, parameter :: mmax_F = 35 !numero total de autofuncoes a serem calculadas para F1 e F2
+    integer, parameter :: mmax_G = 35 !numero total de autofuncoes a serem calculadas para G1
     integer, parameter :: mmax_phi = max(mmax_T, mmax_F, mmax_G) !maior valor entre mmax_T, mmax_F e mmax_G
     integer, parameter :: delta_m = 60      !incremento no numero de termos
     double precision, parameter :: reltol = 0.0 !1.0D-8

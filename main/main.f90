@@ -50,6 +50,7 @@ program main
     double precision :: x, dx, stdev
     double precision :: h_est
     integer :: kmax
+    double precision :: lambda
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -95,25 +96,29 @@ program main
 
     dx = a/dble(tmax - 1)
 
-    interface_idx = 3
-    condutance_idx = 2
+    interface_idx = 1
+    condutance_idx = 1
 
     call c_f_procpointer(hlist(condutance_idx), h)
     call c_f_procpointer(wlist(interface_idx), w)
     call c_f_procpointer(dwlist(interface_idx), dw)
 
     call calculate_temperature_coefficients(interface_idx, condutance_idx, h, vx, vy)
-    stdev = 0.1
+    stdev = 0.4
     call add_error(vy, stdev)
     call least_squares_for_Y(vx, vy)
+
+    do j = 1, tnmax
+        write(*, *, decimal = 'comma')vy(j)
+    end do
+
+    lambda = 1.0
+
+    call tikhonov2(lambda, vx, vy, vvY)
 
     !Principio da discrepancia de Morozov
     kmax = N
     call morozov(stdev, vx, vy, vvY, kmax)
-
-    !    do j = 1, tnmax
-    !        write(*, *)vx(j), vy(j)
-    !    end do
 
     call calculate_reciprocity_coefficients(interface_idx)
 

@@ -4,6 +4,32 @@ module tikhonov_module
     implicit none
 
 contains
+    subroutine tikhonov2(lambda, vx, vy, vvY)
+        double precision, intent(in) :: lambda
+        double precision, dimension(tnmax), intent(in) :: vx
+        double precision, dimension(tnmax), intent(in) :: vy
+        double precision, dimension(0: mmax_phi), intent(out) :: vvY
+        double precision, dimension(tnmax, 0: mmax_phi) :: mA
+        double precision, dimension(0: mmax_phi, 0: mmax_phi) :: mAtA
+        double precision, dimension(0: mmax_phi) :: vb
+        integer :: i, j
+
+        do i = 1, tnmax
+            do j = 0, mmax_phi
+                mA(i, j) = cos(mu(j)*vx(i))
+            end do
+        end do
+
+        mAtA = matmul(transpose(mA), mA)
+        do i = 0, mmax_phi
+            mAtA(i, i) = mAtA(i, i) + lambda*lambda
+        end do
+
+        vb = matmul(transpose(mA), vy)
+
+
+    end subroutine
+
     subroutine tikhonov(lambda, vx, vy, vvY)
         !http://www2.compute.dtu.dk/~pcha/DIP/chap4.pdf, chap8
         integer, parameter :: deriv_ord = 0
@@ -61,17 +87,6 @@ contains
         integrals_Y(0) = vb(1, 1)*a
         integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
         vvY = vb(1:nn, 1)
-
-        open(unit = 5, file = '/home/cx3d/a.txt')
-        do i = 1, mm
-            x = vx(i)
-            y = 0.0
-            do j = 1, nn
-                y = y + vb(j, 1)*cos(mu(j - 1)*x)
-            end do
-            write(5, *)x, vy(i), y
-        end do
-        close(5)
     end subroutine
 
     subroutine morozov(sigma, vx, vy, vvY, i)

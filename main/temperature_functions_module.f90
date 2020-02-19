@@ -315,7 +315,7 @@ contains
         if (present(write_files)) then
             opt_write_files = write_files
         else
-            opt_write_files = .true.
+            opt_write_files = .false.
         end if
 
         if (opt_write_files) then
