@@ -8,7 +8,7 @@ SHELL = /bin/sh
 
 #  CC is the C compiler, normally invoked with options CFLAGS.
 #
-CC     = gcc
+CC     = gcc -g3
 CFLAGS = -O3
 
 #  Modify the FORTRAN and OPTS definitions to refer to the compiler
@@ -20,7 +20,7 @@ CFLAGS = -O3
 #  should not compile LAPACK with flags such as -ffpe-trap=overflow.
 #
 FORTRAN = gfortran
-OPTS    = -O2 -frecursive
+OPTS    = -O2 -frecursive -g3
 DRVOPTS = $(OPTS)
 NOOPT   = -O0 -frecursive
 
