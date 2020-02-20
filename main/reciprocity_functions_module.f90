@@ -79,12 +79,12 @@ contains
         integer, allocatable :: seed(:)
 
         if (stdev > 0) then
-            call random_seed(size = sz)
-            allocate(seed(sz))
-            call random_seed(get = seed)
-            do i = 1, sz
-                write (*, '(A5, I2, A4, I20)') 'seed(', i, ') = ', seed(i)
-            end do
+            !            call random_seed(size = sz)
+            !            allocate(seed(sz))
+            !            call random_seed(get = seed)
+            !            do i = 1, sz
+            !                write (*, '(A5, I2, A4, I20)') 'seed(', i, ') = ', seed(i)
+            !            end do
 
             !            seed( 1) =           -385259303
             !            seed( 2) =            372086166

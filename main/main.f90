@@ -48,10 +48,12 @@ program main
     double precision :: c_fluxo_calor, c_delta_temperatura
     double precision, dimension(tnmax) :: vx, vy
     integer :: interface_idx, condutance_idx, nmax, k, j
-    double precision :: x, dx, stdev
+    double precision :: x, dx, stdev, sqrt_rms
     double precision :: h_est
     integer :: kmax
     double precision :: lambda
+    logical :: success
+    double precision, dimension(tnmax) :: tmpvy
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -97,7 +99,7 @@ program main
 
     dx = a/dble(tmax - 1)
 
-    interface_idx = 3
+    interface_idx = 2
     condutance_idx = 3
 
     call c_f_procpointer(hlist(condutance_idx), h)
@@ -107,15 +109,29 @@ program main
     call calculate_temperature_coefficients(interface_idx, condutance_idx, h, vx, vy)
     stdev = 0.5
     call add_error(vy, stdev)
-    call least_squares_for_Y(vx, vy, vvY)
+    !call least_squares_for_Y(vx, vy, vvY)
 
-    do j = 1, tnmax
-        write(*, *, decimal = 'comma')vy(j)
-    end do
+    !    lambda = 0.8266385
+    call find_root(obj, 0.8D0, 1.0D-6, 1000, lambda, success )
+    write(*, *, decimal = 'comma') lambda
+
+    !    lambda = 0.82663896675
+    !    call tikhonov2(lambda, vx, vy, vvY)
+    !    tmpvy = 0.0
+    !    do j = 0, N
+    !        tmpvy = tmpvy + vvY(j)*cos(mu(j)*vx)
+    !    end do
+    !    sqrt_rms = norm2(tmpvy - vy)/sqrt(dble(tnmax))
+    !    write(*, *, decimal = 'comma') lambda, sqrt_rms
+    !
+    !    do j = 1, tnmax
+    !        write(*, *, decimal = 'comma')vy(j)
+    !    end do
 
     !Principio da discrepancia de Morozov
     kmax = N
-    call morozov(stdev, vx, vy, vvY, kmax)
+!    call morozov(stdev, vx, vy, vvY, kmax)
+!    kmax = 2
 
     call calculate_reciprocity_coefficients(interface_idx)
 
@@ -138,4 +154,64 @@ program main
         write(7, *)x, h_est, h(x)
     end do
     close(7)
+
+contains
+    double precision function obj(lambda)
+        double precision, intent(in) :: lambda
+        double precision, dimension(tnmax) :: tmpvy
+        double precision :: sqrt_rms
+
+        call tikhonov2(lambda, vx, vy, vvY)
+        tmpvy = 0.0
+        do j = 0, N
+            tmpvy = tmpvy + vvY(j)*cos(mu(j)*vx)
+        end do
+        sqrt_rms = norm2(tmpvy - vy)/sqrt(dble(tnmax))
+        obj = sqrt_rms - stdev
+    end function obj
+
+    subroutine find_root( f, xinit, tol, maxiter, result, success )
+        interface
+            double precision function f(x)
+                double precision, intent(in) :: x
+            end function f
+        end interface
+
+        double precision, intent(in)     :: xinit
+        double precision, intent(in)     :: tol
+        integer, intent(in)  :: maxiter
+        double precision, intent(out)    :: result
+        logical, intent(out) :: success
+
+        double precision                 :: eps = 0.00001
+        double precision                 :: fx1
+        double precision                 :: fx2
+        double precision                 :: fprime
+        double precision                 :: x
+        double precision                 :: xnew
+        integer              :: i
+
+        result  = 0.0
+        success = .false.
+
+        x = xinit
+        do i = 1,max(1,maxiter)
+            fx1    = f(x)
+            fx2    = f(x+eps)
+            write(*,*) i, fx1, fx2, eps
+            fprime = (fx2 - fx1) / eps
+
+            xnew   = x - fx1 / fprime
+
+            if ( abs(xnew-x) <= tol ) then
+                success = .true.
+                result  = xnew
+                exit
+            endif
+
+            x = xnew
+            write(*,*) i, x
+        enddo
+
+    end subroutine find_root
 end program main

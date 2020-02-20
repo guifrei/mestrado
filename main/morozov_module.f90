@@ -3,6 +3,8 @@ module morozov_module
     use eigenfunctions_module
     implicit none
 
+!https://www.statisticshowto.datasciencecentral.com/wp-content/uploads/2017/06/proof-of-tikhonov.pdf
+
 contains
     subroutine morozov(sigma, vx, vy, vvY, i)
         double precision, intent(in) :: sigma
