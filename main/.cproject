@@ -17,31 +17,31 @@
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 				<configuration artifactName="${ProjName}" buildProperties="" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.photran.core.GFortranErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GmakeErrorParser" id="photran.managedbuild.config.gnu.fortran.exe.debug.1628958093" name="Debug" optionalBuildProperties="org.eclipse.cdt.docker.launcher.containerbuild.property.selectedvolumes=,org.eclipse.cdt.docker.launcher.containerbuild.property.volumes=" parent="photran.managedbuild.config.gnu.fortran.exe.debug">
 					<folderInfo id="photran.managedbuild.config.gnu.fortran.exe.debug.1628958093." name="/" resourcePath="">
-						<toolChain id="photran.managedbuild.toolchain.gnu.fortran.exe.debug.13521174" name="GCC Fortran" superClass="photran.managedbuild.toolchain.gnu.fortran.exe.debug">
-							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="photran.managedbuild.target.gnu.platform.exe.debug.440521035" name="Debug Platform" osList="solaris,linux,hpux,aix,qnx" superClass="photran.managedbuild.target.gnu.platform.exe.debug"/>
-							<builder buildPath="${workspace_loc:/linked_list_project}/Debug" id="photran.managedbuild.target.gnu.builder.exe.debug.1753211026" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="photran.managedbuild.target.gnu.builder.exe.debug"/>
-							<tool id="photran.managedbuild.tool.gnu.c.compiler.exe.debug.488984437" name="GCC C Compiler" superClass="photran.managedbuild.tool.gnu.c.compiler.exe.debug">
-								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.608487165" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+						<toolChain id="photran.managedbuild.toolchain.gnu.fortran.exe.debug.700889306" name="GCC Fortran" superClass="photran.managedbuild.toolchain.gnu.fortran.exe.debug">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="photran.managedbuild.target.gnu.platform.exe.debug.1737636495" name="Debug Platform" osList="solaris,linux,hpux,aix,qnx" superClass="photran.managedbuild.target.gnu.platform.exe.debug"/>
+							<builder buildPath="${workspace_loc:/main}/Debug" id="photran.managedbuild.target.gnu.builder.exe.debug.376186378" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="photran.managedbuild.target.gnu.builder.exe.debug"/>
+							<tool id="photran.managedbuild.tool.gnu.c.compiler.exe.debug.320218334" name="GCC C Compiler" superClass="photran.managedbuild.tool.gnu.c.compiler.exe.debug">
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.8826909" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
-							<tool command="/Work/linux/bin/gfortran" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug.674470400" name="GNU Fortran Compiler" superClass="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug">
-								<inputType id="photran.managedbuild.tool.gnu.fortran.compiler.input.106430102" superClass="photran.managedbuild.tool.gnu.fortran.compiler.input"/>
+							<tool id="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug.173201331" name="GNU Fortran Compiler" superClass="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug">
+								<option id="gnu.fortran.compiler.exe.debug.option.debugging.level.1368096587" superClass="gnu.fortran.compiler.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.fortran.debugging.level.max" valueType="enumerated"/>
+								<inputType id="photran.managedbuild.tool.gnu.fortran.compiler.input.1552723178" superClass="photran.managedbuild.tool.gnu.fortran.compiler.input"/>
 							</tool>
-							<tool command="/Work/linux/bin/gfortran" id="photran.managedbuild.tool.gnu.fortran.linker.exe.debug.292626894" name="GNU Fortran Linker" superClass="photran.managedbuild.tool.gnu.fortran.linker.exe.debug">
-								<option id="gnu.fortran.link.option.libs.1237403979" name="Libraries (-l)" superClass="gnu.fortran.link.option.libs" useByScannerDiscovery="false" valueType="libs">
+							<tool id="photran.managedbuild.tool.gnu.fortran.linker.exe.debug.1207860090" name="GNU Fortran Linker" superClass="photran.managedbuild.tool.gnu.fortran.linker.exe.debug">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.fortran.link.option.libs.1835977713" name="Libraries (-l)" superClass="gnu.fortran.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="lapack"/>
 									<listOptionValue builtIn="false" value="refblas"/>
 								</option>
-								<option id="gnu.fortran.link.option.paths.1501809505" name="Library search path (-L)" superClass="gnu.fortran.link.option.paths" useByScannerDiscovery="false" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.fortran.link.option.paths.1497512559" name="Library search path (-L)" superClass="gnu.fortran.link.option.paths" useByScannerDiscovery="false" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lapack-3.8.0}&quot;"/>
 								</option>
-								<option id="gnu.fortran.link.option.ldflags.1914278027" name="Linker flags" superClass="gnu.fortran.link.option.ldflags" useByScannerDiscovery="false" value="-static" valueType="string"/>
-								<inputType id="photran.managedbuild.tool.gnu.fortran.linker.input.1887111249" superClass="photran.managedbuild.tool.gnu.fortran.linker.input">
+								<inputType id="photran.managedbuild.tool.gnu.fortran.linker.input.1087788250" superClass="photran.managedbuild.tool.gnu.fortran.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 								</inputType>
 							</tool>
-							<tool id="photran.managedbuild.tool.gnu.assembler.exe.debug.1998542571" name="GCC Assembler" superClass="photran.managedbuild.tool.gnu.assembler.exe.debug">
-								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.871476551" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							<tool id="photran.managedbuild.tool.gnu.assembler.exe.debug.359435417" name="GCC Assembler" superClass="photran.managedbuild.tool.gnu.assembler.exe.debug">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.646882827" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>

@@ -300,6 +300,20 @@ module netlib_module
     end interface
 
     interface
+        subroutine dsysv(uplo, n, nrhs, a, lda, ipiv, b, ldb, work, lwork, info)
+            character(len = 1) , intent(in) :: uplo
+            integer, intent(in) :: n, nrhs
+            double precision, dimension(lda, n), intent(inout) :: a
+            integer, intent(in) :: lda, ldb
+            integer, dimension(n), intent(out) :: ipiv
+            double precision, dimension(ldb, nrhs), intent(inout) :: b
+            double precision, dimension(lwork), intent(out) :: work
+            integer, intent(in) :: lwork
+            integer, intent(out) :: info
+        end subroutine
+    end interface
+
+    interface
         subroutine extrap(init, eps, maxcol, sk, ginit, result, info)
             integer, intent(inout) :: init
             double precision, intent(in) :: eps, sk

@@ -39,6 +39,7 @@ program main
     use netlib_module
     use estimated_h_module
     use tikhonov_module
+    use morozov_module
     implicit none
 
     procedure(h_proc_t), pointer :: h
@@ -96,25 +97,21 @@ program main
 
     dx = a/dble(tmax - 1)
 
-    interface_idx = 1
-    condutance_idx = 1
+    interface_idx = 3
+    condutance_idx = 3
 
     call c_f_procpointer(hlist(condutance_idx), h)
     call c_f_procpointer(wlist(interface_idx), w)
     call c_f_procpointer(dwlist(interface_idx), dw)
 
     call calculate_temperature_coefficients(interface_idx, condutance_idx, h, vx, vy)
-    stdev = 0.4
+    stdev = 0.5
     call add_error(vy, stdev)
-    call least_squares_for_Y(vx, vy)
+    call least_squares_for_Y(vx, vy, vvY)
 
     do j = 1, tnmax
         write(*, *, decimal = 'comma')vy(j)
     end do
-
-    lambda = 1.0
-
-    call tikhonov2(lambda, vx, vy, vvY)
 
     !Principio da discrepancia de Morozov
     kmax = N
@@ -122,7 +119,7 @@ program main
 
     call calculate_reciprocity_coefficients(interface_idx)
 
-    do j = 0, N
+    do j = 0, kmax
         reciprocity_f(j) = calc_reciprocity_f(j)
         reciprocity_g(j) = calc_reciprocity_g(j)
     end do

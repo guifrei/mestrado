@@ -81,49 +81,49 @@ contains
         if (stdev > 0) then
             call random_seed(size = sz)
             allocate(seed(sz))
-            !                        call random_seed(get = seed)
-            !                        do i = 1, sz
-            !                            write (*, '(A5, I2, A4, I20)') 'seed(', i, ') = ', seed(i)
-            !                        end do
+            call random_seed(get = seed)
+            do i = 1, sz
+                write (*, '(A5, I2, A4, I20)') 'seed(', i, ') = ', seed(i)
+            end do
 
-            seed( 1) =           -958061469
-            seed( 2) =          -1771584774
-            seed( 3) =          -1442943105
-            seed( 4) =           1772560231
-            seed( 5) =           1383818085
-            seed( 6) =            735970811
-            seed( 7) =          -1478794335
-            seed( 8) =           -556286740
-            seed( 9) =          -1568032765
-            seed(10) =             75387879
-            seed(11) =          -1776664065
-            seed(12) =           -787746154
-            seed(13) =           1564600451
-            seed(14) =           -281070179
-            seed(15) =          -1728515462
-            seed(16) =           -753690087
-            seed(17) =          -1938055380
-            seed(18) =            734272983
-            seed(19) =          -1173422824
-            seed(20) =           -681217994
-            seed(21) =           -536357201
-            seed(22) =            237615303
-            seed(23) =           -983278272
-            seed(24) =           1143442660
-            seed(25) =           1402428719
-            seed(26) =           1459836958
-            seed(27) =          -1883717417
-            seed(28) =            766805053
-            seed(29) =          -1116004941
-            seed(30) =            825875804
-            seed(31) =           -328030294
-            seed(32) =           1070325082
-            seed(33) =                    0
+            !            seed( 1) =           -385259303
+            !            seed( 2) =            372086166
+            !            seed( 3) =           1732633078
+            !            seed( 4) =            262094655
+            !            seed( 5) =          -1253601498
+            !            seed( 6) =           -252204436
+            !            seed( 7) =          -1611597160
+            !            seed( 8) =            353722282
+            !            seed( 9) =          -1447018444
+            !            seed(10) =          -1253515875
+            !            seed(11) =          -1209401376
+            !            seed(12) =          -1480898054
+            !            seed(13) =           1368043947
+            !            seed(14) =            386218010
+            !            seed(15) =           -416384562
+            !            seed(16) =            -30925023
+            !            seed(17) =          -1870123119
+            !            seed(18) =          -1603393308
+            !            seed(19) =          -1561859525
+            !            seed(20) =           -513449033
+            !            seed(21) =            884028106
+            !            seed(22) =           1920629064
+            !            seed(23) =           -544366823
+            !            seed(24) =           -203020196
+            !            seed(25) =          -1285604011
+            !            seed(26) =           1125507407
+            !            seed(27) =           -411785441
+            !            seed(28) =           -567334698
+            !            seed(29) =           1849520929
+            !            seed(30) =            142744696
+            !            seed(31) =            989604615
+            !            seed(32) =          -1485855551
+            !            seed(33) =                    0
+            !
+            !            call random_seed(put = seed)
+            !            deallocate(seed)
 
-            call random_seed(put = seed)
-            deallocate(seed)
-
-            !call random_seed
+            call random_seed
             call random_number(rand_u)
             call random_number(rand_v)
             rand_epsilon = cos(2.0*pi*rand_v)*sqrt(-2.0*log(rand_u))
@@ -261,10 +261,11 @@ contains
         vvY(1:nn - 1) = integrals_Y(1:nn - 1)*2.0/a
     end subroutine
 
-    subroutine least_squares_for_Y(vx, vy, interface_idx, condutance_idx, stdev_idx)
+    subroutine least_squares_for_Y(vx, vy, vvY, interface_idx, condutance_idx, stdev_idx)
         use tikhonov_module
         double precision, dimension(tnmax), intent(in) :: vx
         double precision, dimension(tnmax), intent(in) :: vy
+        double precision, dimension(0: mmax_phi), intent(inout) :: vvY
         integer, intent(in), optional :: interface_idx
         integer, intent(in), optional :: condutance_idx
         integer, intent(in), optional :: stdev_idx
@@ -516,59 +517,10 @@ contains
         !https://www.sintef.no/globalassets/project/evitameeting/2005/lcurve.pdf
         !http://www2.compute.dtu.dk/~pcha/DIP/chap4.pdf
         !http://www2.compute.dtu.dk/~pcha/DIP/chap5.pdf
-        !        block
-        !            double precision, dimension(0: 4*mmax_F + 3, 0: 2*mmax_F + 1) :: new_mxF
-        !            double precision, dimension(0: 4*mmax_F + 3, 0: N) :: new_coeffsF
-        !            double precision :: lambda
-        !            integer :: k
-        !            integer, parameter :: lwork = (4*mmax_F + 4)*32
-        !            double precision, dimension(lwork) :: work
-        !
-        !            lambda = 1.0D-10
-        !            do k = 1, 10
-        !                lambda = lambda*10.0
-        !                new_mxF = 0.0
-        !                new_mxF(0:2*mmax_F + 1, 0:2*mmax_F + 1) = mxF
-        !                do j = 0, 2*mmax_F + 1
-        !                    new_mxF(2*mmax_F + 2 + j, j) = lambda
-        !                end do
-        !                new_coeffsF(0: 2*mmax_F + 1, :) = coeffsF
-        !                new_coeffsF(2*mmax_F + 2: 4*mmax_F + 3, :) = 0.0
-        !
-        !                call dgels(trans, 4*mmax_F + 4, 2*mmax_F + 2, N + 1, new_mxF, 4*mmax_F + 4, new_coeffsF, &
-        !                    4*mmax_F + 4, work, lwork, info)
-        !            end do
-        !            coeffsF = new_coeffsF(0: 2*mmax_F + 1, :)
-        !        end block
-
 
         call dgesvx(fact, trans, 2*mmax_F+2, N+1, mxF, 2*mmax_F+2, afF, 2*mmax_F+2, ipivF, equed, &
             rF, cF, coeffsF, 2*mmax_F+2, tmpcoeffsF, 2*mmax_F+2, rcond, ferr, berr, workF, iworkF, info)
         coeffsF = tmpcoeffsF
-
-        !        block
-        !            double precision, dimension(0: 2*mmax_G + 1, 0: mmax_G) :: new_mxG
-        !            double precision, dimension(0:  2*mmax_G + 1, 0: N) :: new_coeffsG
-        !            double precision :: lambda
-        !            integer :: k
-        !            integer, parameter :: lwork = (2*mmax_G + 2)*32
-        !            double precision, dimension(lwork) :: work
-        !
-        !            lambda = 0.001
-        !            do k = 1, 1
-        !                new_mxG = 0.0
-        !                new_mxG(0:mmax_G, 0:mmax_G) = mxG
-        !                do j = 0, mmax_G
-        !                    new_mxG(mmax_G + 1 + j, j) = lambda
-        !                end do
-        !                new_coeffsG(0: mmax_G, 0:) = coeffsG
-        !                new_coeffsG(mmax_G + 1: 2*mmax_G + 1, 0:) = 0.0
-        !
-        !                call dgels(trans, 2*mmax_G + 2, mmax_G + 1, N + 1, new_mxG, 2*mmax_G + 2, new_coeffsG, &
-        !                    2*mmax_G + 2, work, lwork, info)
-        !            end do
-        !            coeffsG = new_coeffsG(0: mmax_G, :)
-        !        end block
 
         call dgesvx(fact, trans, mmax_G+1, N+1, mxG, mmax_G+1, afG, mmax_G+1, ipivG, equed, &
             rG, cG, coeffsG, mmax_G+1, tmpcoeffsG, mmax_G+1, rcond, ferr, berr, workG, iworkG, info)
@@ -577,54 +529,6 @@ contains
         ! Algoritmo de ortogonalizacao de Gram-Schmidt
         !write(*, *)'Gram Schmidt'
         call gram_schmidt(interface_idx)
-
-    !        block
-    !            double precision :: x
-    !            integer :: r_idx
-    !
-    !            r_idx = 5
-    !            open(unit = 1, file='/home/cx3d/mestrado/data/a.txt')
-    !            do j = 0, 100
-    !                x = dble(j)*a/100.0
-    !                write(1, *)x, F1(r_idx, x, b), fpsi(r_idx, x)
-    !            end do
-    !            close(1)
-    !
-    !            open(unit = 1, file='/home/cx3d/mestrado/data/b.txt')
-    !            do j = 0, 100
-    !                x = dble(j)*a/100.0
-    !                write(1, *)x, k1*dF1dn(r_idx, x, interface_idx), k2*dF2dn(r_idx, x, interface_idx)
-    !            end do
-    !            close(1)
-    !
-    !            open(unit = 1, file='/home/cx3d/mestrado/data/c.txt')
-    !            do j = 0, 100
-    !                x = dble(j)*a/100.0
-    !                write(1, *)x, F1(r_idx, x, w(x)), F2(r_idx, x, w(x))
-    !            end do
-    !            close(1)
-    !
-    !            open(unit = 1, file='/home/cx3d/mestrado/data/d.txt')
-    !            do j = 0, 100
-    !                x = dble(j)*a/100.0
-    !                write(1, *)x, F2(r_idx, x, 0.0_8)
-    !            end do
-    !            close(1)
-    !
-    !            open(unit = 1, file='/home/cx3d/mestrado/data/e.txt')
-    !            do j = 0, 100
-    !                x = dble(j)*a/100.0
-    !                write(1, *)x, G1(r_idx, x, b), fphi(r_idx, x)
-    !            end do
-    !            close(1)
-    !
-    !            open(unit = 1, file='/home/cx3d/mestrado/data/f.txt')
-    !            do j = 0, 100
-    !                x = dble(j)*a/100.0
-    !                write(1, *)x, dG1dn(r_idx, x, interface_idx)
-    !            end do
-    !            close(1)
-    !        end block
     end subroutine
 
     function soma_controle_erro(parcela, j, x, y, v, mmax) result(r)

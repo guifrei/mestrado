@@ -11,8 +11,13 @@ contains
         double precision, dimension(0: mmax_phi), intent(out) :: vvY
         double precision, dimension(tnmax, 0: mmax_phi) :: mA
         double precision, dimension(0: mmax_phi, 0: mmax_phi) :: mAtA
-        double precision, dimension(0: mmax_phi) :: vb
         integer :: i, j
+
+        integer, dimension(mmax_phi + 1) :: ipiv
+        double precision, dimension(:), allocatable :: work
+        double precision, dimension(1) :: swork
+        integer :: lwork
+        integer :: info
 
         do i = 1, tnmax
             do j = 0, mmax_phi
@@ -25,9 +30,12 @@ contains
             mAtA(i, i) = mAtA(i, i) + lambda*lambda
         end do
 
-        vb = matmul(transpose(mA), vy)
-
-
+        vvY = matmul(transpose(mA), vy)
+        lwork = -1
+        call dsysv('U', mmax_phi + 1, 1, mAtA, mmax_phi + 1, ipiv, vvY, mmax_phi + 1, swork, lwork, info)
+        lwork = int(swork(1))
+        allocate(work(lwork))
+        call dsysv('U', mmax_phi + 1, 1, mAtA, mmax_phi + 1, ipiv, vvY, mmax_phi + 1, work, lwork, info)
     end subroutine
 
     subroutine tikhonov(lambda, vx, vy, vvY)
@@ -48,24 +56,22 @@ contains
         double precision, dimension(0: mmax_phi) :: integrals_Y
         double precision, dimension(nn - deriv_ord, nn) :: mL !operador derivativo
 
-                    !            lambda = 0.0001
-
         mL = 0.0
 
         if (deriv_ord == 0) then
             do i = 1, nn - deriv_ord
-                mL(i, i) = sqrt(lambda)
+                mL(i, i) = lambda
             end do
         else if (deriv_ord == 1) then
             do i = 1, nn - deriv_ord
-                mL(i, i) = -sqrt(lambda)
-                mL(i, i + 1) = sqrt(lambda)
+                mL(i, i) = -lambda
+                mL(i, i + 1) = lambda
             end do
         else if (deriv_ord == 2) then
             do i = 1, nn - deriv_ord
-                mL(i, i) = sqrt(lambda)
-                mL(i, i + 1) = -2.0*sqrt(lambda)
-                mL(i, i + 2) = sqrt(lambda)
+                mL(i, i) = lambda
+                mL(i, i + 1) = -2.0*lambda
+                mL(i, i + 2) = lambda
             end do
         end if
 
@@ -87,45 +93,5 @@ contains
         integrals_Y(0) = vb(1, 1)*a
         integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
         vvY = vb(1:nn, 1)
-    end subroutine
-
-    subroutine morozov(sigma, vx, vy, vvY, i)
-        double precision, intent(in) :: sigma
-        double precision, dimension(tnmax), intent(in) :: vx
-        double precision, dimension(tnmax), intent(inout) :: vy
-        double precision, dimension(0: mmax_phi), intent(inout) :: vvY
-        integer, intent(out) :: i
-        double precision, dimension(tnmax) :: tmpya, tmpyb
-        double precision :: sqrt_rms_a, sqrt_rms_b, diff_a, diff_b
-        logical :: keep
-
-        if (sigma.ne.0) then
-            keep = .true.
-            tmpya = vvY(0)
-            sqrt_rms_a = norm2(tmpya - vy)/sqrt(dble(tnmax))
-            diff_a = dabs(sqrt_rms_a - sigma)
-            i = 1
-
-            tmpyb = tmpya
-            do while (keep .and. (i <= mmax_phi))
-                tmpyb = tmpyb + vvY(i)*cos(mu(i)*vx)
-                sqrt_rms_b = norm2(tmpyb - vy)/sqrt(dble(tnmax))
-                diff_b = dabs(sqrt_rms_b - sigma)
-
-                if (sqrt_rms_b <= sigma) then
-                    keep = .false.
-                    vy = tmpyb
-                    !i = i + 1 !TODO
-                    write(*, *)i, sqrt_rms_b
-                end if
-
-                if (keep) then
-                    tmpya = tmpyb
-                    sqrt_rms_a = sqrt_rms_b
-                    diff_a = diff_b
-                    i = i + 1
-                end if
-            end do
-        end if
     end subroutine
 end module tikhonov_module
