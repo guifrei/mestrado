@@ -40,6 +40,7 @@ program main
     use estimated_h_module
     use tikhonov_module
     use morozov_module
+    use iso_c_binding
     implicit none
 
     procedure(h_proc_t), pointer :: h
@@ -54,6 +55,17 @@ program main
     double precision :: lambda
     logical :: success
     double precision, dimension(tnmax) :: tmpvy
+
+    interface generic_spec
+        function gsl_rng_alloc(gsl_rng_type) result(gsl_rng) bind(C)
+            import
+            type(c_ptr), value :: gsl_rng_type
+            type(c_ptr) :: gsl_rng
+        end function
+    end interface generic_spec
+
+!    type(c_ptr), bind(C, name = '') :: gsl_rng_type
+    type(c_ptr) ::  gsl_rng
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -99,8 +111,8 @@ program main
 
     dx = a/dble(tmax - 1)
 
-    interface_idx = 2
-    condutance_idx = 3
+    interface_idx = 1
+    condutance_idx = 1
 
     call c_f_procpointer(hlist(condutance_idx), h)
     call c_f_procpointer(wlist(interface_idx), w)
@@ -110,28 +122,15 @@ program main
     stdev = 0.5
     call add_error(vy, stdev)
     !call least_squares_for_Y(vx, vy, vvY)
-
-    !    lambda = 0.8266385
-    call find_root(obj, 0.8D0, 1.0D-6, 1000, lambda, success )
-    write(*, *, decimal = 'comma') lambda
-
-    !    lambda = 0.82663896675
-    !    call tikhonov2(lambda, vx, vy, vvY)
-    !    tmpvy = 0.0
-    !    do j = 0, N
-    !        tmpvy = tmpvy + vvY(j)*cos(mu(j)*vx)
-    !    end do
-    !    sqrt_rms = norm2(tmpvy - vy)/sqrt(dble(tnmax))
-    !    write(*, *, decimal = 'comma') lambda, sqrt_rms
-    !
-    !    do j = 1, tnmax
-    !        write(*, *, decimal = 'comma')vy(j)
-    !    end do
+    lambda = 0.66
+!    call tikhonov2(lambda, vx, vy, vvY)
+    call find_root(obj, 0.66D0, 1.0D-4, 1000, lambda, success)
+    call tikhonov2(lambda, vx, vy, vvY)
+    write(*, *)obj(lambda)
 
     !Principio da discrepancia de Morozov
     kmax = N
-!    call morozov(stdev, vx, vy, vvY, kmax)
-!    kmax = 2
+    call morozov(stdev, vx, vy, vvY, kmax)
 
     call calculate_reciprocity_coefficients(interface_idx)
 
