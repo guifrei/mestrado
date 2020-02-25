@@ -26,11 +26,11 @@ contains
                 sqrt_rms = norm2(tmpy - vy)/sqrt(dble(tnmax))
 
                 if (sqrt_rms <= sigma) then
-                    keep = .false.
+!                    keep = .false.
                     vy = tmpy
-                    write(*, *, decimal='comma')i, sqrt_rms
                 end if
 
+                write(*, *, decimal='comma')i, abs(sqrt_rms - sigma)
                 if (keep) then
                     i = i + 1
                 end if

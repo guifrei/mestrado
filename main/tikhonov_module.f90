@@ -87,7 +87,7 @@ contains
         mxa(mm + 1: mm + nn - deriv_ord, :) = mL
 
         vb(1:mm, 1) = vy
-        vb(mm + 1:mm + nn - deriv_ord, 1) = matmul(mL, vvY)
+        vb(mm + 1:mm + nn - deriv_ord, 1) = 0!matmul(mL, vvY)
 
         call dgels('N', mm + nn - deriv_ord, nn, 1, mxa, mm + nn - deriv_ord, vb, mm + nn - deriv_ord, work, lwork, info)
         integrals_Y(0) = vb(1, 1)*a
