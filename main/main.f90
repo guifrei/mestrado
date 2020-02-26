@@ -18,7 +18,7 @@ program main
     integer :: interface_idx, condutance_idx, stdev_idx, nmax, k, j
     double precision :: x, dx, sqrt_rms
     double precision :: h_est
-    integer, dimension(3, 3, 3) :: kmax
+    integer :: kmax
     double precision :: lambda
     logical :: success
     double precision, dimension(3) :: stdev = [0.0D0, 0.1D0, 0.5D0]
@@ -100,7 +100,6 @@ program main
                 !                stdev = 0.5!maxval(abs(vy))*0.1/100.0
                 call add_error(vy, stdev(stdev_idx))
                 call least_squares_for_Y(vx, vy, vvY)
-                kmax = N
 
                 open(unit=10,file='../paper/difference_interface_' // &
                     str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
@@ -114,15 +113,71 @@ program main
                 end if
                 close(10)
 
-                !    kmax = 6
-                !    vy = 0.0
-                !    do j = 0, kmax
-                !        vy = vy + vvY(j)*cos(mu(j)*vx)
-                !    end do
-
                 call calculate_reciprocity_coefficients(interface_idx)
 
-                nmax = kmax(interface_idx, condutance_idx, stdev_idx)
+                kmax = N
+                if ((interface_idx.eq.1).and.(condutance_idx.eq.1)) then
+                    if (stdev_idx.eq.2) then
+                        kmax = 10
+                    else if (stdev_idx.eq.3) then
+                        kmax = 6
+                    end if
+                else if ((interface_idx.eq.1).and.(condutance_idx.eq.2)) then
+                    if (stdev_idx.eq.2) then
+                        kmax = 6
+                    else if (stdev_idx.eq.3) then
+                        kmax = 4
+                    end if
+                else if ((interface_idx.eq.1).and.(condutance_idx.eq.3)) then
+                    if (stdev_idx.eq.2) then
+                        kmax = 10
+                    else if (stdev_idx.eq.3) then
+                        kmax = 5
+                    end if
+                else if ((interface_idx.eq.2).and.(condutance_idx.eq.1)) then
+                    if (stdev_idx.eq.2) then
+                        kmax = 10
+                    else if (stdev_idx.eq.3) then
+                        kmax = 6
+                    end if
+                else if ((interface_idx.eq.2).and.(condutance_idx.eq.2)) then
+                    if (stdev_idx.eq.2) then
+                        kmax = 9
+                    else if (stdev_idx.eq.3) then
+                        kmax = 6
+                    end if
+                else if ((interface_idx.eq.2).and.(condutance_idx.eq.3)) then
+                    if (stdev_idx.eq.2) then
+                        kmax = 13
+                    else if (stdev_idx.eq.3) then
+                        kmax = 6
+                    end if
+                else if ((interface_idx.eq.3).and.(condutance_idx.eq.1)) then
+                    if (stdev_idx.eq.2) then
+                        kmax = 10
+                    else if (stdev_idx.eq.3) then
+                        kmax = 6
+                    end if
+                else if ((interface_idx.eq.3).and.(condutance_idx.eq.2)) then
+                    if (stdev_idx.eq.2) then
+                        kmax = 8
+                    else if (stdev_idx.eq.3) then
+                        kmax = 6
+                    end if
+                else if ((interface_idx.eq.3).and.(condutance_idx.eq.3)) then
+                    if (stdev_idx.eq.2) then
+                        kmax = 6
+                    else if (stdev_idx.eq.3) then
+                        kmax = 5
+                    end if
+                end if
+
+                vy = 0.0
+                do j = 0, kmax
+                    vy = vy + vvY(j)*cos(mu(j)*vx)
+                end do
+
+                nmax = kmax
 
                 do j = 0, nmax
                     reciprocity_f(j) = calc_reciprocity_f(j)
