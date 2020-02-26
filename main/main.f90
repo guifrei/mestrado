@@ -1,36 +1,3 @@
-!data00 = Import[
-!   "/home/cx3d/mestrado/data/temperaturas_sinteticas_interface_03_\
-!conductance_01_stdev_00.dat", {"Data", All, 2}];
-!
-!gaussData01 = GaussianFilter[data01, 20.0, Method -> "Gaussian"];
-!ListLinePlot[{data00, gaussData01}]
-
-!plot 'conductance_01.dat', 'estimativa_ctc_interface_01_conductance_01_stdev_00.dat' with lines, 'estimativa_ctc_interface_01_conductance_01_stdev_01.dat', 'estimativa_ctc_interface_01_conductance_01_stdev_05.dat'
-!
-!plot 'conductance_02.dat', 'estimativa_ctc_interface_01_conductance_02_stdev_00.dat' with lines, 'estimativa_ctc_interface_01_conductance_02_stdev_01.dat', 'estimativa_ctc_interface_01_conductance_02_stdev_05.dat'
-!
-!plot 'conductance_03.dat', 'estimativa_ctc_interface_01_conductance_03_stdev_00.dat' with lines, 'estimativa_ctc_interface_01_conductance_03_stdev_01.dat', 'estimativa_ctc_interface_01_conductance_03_stdev_05.dat'
-!
-!
-!===============
-!
-!
-!plot 'conductance_01.dat', 'estimativa_ctc_interface_02_conductance_01_stdev_00.dat' with lines, 'estimativa_ctc_interface_02_conductance_01_stdev_01.dat', 'estimativa_ctc_interface_02_conductance_01_stdev_05.dat'
-!
-!plot 'conductance_02.dat', 'estimativa_ctc_interface_02_conductance_02_stdev_00.dat' with lines, 'estimativa_ctc_interface_02_conductance_02_stdev_01.dat', 'estimativa_ctc_interface_02_conductance_02_stdev_05.dat'
-!
-!plot 'conductance_03.dat', 'estimativa_ctc_interface_02_conductance_03_stdev_00.dat' with lines, 'estimativa_ctc_interface_02_conductance_03_stdev_01.dat', 'estimativa_ctc_interface_02_conductance_03_stdev_05.dat'
-!
-!===============
-!
-!
-!plot 'conductance_01.dat', 'estimativa_ctc_interface_03_conductance_01_stdev_00.dat' with lines, 'estimativa_ctc_interface_03_conductance_01_stdev_01.dat', 'estimativa_ctc_interface_03_conductance_01_stdev_05.dat'
-!
-!plot 'conductance_02.dat', 'estimativa_ctc_interface_03_conductance_02_stdev_00.dat' with lines, 'estimativa_ctc_interface_03_conductance_02_stdev_01.dat', 'estimativa_ctc_interface_03_conductance_02_stdev_05.dat'
-!
-!plot 'conductance_03.dat', 'estimativa_ctc_interface_03_conductance_03_stdev_00.dat' with lines, 'estimativa_ctc_interface_03_conductance_03_stdev_01.dat', 'estimativa_ctc_interface_03_conductance_03_stdev_05.dat'
-
-
 program main
     use interfaces_module
     use conductances_module
@@ -38,8 +5,8 @@ program main
     use reciprocity_functions_module
     use netlib_module
     use estimated_h_module
-    use tikhonov_module
-    use morozov_module
+    !use tikhonov_module
+    !use morozov_module
     use iso_c_binding
     implicit none
 
@@ -47,14 +14,15 @@ program main
     procedure(w_proc_t), pointer :: w
     procedure(dw_proc_t), pointer :: dw
     double precision :: c_fluxo_calor, c_delta_temperatura
-    double precision, dimension(tnmax) :: vx, vy
-    integer :: interface_idx, condutance_idx, nmax, k, j
-    double precision :: x, dx, stdev, sqrt_rms
+    double precision, dimension(tnmax) :: vx, vy, tmpy
+    integer :: interface_idx, condutance_idx, stdev_idx, nmax, k, j
+    double precision :: x, dx, sqrt_rms
     double precision :: h_est
-    integer :: kmax
+    integer, dimension(3, 3, 3) :: kmax
     double precision :: lambda
     logical :: success
-    double precision, dimension(tnmax) :: tmpvy
+    double precision, dimension(3) :: stdev = [0.0D0, 0.1D0, 0.5D0]
+    character(len = 2) :: str_idx, str_cdx, str_stdev
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -98,107 +66,86 @@ program main
     hlist(8) = c_funloc(h8)
     hlist(9) = c_funloc(h9)
 
-    interface_idx = 1
-    condutance_idx = 3
-
-    call c_f_procpointer(hlist(condutance_idx), h)
-    call c_f_procpointer(wlist(interface_idx), w)
-    call c_f_procpointer(dwlist(interface_idx), dw)
-
-    call calculate_temperature_coefficients(interface_idx, condutance_idx, h, vx, vy)
-    stdev = 0.5!maxval(abs(vy))*0.1/100.0
-    call add_error(vy, stdev)
-    call least_squares_for_Y(vx, vy, vvY)
-    call find_root(obj, 0.5D0, 1.0D-4, 1000, lambda, success)
-    call tikhonov(lambda, vx, vy, vvY)
-    write(*, *)stdev, obj(lambda)
-
-    !Principio da discrepancia de Morozov
-    kmax = N
-    call morozov(stdev, vx, vy, vvY, kmax)
-    write(*, *)stdev
-    kmax = 4
-
-    call calculate_reciprocity_coefficients(interface_idx)
-
-    do j = 0, kmax
-        reciprocity_f(j) = calc_reciprocity_f(j)
-        reciprocity_g(j) = calc_reciprocity_g(j)
-    end do
-
-    open(7, file = '/tmp/log')
-    nmax = kmax
-    dx = a/dble(tmax - 1)
-    do j = 1, tmax
-        x = dx*(j - 1)
-        c_fluxo_calor = 0
-        c_delta_temperatura = 0
-        do k = 0, nmax
-            c_fluxo_calor = c_fluxo_calor + parcela_fluxo_calor(x, k, interface_idx)
-            c_delta_temperatura = c_delta_temperatura + parcela_delta_temperatura(x, k, interface_idx)
-        end do
-        h_est = c_fluxo_calor/c_delta_temperatura
-        write(7, *)x, h_est, h(x)
+    dx = a/1000.0
+    open(unit=7,file='../paper/interface.dat')
+    open(unit=8,file='../paper/conductance.dat')
+    do j = 0, 1000
+        x = dx*dble(j)
+        write(7, *)x, w1(x), w2(x), w3(x)
+        write(8, *)x, h1(x), h2(x), h3(x)
     end do
     close(7)
+    close(8)
 
-contains
-    double precision function obj(lambda)
-        double precision, intent(in) :: lambda
-        double precision, dimension(tnmax) :: tmpvy
-        double precision :: sqrt_rms
+    do interface_idx = 1, 3
+        do condutance_idx = 1, 3
+            do stdev_idx = 1, 3
 
-        call tikhonov(lambda, vx, vy, vvY)
-        tmpvy = 0.0
-        do j = 0, mmax_phi
-            tmpvy = tmpvy + vvY(j)*cos(mu(j)*vx)
+                write(*, *)'Interface = ', interface_idx, ', conductance = ', condutance_idx, ', stdev = ', stdev_idx
+                write(str_idx, '(I2.2)') interface_idx
+                write(str_cdx, '(I2.2)') condutance_idx
+                if (stdev_idx.eq.1) then
+                    str_stdev = '00'
+                else if (stdev_idx.eq.2) then
+                    str_stdev = '01'
+                else
+                    str_stdev = '05'
+                end if
+
+                call c_f_procpointer(hlist(condutance_idx), h)
+                call c_f_procpointer(wlist(interface_idx), w)
+                call c_f_procpointer(dwlist(interface_idx), dw)
+
+                call calculate_temperature_coefficients(interface_idx, condutance_idx, h, vx, vy)
+                !                stdev = 0.5!maxval(abs(vy))*0.1/100.0
+                call add_error(vy, stdev(stdev_idx))
+                call least_squares_for_Y(vx, vy, vvY)
+                kmax = N
+
+                open(unit=10,file='../paper/difference_interface_' // &
+                    str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
+                if (stdev(stdev_idx).ne.0) then
+                    tmpy = 0.0
+                    do j = 0, mmax_phi
+                        tmpy = tmpy + vvY(j)*cos(mu(j)*vx)
+                        sqrt_rms = norm2(tmpy - vy)
+                        write(10, *)j, sqrt_rms !norm2(vvY(i)*cos(mu(i)*vx))
+                    end do
+                end if
+                close(10)
+
+                !    kmax = 6
+                !    vy = 0.0
+                !    do j = 0, kmax
+                !        vy = vy + vvY(j)*cos(mu(j)*vx)
+                !    end do
+
+                call calculate_reciprocity_coefficients(interface_idx)
+
+                nmax = kmax(interface_idx, condutance_idx, stdev_idx)
+
+                do j = 0, nmax
+                    reciprocity_f(j) = calc_reciprocity_f(j)
+                    reciprocity_g(j) = calc_reciprocity_g(j)
+                end do
+
+                open(7, file='../paper/calculated_ctc_interface_' // &
+                    str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
+
+                dx = a/dble(tmax - 1)
+                do j = 1, tmax
+                    x = dx*(j - 1)
+                    c_fluxo_calor = 0
+                    c_delta_temperatura = 0
+                    do k = 0, nmax
+                        c_fluxo_calor = c_fluxo_calor + parcela_fluxo_calor(x, k, interface_idx)
+                        c_delta_temperatura = c_delta_temperatura + parcela_delta_temperatura(x, k, interface_idx)
+                    end do
+                    h_est = c_fluxo_calor/c_delta_temperatura
+                    write(7, *)x, h_est, h(x)
+                end do
+                close(7)
+            end do
         end do
-        sqrt_rms = norm2(tmpvy - vy)/sqrt(dble(tnmax))
-        obj = sqrt_rms - stdev
-    end function obj
-
-    subroutine find_root( f, xinit, tol, maxiter, result, success )
-        interface
-            double precision function f(x)
-                double precision, intent(in) :: x
-            end function f
-        end interface
-
-        double precision, intent(in)     :: xinit
-        double precision, intent(in)     :: tol
-        integer, intent(in)  :: maxiter
-        double precision, intent(out)    :: result
-        logical, intent(out) :: success
-
-        double precision                 :: eps = 0.00001
-        double precision                 :: fx1
-        double precision                 :: fx2
-        double precision                 :: fprime
-        double precision                 :: x
-        double precision                 :: xnew
-        integer              :: i
-
-        result  = 0.0
-        success = .false.
-
-        x = xinit
-        do i = 1,max(1,maxiter)
-            fx1    = f(x)
-            fx2    = f(x+eps)
-            write(*,*) i, fx1, fx2, eps
-            fprime = (fx2 - fx1) / eps
-
-            xnew   = x - fx1 / fprime
-
-            if ( abs(xnew-x) <= tol ) then
-                success = .true.
-                result  = xnew
-                exit
-            endif
-
-            x = xnew
-            write(*,*) i, x
-        enddo
-
-    end subroutine find_root
+    end do
 end program main

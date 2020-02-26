@@ -14,26 +14,13 @@ contains
         integer, intent(out) :: i
         double precision, dimension(tnmax) :: tmpy
         double precision :: sqrt_rms
-        logical :: keep
 
         if (sigma.ne.0) then
-            keep = .true.
             tmpy = 0.0
-            i = 0
-
-            do while (keep .and. (i <= mmax_phi))
+            do i = 0, mmax_phi
                 tmpy = tmpy + vvY(i)*cos(mu(i)*vx)
-                sqrt_rms = norm2(tmpy - vy)/sqrt(dble(tnmax))
-
-                if (sqrt_rms <= sigma) then
-!                    keep = .false.
-                    vy = tmpy
-                end if
-
-                write(*, *, decimal='comma')i, abs(sqrt_rms - sigma)
-                if (keep) then
-                    i = i + 1
-                end if
+                sqrt_rms = norm2(tmpy - vy)
+                write(*, '(I3, F20.15)', decimal='comma')i, sqrt_rms !norm2(vvY(i)*cos(mu(i)*vx))
             end do
         end if
     end subroutine

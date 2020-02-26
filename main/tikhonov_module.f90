@@ -19,10 +19,8 @@ contains
         integer :: lwork
         integer :: info
 
-        do i = 1, tnmax
-            do j = 0, mmax_phi
-                mA(i, j) = cos(mu(j)*vx(i))
-            end do
+        do j = 0, mmax_phi
+            mA(:, j) = cos(mu(j)*vx)
         end do
 
         mAtA = matmul(transpose(mA), mA)
