@@ -172,10 +172,10 @@ program main
                     end if
                 end if
 
-                vy = 0.0
-                do j = 0, kmax
-                    vy = vy + vvY(j)*cos(mu(j)*vx)
-                end do
+!                vy = 0.0
+!                do j = 0, kmax
+!                    vy = vy + vvY(j)*cos(mu(j)*vx)
+!                end do
 
                 nmax = kmax
 
