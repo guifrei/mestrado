@@ -120,18 +120,18 @@
 	methods employed may demand direct measurements, usually obtained by intrusive
 	means; or they may demand a detailed description of the surfaces in contact, which is not
 	always available. Several strategies have been developed, eventually falling into either of
-	the features just described. Recently, the works conducted by Colaço et al. have been able
+	the features just described. Recently, some works conducted by our group have been able
 	to address these issues by applying the Reciprocity Functional approach, leading to a non-intrusive and non-iterative method for estimation of the thermal contact conductance. In this
 	approach, a set of auxiliary problems are introduced and their solutions are used to
-	assemble closed-form expressions for estimation of both temperature discontinuities and
+	assemble closed-form expressions for estimating the temperature discontinuities and
 	heat flux across the contact interface. This method has been succesfully employed in the
-	estimation of thermal contact conductance along planar contact interfaces inside composites
+	estimation of thermal contact conductances along planar contact interfaces inside composites
 	having a rectangular cross-section. This paper aims to extend the application of the
 	Reciprocity Functionals to a more general class of problems, in which the contact
 	interfaces have arbitrary, non-regular shapes, being the planar contact interface a
 	particular case. The results obtained show how this approach is capable of recovering the
 	distributions of temperature discontinuities and heat flow across the contact interface in a
-	fast and effective fashion.}
+	fast and effective fashion. This paper also presents a stopping criteria for the summation series developed in the method, which provide the aforementioned quantities.}
 
 \begin{document}
 
@@ -147,7 +147,7 @@ If heat transfer takes place through a common boundary between two bodies in phy
 h_c = \frac{q_c}{\Delta T_c} \label{definicao_1}
 \end{equation}
 
-where $q_c$ is the heat flux and $\Delta T_c$ is the temperature jump, both mesured across the contact interface. 
+where $q_c$ is the heat flux and $\Delta T_c$ is the temperature jump, both evaluated across the contact interface. 
 
 An equivalent definition of the TCC may be established upon the analysis of the associated heat conduction problem, by means of the boundary conditions evaluated on the contact interface. Thus, if $T_1$ and $T_2$ are the temperature fields in each of the solids whose contact interface is designated by $\Gamma$, and  $k_1$ and $k_2$ are their respective thermal conductivities, then energy balance allows the following relation:
 
@@ -166,9 +166,9 @@ h_c = \frac{-k_1\displaystyle\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\G
 
 The TCC may be seen as a parameter to evaluate the quality of the contact between two solid bodies. In extreme cases, the TCC vanishes on perfect thermally insulated regions along the contact interface, since the heat flux on the numerator in \eqref{definicao_1} will be zero, whereas an infinite value for TCC will be found where the contact itself is perfect, for which the temperature jump on the denominator in \eqref{definicao_1} will be zero. The TCC may also be useful for evaluating the presence of discontinuities or cracks inside heterogeneous materials; in fact, temperature jumps appear at those regions and the temperature fields measured on the external boundaries of the material will show values different from the expected ones if those discontinuities did not exist. Some examples of the necessity of calculating or estimating the TCC may be found in aerodynamics \citep{artigo_aerospacial}, microelectronics \citep{artigo_snaith} or heat exchanger projects \citep{artigo_huang}. 
 
-Some measuring methods developed for estimating the TCC usually demand knowing details of the surfaces in contact, as well as evaluations of temperature and heat flux inside the bodies in contact, either \textit{in loco} or through some kind of regression from measurements at inner points, resulting in complex or intrusive experimental assemblies \citep{artigo_fenech, tese_mikic, artigo_beck, artigo_salgon}. Still, due to its special features, this problem may be classified as an Inverse Heat Conduction Problem (abbreviated as IHCP); in that case, the distribution of TCC across the contact interface may be considered as the unknown function to be estimated, by means of the definition \eqref{definicao_1}. In any case, the distributions of heat flux and temperature jumps across the contact interface, which are necessary for estimation of TCC from \eqref{definicao_1}, still need to be measured or calculated.
+Some measuring methods developed for estimating the TCC usually demand knowing details of the surfaces in contact, as well as evaluations of the temperature and heat flux inside the bodies in contact, either \textit{in loco} or through some kind of regression from measurements at inner points, resulting in complex or intrusive experimental assemblies \citep{artigo_fenech, tese_mikic, artigo_beck, artigo_salgon}. Still, due to its special features, this problem may be classified as an Inverse Heat Conduction Problem (abbreviated as IHCP); in that case, the distribution of TCC across the contact interface may be considered as the unknown function to be estimated, by means of the definition \eqref{definicao_1}. In any case, the distributions of heat flux and temperature jumps across the contact interface, which are necessary for estimation of TCC from \eqref{definicao_1}, still need to be measured or calculated.
 
-The concept of Reciprocity Functional (RF), introduced by \cite{artigo_andrieux}, has been applied in recent researches on indirect evaluation of temperature jumps and heat flux distributions across contact interfaces \citep{reciproc_3, artigo_colaco_2, artigo_colaco_3, artigo_abreu_2,artigo_abreu_3, artigo_padilha_2}. These works resulted in the development of non-intrusive, non-iterative, and more computationally efficient approaches for estimation of the TCC. However, these techniques have been applied to regular geometrical configurations, such as rectangular or circular-shaped cross section contact interfaces. Nevertheless, the analytical development envolving the use of the RF approach is not restricted to any particular geometry, and may be expanded to more compreehensive configurations.
+The concept of Reciprocity Functional (RF), introduced by \cite{artigo_andrieux}, has been applied in recent researches on indirect evaluation of temperature jumps and heat flux distributions across contact interfaces \citep{reciproc_3, artigo_colaco_2, artigo_colaco_3, artigo_abreu_2,artigo_abreu_3, artigo_padilha_2}. These works resulted in the development of non-intrusive, non-iterative, and computationally more efficient approaches for estimating the TCC. However, these techniques have been applied to regular geometrical configurations, such as rectangular or circular-shaped cross section contact interfaces. Nevertheless, the analytical development envolving the use of the RF approach is not restricted to any particular geometry, and may be expanded to more compreehensive configurations.
 
 This paper presents and discusses the problem of estimating the TCC between two solid bodies in contact, considering that the contact interface is not necessarily regular. The starting point is the work developed by \cite{reciproc_3}, who studied the specific case in which the contact interface is planar and horizontal, given that both bodies have a rectangular cross section shape. The auxiliary problems, which provide the necessary functions to be used in the RF approach, were solved using the Method of Fundamental Solutions. \cite{artigo_padilha_3}, by means of the Classic Integral Transform Technique (CITT)\citep{livro_integral_transforms_cotta}, deduced an algebraic expression to estimate the TCC for this particular case model.
 
@@ -259,7 +259,7 @@ In the above equations, $T_1$ and $T_2$ are the temperature fields corresponding
 
 \section*{Inverse problem}
 
-The inverse problem is the estimation of the function $h_c(x)$ by means of the equation \eqref{definicao_3} on the contact interface $\Gamma$ between the two bodies $\Omega_1$ and $\Omega_2$, according to the physical arrangement illustrated in Figure \ref{fig2}. The estimation will be performed by using temperature measurements $Y = T(\Gamma_0)$ taken, for example, by an infrared camera on interface $\Gamma_0$. Both surfaces $\Gamma_1$ and $\Gamma_2$ will be kept thermically insulated, and the bottom surface $\Gamma_\infty$ will be subjected to the same prescribed temperature as in the direct problem. The heat flux $q_c(x) = -k_1\frac{\partial T_1}{\partial \mathbf{n}_1}$ and the temperature jump $\Delta T_c(x) = T_1 - T_2$, both evaluated at the contact interface $\Gamma$, will be indirectly estimated by defining and solving two separated auxiliary problems, as proposed by \cite{reciproc_3}.
+The inverse problem considered in this work is concerned with the estimation of the function $h_c(x)$ by means of the equation \eqref{definicao_3} on the contact interface $\Gamma$ between the two bodies $\Omega_1$ and $\Omega_2$, according to the physical arrangement illustrated in Figure \ref{fig2}. The estimation will be performed by using temperature measurements $Y = T(\Gamma_0)$ taken, for example, by a thermographic camera on interface $\Gamma_0$. Both surfaces $\Gamma_1$ and $\Gamma_2$ will be kept thermically insulated, and the bottom surface $\Gamma_\infty$ will be subjected to the same prescribed temperature as in the direct problem. The heat flux $q_c(x) = -k_1\frac{\partial T_1}{\partial \mathbf{n}_1}$ and the temperature jump $\Delta T_c(x) = T_1 - T_2$, both evaluated at the contact interface $\Gamma$, will be indirectly estimated by defining and solving two separated auxiliary problems, as proposed by \cite{reciproc_3}.
 
 \section*{Application of the reciprocity functional}
 
@@ -290,7 +290,7 @@ By rasing two families of auxiliary functions $F_{1,j}, j=1,2,\ldots N_1$ and $G
 & k_1 \Re(F_{1,j})
 =
 \left\langle \left[T_1 - T_2\right]_\Gamma, \beta_j\right\rangle _{L^2(\Gamma)}
-\label{identidade_T_inner} \\
+\label{identidade_T_inner} \\ \nonumber \\
 & k_1 \Re(G_{1,j})
 =
 \left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j\right\rangle _{L^2(\Gamma)}
@@ -298,19 +298,19 @@ By rasing two families of auxiliary functions $F_{1,j}, j=1,2,\ldots N_1$ and $G
 \end{align}
 where
 \begin{align}
-& \beta_j = k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\bigg|_\Gamma \label{expressao_define_beta} \\
+& \beta_j = k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\bigg|_\Gamma \label{expressao_define_beta} \\ \nonumber \\
 & \gamma_j = G_{1,j}\big|_\Gamma \label{expressao_define_gamma}
 \end{align}
 
-Assuming that $\beta_j, j=1,2,\ldots N_1$ and $\gamma_j, j=1,2,\ldots N_2$ form two sets of orthonormal functions, they define two linear subspaces over which $T_1 - T_2$ and $-k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}$ may be ortogonally projected, that is:
+Assuming that $\beta_j, j=1,2,\ldots N_1$ and $\gamma_j, j=1,2,\ldots N_2$ form two sets of orthonormal functions, they defined two linear subspaces over which $T_1 - T_2$ and $-k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}$ may be ortogonally projected, that is:
 \begin{align}
-& [T_1 - T_2]_\Gamma \approx \sum_{j=1}^{N_1} \left\langle  \left[T_1 - T_2\right]_\Gamma, \beta_j \right\rangle_{L^2(\Gamma)} \beta_j \\ 
+& [T_1 - T_2]_\Gamma \approx \sum_{j=1}^{N_1} \left\langle  \left[T_1 - T_2\right]_\Gamma, \beta_j \right\rangle_{L^2(\Gamma)} \beta_j \\ \nonumber \\
 & - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma \approx \sum_{j=1}^{N_2} \left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j \right\rangle_{L^2(\Gamma)} \gamma_j
 \end{align}
 
 Applying identities \eqref{identidade_T_inner} and \eqref{identidade_q_inner} to the above equations, and assuming that the orthogonal projections represent the corresponding functions in a reasonable manner, the following relations can be written:
 \begin{align}
-& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \label{resultado_1} \\
+& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j \label{resultado_1} \\ \nonumber \\
 & - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j \label{resultado_2}
 \end{align}
 
@@ -482,12 +482,8 @@ where $v(x) = b - w(x)$.
 \subsection*{Orthonormalization of the auxiliary functions}
 The orthonormality of functions $\beta_j(x)$ and $\gamma_j(x)$ was a prerequisite for applying the expansions \eqref{resultado_1} and \eqref{resultado_2}, which provide the necessary estimatives for the temperature jump and heat flux at the contact interface. At first, this feature cannot be guaranteed for the functions $\beta_j(x)$ and $\gamma_j(x)$ obtained from the previous subsection. However, assuming that the sets of functions $\beta_j(x), j=1,2,\dots, N_1$ and $\gamma_j(x), j=1,2,\dots, N_2$ are linearly independent, it is possible to obtain a new set of functions $\hat{\beta}_j(x)$ and $\hat{\gamma}_j(x)$ fulfilling that condition, by means of the Gram-Schmidt orthonormalization algorithm \citep{livro_axler}:
 \begin{align}
-\hat{\beta}_j = & \frac{1}{\norm{\nu_j}}\beta_j - \sum_{k=0}^{j-1} \frac{\langle \beta_j, \hat{\beta}_k \rangle_{L^2(\Gamma)}}{\norm{\nu_j}} \hat{\beta}_k \label{termo_beta} , \\
-& j=1,2,\dots, N_1 
-\end{align}
-\begin{align}
-\hat{\gamma}_j = & \frac{1}{\norm{\upsilon_j}}\gamma_j - \sum_{k=0}^{j-1} \frac{\langle \gamma_j, \hat{\gamma}_k \rangle_{L^2(\Gamma)}}{\norm{\upsilon_j}} \hat{\gamma}_k \label{termo_gamma},  \\
-& j=1,2,\dots, N_2 \nonumber 
+\hat{\beta}_j = & \frac{1}{\norm{\nu_j}}\beta_j - \sum_{k=0}^{j-1} \frac{\langle \beta_j, \hat{\beta}_k \rangle_{L^2(\Gamma)}}{\norm{\nu_j}} \hat{\beta}_k, j=1,2,\dots, N_1 \label{termo_beta} \\ \nonumber \\
+\hat{\gamma}_j = & \frac{1}{\norm{\upsilon_j}}\gamma_j - \sum_{k=0}^{j-1} \frac{\langle \gamma_j, \hat{\gamma}_k \rangle_{L^2(\Gamma)}}{\norm{\upsilon_j}} \hat{\gamma}_k, j=1,2,\dots, N_2 \label{termo_gamma}
 \end{align}
 where
 \begin{align}
@@ -497,14 +493,8 @@ where
 
 Due to the linearity of the auxiliary problems, the corresponding constants $\hat{\mathbb{A}}_{j,m}$ and $\hat{\mathbb{E}}_{j,m}$ may be obtained from an analogous procedure:
 \begin{align}
-\hat{\mathbb{A}}_{j,m} = & \frac{1}{\norm{\nu_j}} \mathbb{A}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \beta_j, \hat{\beta}_k \rangle}{\norm{\nu_j}} \hat{\mathbb{A}}_{k,m}
-\label{expressao_relaciona_psi} ,\\ 
-& j=1,2,\dots, N_1; m=0,1,2,\ldots,M \nonumber
-\end{align}
-\begin{align}
-\hat{\mathbb{E}}_{j,m} = & \frac{1}{\norm{\upsilon_j}} \mathbb{E}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \gamma_j, \hat{\gamma}_k \rangle}{\norm{\upsilon_j}} \hat{\mathbb{E}}_{k,m}
-\label{expressao_relaciona_zeta} , \\
-& j=1,2,\dots, N_2 ; m=0,1,2,\ldots,M  \nonumber 
+\hat{\mathbb{A}}_{j,m} = & \frac{1}{\norm{\nu_j}} \mathbb{A}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \beta_j, \hat{\beta}_k \rangle}{\norm{\nu_j}} \hat{\mathbb{A}}_{k,m}, j=1,2,\dots, N_1; m=0,1,2,\ldots,M \label{expressao_relaciona_psi} \\ \nonumber \\
+\hat{\mathbb{E}}_{j,m} = & \frac{1}{\norm{\upsilon_j}} \mathbb{E}_{j,m} - \sum_{k=0}^{j-1} \frac{\langle \gamma_j, \hat{\gamma}_k \rangle}{\norm{\upsilon_j}} \hat{\mathbb{E}}_{k,m}, j=1,2,\dots, N_2 ; m=0,1,2,\ldots,M \label{expressao_relaciona_zeta}
 \end{align}
 
 Equations \eqref{expressao_relaciona_psi} and \eqref{expressao_relaciona_zeta} are basically recurrence relations that allow the determination of coefficients $\hat{\mathbb{A}}_{j,m}$ and $\hat{\mathbb{E}}_{j,m}$ from coefficients $\mathbb{A}_{j,m}$ and $\mathbb{E}_{j,m}$, which have to be previously calculated as the solution of the linear systems \eqref{sistema_para_coeficientes_1a}, \eqref{sistema_para_coeficientes_2a} and \eqref{sistema_para_coeficientes_3a} (the coefficients $\hat{\mathbb{D}}_{j,m}$ are calculated as a side effect). These new coefficients, when substituted into \eqref{serie_para_beta} and \eqref{serie_para_gamma} at each step of the recurrency process, will provide the functions $\hat{\beta}_j$ and $\hat{\gamma}_j$ that meet the orthonormality criteria. 
@@ -592,7 +582,7 @@ The following procedure has been followed:
 	\item Different theoretical geometries of contact interface were proposed; for each geometry, a corresponding expression of the form $y = w(x)$ was defined. The geometries are summarized in Table \ref{tabela_interfaces} and graphically represented in Figures \ref{fig3a} to \ref{fig3c};
 	\item Different theoretical distribution profiles for the TCC were proposed; for each profile, a corresponding expression for $h_c(x)$ was defined. The profiles are summarized in Table \ref{tabela_ctc} and plotted in Figures \ref{fig4a} to \ref{fig4c};
 	\item The direct problem defined in equations \eqref{harm_T1} to \eqref{cc_T1_5} was numerically solved for each combination of a geometry and a TCC profile, leading to a collection of possible temperature distributions over the domain as a result;
-	\item From each temperature distribution, samples were taken along the upper boundary interface $\Gamma_0$ of the experimental assembly, providing the set of temperature values $Y$ required by the inverse problem. Gaussian noises were introduced in the simulated temperatures, simulating measurement errors;
+	\item From each temperature distribution, simulated samples were taken along the upper boundary interface $\Gamma_0$ of the experimental assembly, providing the set of temperature values $Y$ required by the inverse problem. Gaussian noises were introduced in the simulated temperatures, simulating measurement errors;
 	\item Equation \eqref{equacao_definicao_f_r_rep} was used to estimate the TCC along the interface contact and compared to the expected profile. This comparison was made for each combination of interface contact geometry and theoretical TCC profile. The equation for the interface contact $w(x)$ was used to calculate the coefficients $\mathbb{A}_{j,m}$ and $\mathbb{E}_{j,m}$ from the linear systems \eqref{sistema_para_coeficientes_1}, \eqref{sistema_para_coeficientes_2} and \eqref{sistema_para_coeficientes_3}. The synthetic temperature measuremens $Y$ were used in expression \eqref{aproximacao_Y}, which yields the values for $\bar{y}_0$ and $\bar{y}_m$ to be used in the RF expressions \eqref{calculo_FR_F1_antes_b} and \eqref{calculo_FR_G1_antes_b}.
 \end{enumerate}
 
@@ -936,13 +926,13 @@ where $\xi_{x=x_n}$ represents evaluations of either the temperature jump or the
 	\end{center}
 \end{figure}
 
-\cite{artigo_padilha_3} noticed that unstable behavior of estimatives when studying the specific case of a planar horizontal contact interface. It could be seen that, for the specific case in which $\sigma = 0.0\celsius$, the maximum number of terms in the summations before reaching unstability were $N_1=N_2=14$, for either calculation of temperature jump and heat flux across the contact interface. However, for the same case in the present work, the maximum number of terms in the summations before reaching unstability were greater ($N_1=N_2=20$) and corresponded to the maximum number of summation elements; in other words, the graphs plotted in Figures \ref{erro_rms_1} and \ref{erro_rms_2} for the results found by \cite{artigo_padilha_3} would show an ascending behavior starting from $N_1=N_2=14$ for the case $\sigma = 0.0\celsius$. A possible explanation for the improvement in the number of summing elements for this case lies on the analytical representation $Y(x)$ of the sampled temperatures. In the work of \cite{artigo_padilha_3}, the sampled temperatures were represented by a \textit{spline}, while in this work they were represented through a Fourier expansion, as suggested by \cite{artigo_mocerino}.
+\cite{artigo_padilha_3} noticed that unstable behavior of estimatives when studying the specific case of a planar horizontal contact interface. In their study, for the specific case in which $\sigma = 0.0\celsius$, the maximum number of terms in the summations before reaching unstability were $N_1=N_2=14$, for either calculation of temperature jump and heat flux across the contact interface. However, for the same case in the present work, the maximum number of terms in the summations before reaching unstability were greater ($N_1=N_2=20$) and corresponded to the maximum number of summation elements; in other words, the graphs plotted in Figures \ref{erro_rms_1} and \ref{erro_rms_2} for the results found by \cite{artigo_padilha_3} would show an ascending behavior starting from $N_1=N_2=14$ for the case $\sigma = 0.0\celsius$. A possible explanation for the improvement in the number of summing elements for this case lies on the analytical representation $Y(x)$ of the sampled temperatures. In the work of \cite{artigo_padilha_3}, the sampled temperatures were represented by a \textit{spline}, while in this work they were represented through a Fourier expansion, as suggested by \cite{artigo_mocerino}.
 
 The comparisons in Figures \ref{erro_rms_1} and \ref{erro_rms_2} made use of the results obtained from the solution of the direct problem defined by equations \eqref{harm_T1} to \eqref{cc_T1_5}, namely, the temperature jump and the heat flux at the contact interface. In a real world application, these quantities are not known in advance; indeed, the purpose of the method presented in this work is to estimate them in order to obtain an estimative of the thermal contact conductance. However, as seen before, adding terms to the summations of both quantities may lead to unstable results, if a consistent stopping criteria is not adopted. In this work, a stopping criteria was outlined, based on the analysis of the following expression:
 \begin{align}
 \delta_{Y(x)}(k) = \norm{Y(x) - \left[\bar{y}_0 + \sum_{m=1}^k \bar{y}_m \cos\mu_m x \right]} , k \le M \label{aproximacao_Y_2}
 \end{align}
-which can be understood as the error between the measured temperatures $Y(x)$ and their truncated representation as a Fourier series expansion, as stated in equation \eqref{aproximacao_Y}, up to the $k$-th term. Thus, graphs of $\delta_{Y(x)}(k)$ \textit{versus} $k$ were plotted for each combination of interface geometry, thermal contact conductance profile and error level, as well as graphs for $\delta_{[T_1 - T_2]}$ and $\delta_{\left[-k_1 \frac{\partial T_1}{\partial \mathbf{n}}\right]}$. By comparing these graphs, one could notice that the region in the $k$ axis where $\delta_{Y(x)}(k)$ had a quasi-steady behavior corresponded to the situations in which the estimatives had unstable results if those values of $k$ were used in place of $N_1$ or $N_2$ in equation \eqref{equacao_definicao_f_r_rep}. 
+which can be understood as the error between the measured temperatures $Y(x)$ and their truncated representation as a Fourier series expansion, as stated in equation \eqref{aproximacao_Y}, up to the $k$-th term. Thus, graphs of $\delta_{Y(x)}(k)$ \textit{versus} $k$ were plotted for each combination of interface geometry, thermal contact conductance profile and error level, as well as graphs for $\delta_{[T_1 - T_2]}$ and $\delta_{\left[-k_1 \frac{\partial T_1}{\partial \mathbf{n}}\right]}$. By comparing these graphs, one can notice that the region in the $k$ axis where $\delta_{Y(x)}(k)$ had a quasi-steady behavior corresponded to the situations in which the estimatives had unstable results if those values of $k$ were used in place of $N_1$ or $N_2$ in equation \eqref{equacao_definicao_f_r_rep}. 
 
 For instance, Figure \ref{erro_rms_xxx} shows the results obtained in the evaluation of $\delta_{Y(x)}(k)$ for the test problem associated with the contact interface profile 1 and theoretical contact interface 3; for this case the limiting indices for the summations were chosen as $k=N_1=N_2=10$ for $\sigma = 0.1\celsius$ and $k=N_1=N_2=5$ for $\sigma = 0.5\celsius$. These choices are not absolute, in the sense that a bigger value for $k$ (and consequently for $N_1$ and $N_2$) could be chosen and still provide stable results for the estimatives; however, the probability of obtaining results with poor quality seems to decrease if a value for $k$ is picked using the empirically obtained criteria described above.
 
