@@ -26,7 +26,7 @@ module constants_module
 
     integer, parameter :: tnmax = 121
     integer, parameter :: N = 20 ! tnmax/ndiv + 1 !min(mmax_F, mmax_G)           !numero total de funcionais de reciprocidade
-    integer, parameter :: tmax = 1001         ! para o levantamento do campo de temperaturas
+    integer, parameter :: tmax = 201         ! para o levantamento do campo de temperaturas
 end module constants_module
 
 
