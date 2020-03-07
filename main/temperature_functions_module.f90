@@ -8,17 +8,22 @@ module temperature_functions_module
 
     double precision, dimension(0: 2*mmax_T+1), target :: vst
 contains
-    function eta(m, x, interface_idx) result(r)
+    function eta(m, x, w, dw) result(r)
+        interface
+            function w(x) result(r)
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+
+            function dw(x) result(r)
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
         integer, intent(in) :: m
         double precision, intent(in) :: x
-        integer, intent(in) :: interface_idx
         double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
         double precision :: y, dy, v1, v2, v3
-
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
 
         y = w(x)
         dy = dw(x)
@@ -29,17 +34,22 @@ contains
     end function
 
 
-    function sigma(m, x, interface_idx) result(r)
+    function sigma(m, x, w, dw) result(r)
+        interface
+            function w(x) result(r)
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+
+            function dw(x) result(r)
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
         integer, intent(in) :: m
         double precision, intent(in) :: x
-        integer, intent(in) :: interface_idx
         double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
         double precision :: y, dy, v1, v2, v3
-
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
 
         y = w(x)
         dy = dw(x)
@@ -50,43 +60,51 @@ contains
     end function
 
 
-    function rho(m, x, interface_idx, hc) result(r)
+    function rho(m, x, hc, w, dw) result(r)
         integer, intent(in) :: m
         double precision, intent(in) :: x
-        integer, intent(in) :: interface_idx
         interface
             function hc(x) result(r)
                 double precision, intent(in) :: x
                 double precision :: r
             end function
+
+            function w(x) result(r)
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+
+            function dw(x) result(r)
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
         end interface
         double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
-
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
 
         r = sinh(mu(m) * w(x)) * cos(mu(m) * x) * hc(x) * sqrt(1.0 + dw(x) ** 2) / cosh(mu(m) * b)
     end function
 
 
-    function kappa(m, x, interface_idx, hc) result(r)
+    function kappa(m, x, hc, w, dw) result(r)
         integer, intent(in) :: m
         double precision, intent(in) :: x
-        integer, intent(in) :: interface_idx
         interface
             function hc(x) result(r)
                 double precision, intent(in) :: x
                 double precision :: r
             end function
+
+            function w(x) result(r)
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+
+            function dw(x) result(r)
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
         end interface
         double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
-
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
 
         r = cosh(mu(m) * (b - w(x))) * cos(mu(m) * x) * hc(x) * sqrt(1.0 + dw(x) ** 2) / cosh(mu(m) * b)
     end function
@@ -249,19 +267,27 @@ contains
     end function
 
     ! Determinação dos coeficientes via transformação integral
-    subroutine calculate_temperature_coefficients(interface_idx, condutance_idx, hc, vx, vy, write_files)
-        integer, intent(in) :: interface_idx, condutance_idx
+    subroutine calculate_temperature_coefficients(hc, w, dw, vx, vy)
         interface
             function hc(x) result(r)
                 import
                 double precision, intent(in) :: x
                 double precision :: r
             end function
+
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
         end interface
-        logical, intent(in), optional :: write_files
         double precision, dimension(0: tnmax - 1), optional, target :: vx, vy
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
         integer, target :: j, n
         double precision, dimension(0: 2*mmax_T+1, 0: 2*mmax_T+1) :: mx
         double precision, dimension(0: 2*mmax_T+1) :: vz
@@ -276,11 +302,7 @@ contains
         character(1) :: equed
         integer :: info
         double precision :: rcond
-        logical :: opt_write_files
         double precision, dimension(:), pointer :: opt_vx, opt_vy
-
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
 
         ! Geracao das temperaturas
         !        write(*, *)'Assembling system...'
@@ -311,40 +333,6 @@ contains
                 opt_vy(n) = t1(x, b)
             end do
         end if
-
-        if (present(write_files)) then
-            opt_write_files = write_files
-        else
-            opt_write_files = .false.
-        end if
-
-        if (opt_write_files) then
-            write(str_idx, '(I2.2)') interface_idx
-            write(str_cdx, '(I2.2)') condutance_idx
-
-            open(unit = 1, file = '/home/cx3d/mestrado/' // &
-                'data/fortran/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
-            open(unit = 3, file = '/home/cx3d/mestrado/' // &
-                'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
-            open(unit = 4, file = '/home/cx3d/mestrado/' // &
-                'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
-            dx = a/dble(tnmax - 1)
-            do n = 0, tnmax - 1
-                x = dble(n)*dx
-                if (n == 0) then
-                    x = x + dx*0.01
-                else if (n == tnmax - 1) then
-                    x = x - dx*0.01
-                end if
-                write(1, *)x, t1(x, b)
-                write(3, *)x, t1(x, w(x)) - t2(x, w(x))
-                write(4, *)x, -k1*(dw(x)*d_t1_dx(x, w(x)) - d_t1_dy(x, w(x)))/sqrt(1.0 + dw(x)**2)
-            end do
-            close(4)
-            close(2)
-            close(1)
-        end if
-
     contains
         function fa(x, args) result(r)
             double precision, intent(in) :: x
@@ -356,7 +344,7 @@ contains
             if (j == 0) then
                 r = -hc(x) * sqrt(1.0 + dw(x) ** 2)*w(x)
             else
-                r = -2.0*rho(j, x, interface_idx, hc)
+                r = -2.0*rho(j, x, hc, w, dw)
             end if
         end function
 
@@ -370,7 +358,7 @@ contains
             if (j == 0) then
                 r = hc(x) * sqrt(1.0 + dw(x) ** 2)
             else
-                r = 2.0*(k1*mu(j)*eta(j, x, interface_idx) + kappa(j, x, interface_idx, hc))
+                r = 2.0*(k1*mu(j)*eta(j, x, w, dw) + kappa(j, x, hc, w, dw))
             end if
         end function
 
@@ -384,7 +372,7 @@ contains
             if (j == 0) then
                 r = -(k2 + hc(x) * sqrt(1.0 + dw(x) ** 2)*w(x))
             else
-                r = -2.0*(k2*mu(j)*sigma(j, x, interface_idx) + rho(j, x, interface_idx, hc))
+                r = -2.0*(k2*mu(j)*sigma(j, x, w, dw) + rho(j, x, hc, w, dw))
             end if
         end function
 
@@ -398,7 +386,7 @@ contains
             if (j == 0) then
                 r = hc(x) * sqrt(1.0 + dw(x) ** 2)
             else
-                r = 2.0*kappa(j, x, interface_idx, hc)
+                r = 2.0*kappa(j, x, hc, w, dw)
             end if
         end function
 
@@ -417,5 +405,48 @@ contains
 
             r = q*a*hc(x) * sqrt(1.0 + dw(x) ** 2)*w(x)/k1
         end function
+    end subroutine
+
+    subroutine write_files(w, dw, interface_idx, condutance_idx)
+        interface
+            function w(x) result(r)
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+
+            function dw(x) result(r)
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+        integer, intent(in) :: interface_idx, condutance_idx
+        integer :: j
+        double precision :: x, dx
+        character(len = 2) :: str_idx, str_cdx
+
+        write(str_idx, '(I2.2)') interface_idx
+        write(str_cdx, '(I2.2)') condutance_idx
+
+        open(unit = 1, file = '/home/cx3d/mestrado/' // &
+            'data/fortran/temperaturas_sinteticas_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
+        open(unit = 3, file = '/home/cx3d/mestrado/' // &
+            'data/fortran/delta_temperatura_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
+        open(unit = 4, file = '/home/cx3d/mestrado/' // &
+            'data/fortran/fluxo_calor_interface_'//str_idx//'_conductance_'//str_cdx//'.dat')
+        dx = a/dble(tnmax - 1)
+        do j = 0, tnmax - 1
+            x = dble(j)*dx
+            if (j == 0) then
+                x = x + dx*0.01
+            else if (j == tnmax - 1) then
+                x = x - dx*0.01
+            end if
+            write(1, *)x, t1(x, b)
+            write(3, *)x, t1(x, w(x)) - t2(x, w(x))
+            write(4, *)x, -k1*(dw(x)*d_t1_dx(x, w(x)) - d_t1_dy(x, w(x)))/sqrt(1.0 + dw(x)**2)
+        end do
+        close(4)
+        close(2)
+        close(1)
     end subroutine
 end module temperature_functions_module
