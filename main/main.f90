@@ -8,6 +8,7 @@ program main
     !use tikhonov_module
     !use morozov_module
     use iso_c_binding
+    use spline_class_module
     implicit none
 
     procedure(h_proc_t), pointer :: h
@@ -23,6 +24,32 @@ program main
     logical :: success
     double precision, dimension(3) :: stdev = [0.0D0, 0.1D0, 0.5D0]
     character(len = 2) :: str_idx, str_cdx, str_stdev
+
+    block
+        type(spline_class) :: spline
+        integer, parameter :: tnmax = 121
+        double precision, dimension(tnmax) :: vx, vy
+        integer :: cnt
+        double precision :: x, y
+
+        do cnt = 1, tnmax
+            x = (cnt - 1)*a/(tnmax - 1);
+            vx(cnt) = x
+            vy(cnt) = a*exp(x/a)
+        end do
+
+        spline = spline_class(vx, vy, tnmax)
+
+        open(unit=100, file = '/tmp/out.txt')
+        do cnt = 1, 20
+            x = (cnt - 1)*a/(20 - 1);
+            y = spline%eval_d(x)
+            write(100, *)x, y
+        end do
+        close(100)
+
+
+    end block
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -172,10 +199,10 @@ program main
                     end if
                 end if
 
-!                vy = 0.0
-!                do j = 0, kmax
-!                    vy = vy + vvY(j)*cos(mu(j)*vx)
-!                end do
+                !                vy = 0.0
+                !                do j = 0, kmax
+                !                    vy = vy + vvY(j)*cos(mu(j)*vx)
+                !                end do
 
                 nmax = kmax
 

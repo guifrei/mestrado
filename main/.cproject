@@ -24,7 +24,8 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.8826909" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug.173201331" name="GNU Fortran Compiler" superClass="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug">
-								<option id="gnu.fortran.compiler.exe.debug.option.debugging.level.1368096587" superClass="gnu.fortran.compiler.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.fortran.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.fortran.compiler.exe.debug.option.debugging.level.1368096587" name="Debug Level" superClass="gnu.fortran.compiler.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.fortran.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.fortran.compiler.option.misc.other.498954565" superClass="gnu.fortran.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -freal-4-real-8" valueType="string"/>
 								<inputType id="photran.managedbuild.tool.gnu.fortran.compiler.input.1552723178" superClass="photran.managedbuild.tool.gnu.fortran.compiler.input"/>
 							</tool>
 							<tool id="photran.managedbuild.tool.gnu.fortran.linker.exe.debug.1207860090" name="GNU Fortran Linker" superClass="photran.managedbuild.tool.gnu.fortran.linker.exe.debug">
