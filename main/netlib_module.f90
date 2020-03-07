@@ -193,6 +193,20 @@ module netlib_module
             integer, intent(out) :: ier
         end subroutine
 
+        subroutine splder(t, n, c, k, nu, x, y, m, wrk, ier)
+        import
+            integer, intent(in) :: n
+            integer, intent(in) :: m
+            integer, intent(in) :: k
+            integer, intent(in) :: nu
+            double precision, intent(in), dimension(n) :: t
+            double precision, intent(in), dimension(n) :: c
+            double precision, intent(in), dimension(m) :: x
+            double precision, intent(out), dimension(m) :: y
+            double precision, intent(out), dimension(n) :: wrk
+            integer, intent(out) :: ier
+        end subroutine
+
         function splint(t,n,c,k,a,b,wrk) result(r)
             import
             integer, intent(in) :: n
