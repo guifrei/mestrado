@@ -6,12 +6,12 @@ module morozov_module
 !https://www.statisticshowto.datasciencecentral.com/wp-content/uploads/2017/06/proof-of-tikhonov.pdf
 
 contains
-    subroutine morozov(sigma, vx, vy, vvY, i)
+    subroutine morozov(sigma, vx, vy, vvY)
         double precision, intent(in) :: sigma
         double precision, dimension(tnmax), intent(in) :: vx
         double precision, dimension(tnmax), intent(inout) :: vy
         double precision, dimension(0: mmax_phi), intent(inout) :: vvY
-        integer, intent(out) :: i
+        integer :: i
         double precision, dimension(tnmax) :: tmpy
         double precision :: sqrt_rms
 

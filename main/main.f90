@@ -13,14 +13,15 @@ program main
     procedure(w_proc_t), pointer :: w
     procedure(dw_proc_t), pointer :: dw
     double precision :: c_fluxo_calor, c_delta_temperatura
-    double precision, dimension(tnmax) :: vx, vy, tmpy
+    double precision, dimension(tnmax) :: vx, vy, vy_noerr, tmpy
     integer :: interface_idx, condutance_idx, stdev_idx, nmax, k, j
     double precision :: x, dx, sqrt_rms
     double precision :: h_est
     integer :: kmax
     double precision, dimension(3) :: stdev_values = [0.0D0, 0.1D0, 0.5D0]
-    double precision :: stdev
+    double precision :: stdev, zz
     character(len = 2) :: str_idx, str_cdx, str_stdev
+    double precision, dimension(0: mmax_phi) :: werrY
     type(spline_class) :: spline
 
     wlist(1) = c_funloc(w1)
@@ -74,19 +75,53 @@ program main
     open(unit=8,file='../paper/conductance.dat')
     do j = 0, 1000
         x = dx*dble(j)
-        write(7, *)x, w1(x), w2(x), w3(x), werr(x)
+        zz = 0
+        do k = 0, mmax_phi
+            zz = zz + werrY(k)*cos(mu(k)*x)
+        end do
+        write(7, *)x, w1(x), w2(x), w3(x), werr(x), w(x) + spline%eval(x)
         write(8, *)x, h1(x), h2(x), h3(x)
     end do
     close(7)
     close(8)
 
     do interface_idx = 1, 3
+        call c_f_procpointer(wlist(interface_idx), w)
+        call c_f_procpointer(dwlist(interface_idx), dw)
         do condutance_idx = 1, 3
+            call c_f_procpointer(hlist(condutance_idx), h)
+            call calculate_temperature_coefficients(h, w, dw, vx, vy_noerr)
             do stdev_idx = 1, 3
-                call c_f_procpointer(hlist(condutance_idx), h)
-                call c_f_procpointer(wlist(interface_idx), w)
-                call c_f_procpointer(dwlist(interface_idx), dw)
-                call generate_results(h, w, dw, werr, dwerr)
+                write(str_idx, '(I2.2)') interface_idx
+                write(str_cdx, '(I2.2)') condutance_idx
+                if (stdev_idx.eq.1) then
+                    str_stdev = '00'
+                else if (stdev_idx.eq.2) then
+                    str_stdev = '01'
+                else
+                    str_stdev = '05'
+                end if
+
+                write(*, *)'Interface = ', interface_idx, ', conductance = ', condutance_idx, ', stdev = ', str_stdev
+
+                stdev = stdev_values(stdev_idx)
+                vy = vy_noerr
+                call add_error(vy, stdev)
+                call least_squares_for_Y(vx, vy, vvY, tnmax)
+
+                open(unit=10,file='../paper/difference_interface_' // &
+                    str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
+                if (stdev.ne.0) then
+                    tmpy = 0.0
+                    do j = 0, mmax_phi
+                        tmpy = tmpy + vvY(j)*cos(mu(j)*vx)
+                        sqrt_rms = norm2(tmpy - vy)
+                        write(10, *)j, sqrt_rms
+                    end do
+                end if
+                close(10)
+
+                call generate_results(h, w, dw, w, dw)
             end do
         end do
     end do
@@ -120,90 +155,62 @@ contains
             end function
         end interface
 
-        write(*, *)'Interface = ', interface_idx, ', conductance = ', condutance_idx, ', stdev = ', stdev_idx
-        write(str_idx, '(I2.2)') interface_idx
-        write(str_cdx, '(I2.2)') condutance_idx
-        if (stdev_idx.eq.1) then
-            str_stdev = '00'
-        else if (stdev_idx.eq.2) then
-            str_stdev = '01'
-        else
-            str_stdev = '05'
-        end if
-
-        call calculate_temperature_coefficients(h, w, dw, vx, vy)
-        stdev = stdev_values(stdev_idx)
-        call add_error(vy, stdev)
-        call least_squares_for_Y(vx, vy, vvY, tnmax)
-
-        open(unit=10,file='../paper/difference_interface_' // &
-            str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
-        if (stdev.ne.0) then
-            tmpy = 0.0
-            do j = 0, mmax_phi
-                tmpy = tmpy + vvY(j)*cos(mu(j)*vx)
-                sqrt_rms = norm2(tmpy - vy)
-                write(10, *)j, sqrt_rms
-            end do
-        end if
-        close(10)
-
         call calculate_reciprocity_coefficients(werr, dwerr)
 
         kmax = N
         if ((interface_idx.eq.1).and.(condutance_idx.eq.1)) then
             if (stdev_idx.eq.2) then
-                kmax = 10
-            else if (stdev_idx.eq.3) then
                 kmax = 6
+            else if (stdev_idx.eq.3) then
+                kmax = 4
             end if
         else if ((interface_idx.eq.1).and.(condutance_idx.eq.2)) then
             if (stdev_idx.eq.2) then
-                kmax = 6
+                kmax = 5
             else if (stdev_idx.eq.3) then
                 kmax = 4
             end if
         else if ((interface_idx.eq.1).and.(condutance_idx.eq.3)) then
             if (stdev_idx.eq.2) then
-                kmax = 10
-            else if (stdev_idx.eq.3) then
                 kmax = 5
+            else if (stdev_idx.eq.3) then
+                kmax = 3
             end if
         else if ((interface_idx.eq.2).and.(condutance_idx.eq.1)) then
             if (stdev_idx.eq.2) then
-                kmax = 10
+                kmax = 8
             else if (stdev_idx.eq.3) then
-                kmax = 6
+                kmax = 5
             end if
         else if ((interface_idx.eq.2).and.(condutance_idx.eq.2)) then
             if (stdev_idx.eq.2) then
-                kmax = 9
-            else if (stdev_idx.eq.3) then
                 kmax = 6
+            else if (stdev_idx.eq.3) then
+                kmax = 3
             end if
         else if ((interface_idx.eq.2).and.(condutance_idx.eq.3)) then
             if (stdev_idx.eq.2) then
-                kmax = 13
-            else if (stdev_idx.eq.3) then
                 kmax = 6
+            else if (stdev_idx.eq.3) then
+                kmax = 4
             end if
         else if ((interface_idx.eq.3).and.(condutance_idx.eq.1)) then
             if (stdev_idx.eq.2) then
-                kmax = 10
+                kmax = 8
             else if (stdev_idx.eq.3) then
-                kmax = 6
+                kmax = 4
             end if
         else if ((interface_idx.eq.3).and.(condutance_idx.eq.2)) then
             if (stdev_idx.eq.2) then
-                kmax = 8
+                kmax = 7
             else if (stdev_idx.eq.3) then
-                kmax = 6
+                kmax = 4
             end if
         else if ((interface_idx.eq.3).and.(condutance_idx.eq.3)) then
             if (stdev_idx.eq.2) then
-                kmax = 6
-            else if (stdev_idx.eq.3) then
                 kmax = 5
+            else if (stdev_idx.eq.3) then
+                kmax = 4
             end if
         end if
 
@@ -235,25 +242,35 @@ contains
     subroutine init_uncertainty()
         integer, parameter :: nmax = 100
         double precision, dimension(nmax) :: vx, rand_u, rand_v, rand_epsilon
-        double precision :: stdev = b/100.0
+        double precision :: stdev
+        double precision :: mean
         integer :: i
 
+        stdev = b/50.0
         dx = a/dble(nmax - 1)
         do j = 1, nmax
             vx(j) = dx*(j - 1)
         end do
 
         call random_seed
-        rand_epsilon = 0.0
-        do i = 1,1000
-            call random_number(rand_u)
-            call random_number(rand_v)
-            rand_epsilon = rand_epsilon + cos(2.0*pi*rand_v)*sqrt(-2.0*log(rand_u))
-        end do
-        rand_epsilon = rand_epsilon/1000.0
+        call random_number(rand_u)
+        call random_number(rand_v)
+        rand_epsilon = cos(2.0*pi*rand_v)*sqrt(-2.0*log(rand_u))
         rand_epsilon = rand_epsilon*stdev
 
-        call least_squares_for_Y(vx, vy, vvY, 1000)
+        stdev = 0
+        mean = 0
+        do i = 1,100
+            mean = mean + rand_epsilon(i)
+            stdev = stdev + rand_epsilon(i)*rand_epsilon(i)
+        end do
+
+        mean = mean/100.0
+        stdev = stdev/10000.0
+
+        stdev = sqrt(stdev - mean*mean)
+
+        call least_squares_for_Y(vx, rand_epsilon, werrY, nmax)
 
         spline = spline_class(vx, rand_epsilon, nmax)
     end subroutine
@@ -261,16 +278,22 @@ contains
     function werr(x) result(r)
         double precision, intent(in) :: x
         double precision :: r
+        integer :: i
 
-        !r = w(x) + spline%eval(x)
-        r = w(x) + b/50.0*cos(pi*x/a) + b/100.0*cos(2.0*pi*x/a)
+        r = w(x)
+        do i = 0, mmax_phi
+            r = r + werrY(i)*cos(mu(i)*x)
+        end do
     end function
 
     function dwerr(x) result(r)
         double precision, intent(in) :: x
         double precision :: r
+        integer :: i
 
-        !r = dw(x) + spline%eval_d(x)
-        r = dw(x) - (pi/a)*b/50.0*sin(pi*x/a) - (2.0*pi/a)*b/100.0*sin(2.0*pi*x/a)
+        r = dw(x)
+        do i = 0, mmax_phi
+            r = r - mu(i)*werrY(i)*sin(mu(i)*x)
+        end do
     end function
 end program main

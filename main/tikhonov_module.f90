@@ -4,11 +4,12 @@ module tikhonov_module
     implicit none
 
 contains
-    subroutine tikhonov2(lambda, vx, vy, vvY)
+    subroutine tikhonov2(lambda, vx, vy, vvY, residue)
         double precision, intent(in) :: lambda
         double precision, dimension(tnmax), intent(in) :: vx
         double precision, dimension(tnmax), intent(in) :: vy
         double precision, dimension(0: mmax_phi), intent(out) :: vvY
+        double precision, optional :: residue
         double precision, dimension(tnmax, 0: mmax_phi) :: mA
         double precision, dimension(0: mmax_phi, 0: mmax_phi) :: mAtA
         integer :: i, j
@@ -34,6 +35,14 @@ contains
         lwork = int(swork(1))
         allocate(work(lwork))
         call dsysv('U', mmax_phi + 1, 1, mAtA, mmax_phi + 1, ipiv, vvY, mmax_phi + 1, work, lwork, info)
+
+        !Para a curva L
+
+        if (present(residue)) then
+            residue = log(norm2(matmul(mA, vvY) - vy))
+        end if
+
+        deallocate(work)
     end subroutine
 
     subroutine tikhonov(lambda, vx, vy, vvY)

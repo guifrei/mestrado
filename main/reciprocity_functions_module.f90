@@ -75,62 +75,18 @@ contains
         double precision, dimension(tnmax), intent(inout) :: sample_y
         double precision, intent(in) :: stdev
         double precision, dimension(tnmax) :: rand_u, rand_v, rand_epsilon
-        integer :: sz, i
-        integer, allocatable :: seed(:)
+        integer :: i
+        integer, parameter :: maxsampling = 5000
 
         if (stdev > 0) then
-            !            call random_seed(size = sz)
-            !            allocate(seed(sz))
-            !            call random_seed(get = seed)
-            !            do i = 1, sz
-            !                write (*, '(A5, I2, A4, I20)') 'seed(', i, ') = ', seed(i)
-            !            end do
-            !
-            !            seed( 1) =           1735964997
-            !            seed( 2) =          -1899570570
-            !            seed( 3) =          -1916140827
-            !            seed( 4) =           -365159221
-            !            seed( 5) =          -1707816154
-            !            seed( 6) =           1885880775
-            !            seed( 7) =           1632974868
-            !            seed( 8) =          -1732338435
-            !            seed( 9) =          -2144761781
-            !            seed(10) =           1558797291
-            !            seed(11) =            -76752210
-            !            seed(12) =          -1599751705
-            !            seed(13) =          -1947760814
-            !            seed(14) =           -650042213
-            !            seed(15) =           -343692856
-            !            seed(16) =            -75608390
-            !            seed(17) =           -533548596
-            !            seed(18) =             22080825
-            !            seed(19) =          -1375472808
-            !            seed(20) =           2125428121
-            !            seed(21) =          -1221007268
-            !            seed(22) =          -2022422129
-            !            seed(23) =          -2100777368
-            !            seed(24) =           1366608952
-            !            seed(25) =            567304476
-            !            seed(26) =          -1010752275
-            !            seed(27) =           -737203679
-            !            seed(28) =          -1255295320
-            !            seed(29) =          -1979909672
-            !            seed(30) =            998064812
-            !            seed(31) =             18609693
-            !            seed(32) =            -26961015
-            !            seed(33) =                    0
-            !
-            !            call random_seed(put = seed)
-            !            deallocate(seed)
-
             call random_seed
             rand_epsilon = 0.0
-            do i = 1,1000
+            do i = 1, maxsampling
                 call random_number(rand_u)
                 call random_number(rand_v)
                 rand_epsilon = rand_epsilon + cos(2.0*pi*rand_v)*sqrt(-2.0*log(rand_u))
             end do
-            rand_epsilon = rand_epsilon/1000.0
+            rand_epsilon = rand_epsilon/sqrt(dble(maxsampling))
             sample_y = sample_y + stdev*rand_epsilon
         end if
     end subroutine
