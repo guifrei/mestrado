@@ -109,6 +109,8 @@ program main
                 call add_error(vy, stdev)
                 call least_squares_for_Y(vx, vy, vvY, tnmax)
 
+                call filter_frequencies(vx, vy, vvY, tnmax, 4)!TODO decidir como implementar este filtro
+
                 open(unit=10,file='../paper/difference_interface_' // &
                     str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
                 if (stdev.ne.0) then
@@ -158,62 +160,6 @@ contains
         call calculate_reciprocity_coefficients(werr, dwerr)
 
         kmax = N
-        if ((interface_idx.eq.1).and.(condutance_idx.eq.1)) then
-            if (stdev_idx.eq.2) then
-                kmax = 6
-            else if (stdev_idx.eq.3) then
-                kmax = 4
-            end if
-        else if ((interface_idx.eq.1).and.(condutance_idx.eq.2)) then
-            if (stdev_idx.eq.2) then
-                kmax = 5
-            else if (stdev_idx.eq.3) then
-                kmax = 4
-            end if
-        else if ((interface_idx.eq.1).and.(condutance_idx.eq.3)) then
-            if (stdev_idx.eq.2) then
-                kmax = 5
-            else if (stdev_idx.eq.3) then
-                kmax = 3
-            end if
-        else if ((interface_idx.eq.2).and.(condutance_idx.eq.1)) then
-            if (stdev_idx.eq.2) then
-                kmax = 8
-            else if (stdev_idx.eq.3) then
-                kmax = 5
-            end if
-        else if ((interface_idx.eq.2).and.(condutance_idx.eq.2)) then
-            if (stdev_idx.eq.2) then
-                kmax = 6
-            else if (stdev_idx.eq.3) then
-                kmax = 3
-            end if
-        else if ((interface_idx.eq.2).and.(condutance_idx.eq.3)) then
-            if (stdev_idx.eq.2) then
-                kmax = 6
-            else if (stdev_idx.eq.3) then
-                kmax = 4
-            end if
-        else if ((interface_idx.eq.3).and.(condutance_idx.eq.1)) then
-            if (stdev_idx.eq.2) then
-                kmax = 8
-            else if (stdev_idx.eq.3) then
-                kmax = 4
-            end if
-        else if ((interface_idx.eq.3).and.(condutance_idx.eq.2)) then
-            if (stdev_idx.eq.2) then
-                kmax = 7
-            else if (stdev_idx.eq.3) then
-                kmax = 4
-            end if
-        else if ((interface_idx.eq.3).and.(condutance_idx.eq.3)) then
-            if (stdev_idx.eq.2) then
-                kmax = 5
-            else if (stdev_idx.eq.3) then
-                kmax = 4
-            end if
-        end if
-
         nmax = kmax
 
         do j = 0, nmax
@@ -237,6 +183,34 @@ contains
             write(7, *)x, h_est, h(x)
         end do
         close(7)
+    end subroutine
+
+    subroutine filter_frequencies(vx, vy, vvY, nmax, idx)
+        integer, intent(in) :: nmax
+        double precision, dimension(nmax), intent(in) :: vx
+        double precision, dimension(nmax), intent(inout) :: vy
+        double precision, dimension(0: mmax_phi), intent(inout) :: vvY
+        integer, intent(in) :: idx
+        integer :: i, j
+        double precision, dimension(:, :), allocatable :: mxa
+        double precision :: x
+
+        allocate(mxa(nmax, mmax_phi + 1))
+        vvY(idx:mmax_phi) = 0.0
+        mxa = 0.0
+        do i = 1, nmax
+            x = vx(i)
+            do j = 1, mmax_phi + 1
+                mxa(i, j) = cos(mu(j - 1)*x)
+            end do
+        end do
+
+        do j = 1, mmax_phi + 1
+            mxa(:, j) = cos(mu(j - 1)*vx)
+        end do
+
+        vy = matmul(mxa, vvY)
+        deallocate(mxa)
     end subroutine
 
     subroutine init_uncertainty()
