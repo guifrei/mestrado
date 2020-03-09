@@ -19,7 +19,7 @@ program main
     double precision :: h_est
     integer :: kmax
     double precision, dimension(3) :: stdev_values = [0.0D0, 0.1D0, 0.5D0]
-    double precision :: stdev, zz
+    double precision :: stdev, zz, maxpow, pow
     character(len = 2) :: str_idx, str_cdx, str_stdev
     double precision, dimension(0: mmax_phi) :: werrY
     type(spline_class) :: spline
@@ -108,18 +108,26 @@ program main
                 vy = vy_noerr
                 call add_error(vy, stdev)
                 call least_squares_for_Y(vx, vy, vvY, tnmax)
-
+                
                 !http://homepage.ntu.edu.tw/~wttsai/fortran/ppt/17.Numerical_Filtering.pdf
                 !http://www.cs.tut.fi/~moncef/SGN-3016-DIP/Chap04.pdf
                 !https://www.researchgate.net/publication/333570571_A_Numerical_Method_for_Filtering_the_Noise_in_the_Heat_Conduction_Problem
                 !http://www-personal.umich.edu/~cjablono/Jablonowski-Diffusion-Filters-Damping.pdf
 
-!                call filter_frequencies(vx, vy, vvY, tnmax, 4)!TODO decidir como implementar este filtro
-!                do j = 0, mmax_phi
-!                    vvY(j) = vvY(j)/sqrt(1.0 + mu(j)**6)
-!                end do
-                call filter_frequencies(vx, vy, vvY, tnmax, mmax_phi)
+                if (stdev_idx.eq.2) then
+                    call filter_frequencies(vx, vy, vvY, tnmax, 4)
+                else if (stdev_idx.eq.3) then
+                    call filter_frequencies(vx, vy, vvY, tnmax, 4)
+                end if
+                
+                open(unit=10,file='../paper/amplitudes_interface' // &
+                    str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
 
+                do j = 0, mmax_phi             
+                    write(10, *)j, vvY(j)          
+                end do
+                close(10)
+                
                 open(unit=10,file='../paper/difference_interface_' // &
                     str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
                 if (stdev.ne.0) then
@@ -200,20 +208,32 @@ contains
         double precision, dimension(nmax), intent(inout) :: vy
         double precision, dimension(0: mmax_phi), intent(inout) :: vvY
         integer, intent(in) :: idx
-        integer :: i, j
+        integer :: j
         double precision, dimension(:, :), allocatable :: mxa
-        double precision :: x
+        double precision :: sigma, muc, fac
+        integer :: nidx
+        double precision, dimension(0: mmax_phi) :: vvYtmp
 
         allocate(mxa(nmax, mmax_phi + 1))
-        vvY(idx:mmax_phi) = 0.0
-        mxa = 0.0
-        do i = 1, nmax
-            x = vx(i)
-            do j = 1, mmax_phi + 1
-                mxa(i, j) = cos(mu(j - 1)*x)
-            end do
-        end do
+        !        vvY(idx + 1:mmax_phi) = 0.0
+        sigma = 0.01
+        
+        nidx = int(2.0/sigma/pi)
+        muc = mu(4)
 
+        do j = 0, mmax_phi
+            !vvY(j) = vvY(j)*exp(-((mu(j)*sigma)**2)/2.0)
+            !vvY(j) = vvY(j)*exp(-(mu(j)/muc)**2)
+            !vvY(j) = vvY(j)/sqrt(1.0 + (mu(j)/muc)**8)
+            if (j .ne. 0) then
+                muc = mu(idx)
+                fac = exp(-(mu(j)/muc)**2)
+            else
+                fac = 1.0
+            end if
+            vvY(j) = vvY(j) * fac
+        end do
+        mxa = 0.0
         do j = 1, mmax_phi + 1
             mxa(:, j) = cos(mu(j - 1)*vx)
         end do
@@ -229,7 +249,7 @@ contains
         double precision :: mean
         integer :: i
 
-        stdev = b/50.0
+        stdev = b/10.0
         dx = a/dble(nmax - 1)
         do j = 1, nmax
             vx(j) = dx*(j - 1)

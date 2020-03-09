@@ -75,18 +75,61 @@ contains
         double precision, dimension(tnmax), intent(inout) :: sample_y
         double precision, intent(in) :: stdev
         double precision, dimension(tnmax) :: rand_u, rand_v, rand_epsilon
-        integer :: i
-        integer, parameter :: maxsampling = 5000
+        integer :: sz, i
+        integer, allocatable :: seed(:)
 
         if (stdev > 0) then
-            call random_seed
-            rand_epsilon = 0.0
-            do i = 1, maxsampling
-                call random_number(rand_u)
-                call random_number(rand_v)
-                rand_epsilon = rand_epsilon + cos(2.0*pi*rand_v)*sqrt(-2.0*log(rand_u))
-            end do
-            rand_epsilon = rand_epsilon/sqrt(dble(maxsampling))
+            call random_seed(size = sz)
+            allocate(seed(sz))
+            !            call random_seed(get = seed)
+            !            do i = 1, sz
+            !                write (*, '(A5, I2, A4, I20)') 'seed(', i, ') = ', seed(i)
+            !            end do
+
+            seed( 1) =           -688659360
+            seed( 2) =           1156350764
+            seed( 3) =          -1168610639
+            seed( 4) =            480211495
+            seed( 5) =          -1580778910
+            seed( 6) =           1557966034
+            seed( 7) =            328545855
+            seed( 8) =           1228570738
+            seed( 9) =            373783120
+            seed(10) =          -2088108566
+            seed(11) =           -100560045
+            seed(12) =           1564181635
+            seed(13) =          -1348229455
+            seed(14) =          -1551328285
+            seed(15) =            253101084
+            seed(16) =           -570227061
+            seed(17) =           -913548635
+            seed(18) =            680999108
+            seed(19) =          -1068779255
+            seed(20) =           1925364486
+            seed(21) =           1007961196
+            seed(22) =           -284370671
+            seed(23) =          -1066900979
+            seed(24) =           1233456481
+            seed(25) =           -522665472
+            seed(26) =           1496635427
+            seed(27) =            -86380480
+            seed(28) =           -615246261
+            seed(29) =           -392558723
+            seed(30) =            934854035
+            seed(31) =           -337218439
+            seed(32) =           1473505737
+            seed(33) =                    8
+
+
+            call random_seed(put = seed)
+            deallocate(seed)
+
+            !            call random_seed
+
+            call random_number(rand_u)
+            call random_number(rand_v)
+            rand_epsilon = cos(2.0*pi*rand_v)*sqrt(-2.0*log(rand_u))
+
             sample_y = sample_y + stdev*rand_epsilon
         end if
     end subroutine
