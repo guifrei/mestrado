@@ -111,6 +111,8 @@ program main
 
                 !http://homepage.ntu.edu.tw/~wttsai/fortran/ppt/17.Numerical_Filtering.pdf
                 !http://www.cs.tut.fi/~moncef/SGN-3016-DIP/Chap04.pdf
+                !https://www.researchgate.net/publication/333570571_A_Numerical_Method_for_Filtering_the_Noise_in_the_Heat_Conduction_Problem
+                !http://www-personal.umich.edu/~cjablono/Jablonowski-Diffusion-Filters-Damping.pdf
 
 !                call filter_frequencies(vx, vy, vvY, tnmax, 4)!TODO decidir como implementar este filtro
 !                do j = 0, mmax_phi
