@@ -109,7 +109,14 @@ program main
                 call add_error(vy, stdev)
                 call least_squares_for_Y(vx, vy, vvY, tnmax)
 
-                call filter_frequencies(vx, vy, vvY, tnmax, 4)!TODO decidir como implementar este filtro
+                !http://homepage.ntu.edu.tw/~wttsai/fortran/ppt/17.Numerical_Filtering.pdf
+                !http://www.cs.tut.fi/~moncef/SGN-3016-DIP/Chap04.pdf
+
+!                call filter_frequencies(vx, vy, vvY, tnmax, 4)!TODO decidir como implementar este filtro
+!                do j = 0, mmax_phi
+!                    vvY(j) = vvY(j)/sqrt(1.0 + mu(j)**6)
+!                end do
+                call filter_frequencies(vx, vy, vvY, tnmax, mmax_phi)
 
                 open(unit=10,file='../paper/difference_interface_' // &
                     str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
