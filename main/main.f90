@@ -113,13 +113,17 @@ program main
                 !http://www.cs.tut.fi/~moncef/SGN-3016-DIP/Chap04.pdf
                 !https://www.researchgate.net/publication/333570571_A_Numerical_Method_for_Filtering_the_Noise_in_the_Heat_Conduction_Problem
                 !http://www-personal.umich.edu/~cjablono/Jablonowski-Diffusion-Filters-Damping.pdf
+                !https://www.dsprelated.com/freebooks/sasp/Spectrum_Analysis_Noise.html
+                !https://www.quora.com/What-options-do-we-have-to-remove-Gaussian-noise-from-Signal
 
-                if (stdev_idx.eq.2) then
-                    call filter_frequencies(vx, vy, vvY, tnmax, 4)
-                else if (stdev_idx.eq.3) then
-                    call filter_frequencies(vx, vy, vvY, tnmax, 4)
-                end if
+!                if (stdev_idx.eq.2) then
+!                    call filter_frequencies(vx, vy, vvY, tnmax, 5)
+!                else if (stdev_idx.eq.3) then
+!                    call filter_frequencies(vx, vy, vvY, tnmax, 3)
+!                end if
                 
+                !                call filter_frequencies(vx, vy, vvY, tnmax, 20)
+
                 open(unit=10,file='../paper/amplitudes_interface' // &
                     str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
 
@@ -130,14 +134,12 @@ program main
                 
                 open(unit=10,file='../paper/difference_interface_' // &
                     str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
-                if (stdev.ne.0) then
-                    tmpy = 0.0
-                    do j = 0, mmax_phi
-                        tmpy = tmpy + vvY(j)*cos(mu(j)*vx)
-                        sqrt_rms = norm2(tmpy - vy)
-                        write(10, *)j, sqrt_rms
-                    end do
-                end if
+                tmpy = 0.0
+                do j = 0, N
+                    tmpy = tmpy + vvY(j)*cos(mu(j)*vx)
+                    sqrt_rms = norm2(tmpy - vy)
+                    write(10, *)j, sqrt_rms
+                end do
                 close(10)
 
                 call generate_results(h, w, dw, w, dw)
@@ -176,7 +178,7 @@ contains
 
         call calculate_reciprocity_coefficients(werr, dwerr)
 
-        kmax = N
+        kmax = 20
         nmax = kmax
 
         do j = 0, nmax
@@ -210,29 +212,10 @@ contains
         integer, intent(in) :: idx
         integer :: j
         double precision, dimension(:, :), allocatable :: mxa
-        double precision :: sigma, muc, fac
-        integer :: nidx
-        double precision, dimension(0: mmax_phi) :: vvYtmp
 
         allocate(mxa(nmax, mmax_phi + 1))
-        !        vvY(idx + 1:mmax_phi) = 0.0
-        sigma = 0.01
-        
-        nidx = int(2.0/sigma/pi)
-        muc = mu(4)
+        vvY(idx + 1:mmax_phi) = 0.0
 
-        do j = 0, mmax_phi
-            !vvY(j) = vvY(j)*exp(-((mu(j)*sigma)**2)/2.0)
-            !vvY(j) = vvY(j)*exp(-(mu(j)/muc)**2)
-            !vvY(j) = vvY(j)/sqrt(1.0 + (mu(j)/muc)**8)
-            if (j .ne. 0) then
-                muc = mu(idx)
-                fac = exp(-(mu(j)/muc)**2)
-            else
-                fac = 1.0
-            end if
-            vvY(j) = vvY(j) * fac
-        end do
         mxa = 0.0
         do j = 1, mmax_phi + 1
             mxa(:, j) = cos(mu(j - 1)*vx)
