@@ -24,9 +24,9 @@ module constants_module
     double precision, parameter :: b1 = 0.011
     double precision, parameter :: b2 = 0.009
 
-    integer, parameter :: tnmax = 121
-    integer, parameter :: N = 20 ! tnmax/ndiv + 1 !min(mmax_F, mmax_G)           !numero total de funcionais de reciprocidade
-    integer, parameter :: tmax = 201         ! para o levantamento do campo de temperaturas
+    integer, parameter :: tnmax = 128
+    integer, parameter :: N = min(mmax_F, mmax_G)           !numero total de funcionais de reciprocidade
+    integer, parameter :: tmax = 200         ! para o levantamento do campo de temperaturas
 end module constants_module
 
 

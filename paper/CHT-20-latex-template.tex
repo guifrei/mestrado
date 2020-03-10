@@ -410,6 +410,7 @@ where the eigenvalues $\mu_m$ are given as \citep{livro_integral_transforms_cott
 \displaystyle\frac{m\pi}{a}, & m = 1,2,3,\ldots
 \end{array}
 \right.
+\label{eigenvals}
 \end{align}
 
 Applying the integral transform to the partial differential equations \eqref{funcao_F_harm_T1}, \eqref{funcao_F_harm_T2} and \eqref{funcao_G_harm_T1}, the dependency on $x$ is eliminated, and the following ordinary equations in $y$ are obtained:
@@ -862,7 +863,7 @@ The third contact interface analysed refers to index 3 in Table \ref{tabela_inte
 In all cases, it was possible to notice that the estimated profiles for the TCC showed a very good adherence to the theoretical ones. For the simulations using $\sigma = \text{0.0}\celsius$, corresponding to temperature measurements without noise, there is an excellent agreement between the estimated and expected profiles. For the other cases, in which gaussian noises were added, the general behavior of the TCC was well captured.
 
 \subsection*{Instability of estimatives and stop criteria for summations}
-It could be seen in this work that the expressions for estimation of temperature jump and heat flux across the contact interface in terms of the Reciprocity Functionals (equations \eqref{resultado_1} and \eqref{resultado_2}), in the presence of noise on the synthetic temperatures, did not have a monotonic convergent behavior as the number of summing elements increased indefinitely. In fact, each simulated configuration of contact interface and expected thermal contact conductance had its own optimal number of terms, so that adding more elements to either of the summations up to that limit led to a progressive improvement of the calculated estimatives through equation \eqref{equacao_definicao_f_r_rep}; from that point on, as more terms were included in the summations, the estimatives diverged quickly, leading to unstable results. On the other hand, when lower noise levels were added to the synthetic temperatures, those optimal number of terms could be increased; in the limit, when $\sigma = 0.0\celsius$, all terms for both summations could be added without loss of quality of the estimation. 
+It could be seen in this work that the expressions for estimation of temperature jump and heat flux across the contact interface in terms of the Reciprocity Functionals (equations \eqref{resultado_1} and \eqref{resultado_2}), in the presence of noise on the synthetic temperatures, did not have a monotonic convergent behavior as the number of summing elements increased indefinitely. In fact, each simulated configuration of contact interface and expected thermal contact conductance had its own optimal number of terms, so that adding more elements to either of the summations up to that limit led to a progressive improvement of the calculated estimatives through equation \eqref{equacao_definicao_f_r_rep}; from that point on, as more terms were included in the summations, the estimatives diverged quickly, leading to unstable results. On the other hand, when lower noise levels were added to the synthetic temperatures, those optimal number of terms could be increased; in the limit, when $\sigma = 0.0\celsius$, all terms for both summations could be added without loss of quality of the estimation. \cite{artigo_padilha_3} noticed that same unstable behavior of estimatives when studying the specific case of a planar horizontal contact interface. In their study, for the specific case in which $\sigma = 0.0\celsius$, the maximum number of terms in the summations before reaching unstability were $N_1=N_2=14$, for either calculation of temperature jump and heat flux across the contact interface. However, for the same case in the present work, the maximum number of terms in the summations before reaching unstability were greater ($N_1=N_2=20$) and corresponded to the maximum number of summation elements.
 
 As a matter of example, Figures \ref{erro_rms_1} and \ref{erro_rms_2} show the mean square deviation of the estimatives from the expected values, for both temperature jump and heat flux, for the specific case of the test problem using the contact interface profile 1 and theoretical contact interface 3. The mean square deviation may be defined as:
 \begin{equation}
@@ -893,7 +894,7 @@ where $\xi_{x=x_n}$ represents evaluations of either the temperature jump or the
 		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=3.0pt}] table[x index=0,y index=1] {../data/erro_rms_interface_01_conductance_03_stdev_05.dat};			
 		\end{axis}
 		\end{tikzpicture}
-		\caption{Mean square deviation of the estimatives for $[T_1 - T_2]_\Gamma$ \textit{versus} the number of  elements in the corresponding summation, for the test problem associated with the contact interface profile 1 and theoretical contact interface 3: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+		\caption{Mean square deviation of the estimatives for $[T_1 - T_2]_\Gamma$ \textit{versus} the number of  elements in the corresponding summation, for the test problem associated with the contact interface profile 1 and theoretical contact interface 3: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0\celsius$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
 		\label{erro_rms_1}
 	\end{center}
 \end{figure}
@@ -921,20 +922,12 @@ where $\xi_{x=x_n}$ represents evaluations of either the temperature jump or the
 		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=3.0pt}] table[x index=0,y index=2] {../data/erro_rms_interface_01_conductance_03_stdev_05.dat};			
 		\end{axis}
 		\end{tikzpicture}
-		\caption{Mean square deviation of the estimatives for $\left[-k_1 \frac{\partial T_1}{\partial \mathbf{n}}\right]_\Gamma$ \textit{versus} the number of  elements in the corresponding summation, for the test problem associated with the contact interface profile 1 and theoretical contact interface 3: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
+		\caption{Mean square deviation of the estimatives for $\left[-k_1 \frac{\partial T_1}{\partial \mathbf{n}}\right]_\Gamma$ \textit{versus} the number of  elements in the corresponding summation, for the test problem associated with the contact interface profile 1 and theoretical contact interface 3: $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0.0\celsius$; $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
 		\label{erro_rms_2}
 	\end{center}
 \end{figure}
 
-\cite{artigo_padilha_3} noticed that unstable behavior of estimatives when studying the specific case of a planar horizontal contact interface. In their study, for the specific case in which $\sigma = 0.0\celsius$, the maximum number of terms in the summations before reaching unstability were $N_1=N_2=14$, for either calculation of temperature jump and heat flux across the contact interface. However, for the same case in the present work, the maximum number of terms in the summations before reaching unstability were greater ($N_1=N_2=20$) and corresponded to the maximum number of summation elements; in other words, the graphs plotted in Figures \ref{erro_rms_1} and \ref{erro_rms_2} for the results found by \cite{artigo_padilha_3} would show an ascending behavior starting from $N_1=N_2=14$ for the case $\sigma = 0.0\celsius$. A possible explanation for the improvement in the number of summing elements for this case lies on the analytical representation $Y(x)$ of the sampled temperatures. In the work of \cite{artigo_padilha_3}, the sampled temperatures were represented by a \textit{spline}, while in this work they were represented through a Fourier expansion, as suggested by \cite{artigo_mocerino}.
-
-The comparisons in Figures \ref{erro_rms_1} and \ref{erro_rms_2} made use of the results obtained from the solution of the direct problem defined by equations \eqref{harm_T1} to \eqref{cc_T1_5}, namely, the temperature jump and the heat flux at the contact interface. In a real world application, these quantities are not known in advance; indeed, the purpose of the method presented in this work is to estimate them in order to obtain an estimative of the thermal contact conductance. However, as seen before, adding terms to the summations of both quantities may lead to unstable results, if a consistent stopping criteria is not adopted. In this work, a stopping criteria was outlined, based on the analysis of the following expression:
-\begin{align}
-\delta_{Y(x)}(k) = \norm{Y(x) - \left[\bar{y}_0 + \sum_{m=1}^k \bar{y}_m \cos\mu_m x \right]} , k \le M \label{aproximacao_Y_2}
-\end{align}
-which can be understood as the error between the measured temperatures $Y(x)$ and their truncated representation as a Fourier series expansion, as stated in equation \eqref{aproximacao_Y}, up to the $k$-th term. Thus, graphs of $\delta_{Y(x)}(k)$ \textit{versus} $k$ were plotted for each combination of interface geometry, thermal contact conductance profile and error level, as well as graphs for $\delta_{[T_1 - T_2]}$ and $\delta_{\left[-k_1 \frac{\partial T_1}{\partial \mathbf{n}}\right]}$. By comparing these graphs, one can notice that the region in the $k$ axis where $\delta_{Y(x)}(k)$ had a quasi-steady behavior corresponded to the situations in which the estimatives had unstable results if those values of $k$ were used in place of $N_1$ or $N_2$ in equation \eqref{equacao_definicao_f_r_rep}. 
-
-For instance, Figure \ref{erro_rms_xxx} shows the results obtained in the evaluation of $\delta_{Y(x)}(k)$ for the test problem associated with the contact interface profile 1 and theoretical contact interface 3; for this case the limiting indices for the summations were chosen as $k=N_1=N_2=10$ for $\sigma = 0.1\celsius$ and $k=N_1=N_2=5$ for $\sigma = 0.5\celsius$. These choices are not absolute, in the sense that a bigger value for $k$ (and consequently for $N_1$ and $N_2$) could be chosen and still provide stable results for the estimatives; however, the probability of obtaining results with poor quality seems to decrease if a value for $k$ is picked using the empirically obtained criteria described above.
+By taking a closer look at the summations in equations \eqref{calculo_FR_F1_antes_b} and \eqref{calculo_FR_G1_antes_b}, it is possible to have a better understanding of this phenomena. During the numerical calculations, it was found that the values in both matrices $\mathbb{A}$ and $\mathbb{E}$ assumed small, limited values. The terms $\bar{\psi}_{j, m}$ and $\bar{\phi}_{j, m}$ were either zero (when $j \ne m$) or a constant value given by $\sqrt{\frac{a}{2}}$. The presence of the term $\sinh\mu_m b$ makes the corresponding fraction vanish, since that function grows indefinitely as its argument grows. The term $\tanh\mu_m b$ makes the corresponding fraction tend to a constant value, since that function has an upper limit of 1 as its argument grows. Therefore, the global behavior of the summations depended on the behavior of the product $\mu_m\bar{y}_m$. The factor $\mu_m$ corresponds to the eigenvalues defined in \eqref{eigenvals}, which grow linearly with the index $m$, and the factor $\bar{y}_m$ comes from the expansion of the synthetic temperatures into a Fourier cosine series, as shown in equation \eqref{aproximacao_Y}. Figure \ref{amplitude} illustrates the evaluated values of $\mu_m\bar{y}_m$, for the particular test case involving the contact interface profile 1 and theoretical contact interface 3; similar results were obtained from the other studied cases.
 
 \begin{figure}[H]
 	\begin{center}		
@@ -947,24 +940,300 @@ For instance, Figure \ref{erro_rms_xxx} shows the results obtained in the evalua
 		scaled y ticks = false,
 		x tick label style={/pgf/number format/fixed},
 		y tick label style={/pgf/number format/fixed},
+		xmin = 1,
 		xmax = 20,
-		ymin = 0.01,
-		ymax = 15,
+		%ymin = 0.01,
+		%ymax = 15,
 		anchor=east,  
 		width=9cm,
-		height=6cm,
+		height=5cm,
 		label style={font=\footnotesize},
-		xlabel = $k$,
-		ylabel= $\delta_{Y(x)}(k)$,
+		xlabel = $m$,
+		ylabel= $\mu_m\bar{y}_m$,
 		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
-		\addplot[color=red,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {difference_interface_01_conductance_03_stdev_01.dat};
-		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {difference_interface_01_conductance_03_stdev_05.dat};		
+		\addplot[color=blue,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_01_conductance_03_stdev_00.dat};
+		\addplot[color=red,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_01_conductance_03_stdev_01.dat};
+		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_01_conductance_03_stdev_05.dat};		
 		\end{axis}
 		\end{tikzpicture}
-		\caption{Evaluation of $\delta_{Y(x)}(k)$ \textit{versus} $k$, for the test problem associated with the contact interface profile 1 and theoretical contact interface 3: $\textcolor{red}{\square} \rightarrow \sigma = 0.1$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5$}
-		\label{erro_rms_xxx}
+		\caption{Evaluation of $\mu_m\bar{y}_m$ \textit{versus} $m$, for the test problem associated with the contact interface profile 1 and theoretical contact interface 3: $\textcolor{blue}{\square} \rightarrow \sigma = 0.0\celsius$; $\textcolor{red}{\triangle} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
+		\label{amplitude}
 	\end{center}
 \end{figure}
+
+The sequence ${\mu_m\bar{y}_m, m = 1, 2, 3 \dots}$ showed an average decreasing behavior for coefficients $\bar{y}_m$ calculated from the synthetic temperatures without noise ($\sigma = 0.0\celsius$). In other words, the contribution of each term in the summations in equations \eqref{calculo_FR_F1_antes_b} and \eqref{calculo_FR_G1_antes_b} as the summation advanced, kept the resulting sums limited in value, which explains why the estimated temperature jumps and heat fluxes converged easily in that condition. On the other hand, the same sequence of values, when calculated by means of the synthetic temperatures with noise added, showed an increasing tendency by assuming large values, making it difficult for the summations to converge. This happens because the amplitudes $\bar{y}_m$ associated with the higher frequencies (that is, higher values of $m$), which were supposed to be small, are affected by the presence of noise, which introduce new elements in those frequencies.\footnote{A possible explanation for the unstable results found by \cite{artigo_padilha_3}, even for the case $\sigma = 0.0\celsius$, lies on the analytical representation $Y(x)$ of the sampled temperatures adopted in that work: they were substituted in equations \eqref{coef_it_0} and \eqref{coef_it_m} by an interpolated spline. Such substitution introduced higher frequencies in the same fashion as the addition of gaussian noise did. In this work, as previously discussed, the synthetic temperatures were represented through a Fourier expansion, as suggested by \cite{artigo_mocerino}, and the anomalous behavior for $\sigma = 0.0\celsius$ could be avoided.}
+
+The comparisons in Figures \ref{erro_rms_1} and \ref{erro_rms_2} made use of the results obtained from the solution of the direct problem defined by equations \eqref{harm_T1} to \eqref{cc_T1_5}, namely, the temperature jump and the heat flux at the contact interface. In a real world application, these quantities are not known in advance; indeed, the purpose of the method presented in this work is to estimate them in order to obtain an estimative of the thermal contact conductance. However, as seen before, adding terms to the summations of both quantities may lead to unstable results, if a consistent stopping criteria is not adopted. In this work, a stopping criteria was outlined, based on the analysis of the product $\mu_m\bar{y}_m$, as described above. Thus, graphs of $\mu_m\bar{y}_m$ \textit{versus} $m$ were plotted for each combination of interface geometry, thermal contact conductance profile and error level. By comparing these graphs, one can notice that the region in the $m$ axis where $\mu_m\bar{y}_m$ showed an increasing behavior corresponded to the situations in which the estimatives had unstable results if those values of $m$ were used in place of $N_1$ or $N_2$ in equation \eqref{equacao_definicao_f_r_rep}. For instance, the inspection of Figure \ref{amplitude} suggests the adoption of $N_1 = N_2 = 6$ for $\sigma = 0.1\celsius$ and $N_1 = N_2 = 6$ for $\sigma = 0.1\celsius$ , for the test problem associated with the contact interface profile 1 and theoretical contact interface 3. These choices are not absolute, in the sense that a bigger value for $m$ (and consequently for $N_1$ and $N_2$) could be chosen and still provide stable results for the estimatives; however, the probability of obtaining results with poor quality seems to decrease if a value for $m$ is picked using the empirically obtained criteria described above.
+
+%\begin{figure}[H]
+%	\begin{center}		
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		axis lines=left,
+%		ymode = log,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		%xmin = 2,
+%		xmax = 10,
+%		%ymin = 0.01,
+%		%ymax = 15,
+%		anchor=east,  
+%		width=9cm,
+%		height=6cm,
+%		label style={font=\footnotesize},
+%		xlabel = $k$,
+%		ylabel= $\delta_{Y(x)}(k)$,
+%		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+%		\addplot[color=red,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_01_conductance_01_stdev_01.dat};
+%		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_01_conductance_01_stdev_05.dat};		
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{Evaluation of $\delta_{Y(x)}(k)$ \textit{versus} $k$, for the test problem associated with the contact interface profile 1 and theoretical contact interface 1: $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
+%	\end{center}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\begin{center}		
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		axis lines=left,
+%		ymode = log,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		%xmin = 2,
+%		xmax = 10,
+%		%ymin = 0.01,
+%		%ymax = 15,
+%		anchor=east,  
+%		width=9cm,
+%		height=6cm,
+%		label style={font=\footnotesize},
+%		xlabel = $k$,
+%		ylabel= $\delta_{Y(x)}(k)$,
+%		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+%		\addplot[color=red,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_01_conductance_02_stdev_01.dat};
+%		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_01_conductance_02_stdev_05.dat};		
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{Evaluation of $\delta_{Y(x)}(k)$ \textit{versus} $k$, for the test problem associated with the contact interface profile 1 and theoretical contact interface 2: $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
+%	\end{center}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\begin{center}		
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		axis lines=left,
+%		ymode = log,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		%xmin = 2,
+%		xmax = 10,
+%		%ymin = 0.01,
+%		%ymax = 15,
+%		anchor=east,  
+%		width=9cm,
+%		height=6cm,
+%		label style={font=\footnotesize},
+%		xlabel = $k$,
+%		ylabel= $\delta_{Y(x)}(k)$,
+%		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+%		\addplot[color=red,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_01_conductance_03_stdev_01.dat};
+%		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_01_conductance_03_stdev_05.dat};		
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{Evaluation of $\delta_{Y(x)}(k)$ \textit{versus} $k$, for the test problem associated with the contact interface profile 1 and theoretical contact interface 3: $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
+%	\end{center}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\begin{center}		
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		axis lines=left,
+%		ymode = log,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		%xmin = 2,
+%		xmax = 10,
+%		%ymin = 0.01,
+%		%ymax = 15,
+%		anchor=east,  
+%		width=9cm,
+%		height=6cm,
+%		label style={font=\footnotesize},
+%		xlabel = $k$,
+%		ylabel= $\delta_{Y(x)}(k)$,
+%		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+%		\addplot[color=red,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_02_conductance_01_stdev_01.dat};
+%		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_02_conductance_01_stdev_05.dat};		
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{Evaluation of $\delta_{Y(x)}(k)$ \textit{versus} $k$, for the test problem associated with the contact interface profile 2 and theoretical contact interface 1: $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
+%	\end{center}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\begin{center}		
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		axis lines=left,
+%		ymode = log,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		%xmin = 2,
+%		xmax = 10,
+%		%ymin = 0.01,
+%		%ymax = 15,
+%		anchor=east,  
+%		width=9cm,
+%		height=6cm,
+%		label style={font=\footnotesize},
+%		xlabel = $k$,
+%		ylabel= $\delta_{Y(x)}(k)$,
+%		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+%		\addplot[color=red,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_02_conductance_02_stdev_01.dat};
+%		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_02_conductance_02_stdev_05.dat};		
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{Evaluation of $\delta_{Y(x)}(k)$ \textit{versus} $k$, for the test problem associated with the contact interface profile 2 and theoretical contact interface 2: $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
+%	\end{center}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\begin{center}		
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		axis lines=left,
+%		ymode = log,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		%xmin = 2,
+%		xmax = 10,
+%		%ymin = 0.01,
+%		%ymax = 15,
+%		anchor=east,  
+%		width=9cm,
+%		height=6cm,
+%		label style={font=\footnotesize},
+%		xlabel = $k$,
+%		ylabel= $\delta_{Y(x)}(k)$,
+%		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+%		\addplot[color=red,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_02_conductance_03_stdev_01.dat};
+%		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_02_conductance_03_stdev_05.dat};		
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{Evaluation of $\delta_{Y(x)}(k)$ \textit{versus} $k$, for the test problem associated with the contact interface profile 2 and theoretical contact interface 3: $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
+%	\end{center}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\begin{center}		
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		axis lines=left,
+%		ymode = log,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		%xmin = 2,
+%		xmax = 10,
+%		%ymin = 0.01,
+%		%ymax = 15,
+%		anchor=east,  
+%		width=9cm,
+%		height=6cm,
+%		label style={font=\footnotesize},
+%		xlabel = $k$,
+%		ylabel= $\delta_{Y(x)}(k)$,
+%		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+%		\addplot[color=red,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_03_conductance_01_stdev_01.dat};
+%		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_03_conductance_01_stdev_05.dat};		
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{Evaluation of $\delta_{Y(x)}(k)$ \textit{versus} $k$, for the test problem associated with the contact interface profile 3 and theoretical contact interface 1: $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
+%	\end{center}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\begin{center}		
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		axis lines=left,
+%		ymode = log,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		%xmin = 2,
+%		xmax = 10,
+%		%ymin = 0.01,
+%		%ymax = 15,
+%		anchor=east,  
+%		width=9cm,
+%		height=6cm,
+%		label style={font=\footnotesize},
+%		xlabel = $k$,
+%		ylabel= $\delta_{Y(x)}(k)$,
+%		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+%		\addplot[color=red,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_03_conductance_02_stdev_01.dat};
+%		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_03_conductance_02_stdev_05.dat};		
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{Evaluation of $\delta_{Y(x)}(k)$ \textit{versus} $k$, for the test problem associated with the contact interface profile 3 and theoretical contact interface 2: $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
+%	\end{center}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\begin{center}		
+%		\begin{tikzpicture}
+%		\begin{axis}[
+%		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+%		axis lines=left,
+%		ymode = log,
+%		scaled x ticks = false,
+%		scaled y ticks = false,
+%		x tick label style={/pgf/number format/fixed},
+%		y tick label style={/pgf/number format/fixed},
+%		%xmin = 2,
+%		xmax = 10,
+%		%ymin = 0.01,
+%		%ymax = 15,
+%		anchor=east,  
+%		width=9cm,
+%		height=6cm,
+%		label style={font=\footnotesize},
+%		xlabel = $k$,
+%		ylabel= $\delta_{Y(x)}(k)$,
+%		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+%		\addplot[color=red,mark=square,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_03_conductance_03_stdev_01.dat};
+%		\addplot[color=gray,mark=triangle,mark options={mark size=1.5pt}] table[x index=0,y index=1] {amplitudes_interface_03_conductance_03_stdev_05.dat};		
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{Evaluation of $\delta_{Y(x)}(k)$ \textit{versus} $k$, for the test problem associated with the contact interface profile 3 and theoretical contact interface 3: $\textcolor{red}{\square} \rightarrow \sigma = 0.1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0.5\celsius$}
+%	\end{center}
+%\end{figure}
 
 \section*{Conclusion}
 

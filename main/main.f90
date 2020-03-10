@@ -19,10 +19,11 @@ program main
     double precision :: h_est
     integer :: kmax
     double precision, dimension(3) :: stdev_values = [0.0D0, 0.1D0, 0.5D0]
-    double precision :: stdev, zz, maxpow, pow
+    double precision :: stdev, zz
     character(len = 2) :: str_idx, str_cdx, str_stdev
     double precision, dimension(0: mmax_phi) :: werrY
     type(spline_class) :: spline
+    double precision :: amp
 
     wlist(1) = c_funloc(w1)
     wlist(2) = c_funloc(w2)
@@ -107,6 +108,7 @@ program main
                 stdev = stdev_values(stdev_idx)
                 vy = vy_noerr
                 call add_error(vy, stdev)
+
                 call least_squares_for_Y(vx, vy, vvY, tnmax)
                 
                 !http://homepage.ntu.edu.tw/~wttsai/fortran/ppt/17.Numerical_Filtering.pdf
@@ -116,33 +118,40 @@ program main
                 !https://www.dsprelated.com/freebooks/sasp/Spectrum_Analysis_Noise.html
                 !https://www.quora.com/What-options-do-we-have-to-remove-Gaussian-noise-from-Signal
 
-!                if (stdev_idx.eq.2) then
-!                    call filter_frequencies(vx, vy, vvY, tnmax, 5)
-!                else if (stdev_idx.eq.3) then
-!                    call filter_frequencies(vx, vy, vvY, tnmax, 3)
-!                end if
+                !                if (stdev_idx.eq.2) then
+                !                    call filter_frequencies(vx, vy, vvY, tnmax, 5)
+                !                else if (stdev_idx.eq.3) then
+                !                    call filter_frequencies(vx, vy, vvY, tnmax, 3)
+                !                end if
                 
-                !                call filter_frequencies(vx, vy, vvY, tnmax, 20)
+                if (stdev_idx.ne.1) call filter_frequencies(vx, vy, vvY, tnmax, mmax_phi)
 
-                open(unit=10,file='../paper/amplitudes_interface' // &
+                open(unit=10,file='../paper/amplitudes_interface_' // &
                     str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
 
-                do j = 0, mmax_phi             
-                    write(10, *)j, vvY(j)          
+                do j = 1, mmax_phi
+                    write(10, *)j, abs(vvY(j))*mu(j)
                 end do
                 close(10)
                 
                 open(unit=10,file='../paper/difference_interface_' // &
                     str_idx // '_conductance_' // str_cdx // '_stdev_' // str_stdev // '.dat')
-                tmpy = 0.0
-                do j = 0, N
-                    tmpy = tmpy + vvY(j)*cos(mu(j)*vx)
-                    sqrt_rms = norm2(tmpy - vy)
-                    write(10, *)j, sqrt_rms
+                !                tmpy = 0.0
+                !                do j = 0, N
+                !                    tmpy = tmpy + vvY(j)*cos(mu(j)*vx)
+                !                    sqrt_rms = norm2(tmpy - vy)
+                !                    write(10, *)j, sqrt_rms
+                !                end do
+                amp = vvY(0)**2
+                write(10, *)0, abs(vvY(0))
+                do j = 1, mmax_phi
+                    amp = amp + (vvY(j)*mu(j))**2
+                    write(10, *)j, sqrt(amp)
                 end do
                 close(10)
+                close(10)
 
-                call generate_results(h, w, dw, w, dw)
+                call generate_results(h, w, dw, werr, dwerr)
             end do
         end do
     end do
@@ -178,7 +187,67 @@ contains
 
         call calculate_reciprocity_coefficients(werr, dwerr)
 
-        kmax = 20
+        kmax = N
+        if ((interface_idx.eq.1).and.(condutance_idx.eq.1)) then
+            if (stdev_idx.eq.2) then
+                kmax = 3
+            else if (stdev_idx.eq.3) then
+                kmax = 3
+            end if
+        else if ((interface_idx.eq.1).and.(condutance_idx.eq.2)) then
+            if (stdev_idx.eq.2) then
+                kmax = 3
+            else if (stdev_idx.eq.3) then
+                kmax = 3
+            end if
+        else if ((interface_idx.eq.1).and.(condutance_idx.eq.3)) then
+            if (stdev_idx.eq.2) then
+                kmax = 6
+            else if (stdev_idx.eq.3) then
+                kmax = 5
+            end if
+
+
+        else if ((interface_idx.eq.2).and.(condutance_idx.eq.1)) then
+            if (stdev_idx.eq.2) then
+                kmax = 3
+            else if (stdev_idx.eq.3) then
+                kmax = 3
+            end if
+        else if ((interface_idx.eq.2).and.(condutance_idx.eq.2)) then
+            if (stdev_idx.eq.2) then
+                kmax = 5
+            else if (stdev_idx.eq.3) then
+                kmax = 3
+            end if
+        else if ((interface_idx.eq.2).and.(condutance_idx.eq.3)) then
+            if (stdev_idx.eq.2) then
+                kmax = 6
+            else if (stdev_idx.eq.3) then
+                kmax = 6
+            end if
+
+
+        else if ((interface_idx.eq.3).and.(condutance_idx.eq.1)) then
+            if (stdev_idx.eq.2) then
+                kmax = 5
+            else if (stdev_idx.eq.3) then
+                kmax = 3
+            end if
+        else if ((interface_idx.eq.3).and.(condutance_idx.eq.2)) then
+            if (stdev_idx.eq.2) then
+                kmax = 4
+            else if (stdev_idx.eq.3) then
+                kmax = 3
+            end if
+        else if ((interface_idx.eq.3).and.(condutance_idx.eq.3)) then
+            if (stdev_idx.eq.2) then
+                kmax = 4
+            else if (stdev_idx.eq.3) then
+                kmax = 4
+            end if
+        end if
+
         nmax = kmax
 
         do j = 0, nmax
@@ -214,7 +283,7 @@ contains
         double precision, dimension(:, :), allocatable :: mxa
 
         allocate(mxa(nmax, mmax_phi + 1))
-        vvY(idx + 1:mmax_phi) = 0.0
+        !        vvY(idx + 1:mmax_phi) = 0.0
 
         mxa = 0.0
         do j = 1, mmax_phi + 1
@@ -232,7 +301,7 @@ contains
         double precision :: mean
         integer :: i
 
-        stdev = b/10.0
+        stdev = b/20.0
         dx = a/dble(nmax - 1)
         do j = 1, nmax
             vx(j) = dx*(j - 1)
@@ -270,6 +339,7 @@ contains
         do i = 0, mmax_phi
             r = r + werrY(i)*cos(mu(i)*x)
         end do
+    !        r = w(x) + spline%eval(x)
     end function
 
     function dwerr(x) result(r)
@@ -281,5 +351,6 @@ contains
         do i = 0, mmax_phi
             r = r - mu(i)*werrY(i)*sin(mu(i)*x)
         end do
+    !        r = dw(x) + spline%eval_d(x)
     end function
 end program main
