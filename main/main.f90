@@ -86,7 +86,7 @@ program main
     close(7)
     close(8)
 
-    do interface_idx = 2, 2
+    do interface_idx = 1, 3
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
         do condutance_idx = 1, 3
@@ -151,7 +151,7 @@ program main
                 close(10)
                 close(10)
 
-                call generate_results(h, w, dw, werr, dwerr)
+                call generate_results(h, w, dw, w, dw)
             end do
         end do
     end do
