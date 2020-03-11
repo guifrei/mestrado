@@ -97,6 +97,48 @@
 	%\end{minipage}
 }%
 
+\newcommand{\graficoctcunc}[4]{%
+	\centering
+	%\begin{minipage}[t][6cm][c]{4.5cm}				
+	\begin{tikzpicture}[scale=0.81]
+	\begin{axis}[
+	axis lines=left,
+	%/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	%		xmin = 0,
+	%		xmax = 0.04,
+	%		ymin = 310,
+	%		ymax = 340,
+	%		restrict y to domain=-500:2000,
+	scaled x ticks = false,
+	scaled y ticks = false,
+	x tick label style={/pgf/number format/fixed},
+	y tick label style={/pgf/number format/fixed},
+	xtick = {0, 0.01, 0.02, 0.03, 0.04},
+	anchor=east,  
+	width=9cm,
+	height=7cm,
+	label style={font=\footnotesize},
+	xlabel = $x$(m),
+	xlabel style={at={(1.2, 0)}, anchor = east},
+	ylabel= $h_c$ (W/$\text{m}^2$\celsius),		
+	ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
+	\pgfplotstableread{../data/conductance_#2.dat} 
+	\teff
+	\addplot[color=black, line width=1.2pt] table from \teff;
+	\pgfplotstableread{uncert/calculated_ctc_interface_#1_conductance_#2_stdev_00.dat} 
+	\teff
+	\addplot[only marks, color=blue,mark=o,mark options={mark size=1.2pt}] table from \teff;
+	\pgfplotstableread{uncert/calculated_ctc_interface_#1_conductance_#2_stdev_01.dat} 
+	\teff
+	\addplot[only marks,color=red,mark=square,mark options={mark size=1.2pt}] table from \teff;
+	\pgfplotstableread{uncert/calculated_ctc_interface_#1_conductance_#2_stdev_05.dat} 
+	\teff
+	\addplot[only marks,color=gray,mark=triangle,mark options={mark size=1.2pt}] table from \teff;
+	\end{axis}
+	\end{tikzpicture}
+	%\caption*{(#4) Profile #3}
+	%\end{minipage}
+}%
 
 \pnumber{CHT-20-309}
 \ptitle{ESTIMATION OF THERMAL CONTACT CONDUCTANCE ON IRREGULAR INTERFACES USING THE RECIPROCITY FUNCTIONAL APPROACH}
@@ -131,7 +173,7 @@
 	interfaces have arbitrary, non-regular shapes, being the planar contact interface a
 	particular case. The results obtained show how this approach is capable of recovering the
 	distributions of temperature discontinuities and heat flow across the contact interface in a
-	fast and effective fashion. This paper also presents a stopping criteria for the summation series developed in the method, which provide the aforementioned quantities.}
+	fast and effective fashion. This paper also presents a stopping criteria for the summation series developed in the method, which provide the aforementioned quantities. The influence of the uncertainty in the description of the contact interface is also analyzed in this paper.}
 
 \begin{document}
 
@@ -963,7 +1005,50 @@ By taking a closer look at the summations in equations \eqref{calculo_FR_F1_ante
 
 The sequence ${\mu_m\bar{y}_m, m = 1, 2, 3 \dots}$ showed an average decreasing behavior for coefficients $\bar{y}_m$ calculated from the synthetic temperatures without noise ($\sigma = 0.0\celsius$). In other words, the contribution of each term in the summations in equations \eqref{calculo_FR_F1_antes_b} and \eqref{calculo_FR_G1_antes_b} as the summation advanced, kept the resulting sums limited in value, which explains why the estimated temperature jumps and heat fluxes converged easily in that condition. On the other hand, the same sequence of values, when calculated by means of the synthetic temperatures with noise added, showed an increasing tendency by assuming large values, making it difficult for the summations to converge. This happens because the amplitudes $\bar{y}_m$ associated with the higher frequencies (that is, higher values of $m$), which were supposed to be small, are affected by the presence of noise, which introduce new elements in those frequencies.\footnote{A possible explanation for the unstable results found by \cite{artigo_padilha_3}, even for the case $\sigma = 0.0\celsius$, lies on the analytical representation $Y(x)$ of the sampled temperatures adopted in that work: they were substituted in equations \eqref{coef_it_0} and \eqref{coef_it_m} by an interpolated spline. Such substitution introduced higher frequencies in the same fashion as the addition of gaussian noise did. In this work, as previously discussed, the synthetic temperatures were represented through a Fourier expansion, as suggested by \cite{artigo_mocerino}, and the anomalous behavior for $\sigma = 0.0\celsius$ could be avoided.}
 
-The comparisons in Figures \ref{erro_rms_1} and \ref{erro_rms_2} made use of the results obtained from the solution of the direct problem defined by equations \eqref{harm_T1} to \eqref{cc_T1_5}, namely, the temperature jump and the heat flux at the contact interface. In a real world application, these quantities are not known in advance; indeed, the purpose of the method presented in this work is to estimate them in order to obtain an estimative of the thermal contact conductance. However, as seen before, adding terms to the summations of both quantities may lead to unstable results, if a consistent stopping criteria is not adopted. In this work, a stopping criteria was outlined, based on the analysis of the product $\mu_m\bar{y}_m$, as described above. Thus, graphs of $\mu_m\bar{y}_m$ \textit{versus} $m$ were plotted for each combination of interface geometry, thermal contact conductance profile and error level. By comparing these graphs, one can notice that the region in the $m$ axis where $\mu_m\bar{y}_m$ showed an increasing behavior corresponded to the situations in which the estimatives had unstable results if those values of $m$ were used in place of $N_1$ or $N_2$ in equation \eqref{equacao_definicao_f_r_rep}. For instance, the inspection of Figure \ref{amplitude} suggests the adoption of $N_1 = N_2 = 6$ for $\sigma = 0.1\celsius$ and $N_1 = N_2 = 6$ for $\sigma = 0.1\celsius$ , for the test problem associated with the contact interface profile 1 and theoretical contact interface 3. These choices are not absolute, in the sense that a bigger value for $m$ (and consequently for $N_1$ and $N_2$) could be chosen and still provide stable results for the estimatives; however, the probability of obtaining results with poor quality seems to decrease if a value for $m$ is picked using the empirically obtained criteria described above.
+The comparisons in Figures \ref{erro_rms_1} and \ref{erro_rms_2} made use of the results obtained from the solution of the direct problem defined by equations \eqref{harm_T1} to \eqref{cc_T1_5}, namely, the temperature jump and the heat flux at the contact interface. In a real world application, these quantities are not known in advance; indeed, the purpose of the method presented in this work is to estimate them in order to obtain an estimative of the thermal contact conductance. However, as seen before, adding terms to the summations of both quantities may lead to unstable results, if a consistent stopping criteria is not adopted. In this work, a stopping criteria was outlined, based on the analysis of the product $\mu_m\bar{y}_m$, as described above. Thus, graphs of $\mu_m\bar{y}_m$ \textit{versus} $m$ were plotted for each combination of interface geometry, thermal contact conductance profile and error level. By comparing these graphs, one can notice that the region in the $m$ axis where $\mu_m\bar{y}_m$ showed an increasing behavior corresponded to the situations in which the estimatives had unstable results if those values of $m$ were used in place of $N_1$ or $N_2$ in equation \eqref{equacao_definicao_f_r_rep}. For instance, the inspection of Figure \ref{amplitude} suggests the adoption of $N_1 = N_2 = 6$ for $\sigma = 0.1\celsius$ and $N_1 = N_2 = 5$ for $\sigma = 0.5\celsius$ , for the test problem associated with the contact interface profile 1 and theoretical contact interface 3. These choices are not absolute, in the sense that a bigger value for $m$ (and consequently for $N_1$ and $N_2$) could be chosen and still provide stable results for the estimatives; however, the probability of obtaining results with poor quality seems to decrease if a value for $m$ is picked using the empirically obtained criteria described above.
+
+\subsection*{Effect of uncertainty on the description of the contact interface} The results obtained so far did not take into consideration the existence of a certain degree of uncertainty on the analytical description of the contact interface. In order to investigate the relevance of such factor on the prediction of the TCC, a few more simulations were performed, using the contact interface 2 as an example. The synthetic temperatutes were calculated as described in the previous sections, using $w(x)$ to represent the contact interface; for the TCC prediction phase, the expression for $w(x)$ used in the calculations was replaced by a modified expression $\tilde{w}(x)$, such that:
+\begin{equation}
+\tilde{w}(x) = w(x) + u(x)
+\end{equation}
+where $u(x)$ represented the uncertainty on the definition of $w(x)$, and was basically a curve contained random values in the interval $[-b/25, b/25]$. The resulting geometry is depicted in Figure \ref{fig3b_mod}.
+\begin{figure}[H]
+	\begin{center}
+		\begin{tikzpicture}
+		\begin{axis}[
+		anchor=east,  
+		ticks=none,
+		width=8cm,
+		height=4cm,
+		%ylabel=Iterações Lineares,
+		xmin = 0,
+		xmax = 0.04,
+		ymin = 0,
+		ymax = 0.01]
+		\addplot table[color=blue,mark=none,smooth,x index=0,y index=5]{uncert/interface.dat};
+		\end{axis}
+		\end{tikzpicture}
+		\caption{Modified geometry for contact interface 2}
+		\label{fig3b_mod}
+	\end{center}
+\end{figure}
+
+The calculations conducted for the estimation of the TCC for that contact interface employed the same parameters as the ones used in the corresponding problem without uncertainty, including the maximum number of summing terms in the estimatives of temperature jumps and heat fluxes, as discussed in the previous section. Figures \ref{figura_ctc_interface_02a_unc}, \ref{figura_ctc_interface_02b_unc} and \ref{figura_ctc_interface_02c_unc} show the results obtained.
+\begin{figure}[H]
+	\graficoctcunc{02}{01}{1}{a}
+	\caption{Estimated TCC for modified contact interface geometry 2 and TCC profile 1 using synthetic data from the original direct problem and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_02a_unc}
+\end{figure}
+\begin{figure}[H]
+	\graficoctcunc{02}{02}{2}{b}
+	\caption{Estimated TCC for modified contact interface geometry 2 and TCC profile 2 using synthetic data from the original direct problem and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_02b_unc}
+\end{figure}
+\begin{figure}[H]
+	\graficoctcunc{02}{03}{3}{c}
+	\caption{Estimated TCC for modified contact interface geometry 2 and TCC profile 3 using synthetic data from the original direct problem and the reciprocity functional approach for $\sigma = \text{0.0}\celsius$ ($\textcolor{blue}{\ocircle}$), $\sigma = \text{0.1}\celsius$ ($\textcolor{red}{\square}$) and $\sigma = \text{0.5}\celsius$ ($\textcolor{gray}{\triangle}$), and the exact profiles ($\text{--}$)}
+	\label{figura_ctc_interface_02c_unc}
+\end{figure}
 
 %\begin{figure}[H]
 %	\begin{center}		

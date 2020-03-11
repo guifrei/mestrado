@@ -13,9 +13,9 @@ program main
     procedure(w_proc_t), pointer :: w
     procedure(dw_proc_t), pointer :: dw
     double precision :: c_fluxo_calor, c_delta_temperatura
-    double precision, dimension(tnmax) :: vx, vy, vy_noerr, tmpy
+    double precision, dimension(tnmax) :: vx, vy, vy_noerr
     integer :: interface_idx, condutance_idx, stdev_idx, nmax, k, j
-    double precision :: x, dx, sqrt_rms
+    double precision :: x, dx
     double precision :: h_est
     integer :: kmax
     double precision, dimension(3) :: stdev_values = [0.0D0, 0.1D0, 0.5D0]
@@ -69,7 +69,7 @@ program main
 
     call init_uncertainty()
 
-    call c_f_procpointer(wlist(1), w)
+    call c_f_procpointer(wlist(2), w)
 
     dx = a/1000.0
     open(unit=7,file='../paper/interface.dat')
@@ -86,7 +86,7 @@ program main
     close(7)
     close(8)
 
-    do interface_idx = 1, 3
+    do interface_idx = 2, 2
         call c_f_procpointer(wlist(interface_idx), w)
         call c_f_procpointer(dwlist(interface_idx), dw)
         do condutance_idx = 1, 3
@@ -296,12 +296,11 @@ contains
 
     subroutine init_uncertainty()
         integer, parameter :: nmax = 100
-        double precision, dimension(nmax) :: vx, rand_u, rand_v, rand_epsilon
+        double precision, dimension(nmax) :: vx, rand_u, rand_epsilon
         double precision :: stdev
-        double precision :: mean
         integer :: i
 
-        stdev = b/20.0
+        stdev = b/25.0
         dx = a/dble(nmax - 1)
         do j = 1, nmax
             vx(j) = dx*(j - 1)
@@ -309,21 +308,7 @@ contains
 
         call random_seed
         call random_number(rand_u)
-        call random_number(rand_v)
-        rand_epsilon = cos(2.0*pi*rand_v)*sqrt(-2.0*log(rand_u))
-        rand_epsilon = rand_epsilon*stdev
-
-        stdev = 0
-        mean = 0
-        do i = 1,100
-            mean = mean + rand_epsilon(i)
-            stdev = stdev + rand_epsilon(i)*rand_epsilon(i)
-        end do
-
-        mean = mean/100.0
-        stdev = stdev/10000.0
-
-        stdev = sqrt(stdev - mean*mean)
+        rand_epsilon = (2.0*rand_u - 1)*stdev
 
         call least_squares_for_Y(vx, rand_epsilon, werrY, nmax)
 
