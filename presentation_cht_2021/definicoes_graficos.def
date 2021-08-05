@@ -1,0 +1,307 @@
+\newcommand{\graficostemperatura}[5]{%
+	\begin{minipage}[t][6cm][c]{4.5cm}
+		\centering		
+		\begin{tikzpicture}[scale=0.75]
+		\begin{axis}[
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		axis lines=left,
+		%		xmin = 0,
+		%		xmax = 0.04,
+		%ymin = #4,
+		%ymax = #5,
+		%		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=7cm,
+		height=5cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $T_1\big|_{\Gamma_0}$ (\celsius),
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]		
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_0#1_conductance_0#2_stdev_05.dat} 
+		\teff
+		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=2.0pt}] table from \teff;
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_0#1_conductance_0#2_stdev_01.dat} 
+		\teff
+		\addplot[only marks,color=red,mark=square,mark options={mark size=2.0pt}] table from \teff;
+		\pgfplotstableread{../data/temperaturas_sinteticas_interface_0#1_conductance_0#2_stdev_00.dat} 
+		\teff
+		\addplot[color=blue,mark=o,mark options={mark size=2.0pt}] table from \teff;		
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(#3) Perfil #2}
+	\end{minipage}
+}%
+
+% Parametros:
+% erro_rms
+% delta_temperatura ou fluxo_calor
+% interface_id: 1, 2, ou 3
+% condutance_id: 1, 2, ou 3
+% axis text
+% a, b, ou c
+\newcommand{\graficoerrorms}[6]{%
+	\begin{minipage}[t][6cm][c]{4.5cm}
+		\centering		
+		\begin{tikzpicture}[scale=0.75]
+		\begin{axis}[
+		axis lines=left,
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		%ymode = log,
+		grid=major,
+		legend style={legend pos=north west}
+		% xmin = 0.00000001,
+		%		xmax = 0.04,
+		%ymin = 0,
+		%ymax = 90,
+		scaled x ticks = true,
+		scaled y ticks = true,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		xtick = {0,5,10,15,20,25,30,35,40,45,50},
+		anchor=east,  
+		width=7cm,
+		height=6cm,
+		label style={font=\footnotesize},
+		xlabel = $N_j$,
+		ylabel= $\log\left(\delta_{#5}\right)$,
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
+		\pgfplotstableread{../data/#1_#2_interface_0#3_conductance_0#4_stdev_00.dat} 
+		\teff
+		\addplot[color=blue,mark=o,mark options={mark size=2.0pt}] table from \teff;
+		\pgfplotstableread{../data/#1_#2_interface_0#3_conductance_0#4_stdev_01.dat} 
+		\teff
+		\addplot[color=red,mark=square,mark options={mark size=2.0pt}] table from \teff;
+		\pgfplotstableread{../data/#1_#2_interface_0#3_conductance_0#4_stdev_05.dat} 
+		\teff
+		\addplot[color=gray,mark=triangle,mark options={mark size=2.0pt}] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		\caption*{(#6)Perfil #4}
+	\end{minipage}
+}%
+
+%Parametros
+% delta_temperatura ou fluxo_calor
+% interface_idx : 1, 2, ou 3
+% condutance_idx : 1, 2, ou 3
+% numero de autofunces para cada desvio padrao, com dois algarismos
+% a, b, ou c
+\newcommand{\graficoestimativa}[9]{%
+	\begin{minipage}[c][3cm][c]{0.3\textwidth}
+		\centering		
+		\begin{tikzpicture}[scale=0.65]
+		\begin{axis}[
+		axis lines=left,
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		%		xmin = 0,
+		%		xmax = 0.04,
+		%		ymin = 310,
+		%		ymax = 340,
+		%		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=5cm,
+		height=4cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $#8$ (#9),
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
+		\pgfplotstableread{../data/comsol/#1_interface_0#2_conductance_0#3.dat} 
+		\teff
+		\addplot[color=black, line width=1.5pt] table from \teff;
+		\pgfplotstableread{../data/fortran/#1_interface_0#2_conductance_0#3_stdev_00_N_#4.dat} 
+		\teff
+		\addplot[only marks, color=blue,mark=o,mark options={mark size=1.5pt}] table from \teff;
+		\pgfplotstableread{../data/fortran/#1_interface_0#2_conductance_0#3_stdev_01_N_#5.dat} 
+		\teff
+		\addplot[only marks,color=red,mark=square,mark options={mark size=1.5pt}] table from \teff;
+		\pgfplotstableread{../data/fortran/#1_interface_0#2_conductance_0#3_stdev_05_N_#6.dat} 
+		\teff
+		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=1.5pt}] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		%\caption*{(#7) Perfil #3}
+	\end{minipage}
+}%
+
+\newcommand{\graficoctc}[4]{%
+	\begin{minipage}[t][3cm][c]{0.3\textwidth}
+		\centering		
+		\begin{tikzpicture}[scale=0.65]
+		\begin{axis}[
+		axis lines=left,
+		/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+		%		xmin = 0,
+		%		xmax = 0.04,
+		%		ymin = 310,
+		%		ymax = 340,
+		%		restrict y to domain=-500:2000,
+		scaled x ticks = false,
+		scaled y ticks = false,
+		x tick label style={/pgf/number format/fixed},
+		y tick label style={/pgf/number format/fixed},
+		anchor=east,  
+		width=5cm,
+		height=4cm,
+		label style={font=\footnotesize},
+		xlabel = $x$(m),
+		ylabel= $h_c$ (W/$\text{m}^2$\celsius),
+		ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]
+		\pgfplotstableread{../data/conductance_#2.dat} 
+		\teff
+		\addplot[color=black, line width=1.5pt] table from \teff;
+		\pgfplotstableread{../data/estimativa_ctc_interface_#1_conductance_#2_stdev_00.dat} 
+		\teff
+		\addplot[only marks, color=blue,mark=o,mark options={mark size=1.5pt}] table from \teff;
+		\pgfplotstableread{../data/estimativa_ctc_interface_#1_conductance_#2_stdev_01.dat} 
+		\teff
+		\addplot[only marks,color=red,mark=square,mark options={mark size=1.5pt}] table from \teff;
+		\pgfplotstableread{../data/estimativa_ctc_interface_#1_conductance_#2_stdev_05.dat} 
+		\teff
+		\addplot[only marks,color=gray,mark=triangle,mark options={mark size=1.5pt}] table from \teff;
+		\end{axis}
+		\end{tikzpicture}
+		%\caption*{(#4) Perfil #3}
+	\end{minipage}
+}%
+
+\newcommand{\graficosmetricas}[4]{%
+	\begin{minipage}[t][6cm][c]{4.5cm}
+	\centering		
+	\begin{tikzpicture}[scale=0.75]
+	\begin{axis}[
+	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	axis lines=left,
+	ymode = log,
+	scaled x ticks = false,
+	scaled y ticks = false,
+	x tick label style={/pgf/number format/fixed},
+	y tick label style={/pgf/number format/fixed},
+	anchor=east,  
+	width=7cm,
+	height=5cm,
+	label style={font=\footnotesize},
+	xlabel = $x$(m),
+	ylabel= $T_1\big|_{\Gamma_0}$ (\celsius),
+	ylabel style={rotate=-90, at={(-0.1, 1)}, anchor = south west}]			
+	\addplot[color=blue,mark=triangle,mark options={mark size=2.0pt}] table[x index=0,y index=#4] {../data/erro_rms_interface_0#1_conductance_0#2_stdev_0#3.dat};				
+	\end{axis}
+	\end{tikzpicture}
+	%\caption*{(#3) Perfil #2}
+	\end{minipage}
+}%
+
+\newcommand{\graficointerface}[1]{%
+	\begin{minipage}[c][2cm][c]{\textwidth}
+	\centering
+	\begin{tikzpicture}[scale=0.5]
+	\begin{axis}[
+	anchor=east,  
+	ticks=none,
+	width=6cm,
+	height=3cm,
+	%ylabel=Iterações Lineares,
+	xmin = 0,
+	xmax = 0.04,
+	ymin = 0,
+	ymax = 0.02]
+	\pgfplotstableread{../data/interface_0#1.dat} 
+	\teff
+	\addplot[color=blue,mark=none,smooth] table from \teff;
+	\end{axis}			
+	\end{tikzpicture}	
+	\end{minipage}
+}%
+
+\newcommand{\graficosctclegenda}{%
+	\begin{minipage}[c][2cm][c]{0.3\textwidth}
+	\begin{tikzpicture}[scale=0.5]
+	\begin{axis}[
+	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	axis lines=left,
+	xmin = 0,
+	xmax = 0.04,
+	ymin = -500,
+	ymax = 2000,
+	restrict y to domain=-500:2000,
+	scaled x ticks = false,
+	scaled y ticks = false,
+	x tick label style={/pgf/number format/fixed},
+	y tick label style={/pgf/number format/fixed},
+	anchor=east,  
+	width=5.25cm,
+	height=3.5cm,
+	label style={font=\footnotesize},
+	xlabel = $x$(m),
+	ylabel= $h_c(x)[$W/($\text{m}^2$ \celsius)]]
+	\addplot[color=blue,mark=none,smooth, domain=0:0.01] {1000};
+	\addplot[color=blue,mark=none,smooth, domain=0.01:0.03] {0};
+	\addplot[color=blue,mark=none,smooth, domain=0.03:0.04] {1000};
+	\end{axis}			
+	\end{tikzpicture}	
+	\end{minipage}
+	\begin{minipage}[c][2cm][c]{0.3\textwidth}
+	\begin{tikzpicture}[scale=0.5]
+	\begin{axis}[
+	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	axis lines=left,
+	xmin = 0,
+	xmax = 0.04,
+	ymin = -500,
+	ymax = 2000,
+	restrict y to domain=-500:2000,
+	scaled x ticks = false,
+	scaled y ticks = false,
+	x tick label style={/pgf/number format/fixed},
+	y tick label style={/pgf/number format/fixed},
+	anchor=east,  
+	width=5.25cm,
+	height=3.5cm,
+	label style={font=\footnotesize},
+	xlabel = $x$(m),
+	ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
+	\pgfplotstableread{../data/conductance_02.dat} 
+	\teff
+	\addplot[color=blue,mark=none,smooth] table from \teff;
+	\end{axis}			
+	\end{tikzpicture}	
+	\end{minipage}
+	\begin{minipage}[c][2cm][c]{0.3\textwidth}
+	\begin{tikzpicture}[scale=0.5]
+	\begin{axis}[
+	/pgf/number format/1000 sep={.},/pgf/number format/use comma,
+	axis lines=left,
+	xmin = 0,
+	xmax = 0.04,
+	ymin = -500,
+	ymax = 2000,
+	restrict y to domain=-500:2000,
+	scaled x ticks = false,
+	scaled y ticks = false,
+	x tick label style={/pgf/number format/fixed},
+	y tick label style={/pgf/number format/fixed},
+	anchor=east,  
+	width=5.25cm,
+	height=3.5cm,
+	label style={font=\footnotesize},
+	xlabel = $x$(m),
+	ylabel= $h_c(x)$[W/($\text{m}^2$ \celsius)]]
+	\addplot[color=blue,mark=none,smooth, domain=0:0.01] {1000};
+	\addplot[color=blue,mark=none,smooth, domain=0.01:0.02] {500};
+	\addplot[color=blue,mark=none,smooth, domain=0.02:0.03] {1000};
+	\addplot[color=blue,mark=none,smooth, domain=0.03:0.04] {0};
+	\end{axis}	
+	\end{tikzpicture}	
+	\end{minipage}
+}%
+
+\newcommand{\legendagraficos}{%
+	\caption{$\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0\celsius$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5 \celsius$}	
+}%
