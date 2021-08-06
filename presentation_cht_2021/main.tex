@@ -39,8 +39,8 @@
 
 \uselanguage{portuguese}
 \languagepath{portuguese}
-\deftranslation[to=portuguese]{Definition}{Definição}
-\deftranslation[to=portuguese]{Corollary}{Identidades}
+%\deftranslation[to=portuguese]{Definition}{Definição}
+%\deftranslation[to=portuguese]{Corollary}{Identidades}
 
 \usepackage{pgfpages}
 \setbeameroption{show notes}
@@ -54,11 +54,10 @@
 	\end{picture}%
 }
 
-\title{Estimativa
-	de condutâncias térmicas de contato em interfaces irregulares usando a
-	técnica da Transformada Integral Clássica e o método dos funcionais de reciprocidade}
-\author{Guilherme Camelo de Freitas}
-\date{28 de Junho de 2019}
+\title{Estimation of thermal contact conductance on irregular interfaces using the
+	Reciprocity Functional approach}
+\author{Guilherme C. de Freitas, Marcelo J. Colaço}
+\date{August XX, 2021}
 
 \institute
 {
@@ -66,12 +65,6 @@
 	UFRJ/COPPE/PEM
 }
 
-	\AtBeginSection[]{
-	\begin{frame}
-		\frametitle{Sumário}
-		\tableofcontents[currentsection]
-	\end{frame}
-}
 
 \input{definicoes_graficos.def}
 
@@ -95,15 +88,11 @@
 		\end{frame}
 	}
 	
-\begin{frame}{Agenda}
-	\tableofcontents
-\end{frame}
-
-\section{Introdução}
+\section{Introduction}
 
 \begin{frame}
-	\frametitle{Introdução}
-	\framesubtitle{Transferência de calor na interface de contato entre dois corpos}
+	\frametitle{Introduction}
+	\framesubtitle{Heat transfer through the contact interface between two bodies}
 	\begin{figure}[h!b]
 		\begin{center}
 			\begin{tikzpicture}
@@ -112,9 +101,9 @@
 				\includegraphics[trim=250 642 150 154, clip=true]{imgs/img1.pdf}
 			};
 			
-			\node[scale=0.8] at (0, 0.9) {Sólido 1};
-			\node[scale=0.8] at (0, -1.1) {Sólido 2};
-			\node[scale=0.8] at (4, 0.3) {Fluido};
+			\node[scale=0.8] at (0, 0.9) {Soild 1};
+			\node[scale=0.8] at (0, -1.1) {Solid 2};
+			\node[scale=0.8] at (4, 0.3) {Fluid};
 			\end{tikzpicture}
 		\end{center}
 	\end{figure}	
@@ -122,8 +111,8 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Introdução}
-	\framesubtitle{Conceito de condutância térmica de contato (CTC)}
+	\frametitle{Introduction}
+	\framesubtitle{Thermal contact conductance (TCC)}
 	
 	\begin{definition}{}
 		\begin{equation*}
@@ -131,42 +120,42 @@
 		\end{equation*}
 	\end{definition}
 	
-	\begin{alertblock}{Aplicações}
+	\begin{alertblock}{Applications}
 		\begin{itemize}
-			\item Avaliação da qualidade do contato entre corpos materiais
+			\item Evaluating quality of contact between material bodies
 			\begin{itemize}
-				\item $q_c = 0 \Rightarrow h_c = 0 \Rightarrow$ isolamento perfeito
-				\item $\Delta T_c = 0 \Rightarrow h_c = \infty \Rightarrow$ contato perfeito
+				\item $q_c = 0 \Rightarrow h_c = 0 \Rightarrow$ perfect insulation
+				\item $\Delta T_c = 0 \Rightarrow h_c = \infty \Rightarrow$ perfect contact
 			\end{itemize}
-			\item Identificação de falhas ou descontinuidades em materiais homogêneos			
+			\item Identifying cracks or discontinuities in homegeneous materials
 		\end{itemize}
 	\end{alertblock}
 \end{frame}
-
+%
+%\begin{frame}
+%	\frametitle{Introdução}
+%	\framesubtitle{Exemplos de áreas de aplicação}
+%	\begin{itemize}
+%		\item Indústria aeroespacial
+%		\item Microeletrônica
+%		\item Projeto de trocadores de calor
+%	\end{itemize}
+%\end{frame}
+%
 \begin{frame}
-	\frametitle{Introdução}
-	\framesubtitle{Exemplos de áreas de aplicação}
-	\begin{itemize}
-		\item Indústria aeroespacial
-		\item Microeletrônica
-		\item Projeto de trocadores de calor
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Introdução}
+	\frametitle{Introduction}
 	
-	O problema da estimativa da CTC tem características que permitem classificá-lo como um problema inverso de transferência de calor (IHTP, do termo em inglês
-	\textit{Inverse Heat Transfer Problem})
+	The problem of estimating TCC may be understood as an IHTP $\Rightarrow$ \textit{Inverse Heat Transfer Problem}
 	
 \end{frame}
-
+%
 \begin{frame}
-	\frametitle{Introdução}
-	\framesubtitle{Objetivo}
+	\frametitle{Introduction}
+	\framesubtitle{Objective}
 	\begin{alertblock}{}
-		Através de uma abordagem analítico-numérica, estudar o problema inverso da estimativa da CTC entre superfícies
-		de dois corpos materiais colocados em contato, considerando o fato de que tais superfícies não são necessariamente regulares
+		Study the inverse problem associated to the estimation of TCC between surfaces of two material bodies, taking into account that such surfaces are not necessarily regular.
+		
+		An analytical-numerical approach will be employed.
 	\end{alertblock}
 	\begin{center}
 		%\shadowbox{COLAÇO \textit{et al.}, (2013, 2014)}
@@ -176,10 +165,10 @@
 		\shadowbox{PADILHA \textit{et al.}, (2016)}
 	\end{center}
 \end{frame}
-
+%
 \begin{frame}
-	\frametitle{Introdução}
-	\framesubtitle{Interfaces irregulares}
+	\frametitle{Introduction}
+	\framesubtitle{Irregular interfaces}
 	\begin{figure}[h!b]
 		\begin{center}
 			\begin{tikzpicture}[scale=0.5]
@@ -202,7 +191,7 @@
 			\draw [very thin] (0.0, -1.2) -- (2.0, -0.2);
 			\draw [very thin] (2.0, 2.2) -- (2.0, -0.2);
 			\draw [very thin] (-4.4, 2.2) -- (2.0, 2.2);	
-			\draw [very thin, blue] (0.0, 0.0) -- (2.0, 1.0);		
+			\draw [very thin, blue] (0.0, -0.6) -- (2.0, 0.4);	
 			\end{tikzpicture}
 		\end{center}
 	\end{figure}
@@ -231,21 +220,21 @@
 			\draw [very thin] (0.0, -1.2) -- (2.0, -0.2);
 			\draw [very thin] (2.0, 2.2) -- (2.0, -0.2);
 			\draw [very thin] (-4.4, 2.2) -- (2.0, 2.2);
-			\draw [very thin, blue] (0.0, 0.0) -- (2.0, 1.0);		
+			\draw [very thin, blue] (0.0, -0.6) -- (2.0, 0.4);		
 			\end{tikzpicture}
 		\end{center}
 	\end{figure}	
 \end{frame}
-
-%TODO slides de bibliografia apresentando CTC como problema inverso
-%TODO apresentar Colaço e Padilha
-%TODO apresentar CITT
-
-\section{Problema físico}
+%
+%%TODO slides de bibliografia apresentando CTC como problema inverso
+%%TODO apresentar Colaço e Padilha
+%%TODO apresentar CITT
+%
+\section{Physical problem}
 
 \begin{frame}
-	\frametitle{Problema físico}
-	\framesubtitle{Arranjo físico}
+	\frametitle{Physical problem}
+	\framesubtitle{Physical setup}
 	\begin{figure}[h!b]
 		\begin{center}
 			\begin{tikzpicture}[scale=0.6]
@@ -306,32 +295,32 @@
 	\end{figure}
 	
 	\begin{center}
-		\shadowbox{COLAÇO e ALVES (2012); ABREU \textit{et al.} (2016)}
+		\shadowbox{COLAÇO and ALVES (2012); ABREU \textit{et al.} (2016)}
 	\end{center}		
 \end{frame}
-
+%
 \begin{frame}
-	\frametitle{Problema físico}
-	\framesubtitle{Formulação}
+	\frametitle{Physical problem}
+	\framesubtitle{Formulation}
 	\begin{subequations}
 		\begin{alignat*}{2}
-		& \nabla^2 T_1 = 0 \quad\quad\quad\quad && \text{ em } \Omega_1  \\ 
-		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = q && \text{ em } \Gamma_0   \\ 
-		& \frac{\partial T_1}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1 \\ 
-		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = h_c(T_1-T_2) \quad\quad\quad\quad && \text{ em }  \Gamma \\ 
-		& \nabla^2 T_2 = 0 && \text{ em }  \Omega_2\\ 
-		& \frac{\partial T_2}{\partial \mathbf{n}_2} = 0 && \text{ em }  \Gamma_2 \\
-		& T_2 = 0 && \text{ em }  \Gamma_\infty  \\ 
-		& k_2\frac{\partial T_2}{\partial\mathbf{n}_2} = - k_1\frac{\partial T_1}{\partial\mathbf{n}_1} && \text{ em }  \Gamma 
+		& \nabla^2 T_1 = 0 \quad\quad\quad\quad && \text{ on } \Omega_1  \\ 
+		& \nabla^2 T_2 = 0 && \text{ on }  \Omega_2\\ 
+		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = q && \text{ on } \Gamma_0   \\ 
+		& \frac{\partial T_1}{\partial \mathbf{n}_1} = 0 && \text{ on }  \Gamma_1 \\ 
+		& \frac{\partial T_2}{\partial \mathbf{n}_2} = 0 && \text{ on }  \Gamma_2 \\
+		& T_2 = 0 && \text{ on }  \Gamma_\infty  \\ 
+		& k_2\frac{\partial T_2}{\partial\mathbf{n}_2} = - k_1\frac{\partial T_1}{\partial\mathbf{n}_1} && \text{ on }  \Gamma \\
+		& -k_1 \frac{\partial T_1}{\partial\mathbf{n}_1} = h_c(T_1-T_2) \quad\quad\quad\quad && \text{ on }  \Gamma
 		\end{alignat*}
 	\end{subequations}
 \end{frame}
-
-\section{Problema inverso}
+%
+\section{Inverse problem}
 
 \begin{frame}
-	\frametitle{Problema inverso}
-	\framesubtitle{Arranjo físico}
+	\frametitle{Inverse problem}
+	\framesubtitle{Physical problem}
 	\begin{figure}[h!b]
 		\begin{center}
 			\begin{tikzpicture}[scale=0.6]
@@ -403,10 +392,10 @@
 		\end{center}
 	\end{figure}
 \end{frame}
-
+%
 \begin{frame}
-	\frametitle{Problema inverso}
-	\framesubtitle{Formulação}
+	\frametitle{Inverse problem}
+	\framesubtitle{Formulation}
 	\begin{alertblock}{}
 	\begin{align*}
 	& q_c = -k_1\frac{\partial T_1}{\partial \mathbf{n}_1}\bigg|_\Gamma
@@ -418,20 +407,20 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Problema inverso}
-		\framesubtitle{Formulação}
-		Avaliar indiretamente o fluxo de calor e o salto de temperatura na interface de contato
+	\frametitle{Inverse problem}
+		\framesubtitle{Formulation}
+		Indirect formulation of the heat flux and temperature jump across the contact interface
 		
 		\begin{tikzpicture}[overlay]
 		\pause
-		\draw (5, 0) node {\shadowbox{obtidos via solução de problemas auxiliares}};			
+		\draw (5, 0) node {\shadowbox{obtained from auxiliary problems}};			
 		\draw[blue,rounded corners] (6.65, -1.3) rectangle (7.5, -1.8);
 		\draw[blue,rounded corners] (6.7, -3.35) rectangle (7.5, -3.85);
 		\draw [->, blue, very thick] (6.9, -0.35) -- (6.9, -1.3);
 		\draw [-, blue, very thick] (7.8, -0.35) -- (7.8, -3.6);
 		\draw [->, blue, very thick] (7.8, -3.6) -- (7.5, -3.6);
 		\pause
-		\draw (5, -5) node {\shadowbox{obtidos via funcional de reciprocidade}};
+		\draw (5, -5) node {\shadowbox{obtained from reciprocity functionals}};
 		\draw[red,rounded corners] (6.2, -1.3) rectangle (6.6, -1.8);
 		\draw[red,rounded corners] (6.3, -3.35) rectangle (6.65, -3.85);		
 		\draw [->, red, very thick] (6.5, -4.65) -- (6.5, -3.85);	
@@ -447,14 +436,14 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Problema inverso}
-	\framesubtitle{Hipóteses}
+	\frametitle{Inverse problem}
+	\framesubtitle{Assumptions}
 	\begin{itemize}
-		\item Definindo uma operação de \textbf{produto interno} entre $f(\Gamma)$ e $g(\Gamma)$:
+		\item \textbf{Inner product} of $f(\Gamma)$ and $g(\Gamma)$:
 		\begin{align*}
 		 \langle f(\Gamma), g(\Gamma) \rangle = \int_{\Gamma} f(\Gamma) g(\Gamma)d\Gamma
 		\end{align*}
-		\item Assumindo que os $\beta_j(\Gamma), j=1,2,\ldots N_1$ são ortonormais, i.e:
+		\item $\beta_j(\Gamma), j=1,2,\ldots N_1$ are orthonormal, i.e:
 		\begin{align*}
 		\left\langle  \beta_m(\Gamma), \beta_n(\Gamma) \right\rangle = \left\lbrace
 		\begin{matrix}
@@ -464,7 +453,7 @@
 		\right.
 		\end{align*}
 		
-		\item Assumindo que os $\gamma_j(\Gamma), j=1,2,\ldots N_2$ são ortonormais, i.e:
+		\item $\gamma_j(\Gamma), j=1,2,\ldots N_2$ are orthonormal, i.e:
 		\begin{align*}
 		\left\langle  \gamma_m(\Gamma), \gamma_n(\Gamma) \right\rangle = \left\lbrace
 		\begin{matrix}
@@ -475,10 +464,10 @@
 		\end{align*}
 	\end{itemize}
 \end{frame}
-
+%
 \begin{frame}
-	\frametitle{Problema inverso}
-	\framesubtitle{Obtenção dos coeficientes}
+	\frametitle{Inverse problem}
+	\framesubtitle{Calculation of the coefficients}
 	\begin{alertblock}{}
 	\begin{align*}
 		& \alpha_j = \left\langle [T_1 - T_2]_\Gamma, \beta_j(\Gamma) \right\rangle \\ \\
@@ -486,24 +475,24 @@
 	\end{align*}
 \end{alertblock}
 	
-	Procurar uma forma de representar os produtos internos em termos de medidas obtidas nas fronteiras do corpo de prova
+	These inner products will be represented in terms of measures obtained from the outer surfaces of the bodies in contact
 \end{frame}
-
-\section{Solução do problema inverso (FR + CITT)}
-\begin{frame}{Formulação dos problemas auxiliares}
-	\framesubtitle{Primeiro problema auxiliar}
+%
+\section{Solution of the inverse problem (RF + CITT)}
+\begin{frame}{Formulation of the auxiliary problems}
+	\framesubtitle{First auxiliary problem}
 	\begin{columns}
 	\begin{column}{.5\textwidth}
 	\begin{subequations}
 		\begin{alignat*}{2}
 		& \nabla^2 F_{1,j} = 0 \quad\quad\quad\quad && \text{ in } \Omega_1  \\
-		& F_{1,j} = \psi_j(x) && \text{ em } \Gamma_0   \\
-		& \frac{\partial F_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1  \\ 
-		& F_{1,j} = F_{2, j} \quad\quad\quad\quad\quad && \text{ em }  \Gamma \\
-		& \nabla^2 F_{2,j} = 0 && \text{ em }  \Omega_2 \\
-		& \frac{\partial F_{2,j}}{\partial \mathbf{n}_2} = 0 && \text{ em }  \Gamma_2 \\
-		& F_{2,j} = 0 && \text{ em }  \Gamma_\infty \\
-		& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} && \text{ em }  \Gamma 
+		& F_{1,j} = \psi_j(x) && \text{ on } \Gamma_0   \\
+		& \frac{\partial F_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ on }  \Gamma_1  \\ 
+		& F_{1,j} = F_{2, j} \quad\quad\quad\quad\quad && \text{ on }  \Gamma \\
+		& \nabla^2 F_{2,j} = 0 && \text{ on }  \Omega_2 \\
+		& \frac{\partial F_{2,j}}{\partial \mathbf{n}_2} = 0 && \text{ on }  \Gamma_2 \\
+		& F_{2,j} = 0 && \text{ on }  \Gamma_\infty \\
+		& k_2\frac{\partial F_{2, j}}{\partial\mathbf{n}_2} = - k_1\frac{\partial F_{1,j}}{\partial\mathbf{n}_1} && \text{ on }  \Gamma 
 		\end{alignat*}
 	\end{subequations}
 	\end{column}
@@ -520,16 +509,16 @@
 	\end{center}
 \end{frame}
 
-\begin{frame}{Formulação dos problemas auxiliares}
-	\framesubtitle{Segundo problema auxiliar}
+\begin{frame}{Formulation of the auxiliary problems}
+	\framesubtitle{Second auxiliary problem}
 	\begin{columns}
 	\begin{column}{.5\textwidth}
 	\begin{subequations}
 		\begin{alignat*}{2}
-		& \nabla^2 G_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ em } \Omega_1  \\ 
-		& G_{1,j} = \phi_j(x) && \text{ em } \Gamma_0  \\
-		& \frac{\partial G_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ em }  \Gamma_1  \\ 
-		& \frac{\partial G_{1,j}}{\partial\mathbf{n}_1} = 0 \quad\quad\quad\quad\quad && \text{ em }  \Gamma 
+		& \nabla^2 G_{1,j} = 0 \quad\quad\quad\quad\quad && \text{ on } \Omega_1  \\ 
+		& G_{1,j} = \phi_j(x) && \text{ on } \Gamma_0  \\
+		& \frac{\partial G_{1,j}}{\partial \mathbf{n}_1} = 0 && \text{ on }  \Gamma_1  \\ 
+		& \frac{\partial G_{1,j}}{\partial\mathbf{n}_1} = 0 \quad\quad\quad\quad\quad && \text{ on }  \Gamma 
 		\end{alignat*}
 	\end{subequations}
 	\end{column}
@@ -546,220 +535,335 @@
 	\end{center}
 \end{frame}
 
+%
 \begin{frame}
-	\frametitle{Solução dos problemas auxiliares}
-	\framesubtitle{Aplicação da CITT}
-	
-	Etapas:
-	
-	\begin{enumerate}[(i)]
-		\item Desenvolver o problema de autovalor associado
-		\item Desenvolver o par transformada-inversa apropriado
-		\item Aplicar a transformação integral à equação diferencial parcial do problema de valor de contorno original
-		\item Resolver o sistema de equações diferenciais ordinárias desacopladas gerado
-		\item Aplicar a fórmula de inversão para construir a solução completa
-	\end{enumerate}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Solução dos problemas auxiliares}
-	\framesubtitle{Subdomínios}
-	\begin{figure}[h!b]
-		\begin{center}
-			\begin{tikzpicture}[scale=0.6]
-			
-			\draw [ultra thick] (0, 0) -- (10, 0);
-			\draw [ultra thick] (0, 2) -- (7, 2);
-			\draw [ultra thick] (8, 2) -- (10, 2);
-			\draw [ultra thick] (0, 5) -- (10, 5);
-			\draw [ultra thick] (0, 0) -- (0, 5);
-			\draw [ultra thick] (10, 0) -- (10, 5);
-			
-			\draw (2.5, 3.5) node {$\Omega_1$};
-			\draw (2.5, 1) node {$\Omega_2$};	
-			\draw (7.5, 2) node {$\Gamma$};
-			\draw (-0.5, 3.5) node {$\Gamma_1$};
-			\draw (-0.5, 1) node {$\Gamma_2$};
-			\draw (10.5, 3.5) node {$\Gamma_1$};
-			\draw (10.5, 1) node {$\Gamma_2$};
-			\draw (5, -0.4) node {$\Gamma_\infty$};
-			\draw (2.5, 5.3) node {$\Gamma_0$};
-			\draw [blue](5, 6.5) node {$q$};
-			\draw (5, -1.3) node {$a$};
-			\draw (-3.9, 2.5) node {$b$};
-			\draw (-2.4, 1) node {$w$};
-			
-			\node [above right] at (12, 0) {$x$};
-			\node [right] at (0, 8) {$y$};
-			
-			\draw [->, blue] (0, 6.2) -- (0, 5.2);
-			\draw [->, blue] (1, 6.2) -- (1, 5.2);
-			\draw [->, blue] (2, 6.2) -- (2, 5.2);
-			\draw [->, blue] (3, 6.2) -- (3, 5.2);
-			\draw [->, blue] (4, 6.2) -- (4, 5.2);
-			\draw [->, blue] (5, 6.2) -- (5, 5.2);
-			\draw [->, blue] (6, 6.2) -- (6, 5.2);
-			\draw [->, blue] (7, 6.2) -- (7, 5.2);
-			\draw [->, blue] (8, 6.2) -- (8, 5.2);
-			\draw [->, blue] (9, 6.2) -- (9, 5.2);
-			\draw [->, blue] (10, 6.2) -- (10, 5.2);
-			
-			\draw [->, very thick] (10.2,0) -- (12,0);
-			\draw [->, very thick] (0, 6.5) -- (0,8);
-			
-			\draw [-] (0, -0.2) -- (0, -1.2);
-			\draw [-] (10, -0.2) -- (10, -1.2);
-			\draw [<->] (0, -1) -- (10, -1);
-			
-			\draw [-] (-0.2, 0) -- (-3.8, 0);
-			\draw [-] (-0.2, 5) -- (-3.8, 5);
-			\draw [-] (-0.2, 2) -- (-2.2, 2);
-			\draw [<->] (-3.6, 0) -- (-3.6, 5);
-			\draw [<->] (-2.0, 0) -- (-2.0, 2);
-			
-			\end{tikzpicture}
-		\end{center}
-	\end{figure}
+	\frametitle{Reciprocity Functional}
+	\begin{definition}{}
+		\begin{align*}
+		\Re(F) = \int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F - Y\frac{\partial F}{\partial\mathbf{n_1}}\right]d\Gamma_0 \\
+		\end{align*}
+	\end{definition}
 	
 	\begin{center}
-		\shadowbox{PADILHA \textit{et al.}, (2016)}
-	\end{center}		
-\end{frame}
-
-\begin{frame}
-	\frametitle{Solução dos problemas auxiliares}
-	\framesubtitle{Extensão de domínio}
+		\shadowbox{COLAÇO and ALVES (2012)}
+	\end{center}
 	
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			\begin{figure}[t]
-				\begin{center}
-					\begin{tikzpicture}[scale=0.4]
-					
-					\draw [ultra thick, dashed] (0, 0) -- (10, 0);
-					%\draw [ultra thick] (0, 2) -- (7, 2);
-					%\draw [ultra thick] (8, 2) -- (10, 2);
-					\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
-					\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};
-					\draw [ultra thick] (0, 5) -- (10, 5);
-					\draw [ultra thick, dashed] (0, 0) -- (0, 2);	
-					\draw [ultra thick] (0, 2) -- (0, 5);	
-					\draw [ultra thick, dashed] (10, 0) -- (10, 2);
-					\draw [ultra thick] (10, 2) -- (10, 5);
-					
-					\draw (2.5, 3.5) node {$\Omega_1$};
-					\draw (3.3, 2.2) node {$\Gamma$};
-					\draw (-0.5, 3.5) node {$\Gamma_1$};
-					\draw (-0.5, 1) node {$\Gamma_2$};
-					\draw (10.5, 3.5) node {$\Gamma_1$};
-					\draw (10.5, 1) node {$\Gamma_2$};
-					\draw (5, -0.6) node {$\Gamma_\infty$};
-					\draw (2.5, 5.5) node {$\Gamma_0$};
-					\draw [blue](5, 6.5) node {$q$};
-					%\draw (5, -1.3) node {$a$};
-					%\draw (-3.9, 2.5) node {$b$};
-					%\draw (-2.7, 1) node {$w(x)$};
-					
-					\node [above right] at (12, 0) {$x$};
-					\node [right] at (0, 8) {$y$};
-					
-					\draw [->, blue] (0, 6.2) -- (0, 5.2);
-					\draw [->, blue] (1, 6.2) -- (1, 5.2);
-					\draw [->, blue] (2, 6.2) -- (2, 5.2);
-					\draw [->, blue] (3, 6.2) -- (3, 5.2);
-					\draw [->, blue] (4, 6.2) -- (4, 5.2);
-					\draw [->, blue] (5, 6.2) -- (5, 5.2);
-					\draw [->, blue] (6, 6.2) -- (6, 5.2);
-					\draw [->, blue] (7, 6.2) -- (7, 5.2);
-					\draw [->, blue] (8, 6.2) -- (8, 5.2);
-					\draw [->, blue] (9, 6.2) -- (9, 5.2);
-					\draw [->, blue] (10, 6.2) -- (10, 5.2);
-					
-					\draw [->, very thick] (10.2,0) -- (12,0);
-					\draw [->, very thick] (0, 6.5) -- (0,8);
-					
-					%\draw [-] (0, -0.2) -- (0, -1.2);
-					%\draw [-] (10, -0.2) -- (10, -1.2);
-					%\draw [<->] (0, -1) -- (10, -1);
-					
-					%\draw [-] (-0.2, 0) -- (-3.8, 0);
-					%\draw [-] (-0.2, 5) -- (-3.8, 5);
-					%\draw [-] (-0.2, 2) -- (-2.2, 2);
-					%\draw [<->] (-3.6, 0) -- (-3.6, 5);
-					%\draw [<->] (-2.0, 0) -- (-2.0, 2);
-					
-					\end{tikzpicture}
-				\end{center}
-			\end{figure}
-		\end{column}
-		
-		\begin{column}{.5\textwidth}
-			\begin{figure}[t]
-				\begin{center}
-					\begin{tikzpicture}[scale=0.4]
-					
-					\draw [ultra thick] (0, 0) -- (10, 0);
-					%\draw [ultra thick] (0, 2) -- (7, 2);
-					%\draw [ultra thick] (8, 2) -- (10, 2);
-					\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
-					\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};
-					\draw [ultra thick, dashed] (0, 5) -- (10, 5);
-					\draw [ultra thick] (0, 0) -- (0, 2);	
-					\draw [ultra thick, dashed] (0, 2) -- (0, 5);	
-					\draw [ultra thick] (10, 0) -- (10, 2);
-					\draw [ultra thick, dashed] (10, 2) -- (10, 5);
-					
-					\draw (7.5, 1) node {$\Omega_2$};	
-					\draw (3.3, 2.2) node {$\Gamma$};
-					\draw (-0.5, 3.5) node {$\Gamma_1$};
-					\draw (-0.5, 1) node {$\Gamma_2$};
-					\draw (10.5, 3.5) node {$\Gamma_1$};
-					\draw (10.5, 1) node {$\Gamma_2$};
-					\draw (5, -0.6) node {$\Gamma_\infty$};
-					\draw (2.5, 5.5) node {$\Gamma_0$};
-					\draw [blue](5, 6.5) node {$q$};
-					%\draw (5, -1.3) node {$a$};
-					%\draw (-3.9, 2.5) node {$b$};
-					%\draw (-2.7, 1) node {$w(x)$};
-					
-					\node [above right] at (12, 0) {$x$};
-					\node [right] at (0, 8) {$y$};
-					
-					\draw [->, blue] (0, 6.2) -- (0, 5.2);
-					\draw [->, blue] (1, 6.2) -- (1, 5.2);
-					\draw [->, blue] (2, 6.2) -- (2, 5.2);
-					\draw [->, blue] (3, 6.2) -- (3, 5.2);
-					\draw [->, blue] (4, 6.2) -- (4, 5.2);
-					\draw [->, blue] (5, 6.2) -- (5, 5.2);
-					\draw [->, blue] (6, 6.2) -- (6, 5.2);
-					\draw [->, blue] (7, 6.2) -- (7, 5.2);
-					\draw [->, blue] (8, 6.2) -- (8, 5.2);
-					\draw [->, blue] (9, 6.2) -- (9, 5.2);
-					\draw [->, blue] (10, 6.2) -- (10, 5.2);
-					
-					\draw [->, very thick] (10.2,0) -- (12,0);
-					\draw [->, very thick] (0, 6.5) -- (0,8);
-					
-					%\draw [-] (0, -0.2) -- (0, -1.2);
-					%\draw [-] (10, -0.2) -- (10, -1.2);
-					%\draw [<->] (0, -1) -- (10, -1);
-					
-					%\draw [-] (-0.2, 0) -- (-3.8, 0);
-					%\draw [-] (-0.2, 5) -- (-3.8, 5);
-					%\draw [-] (-0.2, 2) -- (-2.2, 2);
-					%\draw [<->] (-3.6, 0) -- (-3.6, 5);
-					%\draw [<->] (-2.0, 0) -- (-2.0, 2);
-					
-					\end{tikzpicture}
-				\end{center}
-			\end{figure}
-		\end{column}
-	\end{columns}
+	\begin{center}
+		\shadowbox{ANDRIEUX and BEN ABDA (1993)}
+	\end{center}	
+\end{frame}
+%
+\begin{frame}
+	\label{slide_fr}
+	\frametitle{Reciprocity Functionals}
+	\framesubtitle{Identities}
+	
+	\begin{alertblock}{}
+		\begin{align*}
+		\int_\Gamma k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma
+		=
+		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)\right. & \left.F_{1,j} - Y\frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0
+		\label{identidade_T} \\ \nonumber \\
+		\int_\Gamma -k_1 G_{1,j} \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma
+		=
+		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)\right. & \left.G_{1,j} -  Y\frac{\partial G_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0 \\
+		\end{align*}
+	\end{alertblock}
+	
+	\begin{center}
+		\shadowbox{COLAÇO and ALVES (2012)}
+	\end{center}
+	
+	\begin{alertblock}{}
+		Relationship between \textit{temperature jump and heat flux measures across interface} $\Gamma$
+		and \textit{temperature mesaures} $Y$ \textit{along surface} $\Gamma_0$
+	\end{alertblock}
+	\hyperlink{slide_produto_interno}{\beamergotobutton{}}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Solução dos problemas auxiliares}
-	\framesubtitle{Solução analítica do primeiro problema auxiliar}
+	\frametitle{Reciprocity Functionals}
+	\framesubtitle{Coefficients for temperature jump}
+	\begin{alertblock}{}
+		\begin{tikzpicture}[overlay]
+		\draw[blue,rounded corners] (0.8, -0.8) rectangle (2.1, -1.9);
+		\draw[blue,rounded corners] (3.25, -2.5) rectangle (4.13, -3.1);
+		\draw [->, blue, thick] (1.45, -1.9) -- (3.69, -2.5);
+		\end{tikzpicture}
+		
+		\begin{align*}
+		\int_\Gamma k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma		
+		& =k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F_{1,j} - Y\frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0
+		\\ \\
+		%
+		\therefore \underbrace{\left\langle [T_1 - T_2]_\Gamma, \beta_j(\Gamma)\right\rangle}_{\alpha_j}
+		& =
+		k_1 \Re(F_{1,j}) \\
+		\end{align*}		
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Reciprocity Functionals}
+	\framesubtitle{Coefficients for heat flux}
+	\begin{alertblock}{}
+		\begin{tikzpicture}[overlay]
+		\draw[red,rounded corners] (2.35, -1.1) rectangle (3, -1.6);
+		\draw[red,rounded corners] (3, -2.8) rectangle (3.9, -3.4);
+		\draw [->, red, thick] (2.675, -1.6) -- (3.45, -2.8);
+		\end{tikzpicture}
+		
+		\begin{align*}
+		\int_\Gamma -k_1 G_{1,j} \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma		
+		& = k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)G_{1,j} -  Y\frac{\partial G_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0 \\ \\
+		\therefore \underbrace{\left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j(\Gamma)\right\rangle}_{\sigma_j}
+		& = k_1 \Re(G_{1,j})
+		\\
+		\end{align*}		
+	\end{alertblock}
+	
+\end{frame}
+%
+\begin{frame}
+	\frametitle{Estimates for temperature jump and heat flux across the contact interface}
+	\begin{alertblock}{}
+		\begin{align*}
+		& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j(\Gamma) \\ \\
+		& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j(\Gamma) \\
+		\end{align*}
+	\end{alertblock}
+\end{frame}
+%
+\begin{frame}
+	\frametitle{Estimate for the thermal contact conductance}
+	\begin{alertblock}{}
+		\begin{align*}
+		& h_c(x) % = \frac{- k_1 \displaystyle\frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma}{[T_1 - T_2]_\Gamma} 
+		= \frac{\displaystyle\sum_{j=1}^{N_2} \Re(G_{1,j}) \gamma_j(x)}{\displaystyle\sum_{j=1}^{N_1} \Re(F_{1,j}) \beta_j(x)} \\
+		\end{align*}
+	\end{alertblock}
+	
+	%\pause
+	\begin{itemize}
+		\item Indirect determination of temperature jump and heat flux across the contact interface $\rightarrow$ non-intrusive technique
+		%\pause
+		\item Evaluation of thermal contact conductance at any point by direct substitution in equation $\rightarrow$ non-iterative technique
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Solution of the auxiliary problems}
+	
+	Steps:
+	
+	\begin{enumerate}[(i)]
+		\item Develop the associated eigenvalue problem
+		\item Develop the appropriate transform-inverse pair
+		\item Apply the integral transform to the partial differential equation of the original boundary value problem
+		\item Solve the system of uncoupled ordinary differential equations
+		\item Apply the inversion formula to build the complete solution
+	\end{enumerate}
+\end{frame}
+%
+%\begin{frame}
+%	\frametitle{Solução dos problemas auxiliares}
+%	\framesubtitle{Subdomínios}
+%	\begin{figure}[h!b]
+%		\begin{center}
+%			\begin{tikzpicture}[scale=0.6]
+%			
+%			\draw [ultra thick] (0, 0) -- (10, 0);
+%			\draw [ultra thick] (0, 2) -- (7, 2);
+%			\draw [ultra thick] (8, 2) -- (10, 2);
+%			\draw [ultra thick] (0, 5) -- (10, 5);
+%			\draw [ultra thick] (0, 0) -- (0, 5);
+%			\draw [ultra thick] (10, 0) -- (10, 5);
+%			
+%			\draw (2.5, 3.5) node {$\Omega_1$};
+%			\draw (2.5, 1) node {$\Omega_2$};	
+%			\draw (7.5, 2) node {$\Gamma$};
+%			\draw (-0.5, 3.5) node {$\Gamma_1$};
+%			\draw (-0.5, 1) node {$\Gamma_2$};
+%			\draw (10.5, 3.5) node {$\Gamma_1$};
+%			\draw (10.5, 1) node {$\Gamma_2$};
+%			\draw (5, -0.4) node {$\Gamma_\infty$};
+%			\draw (2.5, 5.3) node {$\Gamma_0$};
+%			\draw [blue](5, 6.5) node {$q$};
+%			\draw (5, -1.3) node {$a$};
+%			\draw (-3.9, 2.5) node {$b$};
+%			\draw (-2.4, 1) node {$w$};
+%			
+%			\node [above right] at (12, 0) {$x$};
+%			\node [right] at (0, 8) {$y$};
+%			
+%			\draw [->, blue] (0, 6.2) -- (0, 5.2);
+%			\draw [->, blue] (1, 6.2) -- (1, 5.2);
+%			\draw [->, blue] (2, 6.2) -- (2, 5.2);
+%			\draw [->, blue] (3, 6.2) -- (3, 5.2);
+%			\draw [->, blue] (4, 6.2) -- (4, 5.2);
+%			\draw [->, blue] (5, 6.2) -- (5, 5.2);
+%			\draw [->, blue] (6, 6.2) -- (6, 5.2);
+%			\draw [->, blue] (7, 6.2) -- (7, 5.2);
+%			\draw [->, blue] (8, 6.2) -- (8, 5.2);
+%			\draw [->, blue] (9, 6.2) -- (9, 5.2);
+%			\draw [->, blue] (10, 6.2) -- (10, 5.2);
+%			
+%			\draw [->, very thick] (10.2,0) -- (12,0);
+%			\draw [->, very thick] (0, 6.5) -- (0,8);
+%			
+%			\draw [-] (0, -0.2) -- (0, -1.2);
+%			\draw [-] (10, -0.2) -- (10, -1.2);
+%			\draw [<->] (0, -1) -- (10, -1);
+%			
+%			\draw [-] (-0.2, 0) -- (-3.8, 0);
+%			\draw [-] (-0.2, 5) -- (-3.8, 5);
+%			\draw [-] (-0.2, 2) -- (-2.2, 2);
+%			\draw [<->] (-3.6, 0) -- (-3.6, 5);
+%			\draw [<->] (-2.0, 0) -- (-2.0, 2);
+%			
+%			\end{tikzpicture}
+%		\end{center}
+%	\end{figure}
+%	
+%	\begin{center}
+%		\shadowbox{PADILHA \textit{et al.}, (2016)}
+%	\end{center}		
+%\end{frame}
+%
+%\begin{frame}
+%	\frametitle{Solução dos problemas auxiliares}
+%	\framesubtitle{Extensão de domínio}
+%	
+%	\begin{columns}
+%		\begin{column}{.5\textwidth}
+%			\begin{figure}[t]
+%				\begin{center}
+%					\begin{tikzpicture}[scale=0.4]
+%					
+%					\draw [ultra thick, dashed] (0, 0) -- (10, 0);
+%					%\draw [ultra thick] (0, 2) -- (7, 2);
+%					%\draw [ultra thick] (8, 2) -- (10, 2);
+%					\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
+%					\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};
+%					\draw [ultra thick] (0, 5) -- (10, 5);
+%					\draw [ultra thick, dashed] (0, 0) -- (0, 2);	
+%					\draw [ultra thick] (0, 2) -- (0, 5);	
+%					\draw [ultra thick, dashed] (10, 0) -- (10, 2);
+%					\draw [ultra thick] (10, 2) -- (10, 5);
+%					
+%					\draw (2.5, 3.5) node {$\Omega_1$};
+%					\draw (3.3, 2.2) node {$\Gamma$};
+%					\draw (-0.5, 3.5) node {$\Gamma_1$};
+%					\draw (-0.5, 1) node {$\Gamma_2$};
+%					\draw (10.5, 3.5) node {$\Gamma_1$};
+%					\draw (10.5, 1) node {$\Gamma_2$};
+%					\draw (5, -0.6) node {$\Gamma_\infty$};
+%					\draw (2.5, 5.5) node {$\Gamma_0$};
+%					\draw [blue](5, 6.5) node {$q$};
+%					%\draw (5, -1.3) node {$a$};
+%					%\draw (-3.9, 2.5) node {$b$};
+%					%\draw (-2.7, 1) node {$w(x)$};
+%					
+%					\node [above right] at (12, 0) {$x$};
+%					\node [right] at (0, 8) {$y$};
+%					
+%					\draw [->, blue] (0, 6.2) -- (0, 5.2);
+%					\draw [->, blue] (1, 6.2) -- (1, 5.2);
+%					\draw [->, blue] (2, 6.2) -- (2, 5.2);
+%					\draw [->, blue] (3, 6.2) -- (3, 5.2);
+%					\draw [->, blue] (4, 6.2) -- (4, 5.2);
+%					\draw [->, blue] (5, 6.2) -- (5, 5.2);
+%					\draw [->, blue] (6, 6.2) -- (6, 5.2);
+%					\draw [->, blue] (7, 6.2) -- (7, 5.2);
+%					\draw [->, blue] (8, 6.2) -- (8, 5.2);
+%					\draw [->, blue] (9, 6.2) -- (9, 5.2);
+%					\draw [->, blue] (10, 6.2) -- (10, 5.2);
+%					
+%					\draw [->, very thick] (10.2,0) -- (12,0);
+%					\draw [->, very thick] (0, 6.5) -- (0,8);
+%					
+%					%\draw [-] (0, -0.2) -- (0, -1.2);
+%					%\draw [-] (10, -0.2) -- (10, -1.2);
+%					%\draw [<->] (0, -1) -- (10, -1);
+%					
+%					%\draw [-] (-0.2, 0) -- (-3.8, 0);
+%					%\draw [-] (-0.2, 5) -- (-3.8, 5);
+%					%\draw [-] (-0.2, 2) -- (-2.2, 2);
+%					%\draw [<->] (-3.6, 0) -- (-3.6, 5);
+%					%\draw [<->] (-2.0, 0) -- (-2.0, 2);
+%					
+%					\end{tikzpicture}
+%				\end{center}
+%			\end{figure}
+%		\end{column}
+%		
+%		\begin{column}{.5\textwidth}
+%			\begin{figure}[t]
+%				\begin{center}
+%					\begin{tikzpicture}[scale=0.4]
+%					
+%					\draw [ultra thick] (0, 0) -- (10, 0);
+%					%\draw [ultra thick] (0, 2) -- (7, 2);
+%					%\draw [ultra thick] (8, 2) -- (10, 2);
+%					\draw [ultra thick] plot [smooth] coordinates {(0, 2) (1.5, 3.5) (2.5, 0.5) (3, 2)};
+%					\draw [ultra thick] plot [smooth] coordinates {(3.7, 2.3) (5, 3.5) (6.5, 1.5) (10, 2)};
+%					\draw [ultra thick, dashed] (0, 5) -- (10, 5);
+%					\draw [ultra thick] (0, 0) -- (0, 2);	
+%					\draw [ultra thick, dashed] (0, 2) -- (0, 5);	
+%					\draw [ultra thick] (10, 0) -- (10, 2);
+%					\draw [ultra thick, dashed] (10, 2) -- (10, 5);
+%					
+%					\draw (7.5, 1) node {$\Omega_2$};	
+%					\draw (3.3, 2.2) node {$\Gamma$};
+%					\draw (-0.5, 3.5) node {$\Gamma_1$};
+%					\draw (-0.5, 1) node {$\Gamma_2$};
+%					\draw (10.5, 3.5) node {$\Gamma_1$};
+%					\draw (10.5, 1) node {$\Gamma_2$};
+%					\draw (5, -0.6) node {$\Gamma_\infty$};
+%					\draw (2.5, 5.5) node {$\Gamma_0$};
+%					\draw [blue](5, 6.5) node {$q$};
+%					%\draw (5, -1.3) node {$a$};
+%					%\draw (-3.9, 2.5) node {$b$};
+%					%\draw (-2.7, 1) node {$w(x)$};
+%					
+%					\node [above right] at (12, 0) {$x$};
+%					\node [right] at (0, 8) {$y$};
+%					
+%					\draw [->, blue] (0, 6.2) -- (0, 5.2);
+%					\draw [->, blue] (1, 6.2) -- (1, 5.2);
+%					\draw [->, blue] (2, 6.2) -- (2, 5.2);
+%					\draw [->, blue] (3, 6.2) -- (3, 5.2);
+%					\draw [->, blue] (4, 6.2) -- (4, 5.2);
+%					\draw [->, blue] (5, 6.2) -- (5, 5.2);
+%					\draw [->, blue] (6, 6.2) -- (6, 5.2);
+%					\draw [->, blue] (7, 6.2) -- (7, 5.2);
+%					\draw [->, blue] (8, 6.2) -- (8, 5.2);
+%					\draw [->, blue] (9, 6.2) -- (9, 5.2);
+%					\draw [->, blue] (10, 6.2) -- (10, 5.2);
+%					
+%					\draw [->, very thick] (10.2,0) -- (12,0);
+%					\draw [->, very thick] (0, 6.5) -- (0,8);
+%					
+%					%\draw [-] (0, -0.2) -- (0, -1.2);
+%					%\draw [-] (10, -0.2) -- (10, -1.2);
+%					%\draw [<->] (0, -1) -- (10, -1);
+%					
+%					%\draw [-] (-0.2, 0) -- (-3.8, 0);
+%					%\draw [-] (-0.2, 5) -- (-3.8, 5);
+%					%\draw [-] (-0.2, 2) -- (-2.2, 2);
+%					%\draw [<->] (-3.6, 0) -- (-3.6, 5);
+%					%\draw [<->] (-2.0, 0) -- (-2.0, 2);
+%					
+%					\end{tikzpicture}
+%				\end{center}
+%			\end{figure}
+%		\end{column}
+%	\end{columns}
+%\end{frame}
+%
+\begin{frame}
+	\frametitle{Solution of the auxiliary problems}
+	\framesubtitle{Analytical solution of the first auxiliary problem}
 	
 	\begin{alertblock}{}
 		\begin{align*}
@@ -769,7 +873,7 @@
 		\end{align*}
 	\end{alertblock}	
 	
-	onde
+	where
 	\begin{align*}
 	\mu_m = \frac{m \pi}{a}
 	\end{align*}
@@ -777,8 +881,8 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Solução dos problemas auxiliares}
-	\framesubtitle{Solução analítica do segundo problema auxiliar}
+	\frametitle{Solution of the auxiliary problems}
+	\framesubtitle{Analytical solution of the second auxiliary problem}
 	
 	\begin{alertblock}{}
 	\begin{align*}	
@@ -787,16 +891,16 @@
 		\end{align*}
 	\end{alertblock}	
 	
-	onde
+	where
 	\begin{align*}
 	\mu_m = \frac{m \pi}{a}
 	\end{align*}
 	
 \end{frame}
-
+%
 \begin{frame}
-	\frametitle{Solução dos problemas auxiliares}
-	\framesubtitle{Coeficientes do primeiro problema auxiliar}
+	\frametitle{Solution of the auxiliary problems}
+	\framesubtitle{Coefficients of the first auxiliary problem}
 	\begin{align*}
 	\scriptsize \begin{bmatrix}
 	\bar{a}_{0,0} & \bar{b}_{0,0} & \bar{a}_{0,1} & \bar{b}_{0,1} &  \ldots & \bar{a}_{0,M} & \bar{b}_{0,M} \\
@@ -838,8 +942,8 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Solução dos problemas auxiliares}
-	\framesubtitle{Coeficientes do segundo problema auxiliar}
+	\frametitle{Solution of the auxiliary problems}
+	\framesubtitle{Coefficients of the second auxiliary problem}
 	
 	\begin{align*}
 	\begin{bmatrix}
@@ -870,8 +974,8 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Solução dos problemas auxiliares}
-	\framesubtitle{Ortogonalização das funções $\beta_j$ e $\gamma_j$}
+	\frametitle{Solution of the auxiliary problems}
+	\framesubtitle{Orthogonalization of functions $\beta_j$ e $\gamma_j$}
 	
 	\begin{tikzpicture}[overlay]
 %		\pause
@@ -889,7 +993,7 @@
 %		\draw [-, red, very thick] (2.8, -4.65) -- (2.8, -2.6);
 %		\draw [-, red, very thick] (2.8, -2.6) -- (6.4, -2.6);
 %		\draw [->, red, very thick] (6.4, -2.6) -- (6.4, -1.8);
-		\draw (5.5, -2.8) node {\shadowbox{Ortogonalização de Gram-Schmidt}};
+		\draw (5.5, -2.8) node {\shadowbox{Gram-Schmidt orthogonalization}};
 		\draw [->, red, very thick] (5.4, -2.45) -- (5.4, -1.5);
 		\draw [->, red, very thick] (5.4, -3.16) -- (5.4, -4.3);	
 	\end{tikzpicture}
@@ -906,130 +1010,15 @@
 	
 	
 \end{frame}
-
+%
+\section{Results}
 \begin{frame}
-	\frametitle{Funcional de reciprocidade}
-	\begin{definition}{}
-		\begin{align*}
-		\Re(F) = \int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F - Y\frac{\partial F}{\partial\mathbf{n_1}}\right]d\Gamma_0 \\
-		\end{align*}
-	\end{definition}
-	
-	\begin{center}
-		\shadowbox{COLAÇO e ALVES (2012)}
-	\end{center}
-	
-	\begin{center}
-		\shadowbox{ANDRIEUX e BEN ABDA (1993)}
-	\end{center}	
-\end{frame}
-
-\begin{frame}
-	\label{slide_fr}
-	\frametitle{Funcional de reciprocidade}
-	\framesubtitle{Identidades}
-	
-	\begin{alertblock}{}
-		\begin{align*}
-		\int_\Gamma k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma
-		=
-		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)\right. & \left.F_{1,j} - Y\frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0
-		\label{identidade_T} \\ \nonumber \\
-		\int_\Gamma -k_1 G_{1,j} \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma
-		=
-		k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)\right. & \left.G_{1,j} -  Y\frac{\partial G_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0 \\
-		\end{align*}
-	\end{alertblock}
-	
-	\begin{center}
-		\shadowbox{COLAÇO e ALVES (2012)}
-	\end{center}
-	
-	\begin{alertblock}{}
-	Relação entre \textit{as medidas
-		do salto de temperatura e de fluxo de calor na interface} $\Gamma$ com \textit{as medidas de temperatura} $Y$ \textit{tomadas na superfície} $\Gamma_0$
-	\end{alertblock}
-	\hyperlink{slide_produto_interno}{\beamergotobutton{}}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Funcional de reciprocidade}
-	\framesubtitle{Coeficientes - salto de temperatura}
-	\begin{alertblock}{}
-		\begin{tikzpicture}[overlay]
-			\draw[blue,rounded corners] (0.8, -0.8) rectangle (2.1, -1.9);
-			\draw[blue,rounded corners] (3.25, -2.5) rectangle (4.13, -3.1);
-			\draw [->, blue, thick] (1.45, -1.9) -- (3.69, -2.5);
-		\end{tikzpicture}
-		
-		\begin{align*}
-		\int_\Gamma k_1 \frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\left(T_1 - T_2\right)d\Gamma		
-		& =k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)F_{1,j} - Y\frac{\partial F_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0
-		 \\ \\
-		 %
-		 \therefore \underbrace{\left\langle [T_1 - T_2]_\Gamma, \beta_j(\Gamma)\right\rangle}_{\alpha_j}
-		 & =
-		 k_1 \Re(F_{1,j}) \\
-		\end{align*}		
-	\end{alertblock}
-\end{frame}
-	
-\begin{frame}
-	\frametitle{Funcional de reciprocidade}
-	\framesubtitle{Coeficientes - fluxo de calor}
-	\begin{alertblock}{}
-		\begin{tikzpicture}[overlay]
-		\draw[red,rounded corners] (2.35, -1.1) rectangle (3, -1.6);
-		\draw[red,rounded corners] (3, -2.8) rectangle (3.9, -3.4);
-		\draw [->, red, thick] (2.675, -1.6) -- (3.45, -2.8);
-		\end{tikzpicture}
-		
-		\begin{align*}
-		\int_\Gamma -k_1 G_{1,j} \frac{\partial T_1}{\partial\mathbf{n_1}}d\Gamma		
-		& = k_1\int_{\Gamma_0}\left[\left(\frac{-q}{k_1}\right)G_{1,j} -  Y\frac{\partial G_{1,j}}{\partial\mathbf{n_1}}\right]d\Gamma_0 \\ \\
-		\therefore \underbrace{\left\langle  -k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma, \gamma_j(\Gamma)\right\rangle}_{\sigma_j}
-		& = k_1 \Re(G_{1,j})
-		\\
-		\end{align*}		
-	\end{alertblock}
-	
-\end{frame}
-
-\begin{frame}
-	\frametitle{Estimativas do salto de temperatura e do fluxo de calor na interface de contato}
-	\begin{alertblock}{}
-		\begin{align*}
-		& [T_1 - T_2]_\Gamma = \sum_{j=1}^{N_1} k_1 \Re(F_{1,j}) \beta_j(\Gamma) \\ \\
-		& - k_1 \frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma = \sum_{j=1}^{N_2} k_1 \Re(G_{1,j}) \gamma_j(\Gamma) \\
-		\end{align*}
-	\end{alertblock}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Estimativa da condutância térmica de contato}
-	\begin{alertblock}{}
-		\begin{align*}
-		& h_c(x) % = \frac{- k_1 \displaystyle\frac{\partial T_1}{\partial\mathbf{n_1}}\bigg|_\Gamma}{[T_1 - T_2]_\Gamma} 
-		= \frac{\displaystyle\sum_{j=1}^{N_2} \Re(G_{1,j}) \gamma_j(x)}{\displaystyle\sum_{j=1}^{N_1} \Re(F_{1,j}) \beta_j(x)} \\
-		\end{align*}
-	\end{alertblock}
-
-	%\pause
-	\begin{itemize}
-		\item Determinação indireta do salto de temperatura e fluxo de calor na interface de contato $\rightarrow$ técnica não intrusiva
-		%\pause
-	\item Avaliação da condutância térmica de contato num ponto por substituição direta na equação $\rightarrow$ técnica não iterativa
-	\end{itemize}
-\end{frame}
-
-\section{Resultados}
-\begin{frame}
-	\frametitle{Parâmetros usados nos problemas-teste}
+	\frametitle{Parameters used in the test problems}
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{|l|l|}
 			\hline
-			\textbf{Parâmetro} & \textbf{Valor}  \\ \hline
+			\textbf{Parameter} & \textbf{Value}  \\ \hline
 			$a$       & 0.04 m   \\ \hline
 			$b$       & 0.02 m     \\ \hline
 			$k_1$     & 54 W/(m \celsius)  \\ \hline
@@ -1042,11 +1031,11 @@
 		\label{tabela_params}
 	\end{table}
 \end{frame}
-
+%
 \include{graficos}
-
+%
 \begin{frame}
-	\frametitle{Erros de medição}
+	\frametitle{Measurement errors}
 	\begin{center}
 		\begin{align*}
 		& \tilde{\mathbf{Y}} = \mathbf{Y} + \mathbf{\varepsilon} \sigma, \sigma = 
@@ -1060,44 +1049,26 @@
 \end{frame}
 
 \include{graficos2}
-
+%
 \include{graficos3}
-
-\section{Conclusão}
+%
+\section{Conclusion}
 \begin{frame}
-	\frametitle{Conclusão}
+	\frametitle{Conclusion}
 	\begin{itemize}
-		\item Método direto, não iterativo, de baixo custo computacional e que não emprega medidas intrusivas de temperatura no interior dos corpos em contato
-		\begin{itemize}
-			\item O tempo de execução do código computacional no cálculo de um determinado perfil de condutância térmica de contato não excedia o intervalo de tempo de 2,5 segundos (computador Lenovo Ideapad 330, com processador Intel Core\textsuperscript{\texttrademark} i5-8250U, CPU 1,60 GHz e memória RAM de 8 GB)
-		\end{itemize}
+		\item Direct, non-iterative method, with low computational cost, avoiding intrusive measurements inside the bodies in contact		
 	\pause
-		\item As estimativas encontradas mostraram-se muito boas, especialmente para os casos em que não se adicionavam erros às medições experimentais de temperatura
-		\begin{itemize}
-			\item Nos outros casos, as estimativas exibiram um comportamento qualitativo consistente com o comportamento teórico esperado
-		\end{itemize}
+		\item Calculation of very good estimates, especially for cases in which measurement noises were not added to the experimental temperature measures
 	\pause
-		\item Demonstração do potencial do método do Funcional de Reciprocidade em recuperar, de forma rápida e eficaz, as distribuições de salto de temperatura e fluxo de calor na interface de contato, e consequentemente o perfil de condutância térmica de contato
+		\item Qualitative behavior of cases with meausrement noises were consistent with the expected theoretical behavior
+	\pause
+		\item The method was able to recover the distributions of temperature jump and heat flux across the contact interface, and consequently the thermal contact conductance profile, in a fast and effective fashion
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Conclusão}
-	\framesubtitle{Trabalhos futuros}
-	\begin{itemize}
-		\item Técnicas de regularização ou de filtragem de ruídos, suavizando as medidas experimentais de temperatura
-		\pause
-		\item Tratamento de interfaces com descontinuidades
-		\pause
-		\item Problemas tridimensionais e/ou em regime transiente
-		\pause
-		\item Validação prática via aparato experimental
-	\end{itemize}
-\end{frame}	
-
-\begin{frame}
 	\centering
-	Obrigado!
+	Thank you!
 \end{frame}
 
 	

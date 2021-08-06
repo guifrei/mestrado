@@ -7,8 +7,8 @@
 		axis lines=left,
 		%		xmin = 0,
 		%		xmax = 0.04,
-		%ymin = #4,
-		%ymax = #5,
+		ymin = 0,
+		ymax = 0.01,
 		%		restrict y to domain=-500:2000,
 		scaled x ticks = false,
 		scaled y ticks = false,
@@ -211,7 +211,7 @@
 	xmin = 0,
 	xmax = 0.04,
 	ymin = 0,
-	ymax = 0.02]
+	ymax = 0.01]
 	\pgfplotstableread{../data/interface_0#1.dat} 
 	\teff
 	\addplot[color=blue,mark=none,smooth] table from \teff;
@@ -303,5 +303,5 @@
 }%
 
 \newcommand{\legendagraficos}{%
-	\caption{$\text{--} \rightarrow \text{Exato}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0\celsius$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5 \celsius$}	
+	\caption{$\text{--} \rightarrow \text{Exact}$; $\textcolor{blue}{\ocircle} \rightarrow \sigma = 0,0\celsius$; $\textcolor{red}{\square} \rightarrow \sigma = 0,1\celsius$; $\textcolor{gray}{\triangle} \rightarrow \sigma = 0,5 \celsius$}	
 }%
