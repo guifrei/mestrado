@@ -17,14 +17,18 @@ module auxiliary_functions_module
 
     type(phi_t), dimension(0: mmax_phi) :: phi
 contains
-    function kernel(x, interface_idx) result(r)
+    function kernel(x, dw) result(r)
         use interfaces_module
         double precision, intent(in) :: x
-        integer, intent(in) :: interface_idx
         double precision :: r
-        procedure(dw_proc_t), pointer :: dw
 
-        call c_f_procpointer(dwlist(interface_idx), dw)
+        interface
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
         r = sqrt(1 + dw(x)**2)
     end function
@@ -54,15 +58,39 @@ contains
         r = phi_eval(j, x)/phi(j)%sqrt_norm
     end function
 
-    function transform_imp(f, k, j, interface_idx) result(r)
+    function transform_imp(f, k, j, w, dw) result(r)
         use interfaces_module
-        integer, intent(in) :: k, j, interface_idx
+        integer, intent(in) :: k, j
         interface
-            function f(k, x, interface_idx) result(r)
+            function w(x) result(r)
                 import
-                integer, intent(in) :: k, interface_idx
                 double precision, intent(in) :: x
                 double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+        interface
+            function f(k, x, w, dw) result(r)
+                import
+                integer, intent(in) :: k
+                double precision, intent(in) :: x
+                double precision :: r
+                interface
+                    function w(x) result(r)
+                        import
+                        double precision, intent(in) :: x
+                        double precision :: r
+                    end function
+                    function dw(x) result(r)
+                        import
+                        double precision, intent(in) :: x
+                        double precision :: r
+                    end function
+                end interface
             end function
         end interface
         double precision :: r
@@ -73,29 +101,45 @@ contains
             double precision, intent(in) :: x
             type(c_ptr), intent(in) :: args
             double precision :: r
-            procedure(dw_proc_t), pointer :: dw
             double precision :: weight
 
-            call c_f_procpointer(dwlist(interface_idx), dw)
-            weight = kernel(x, interface_idx)
-            r = f(k, x, interface_idx)*phi_eval(j, x)
+            interface
+                function dw(x) result(r)
+                    import
+                    double precision, intent(in) :: x
+                    double precision :: r
+                end function
+            end interface
+
+            weight = kernel(x, dw)
+            r = f(k, x, w, dw)*phi_eval(j, x)
         end function
     end function
 
-    subroutine generate_eigenfunctions(interface_idx)
+    subroutine generate_eigenfunctions(w, dw)
         use netlib_module
         use interfaces_module
 
-        integer, intent(in) :: interface_idx
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+
         double precision :: twant, tgot, dx, lambda1, lambda2, flambda1, flambda2, dlambda, lambda
         integer :: uflag
-        procedure(dw_proc_t), pointer :: dw
         double precision, dimension(64) :: work
         double precision, dimension(2) :: ystart, thres, ygot, ypgot, ymax
         integer :: j, k
 
         call envirn(outch, mcheps, dwarf)
-        call c_f_procpointer(dwlist(interface_idx), dw)
 
         thres = sqrt(dwarf)
         dx = a/1000.0
@@ -171,7 +215,7 @@ contains
                 lambda1 = lambda + dlambda
             end if
             ! Norma
-            phi(j)%norm = transform_imp(f_aux, j, j, interface_idx)
+            phi(j)%norm = transform_imp(f_aux, j, j, w, dw)
             phi(j)%sqrt_norm = sqrt(phi(j)%norm)
         end do
     contains
@@ -221,16 +265,28 @@ contains
             double precision, dimension(*), intent(out) :: yp
             double precision :: weight
 
-            weight = kernel(t, interface_idx)
+            weight = kernel(t, dw)
 
             yp(1) = ((lambda**2)*weight - 1.0)*sin(y(2))*cos(y(2))*y(1)
             yp(2) = (sin(y(2))**2) + (lambda**2)*weight*(cos(y(2))**2)
         end subroutine
 
-        function f_aux(k, x, interface_idx) result(r)
-            integer, intent(in) :: k, interface_idx
+        function f_aux(k, x, w, dw) result(r)
+            integer, intent(in) :: k
             double precision, intent(in) :: x
             double precision :: r
+            interface
+                function w(x) result(r)
+                    import
+                    double precision, intent(in) :: x
+                    double precision :: r
+                end function
+                function dw(x) result(r)
+                    import
+                    double precision, intent(in) :: x
+                    double precision :: r
+                end function
+            end interface
 
             r = phi_eval(k, x)
         end function

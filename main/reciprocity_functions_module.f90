@@ -215,12 +215,10 @@ contains
         vvY(1:nn - 1) = integrals_Y(1:nn - 1)*2.0/a
     end subroutine
 
-    subroutine least_squares_for_Y(vx, vy, interface_idx, condutance_idx, stdev_idx)
+    subroutine least_squares_for_Y(vx, vy, stdev_idx)
         use tikhonov_module
         double precision, dimension(tnmax), intent(in) :: vx
         double precision, dimension(tnmax), intent(in) :: vy
-        integer, intent(in) :: interface_idx
-        integer, intent(in) :: condutance_idx
         integer, intent(in) :: stdev_idx
         integer, parameter :: mm = tnmax
         integer, parameter :: nn = mmax_phi + 1
@@ -231,13 +229,11 @@ contains
         double precision, dimension(lwork) :: work
         double precision :: x, y
         double precision, dimension(0: mmax_phi) :: integrals_Y
-        character(len = 2) :: str_idx, str_cdx, str_stdev
+        character(len = 2) :: str_stdev
         double precision, dimension(nn) :: sings
         double precision, dimension(mm) :: uu
         double precision, dimension(mm, nn) :: vt
 
-        write(str_idx, '(I2.2)') interface_idx
-        write(str_cdx, '(I2.2)') condutance_idx
         if (stdev_idx == 0) then
             str_stdev = '00'
         else if (stdev_idx == 1) then
@@ -264,8 +260,7 @@ contains
         integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
         vvY = vb(1:nn, 1)
 
-        open(unit = 5, file = '/home/cx3d/mestrado/data/coeficientes_interface_'//str_idx//'_conductance_'//str_cdx// &
-            '_stdev_' // str_stdev // '.dat')
+        open(unit = 5, file = '/home/cx3d/mestrado/data/coeficientes_stdev_' // str_stdev // '.dat')
         do i = 0, nn - 1
             write(5, *)vvY(i)
         end do
@@ -302,83 +297,138 @@ contains
         end do
     end function
 
-    function parcela_delta_temperatura(x, j, interface_idx) result(r)
+    function parcela_delta_temperatura(x, j, w, dw) result(r)
         double precision, intent(in) :: x
         integer, intent(in) :: j
-        integer, intent(in) :: interface_idx
         double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
-        r = k1*reciprocity_f(j)*fbeta(j, x, interface_idx)
+        r = k1*reciprocity_f(j)*fbeta(j, x, w, dw)
     end function
 
-    function delta_temperatura(x, interface_idx, kmax) result(r)
+    function delta_temperatura(x, w, dw, kmax) result(r)
         double precision, intent(in) :: x
-        integer, intent(in) :: interface_idx, kmax
+        integer, intent(in) :: kmax
         double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
         integer :: j
 
         r = 0
         do j = 0, kmax
-            r = r + parcela_delta_temperatura(x, j, interface_idx)
+            r = r + parcela_delta_temperatura(x, j, w, dw)
         end do
     end function
 
-    function parcela_fluxo_calor(x, j, interface_idx) result(r)
+    function parcela_fluxo_calor(x, j, w, dw) result(r)
         double precision, intent(in) :: x
         integer, intent(in) :: j
-        integer, intent(in) :: interface_idx
         double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
         r = k1
         r = r*reciprocity_g(j)
-        r = r*fgamma(j, x, interface_idx)
+        r = r*fgamma(j, x, w, dw)
     end function
 
-    function fluxo_calor(x, interface_idx, kmax) result(r)
+    function fluxo_calor(x, w, dw, kmax) result(r)
         double precision, intent(in) :: x
-        integer, intent(in) :: interface_idx, kmax
+        integer, intent(in) :: kmax
         double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
         integer :: j
 
         r = 0
         do j = 0, kmax
-            r = r + parcela_fluxo_calor(x, j, interface_idx)
+            r = r + parcela_fluxo_calor(x, j, w, dw)
         end do
     end function
 
-    subroutine gram_schmidt(interface_idx)
-        integer, intent(in) :: interface_idx
+    subroutine gram_schmidt(w, dw)
         integer :: j, m
         double precision :: prod
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+
         do j = 0, N
             associate (vAj => coeffsF(0::2, j), vDj => coeffsF(1::2, j), vEj => coeffsG(0:, j))
                 do m = 0, j - 1
                     associate (vAk => coeffsF(0::2, m), vDk => coeffsF(1::2, m), vEk => coeffsG(0:, m))
-                        prod = dot_product_beta(j, m, interface_idx)
+                        prod = dot_product_beta(j, m, w, dw)
                         vAj = vAj - prod*vAk
                         vDj = vDj - prod*vDk
                         vpsi(j, :) = vpsi(j, :) - prod*vpsi(m, :)
-                        prod = dot_product_gamma(j, m, interface_idx)
+                        prod = dot_product_gamma(j, m, w, dw)
                         vEj = vEj - prod*vEk
                         vphi(j, :) = vphi(j, :) - prod*vphi(m, :)
                     end associate
                 end do
-                prod = sqrt(dot_product_beta(j, j, interface_idx))
+                prod = sqrt(dot_product_beta(j, j, w, dw))
                 vAj = vAj/prod
                 vDj = vDj/prod
                 vpsi(j, :) = vpsi(j, :)/prod
-                prod = sqrt(dot_product_gamma(j, j, interface_idx))
+                prod = sqrt(dot_product_gamma(j, j, w, dw))
                 vEj = vEj/prod
                 vphi(j, :) = vphi(j, :)/prod
             end associate
         end do
     end subroutine gram_schmidt
 
-    subroutine calculate_reciprocity_coefficients(interface_idx)
-        integer, intent(in) :: interface_idx
+    subroutine calculate_reciprocity_coefficients(w, dw)
         integer :: j, m
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
         double precision, dimension(0: 2*mmax_F + 1, 0: N), target :: tmpcoeffsF
         double precision, dimension(0: mmax_G, 0: N), target :: tmpcoeffsG
         double precision, dimension(0: 2*mmax_F + 1) :: rF, cF
@@ -399,11 +449,18 @@ contains
         double precision, dimension(0: mmax_G, 0: mmax_G) :: mxG
         character(len = 2) :: str_idx
 
-        write(str_idx, '(I2.2)') interface_idx
-
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
-
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
         vpsi = 0.0
         vphi = 0.0
@@ -430,14 +487,14 @@ contains
         mxF = 0.0
         do j = 0, mmax_F
             do m = 0, mmax_F
-                mxF(j*2,m*2) = ftransform(fa, m, j, interface_idx)
-                mxF(j*2,m*2+1) = ftransform(fb, m, j, interface_idx)
-                mxF(j*2+1,m*2) = ftransform(fp, m, j, interface_idx)
-                mxF(j*2+1,m*2+1) = ftransform(fq, m, j, interface_idx)
+                mxF(j*2,m*2) = ftransform(fa, m, j, w, dw)
+                mxF(j*2,m*2+1) = ftransform(fb, m, j, w, dw)
+                mxF(j*2+1,m*2) = ftransform(fp, m, j, w, dw)
+                mxF(j*2+1,m*2+1) = ftransform(fq, m, j, w, dw)
             end do
             do m = 0, N
-                coeffsF(j*2, m) = ftransform(fc, m, j, interface_idx)
-                coeffsF(j*2+1, m) = ftransform(fr, m, j, interface_idx)
+                coeffsF(j*2, m) = ftransform(fc, m, j, w, dw)
+                coeffsF(j*2+1, m) = ftransform(fr, m, j, w, dw)
             end do
         end do
 
@@ -446,10 +503,10 @@ contains
         mxG = 0.0
         do j = 0, mmax_G
             do m = 0, mmax_G
-                mxG(j,m) = ftransform(fu, m, j, interface_idx)
+                mxG(j,m) = ftransform(fu, m, j, w, dw)
             end do
             do m = 0, N
-                coeffsG(j, m) = ftransform(fv, m, j, interface_idx)
+                coeffsG(j, m) = ftransform(fv, m, j, w, dw)
             end do
         end do
 
@@ -526,7 +583,7 @@ contains
 
         ! Algoritmo de ortogonalizacao de Gram-Schmidt
         !write(*, *)'Gram Schmidt'
-        call gram_schmidt(interface_idx)
+        call gram_schmidt(w, dw)
 
     !        block
     !            double precision :: x
@@ -835,108 +892,195 @@ contains
         r = soma_controle_erro(parcela_dG1dy, j, x, y, coeffsG(0:, j), mmax_G)
     end function
 
-    function dF1dn(j, x, interface_idx) result(r)
+    function dF1dn(j, x, w, dw) result(r)
         double precision, intent(in) :: x
-        integer, intent(in) :: j, interface_idx
+        integer, intent(in) :: j
         double precision :: r
-        procedure(dw_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
-
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
-
-        r = (dw(x)*dF1dx(j, x, w(x)) - dF1dy(j, x, w(x)))/sqrt(1 + dw(x)**2)
-    end function
-
-    function dF2dn(j, x, interface_idx) result(r)
-        double precision, intent(in) :: x
-        integer, intent(in) :: j, interface_idx
-        double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
-
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
-
-        r = (dw(x)*dF2dx(j, x, w(x)) - dF2dy(j, x, w(x)))/sqrt(1 + dw(x)**2)
-    end function
-
-    function dG1dn(j, x, interface_idx) result(r)
-        double precision, intent(in) :: x
-        integer, intent(in) :: j, interface_idx
-        double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
-
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
-
-        r = (dw(x)*dG1dx(j, x, w(x)) - dG1dy(j, x, w(x)))/sqrt(1 + dw(x)**2)
-    end function
-
-    function fbeta(j, x, interface_idx) result(r)
-        double precision, intent(in) :: x
-        integer, intent(in) :: j, interface_idx
-        double precision :: r
-
-        r = k1*dF1dn(j, x, interface_idx)
-    end function
-
-    function fgamma(j, x,interface_idx) result(r)
-        double precision, intent(in) :: x
-        integer, intent(in) :: j, interface_idx
-        double precision :: r
-        procedure(w_proc_t), pointer :: w
-
-        call c_f_procpointer(wlist(interface_idx), w)
-        r = G1(j, x, w(x))
-    end function
-
-    function dot_product_beta(j1, j2, interface_idx) result(r)
-        integer, intent(in) :: j1, j2, interface_idx
-        double precision :: r
-
-        r = integrate(f_aux, c_null_ptr, pts)
-    contains
-        function f_aux(x, args) result (r)
-            double precision, intent(in) :: x
-            type(c_ptr), intent(in) :: args
-            double precision :: r
-            procedure(dw_proc_t), pointer :: dw
-
-            call c_f_procpointer(dwlist(interface_idx), dw)
-            r = sqrt(1 + dw(x)**2)*fbeta(j1, x, interface_idx)*fbeta(j2, x, interface_idx)
-        end function
-    end function
-
-    function dot_product_gamma(j1, j2, interface_idx) result(r)
-        integer, intent(in) :: j1, j2, interface_idx
-        double precision :: r
-
-        r = integrate(f_aux, c_null_ptr, pts)
-    contains
-        function f_aux(x, args) result (r)
-            double precision, intent(in) :: x
-            type(c_ptr), intent(in) :: args
-            double precision :: r
-            procedure(dw_proc_t), pointer :: dw
-
-            call c_f_procpointer(dwlist(interface_idx), dw)
-            r = sqrt(1 + dw(x)**2)*fgamma(j1, x, interface_idx)*fgamma(j2, x, interface_idx)
-        end function
-    end function
-
-    function ftransform(f, k, j, interface_idx) result(r)
-        integer, intent(in) :: k, j, interface_idx
         interface
-            function f(k, x, interface_idx) result(r)
+            function w(x) result(r)
                 import
-                integer, intent(in) :: k, interface_idx
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
                 double precision, intent(in) :: x
                 double precision :: r
             end function
         end interface
+
+        r = (dw(x)*dF1dx(j, x, w(x)) - dF1dy(j, x, w(x)))/sqrt(1 + dw(x)**2)
+    end function
+
+    function dF2dn(j, x, w, dw) result(r)
+        double precision, intent(in) :: x
+        integer, intent(in) :: j
         double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+
+        r = (dw(x)*dF2dx(j, x, w(x)) - dF2dy(j, x, w(x)))/sqrt(1 + dw(x)**2)
+    end function
+
+    function dG1dn(j, x, w, dw) result(r)
+        double precision, intent(in) :: x
+        integer, intent(in) :: j
+        double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+
+        r = (dw(x)*dG1dx(j, x, w(x)) - dG1dy(j, x, w(x)))/sqrt(1 + dw(x)**2)
+    end function
+
+    function fbeta(j, x, w, dw) result(r)
+        double precision, intent(in) :: x
+        integer, intent(in) :: j
+        double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+
+        r = k1*dF1dn(j, x, w, dw)
+    end function
+
+    function fgamma(j, x, w, dw) result(r)
+        double precision, intent(in) :: x
+        integer, intent(in) :: j
+        double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+
+        r = G1(j, x, w(x))
+    end function
+
+    function dot_product_beta(j1, j2, w, dw) result(r)
+        integer, intent(in) :: j1, j2
+        double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+
+        r = integrate(f_aux, c_null_ptr, pts)
+    contains
+        function f_aux(x, args) result (r)
+            double precision, intent(in) :: x
+            type(c_ptr), intent(in) :: args
+            double precision :: r
+
+            r = sqrt(1 + dw(x)**2)*fbeta(j1, x, w, dw)*fbeta(j2, x, w, dw)
+        end function
+    end function
+
+    function dot_product_gamma(j1, j2, w, dw) result(r)
+        integer, intent(in) :: j1, j2
+        double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+
+        r = integrate(f_aux, c_null_ptr, pts)
+    contains
+        function f_aux(x, args) result (r)
+            double precision, intent(in) :: x
+            type(c_ptr), intent(in) :: args
+            double precision :: r
+
+            r = sqrt(1 + dw(x)**2)*fgamma(j1, x, w, dw)*fgamma(j2, x, w, dw)
+        end function
+    end function
+
+    function ftransform(f, k, j, w, dw) result(r)
+        integer, intent(in) :: k, j
+        interface
+            function f(k, x, w, dw) result(r)
+                import
+                integer, intent(in) :: k
+                double precision, intent(in) :: x
+                double precision :: r
+                interface
+                    function w(x) result(r)
+                        import
+                        double precision, intent(in) :: x
+                        double precision :: r
+                    end function
+                    function dw(x) result(r)
+                        import
+                        double precision, intent(in) :: x
+                        double precision :: r
+                    end function
+                end interface
+            end function
+        end interface
+        double precision :: r
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
         r = transform(f_aux, j, c_null_ptr, pts)
     contains
@@ -945,18 +1089,29 @@ contains
             type(c_ptr), intent(in) :: args
             double precision :: r
 
-            r = f(k, x, interface_idx)
+            r = f(k, x, w, dw)
         end function
     end function
 
-    function fa(j, x, interface_idx) result(r)
-        integer, intent(in) :: j, interface_idx
+    function fa(j, x, w, dw) result(r)
+        integer, intent(in) :: j
         double precision, intent(in) :: x
         double precision :: r
-        procedure(w_proc_t), pointer :: w
         double precision :: y, arg1, arg2
 
-        call c_f_procpointer(wlist(interface_idx), w)
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+
         y = w(x)
         if (j == 0) then
             r = (b - y) / b
@@ -967,14 +1122,25 @@ contains
         end if
     end function
 
-    function fb(j, x, interface_idx) result(r)
-        integer, intent(in) :: j, interface_idx
+    function fb(j, x, w, dw) result(r)
+        integer, intent(in) :: j
         double precision, intent(in) :: x
         double precision :: r
-        procedure(w_proc_t), pointer :: w
         double precision :: y, arg1, arg2
 
-        call c_f_procpointer(wlist(interface_idx), w)
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
+
         y = w(x)
         if (j == 0) then
             r = - y / b
@@ -985,15 +1151,25 @@ contains
         end if
     end function
 
-    function fc(j, x, interface_idx) result(r)
-        integer, intent(in) :: j, interface_idx
+    function fc(j, x, w, dw) result(r)
+        integer, intent(in) :: j
         double precision, intent(in) :: x
         double precision :: r
-        procedure(w_proc_t), pointer :: w
         integer :: m
         double precision :: y, arg1, arg2
 
-        call c_f_procpointer(wlist(interface_idx), w)
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
         y = w(x)
         r = -vpsi(j, 0)*y/b
@@ -1005,16 +1181,24 @@ contains
     end function
 
 
-    function fp(j, x, interface_idx) result(r)
-        integer, intent(in) :: j, interface_idx
+    function fp(j, x, w, dw) result(r)
+        integer, intent(in) :: j
         double precision, intent(in) :: x
         double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
         double precision :: y, arg1, arg2
 
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
         if (j == 0) then
             r = -k1 / b
@@ -1028,16 +1212,24 @@ contains
     end function
 
 
-    function fq(j, x, interface_idx) result(r)
-        integer, intent(in) :: j, interface_idx
+    function fq(j, x, w, dw) result(r)
+        integer, intent(in) :: j
         double precision, intent(in) :: x
         double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
         double precision :: y, arg1, arg2
 
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
         if (j == 0) then
             r = -k2 / b
@@ -1050,17 +1242,25 @@ contains
         end if
     end function
 
-    function fr(j, x, interface_idx) result(r)
-        integer, intent(in) :: j, interface_idx
+    function fr(j, x, w, dw) result(r)
+        integer, intent(in) :: j
         double precision, intent(in) :: x
         double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
         integer :: m
         double precision :: y, arg1, arg2
 
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
         r = -vpsi(j, 0) * k1 / b
         y = w(x)
@@ -1072,16 +1272,24 @@ contains
         end do
     end function
 
-    function fu(j, x, interface_idx) result(r)
-        integer, intent(in) :: j, interface_idx
+    function fu(j, x, w, dw) result(r)
+        integer, intent(in) :: j
         double precision, intent(in) :: x
         double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
         double precision :: y, arg1, arg2
 
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
         if (j == 0) then
             r = -1.0 / b
@@ -1094,17 +1302,25 @@ contains
         end if
     end function
 
-    function fv(j, x, interface_idx) result(r)
-        integer, intent(in) :: j, interface_idx
+    function fv(j, x, w, dw) result(r)
+        integer, intent(in) :: j
         double precision, intent(in) :: x
         double precision :: r
-        procedure(w_proc_t), pointer :: w
-        procedure(dw_proc_t), pointer :: dw
         integer :: m
         double precision :: y, arg1, arg2
 
-        call c_f_procpointer(wlist(interface_idx), w)
-        call c_f_procpointer(dwlist(interface_idx), dw)
+        interface
+            function w(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+            function dw(x) result(r)
+                import
+                double precision, intent(in) :: x
+                double precision :: r
+            end function
+        end interface
 
         y = w(x)
         r = -vphi(j, 0)/ b

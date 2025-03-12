@@ -4,26 +4,7 @@ module interfaces_module
     use sigmoid_function_module
     implicit none
 
-    interface
-        function w_proc_t(x) result(r)
-            import
-            double precision, intent(in) :: x
-            double precision :: r
-        end function
-
-        function dw_proc_t(x) result(r)
-            import
-            double precision, intent(in) :: x
-            double precision :: r
-        end function
-    end interface
-
-    integer, parameter :: wmax = 15
-
     double precision, parameter :: alpha = 20.0
-
-    type(c_funptr), dimension(wmax) :: wlist
-    type(c_funptr), dimension(wmax) :: dwlist
 
 contains
     function w1(x) result(r)
