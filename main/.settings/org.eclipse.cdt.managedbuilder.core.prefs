@@ -5,7 +5,17 @@ environment/buildEnvironmentInclude/photran.managedbuild.config.gnu.fortran.exe.
 environment/buildEnvironmentInclude/photran.managedbuild.config.gnu.fortran.exe.debug.1094777740/C_INCLUDE_PATH/operation=remove
 environment/buildEnvironmentInclude/photran.managedbuild.config.gnu.fortran.exe.debug.1094777740/append=true
 environment/buildEnvironmentInclude/photran.managedbuild.config.gnu.fortran.exe.debug.1094777740/appendContributed=true
+environment/buildEnvironmentInclude/photran.managedbuild.config.gnu.fortran.exe.debug.1628958093/CPATH/delimiter=\:
+environment/buildEnvironmentInclude/photran.managedbuild.config.gnu.fortran.exe.debug.1628958093/CPATH/operation=remove
+environment/buildEnvironmentInclude/photran.managedbuild.config.gnu.fortran.exe.debug.1628958093/C_INCLUDE_PATH/delimiter=\:
+environment/buildEnvironmentInclude/photran.managedbuild.config.gnu.fortran.exe.debug.1628958093/C_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/photran.managedbuild.config.gnu.fortran.exe.debug.1628958093/append=true
+environment/buildEnvironmentInclude/photran.managedbuild.config.gnu.fortran.exe.debug.1628958093/appendContributed=true
 environment/buildEnvironmentLibrary/photran.managedbuild.config.gnu.fortran.exe.debug.1094777740/LIBRARY_PATH/delimiter=\:
 environment/buildEnvironmentLibrary/photran.managedbuild.config.gnu.fortran.exe.debug.1094777740/LIBRARY_PATH/operation=remove
 environment/buildEnvironmentLibrary/photran.managedbuild.config.gnu.fortran.exe.debug.1094777740/append=true
 environment/buildEnvironmentLibrary/photran.managedbuild.config.gnu.fortran.exe.debug.1094777740/appendContributed=true
+environment/buildEnvironmentLibrary/photran.managedbuild.config.gnu.fortran.exe.debug.1628958093/LIBRARY_PATH/delimiter=\:
+environment/buildEnvironmentLibrary/photran.managedbuild.config.gnu.fortran.exe.debug.1628958093/LIBRARY_PATH/operation=remove
+environment/buildEnvironmentLibrary/photran.managedbuild.config.gnu.fortran.exe.debug.1628958093/append=true
+environment/buildEnvironmentLibrary/photran.managedbuild.config.gnu.fortran.exe.debug.1628958093/appendContributed=true
