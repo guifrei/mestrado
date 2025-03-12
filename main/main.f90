@@ -16,7 +16,7 @@ program main
     integer :: nmax, stdev_idx, k, j
     double precision :: desv, x, y, y1, y2, dx, stdev
     double precision :: fluxo_calor_teorico, delta_temperatura_teorico, norm_f, norm_t, norm_h, h_est
-    integer, target, dimension(2) :: f_args
+    type(f_args_t), target :: f_args
     integer :: nmax_delta_temperatura, nmax_fluxo_calor, kmax
     double precision :: start, finish
 
@@ -43,16 +43,15 @@ program main
 
     open(unit = 1, file='/home/cx3d/mestrado/data/media_beta_gamma.dat')
     do j = 0, N
-        f_args(1) = j
-        !!!!!!!!!!!!!!!!!!!
-        !f_args(2) = interface_idx
+        f_args%idx = j
+        f_args%w_ptr = c_funloc(w1)
+        f_args%dw_ptr = c_funloc(dw1)
         write(1, *)j, integrate(f_aux_beta, c_loc(f_args), pts)/a, integrate(f_aux_gamma, c_loc(f_args), pts)/a
     end do
     close(1)
 
     ! Salvando o perfil de temperatura calculado no Fortran
-    open(unit = 1, file = '/home/cx3d/mestrado/' // &
-        'data/fortran/temperaturas_sinteticas_interface.dat')
+    open(unit = 1, file = '/home/cx3d/mestrado/data/fortran/temperaturas_sinteticas.dat')
     do k = 1, tnmax
         x = dble(k - 1)*dx
         y = t1(x, b)
@@ -131,7 +130,7 @@ program main
             open(unit = 5, file = '/home/cx3d/mestrado/data/fortran/fluxo_calor_interface_stdev_' &
                 // str_stdev // '_N_' // str_N // '.dat')
             open(unit = 14, file = '/home/cx3d/mestrado/data/comsol/delta_temperatura.dat')
-            open(unit = 15, file = '/home/cx3d/mestrado/data/comsol/fluxo_calor_interface.dat')
+            open(unit = 15, file = '/home/cx3d/mestrado/data/comsol/fluxo_calor.dat')
 
             norm_f = 0.0
             norm_t = 0.0
@@ -210,11 +209,15 @@ contains
         double precision, intent(in) :: x
         type(c_ptr), intent(in) :: args
         double precision :: r
-        integer, dimension(:), pointer :: ptr
+        type(f_args_t), pointer :: ptr
+        procedure(w_proc_t), pointer :: w
+        procedure(dw_proc_t), pointer :: dw
 
-        call c_f_pointer(args, ptr, [2])
-        !!!!!!!!!!!!!!!!!!!!
-        r = fbeta(ptr(1), x, w1, dw1)
+        call c_f_pointer(args, ptr)
+        call c_f_procpointer(ptr%w_ptr, w)
+        call c_f_procpointer(ptr%dw_ptr, dw)
+
+        r = fbeta(ptr%idx, x, w, dw)
 
     end function
 
@@ -223,10 +226,14 @@ contains
         type(c_ptr), intent(in) :: args
         double precision :: r
 
-        integer, dimension(:), pointer :: ptr
+        type(f_args_t), pointer :: ptr
+        procedure(w_proc_t), pointer :: w
+        procedure(dw_proc_t), pointer :: dw
 
-        call c_f_pointer(args, ptr, [2])
-        !!!!!!!!!!!!!!!!!!!!
-        r = fgamma(ptr(1), x, w1, dw1)
+        call c_f_pointer(args, ptr)
+        call c_f_procpointer(ptr%w_ptr, w)
+        call c_f_procpointer(ptr%dw_ptr, dw)
+
+        r = fgamma(ptr%idx, x, w, dw)
     end function
 end program main

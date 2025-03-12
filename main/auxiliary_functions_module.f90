@@ -72,8 +72,6 @@ contains
                 double precision, intent(in) :: x
                 double precision :: r
             end function
-        end interface
-        interface
             function f(k, x, w, dw) result(r)
                 import
                 integer, intent(in) :: k
@@ -93,23 +91,30 @@ contains
                 end interface
             end function
         end interface
+
         double precision :: r
 
-        r = integrate(f_aux, c_null_ptr, pts)
+        type(f_args_t), target :: f_args
+
+        f_args%idx = j
+        f_args%w_ptr = c_funloc(w)
+        f_args%dw_ptr = c_funloc(dw)
+
+        r = integrate(f_aux, c_loc(f_args))
     contains
         function f_aux(x, args) result (r)
             double precision, intent(in) :: x
             type(c_ptr), intent(in) :: args
             double precision :: r
             double precision :: weight
+            procedure(w_proc_t), pointer :: w
+            procedure(dw_proc_t), pointer :: dw
 
-            interface
-                function dw(x) result(r)
-                    import
-                    double precision, intent(in) :: x
-                    double precision :: r
-                end function
-            end interface
+            type(f_args_t), pointer :: f_args
+
+            call c_f_pointer(args, f_args)
+            call c_f_procpointer(f_args%w_ptr, w)
+            call c_f_procpointer(f_args%dw_ptr, dw)
 
             weight = kernel(x, dw)
             r = f(k, x, w, dw)*phi_eval(j, x)

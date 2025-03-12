@@ -6,6 +6,26 @@ module interfaces_module
 
     double precision, parameter :: alpha = 20.0
 
+    interface
+        function w_proc_t(x) result(r)
+            import
+            double precision, intent(in) :: x
+            double precision :: r
+        end function
+
+        function dw_proc_t(x) result(r)
+            import
+            double precision, intent(in) :: x
+            double precision :: r
+        end function
+    end interface
+
+    type :: f_args_t
+        integer:: idx
+        type(c_funptr) :: w_ptr
+        type(c_funptr) :: dw_ptr
+    end type
+
 contains
     function w1(x) result(r)
         double precision, intent(in) :: x
