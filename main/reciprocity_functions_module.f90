@@ -215,11 +215,10 @@ contains
         vvY(1:nn - 1) = integrals_Y(1:nn - 1)*2.0/a
     end subroutine
 
-    subroutine least_squares_for_Y(vx, vy, stdev_idx)
+    subroutine least_squares_for_Y(vx, vy)
         use tikhonov_module
         double precision, dimension(tnmax), intent(in) :: vx
         double precision, dimension(tnmax), intent(in) :: vy
-        integer, intent(in) :: stdev_idx
         integer, parameter :: mm = tnmax
         integer, parameter :: nn = mmax_phi + 1
         double precision, dimension(mm, nn) :: mxa
@@ -229,18 +228,9 @@ contains
         double precision, dimension(lwork) :: work
         double precision :: x, y
         double precision, dimension(0: mmax_phi) :: integrals_Y
-        character(len = 2) :: str_stdev
         double precision, dimension(nn) :: sings
         double precision, dimension(mm) :: uu
         double precision, dimension(mm, nn) :: vt
-
-        if (stdev_idx == 0) then
-            str_stdev = '00'
-        else if (stdev_idx == 1) then
-            str_stdev = '01'
-        else
-            str_stdev = '05'
-        end if
 
         mxa = 0.0
         vb = 0.0
@@ -260,7 +250,7 @@ contains
         integrals_Y(1:nn-1) = vb(2:nn, 1)*a/2.0
         vvY = vb(1:nn, 1)
 
-        open(unit = 5, file = '/home/cx3d/mestrado/data/coeficientes_stdev_' // str_stdev // '.dat')
+        open(unit = 5, file = '/home/cx3d/mestrado/data/coeficientes.dat')
         do i = 0, nn - 1
             write(5, *)vvY(i)
         end do
