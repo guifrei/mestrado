@@ -40,6 +40,8 @@ program main
     !        write(*, *)'Elapsed time = ', (finish - start), ' s'
     !===>
 
+    call calculate_temperature_coefficients(w1, dw1, h1)
+
     ! Salvando o perfil de temperatura calculado no Fortran
     open(unit = 1, file = '/home/cx3d/mestrado/data/fortran/temperaturas_sinteticas.dat')
     do k = 1, tnmax
