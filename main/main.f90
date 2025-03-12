@@ -114,7 +114,7 @@ program main
         call cpu_time(finish)
         !                write(*, *)'    Elapsed time = ', (finish - start)*1000.0, ' ms'
 
-        open(unit = 10, file = '/home/cx3d/mestrado/data/erro_rms__stdev_'// str_stdev // '.dat')
+        open(unit = 10, file = '/home/cx3d/mestrado/data/erro_rms_stdev_'// str_stdev // '.dat')
         do nmax = 0, N
             write(str_N, '(I2.2)') nmax
             open(unit = 4, file = '/home/cx3d/mestrado/data/fortran/delta_temperatura_stdev_' &
@@ -155,44 +155,6 @@ program main
             close(5)
             close(4)
         end do
-        close(10)
-
-        !Principio da discrepancia de Morozov
-        kmax = N
-        if (stdev_idx /= 0) call morozov(stdev, vx, vy, vvY, kmax)
-
-        open(unit = 10, file = '/home/cx3d/mestrado/data/erro_rms_stdev_'// str_stdev // '_morozov.dat')
-        open(unit = 4, file = '/home/cx3d/mestrado/data/fortran/delta_temperatura_stdev_' &
-            // str_stdev // '_morozov.dat')
-        open(unit = 5, file = '/home/cx3d/mestrado/' // &
-            'data/fortran/fluxo_calor_stdev_' // str_stdev // '_morozov.dat')
-        open(unit = 14, file = '/home/cx3d/mestrado/data/comsol/delta_temperatura.dat')
-        open(unit = 15, file = '/home/cx3d/mestrado/data/comsol/fluxo_calor.dat')
-        open(unit = 7, file = '/home/cx3d/mestrado/data/estimativa_ctc__stdev_' // str_stdev // '_morozov.dat')
-
-        norm_f = 0.0
-        norm_t = 0.0
-        do j = 1, tnmax
-            x = vx(j)
-            c_fluxo_calor = fluxo_calor(x, w1, dw1, kmax)
-            c_delta_temperatura = delta_temperatura(x, w1, dw1, kmax)
-            write(4, *)x, c_delta_temperatura
-            write(5, *)x, c_fluxo_calor
-            write(7, *)x, c_fluxo_calor/c_delta_temperatura
-
-            read(14, *)x, delta_temperatura_teorico
-            read(15, *)x, fluxo_calor_teorico
-            norm_t = norm_t + (delta_temperatura_teorico - c_delta_temperatura)**2
-            norm_f = norm_f + (fluxo_calor_teorico - c_fluxo_calor)**2
-        end do
-        norm_t = sqrt(norm_t/tnmax)
-        norm_f = sqrt(norm_f/tnmax)
-        write(10, *)nmax, norm_t, norm_f
-        close(15)
-        close(14)
-        close(5)
-        close(4)
-        close(7)
         close(10)
     end do
 end program main
