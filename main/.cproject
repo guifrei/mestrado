@@ -18,23 +18,27 @@
 					<folderInfo id="photran.managedbuild.config.gnu.fortran.exe.debug.1628958093." name="/" resourcePath="">
 						<toolChain id="photran.managedbuild.toolchain.gnu.fortran.exe.debug.13521174" name="GCC Fortran" superClass="photran.managedbuild.toolchain.gnu.fortran.exe.debug">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="photran.managedbuild.target.gnu.platform.exe.debug.440521035" name="Debug Platform" osList="solaris,linux,hpux,aix,qnx" superClass="photran.managedbuild.target.gnu.platform.exe.debug"/>
-							<builder buildPath="${workspace_loc:/main}/Debug" id="org.eclipse.cdt.build.core.internal.builder.1978266937" superClass="org.eclipse.cdt.build.core.internal.builder"/>
+							<builder buildPath="${workspace_loc:/main}/Debug" id="org.eclipse.cdt.build.core.internal.builder.1978266937" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" superClass="org.eclipse.cdt.build.core.internal.builder"/>
 							<tool id="photran.managedbuild.tool.gnu.c.compiler.exe.debug.488984437" name="GCC C Compiler" superClass="photran.managedbuild.tool.gnu.c.compiler.exe.debug">
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.608487165" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug.674470400" name="GNU Fortran Compiler" superClass="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug">
 								<option id="gnu.fortran.compiler.option.std.legacy" name="Fortran Standard" superClass="gnu.fortran.compiler.option.std" useByScannerDiscovery="false" value="-std=legacy" valueType="string"/>
-                                                                <inputType id="photran.managedbuild.tool.gnu.fortran.compiler.input.106430102" superClass="photran.managedbuild.tool.gnu.fortran.compiler.input"/>
+								<inputType id="photran.managedbuild.tool.gnu.fortran.compiler.input.106430102" superClass="photran.managedbuild.tool.gnu.fortran.compiler.input"/>
 							</tool>
 							<tool id="photran.managedbuild.tool.gnu.fortran.linker.exe.debug.292626894" name="GNU Fortran Linker" superClass="photran.managedbuild.tool.gnu.fortran.linker.exe.debug">
 								<option id="gnu.fortran.link.option.libs.1237403979" name="Libraries (-l)" superClass="gnu.fortran.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="lapack"/>
 									<listOptionValue builtIn="false" value="refblas"/>
+									<listOptionValue builtIn="false" value="pytorch_model"/>
+									<listOptionValue builtIn="false" value="python3.12"/>
 								</option>
 								<option id="gnu.fortran.link.option.paths.1501809505" name="Library search path (-L)" superClass="gnu.fortran.link.option.paths" useByScannerDiscovery="false" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lapack-3.8.0}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/main/Debug}&quot;"/>
+									<listOptionValue builtIn="false" value="/home/cx3d/python3.12/lib"/>
 								</option>
-								<option id="gnu.fortran.link.option.ldflags.1914278027" name="Linker flags" superClass="gnu.fortran.link.option.ldflags" useByScannerDiscovery="false" value="-static" valueType="string"/>
+								<option id="gnu.fortran.link.option.ldflags.1914278027" name="Linker flags" superClass="gnu.fortran.link.option.ldflags" useByScannerDiscovery="false" value="-g" valueType="string"/>
 								<inputType id="photran.managedbuild.tool.gnu.fortran.linker.input.1887111249" superClass="photran.managedbuild.tool.gnu.fortran.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -45,6 +49,9 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry excluding="pytorch_model.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -73,7 +80,7 @@
 							</tool>
 							<tool id="photran.managedbuild.tool.gnu.fortran.compiler.exe.release.1142095623" name="GNU Fortran Compiler" superClass="photran.managedbuild.tool.gnu.fortran.compiler.exe.release">
 								<option id="gnu.fortran.compiler.option.std.legacy" name="Fortran Standard" superClass="gnu.fortran.compiler.option.std" useByScannerDiscovery="false" value="-std=legacy" valueType="string"/>
-                                                                <inputType id="photran.managedbuild.tool.gnu.fortran.compiler.input.1357524803" superClass="photran.managedbuild.tool.gnu.fortran.compiler.input"/>
+								<inputType id="photran.managedbuild.tool.gnu.fortran.compiler.input.1357524803" superClass="photran.managedbuild.tool.gnu.fortran.compiler.input"/>
 							</tool>
 							<tool id="photran.managedbuild.tool.gnu.fortran.linker.exe.release.162143702" name="GNU Fortran Linker" superClass="photran.managedbuild.tool.gnu.fortran.linker.exe.release">
 								<inputType id="photran.managedbuild.tool.gnu.fortran.linker.input.847726192" superClass="photran.managedbuild.tool.gnu.fortran.linker.input">
@@ -86,6 +93,9 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry excluding="pytorch_model.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>

@@ -2,19 +2,16 @@ module conductances_module
     use iso_c_binding
     use constants_module
     use sigmoid_function_module
+    use pytorch_model_module
     implicit none
-
-    interface
-        function h_proc_t(x) result(r)
-            import
-            double precision, intent(in) :: x
-            double precision :: r
-        end function
-    end interface
-
-    type(c_funptr), dimension(9) :: hlist
-
 contains
+    function hnn(x) result(r)
+        double precision, intent(in) :: x
+        double precision :: r
+
+        r = run_pytorch_model(x)
+    end function
+
     function h1(x) result(r)
         double precision, intent(in) :: x
         double precision :: r

@@ -52,12 +52,14 @@ contains
         allocate(iwork(leniw), work(lenw))
 
         r = 0.0D0
+        !$OMP PARALLEL DO
         do cnt = 2, npts2
             call dqawo(f_aux, def_pts(cnt-1), def_pts(cnt), mu(m), &
                 1, 1.49D-8, 1.49D-8, tmp, abserr, neval, ier, leniw, maxp1, &
                 lenw, last, iwork, work)
             r = r + tmp
         end do
+        !$OMP END PARALLEL DO
 
         deallocate(iwork, work)
         deallocate(def_pts)
